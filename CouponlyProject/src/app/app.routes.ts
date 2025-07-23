@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'admin',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
   {
@@ -16,6 +16,10 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
+      },
+      {
+        path: 'location',
+        loadChildren: () => import('./features/admin/admin.routes').then(m => m.routes)
       },
       {
         path: 'theme',
