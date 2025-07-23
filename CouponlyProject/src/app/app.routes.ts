@@ -4,7 +4,7 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: '',
@@ -16,6 +16,10 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
+      },
+      {
+        path: 'location',
+        loadChildren: () => import('./features/admin/admin.routes').then(m => m.routes)
       },
       {
         path: 'theme',

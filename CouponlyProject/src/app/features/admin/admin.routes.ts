@@ -3,6 +3,13 @@ import { StoreComponent } from './components/store/store.component';
 
 export const routes: Routes = [
   {
+    path: 'location',
+    loadComponent: () => import('./components/location/location.component').then(m => m.LocationComponent ),
+    data: {
+      title: 'Location'
+    }
+  },
+  {
     path: 'store',
     loadComponent: () => import('./components/store/store.component').then(m =>StoreComponent),
     data: {
