@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'admin',
     pathMatch: 'full'
   },
   {
@@ -52,7 +52,11 @@ export const routes: Routes = [
       {
         path: 'pages',
         loadChildren: () => import('./views/pages/routes').then((m) => m.routes)
-      }
+      },
+      {
+        path: 'admin',
+        loadChildren: () => import('./features/admin/routes').then((m) => m.routes)
+     },
     ]
   },
   {
@@ -83,12 +87,6 @@ export const routes: Routes = [
       title: 'Register Page'
     }
   },
-  {
-    path: 'store',
-    loadComponent: () => import('./features/admin//components/store/store.component').then(m => m.StoreComponent),
-    data: {
-      title: 'Login Page'
-    }
-  },
-  { path: '**', redirectTo: 'dashboard' }
+  
+  { path: '**', redirectTo: 'admin' }
 ];
