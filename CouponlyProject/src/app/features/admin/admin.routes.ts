@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { ManageUsersComponent } from './components/manage-users/manage-users.component';
 
 export const routes: Routes = [
   {
@@ -16,7 +17,7 @@ export const routes: Routes = [
         path: 'store',
         loadComponent: () => import('./components/store/store.component').then(m => m.StoreComponent),
         data: {
-          title: 'Buttons'
+          title: 'Store'
         }
       
       },
@@ -25,6 +26,13 @@ export const routes: Routes = [
         loadComponent: () => import('./components/location/location.component').then(m => m.LocationComponent ),
         data: {
           title: 'Location'
+        }
+      },
+      {
+        path: 'manageusers',
+        loadComponent: () => import('./components/manage-users/manage-users.component').then(m => m.ManageUsersComponent ),
+        data: {
+          title: 'ManageUsers'
         }
       }
     ]
