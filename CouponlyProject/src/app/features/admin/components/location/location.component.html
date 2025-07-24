@@ -15,23 +15,27 @@
                     <tr>
                         <th data-label="#"></th>
                         <th data-label="District Filter">
-                            <select class="form-control">
-                                <option value="">Select District</option>
-                                <option value="district1">District 1</option>
-                                <option value="district2">District 2</option>
-                                <option value="district3">District 3</option>
-                            </select>
+                            <select class="form-control" [(ngModel)]="selectedDistrict" (ngModelChange)="applyFilters()">
+                            <option *ngFor="let district of districts" [value]="district.value">
+                                {{ district.name }}
+                            </option>
+                        </select>
                         </th>
                         <th data-label="Location Filter">
                             <div class="d-flex align-items-center">
-                                <input type="text" placeholder="Filter Location" class="form-control" />
-                                <button type="button" class="btn btn-link p-0 ms-2" title="Sort Ascending">
-                                    <span>&uarr;</span>
+                                <input type="text" placeholder="Filter Location" [(ngModel)]="locationFilter" (input)="applyFilters()"
+                                    class="form-control" />
+                                <button type="button" class="btn btn-link p-0 ms-2"
+                                    [title]="locationSortDirection === 'asc' ? 'Sort Descending' : (locationSortDirection === 'desc' ? 'Clear Sort' : 'Sort Ascending')"
+                                    (click)="toggleLocationSort()">
+                                    <span *ngIf="locationSortDirection === 'asc'">&uarr;</span>
+                                    <span *ngIf="locationSortDirection === 'desc'">&darr;</span>
+                                    <span *ngIf="locationSortDirection === ''">&#x2195;</span>
                                 </button>
                             </div>
                         </th>
                         <th data-label="Pincode Filter">
-                            <input type="text" placeholder="Filter Pincode" class="form-control" />
+                            <input type="text" [(ngModel)]="pincodeFilter" placeholder="Filter Pincode" (input)="applyFilters()" class="form-control" />
                         </th>
                         <th data-label="Latitude Filter"></th>
                         <th data-label="Longitude Filter"></th>
@@ -50,7 +54,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <ng-container *ngFor="let loc of locations; let i = index">
+                    <ng-container *ngFor="let loc of filteredLocations; let i = index">
                         <tr>
                             <td data-label="#">{{ i+1 }}</td>
                             <td *ngIf="shouldShowDistrict(i)" [attr.rowspan]="getDistrictRowspan(i)"
@@ -67,7 +71,7 @@
                                 </c-form-check>
                             </td>
                             <td data-label="">
-                                <button type="button" class="btn btn-link p-0" title="Edit">
+                                <button type="button" class="d-flex btn btn-link p-0 align-items-center" title="Edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
                                         viewBox="0 0 16 16">
                                         <path
