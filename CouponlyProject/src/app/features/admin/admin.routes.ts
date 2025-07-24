@@ -34,6 +34,13 @@ export const routes: Routes = [
         data: {
           title: 'ManageUsers'
         }
+      },
+      {
+        path: 'redeemhistory',
+        loadComponent: () => import('./components/redeem-history/redeem-history.component').then(m => m.RedeemHistoryComponent ),
+        data: {
+          title: 'Redeem History'
+        }
       }
     ]
   }

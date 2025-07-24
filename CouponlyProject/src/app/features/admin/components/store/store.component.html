@@ -1,7 +1,5 @@
 
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <button cButton color="primary" [cModalToggle]="verticallyCenteredScrollableModal.id">Add Store</button>
-</div> 
+
 <c-modal #verticallyCenteredScrollableModal
          [scrollable]="true"
          alignment="center"
@@ -27,8 +25,11 @@
 </c-modal>
 <c-col xs="12">
     <c-card class="mb-4">
-        <c-card-header>
-            <strong>Location</strong>
+       <c-card-header class="d-flex justify-content-between align-items-center">
+            <strong>Store</strong>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
+                <button cButton color="primary" [cModalToggle]="verticallyCenteredScrollableModal.id">Add Store</button>
+            </div>
         </c-card-header>
         <c-card-body>
                 <table [hover]="true" cTable>
