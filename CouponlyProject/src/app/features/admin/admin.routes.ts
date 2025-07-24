@@ -17,7 +17,7 @@ export const routes: Routes = [
         path: 'store',
         loadComponent: () => import('./components/store/store.component').then(m => m.StoreComponent),
         data: {
-          title: 'Buttons'
+          title: 'Store'
         }
       
       },
