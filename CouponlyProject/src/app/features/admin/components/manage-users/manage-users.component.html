@@ -1,76 +1,104 @@
-<c-col xs="12">
-    <c-card class="mb-4">
-        <c-card-header>
-            <strong>Users</strong>
-        </c-card-header>
-        <c-card-body>
-            <table [hover]="true" cTable>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>
-                            <input type="text" placeholder="Filter FirstName" class="form-control" />
-                        </th>
-                        <th>
-                            <input type="text" placeholder="Filter LastName" class="form-control" />
-                        </th>
-                        <th>
-                            <input type="text" placeholder="Filter Email" class="form-control" />
-                        </th>
-                        <th>
-                            <input type="text" placeholder="Filter UserName" class="form-control" />
-                        </th>
-                         <th>
-                            <input type="text" placeholder="Filter PhnNumber" class="form-control" />
-                        </th>
-                        <th>
-                            <input type="text" placeholder="Filter Status" class="form-control" />
-                        </th>
-                        <th>
-                            <input type="text" placeholder="Filter Type" class="form-control" />
-                        </th>
-                        <th>
-                            <input type="text" placeholder="Filter Active" class="form-control" />
-                        </th>
-                    </tr>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">UserName</th>
-                        <th scope="col">Phn Number</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Active</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>&#64;mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>&#64;fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colSpan="2">Larry the Bird</td>
-                        <td>&#64;twitter</td>
-                    </tr>
-                </tbody>
-            </table>
-        </c-card-body>
-    </c-card>
-</c-col>
+<c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
+    id="verticallyCenteredScrollableModal">
+    <app-add-user-modal></app-add-user-modal>
+</c-modal>
+
+<c-modal #editUserModal alignment="center" id="editUserModal">
+    <app-edit-user-modal></app-edit-user-modal>
+</c-modal>
+
+    <c-col xs="12">
+        <c-card class="mb-4">
+            <c-card-header class="d-flex justify-content-between align-items-center">
+                <strong>Users</strong>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary px-4 py-2 text-nowrap"
+                        [cModalToggle]="verticallyCenteredScrollableModal.id">
+                        Add User
+                    </button>
+                </div>
+            </c-card-header>
+            <c-card-body>
+                <table [hover]="true" cTable class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th data-label="#"></th>
+                            <th>
+                                <input type="text" placeholder="Filter FirstName" class="form-control"
+                                    [(ngModel)]="filter.firstName" />
+                                <!-- <button type="button" class="btn btn-link p-0 ms-2" title="Sort Ascending">
+                                    <span>&uarr;</span>
+                                </button> -->
+                            </th>
+                            <th>
+                                <input type="text" placeholder="Filter LastName" class="form-control"
+                                    [(ngModel)]="filter.lastName" />
+                            </th>
+                            <th>
+                                <input type="text" placeholder="Filter Email" class="form-control"
+                                    [(ngModel)]="filter.email" />
+                            </th>
+                            <th>
+                                <input type="text" placeholder="Filter PhnNumber" class="form-control"
+                                    [(ngModel)]="filter.phoneNumber" />
+                            </th>
+                            <th>
+                                <select class="form-control custom-select-wide" [(ngModel)]="filter.type">
+                                    <option value="">Select Type</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="User">User</option>
+                                </select>
+                            </th>
+                            <th>
+
+                                <select id="status" class="form-control custom-select-wide">
+                                    <option value="">Select Status</option>
+                                    <option value="district1">Enabled</option>
+                                    <option value="district2">Disabled</option>
+                                </select>
+                            </th>
+                            <th></th>
+
+                        </tr>
+                        <tr>
+
+                            <th scope="col">#</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phn Number</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Active</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let user of pagedUsers; let i = index">
+                            <tr>
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ user.firstName }}</td>
+                                <td>{{ user.lastName }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phoneNumber }}</td>
+                                <td>{{ user.type }}</td>
+                                <td data-label="Active">
+                                    <c-form-check [switch]="true">
+                                        <input cFormCheckInput checked type="checkbox" />
+                                    </c-form-check>
+                                </td>
+                                <td data-label="">
+                                    <button class="btn btn-sm btn-outline-primary" [cModalToggle]="'editUserModal'"
+                                        (click)="selectedUser = user">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+
+                </table>
+
+            </c-card-body>
+        </c-card>
+    </c-col>
