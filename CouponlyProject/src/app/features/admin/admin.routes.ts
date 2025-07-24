@@ -10,14 +10,30 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'admin',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./../../views/dashboard/dashboard.component').then(m => m.DashboardComponent),
+        data: {
+          title: 'Dashboard'
+        }
       },
       {
         path: 'store',
         loadComponent: () => import('./components/store/store.component').then(m => m.StoreComponent),
         data: {
           title: 'Store'
+        }
+      
+      },
+
+       {
+        path: 'contact',
+        loadComponent: () => import('./components/contact/contact.component').then(m => m.ContactComponent),
+        data: {
+          title: 'contact'
         }
       
       },
@@ -33,6 +49,13 @@ export const routes: Routes = [
         loadComponent: () => import('./components/manage-users/manage-users.component').then(m => m.ManageUsersComponent ),
         data: {
           title: 'ManageUsers'
+        }
+      },
+      {
+        path: 'redeemhistory',
+        loadComponent: () => import('./components/redeem-history/redeem-history.component').then(m => m.RedeemHistoryComponent ),
+        data: {
+          title: 'Redeem History'
         }
       }
     ]
