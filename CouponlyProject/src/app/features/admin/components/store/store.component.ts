@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, ModalComponent, ModalToggleDirective, TableDirective } from '@coreui/angular';
 import { AddStoreModalComponent } from '../../pages/add-store-modal/add-store-modal.component';
+import { EditStoreModalComponent } from '../../pages/edit-store-modal/edit-store-modal.component';
 
 @Component({
   selector: 'app-store',
@@ -15,7 +16,8 @@ import { AddStoreModalComponent } from '../../pages/add-store-modal/add-store-mo
     ModalComponent,
     ReactiveFormsModule,
     FormsModule,
-    AddStoreModalComponent
+    AddStoreModalComponent,
+    EditStoreModalComponent
   ],
   templateUrl: './store.component.html',
   styleUrl: './store.component.scss',
