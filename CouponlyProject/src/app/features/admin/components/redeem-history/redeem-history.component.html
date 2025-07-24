@@ -1,9 +1,35 @@
 <c-col xs="12">
     <c-card class="mb-4">
-        <c-card-header>
+        <c-card-header class="d-flex justify-content-between align-items-center">
             <strong>Redeem History</strong>
+            <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+                <div class="d-flex align-items-center gap-3">
+                    <strong>From: </strong>
+                    <input type="date" class="form-control" />
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <strong>To: </strong>
+                    <input type="date" class="form-control" />
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-sm btn-outline-dark" data-bs-toggle="tooltip" title="Download History">
+                        <svg cIcon name="cil-cloud-download" size="lg"></svg>
+                    </button>
+                    
+                </div>
+            </div>
         </c-card-header>
         <c-card-body>
+            <div class="gap-4 d-md-flex align-items-center justify-content-md-end w-50 m-3">
+                <strong>Choose Store: </strong>
+                <select class="form-control w-50">
+                    <option value="">Select District</option>
+                    <option value="district1">District 1</option>
+                    <option value="district2">District 2</option>
+                    <option value="district3">District 3</option>
+                    <option value="district1">District 1</option>
+                </select>
+            </div>
             <table [hover]="true" cTable class="responsive-table">
                 <thead>
                     
@@ -34,12 +60,7 @@
                             <input type="text" placeholder="Filter Pincode" class="form-control" />
                         </th>
                         <th>
-                            <div class="d-flex align-items-center">
-                                <!-- <c-multi-select
-                                    [multiple]="false"
-                                    [clearSearchOnSelect]="true">
-                                </c-multi-select> -->
-                            </div>
+                            
                         </th>
                     </tr>
                 </thead>
