@@ -21,6 +21,15 @@ export const routes: Routes = [
         }
       
       },
+
+       {
+        path: 'contact',
+        loadComponent: () => import('./components/contact/contact.component').then(m => m.ContactComponent),
+        data: {
+          title: 'contact'
+        }
+      
+      },
       {
         path: 'location',
         loadComponent: () => import('./components/location/location.component').then(m => m.LocationComponent ),

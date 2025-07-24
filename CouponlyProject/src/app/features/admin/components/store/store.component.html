@@ -9,12 +9,26 @@
     <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose></button>
   </c-modal-header>
   <c-modal-body>
-    <p>
-      This is some placeholder content to show a vertically centered modal. We've added some extra copy here to show
-      how vertically centering the modal works when combined with scrollable modals. We also use some repeated line
-      breaks to quickly extend the height of the content, thereby triggering the scrolling. When content becomes
-      longer than the predefined max-height of modal, content will be cropped and scrollable within the modal.
-    </p>
+        <form cForm>
+            <div class="mb-3">
+                <label cLabel for="exampleFormControlTextarea1">Store Name</label>
+                <input aria-label="sm input example" cFormControl placeholder="Small input" sizing="sm" type="text">
+            </div>
+            <div class="mb-3">
+                <label cLabel for="exampleFormControlTextarea1">Address</label>
+                <textarea cFormControl id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label cLabel for="exampleFormControlInput1">Email address</label>
+                <input cFormControl id="exampleFormControlInput1" placeholder="name@example.com" type="email" />
+            </div>
+            
+            <div class="mb-3">
+                <label cLabel for="exampleFormControlTextarea1">Example textarea</label>
+                <input aria-label="sm input example" cFormControl placeholder="Small input" sizing="sm" type="text">
+            </div>
+        </form>
   </c-modal-body>
   <c-modal-footer>
     <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButton color="secondary">
@@ -25,14 +39,11 @@
 </c-modal>
 <c-col xs="12">
     <c-card class="mb-4">
-       <c-card-header class="d-flex justify-content-between align-items-center">
-            <strong>Store</strong>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
-                <button cButton color="primary" [cModalToggle]="verticallyCenteredScrollableModal.id">Add Store</button>
-            </div>
+        <c-card-header>
+            <strong>Location</strong>
         </c-card-header>
         <c-card-body>
-                <table [hover]="true" cTable>
+                <table [hover]="true" cTable cTable class="responsive-table">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
