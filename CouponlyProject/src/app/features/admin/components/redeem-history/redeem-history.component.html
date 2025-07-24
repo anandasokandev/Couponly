@@ -9,40 +9,38 @@
                     
                     <tr>
                         <th scope="col" data-label="#"> </th>
-                        <th scope="col" data-label="District Name">District Name</th>
-                        <th scope="col" data-label="Location Name">Location Name</th>
-                        <th scope="col" data-label="Pincode">Pincode</th>
-                        <th scope="col" data-label="Latitude">Latitude</th>
-                        <th scope="col" data-label="Longitude">Longitude</th>
-                        <th scope="col" data-label="Active">Active</th>
-                        <th scope="col" data-label="Actions">Actions</th>
+                        <th scope="col" data-label="District Name">Coupon Code</th>
+                        <th scope="col" data-label="Location Name">Coupon Name</th>
+                        <th scope="col" data-label="Pincode">User</th>
+                        <th scope="col" data-label="Latitude">Store</th>
+                        <th scope="col" data-label="Longitude">Redeem Date</th>
                     </tr>
 
                     <tr>
                         <th data-label="#"></th>
-                        <th data-label="District Filter">
-                            <select class="form-control">
-                                <option value="">Select District</option>
-                                <option value="district1">District 1</option>
-                                <option value="district2">District 2</option>
-                                <option value="district3">District 3</option>
-                            </select>
-                        </th>
-                        <th data-label="Location Filter">
+                        <th data-label="Coupon Code Filter">
                             <div class="d-flex align-items-center">
-                                <input type="text" placeholder="Filter Location" class="form-control" />
-                                <button type="button" class="btn btn-link p-0 ms-2" title="Sort Ascending">
-                                    <span>&uarr;</span>
-                                </button>
+                                <input type="text" placeholder="Coupon Code" class="form-control" />
+                                
+                            </div>
+                        </th>
+                        <th data-label="Coupon Name Filter">
+                            <div class="d-flex align-items-center">
+                                <input type="text" placeholder="Coupon Name" class="form-control" />
+                                
                             </div>
                         </th>
                         <th data-label="Pincode Filter">
                             <input type="text" placeholder="Filter Pincode" class="form-control" />
                         </th>
-                        <th data-label="Latitude Filter"></th>
-                        <th data-label="Longitude Filter"></th>
-                        <th data-label="Active Filter"></th>
-                        <th data-label="Action Filter"></th>
+                        <th>
+                            <div class="d-flex align-items-center">
+                                <!-- <c-multi-select
+                                    [multiple]="false"
+                                    [clearSearchOnSelect]="true">
+                                </c-multi-select> -->
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

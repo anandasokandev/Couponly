@@ -12,7 +12,7 @@ import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, Fo
     CardComponent, 
     CardHeaderComponent, 
     CardBodyComponent, 
-    TableDirective
+    TableDirective,
   ],
   templateUrl: './redeem-history.component.html',
   styleUrl: './redeem-history.component.scss'
