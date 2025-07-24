@@ -4,36 +4,51 @@
             <strong>Location</strong>
         </c-card-header>
         <c-card-body>
-                <table [hover]="true" cTable>
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">District Name</th>
-                            <th scope="col">Location Name</th>
-                            <th scope="col">Pincode</th>
-                            <th scope="col">Pincode</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>&#64;mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>&#64;fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colSpan="2">Larry the Bird</td>
-                            <td>&#64;twitter</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <table [hover]="true" cTable>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>
+                            <input type="text" placeholder="Filter District" class="form-control" />
+                        </th>
+                        <th>
+                            <input type="text" placeholder="Filter Location" class="form-control" />
+                        </th>
+                        <th>
+                            <input type="text" placeholder="Filter Pincode" class="form-control" />
+                        </th>
+                        <th>
+                            <input type="text" placeholder="Filter Pincode" class="form-control" />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">District Name</th>
+                        <th scope="col">Location Name</th>
+                        <th scope="col">Pincode</th>
+                        <th scope="col">Pincode</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>&#64;mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>&#64;fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td colSpan="2">Larry the Bird</td>
+                        <td>&#64;twitter</td>
+                    </tr>
+                </tbody>
+            </table>
         </c-card-body>
     </c-card>
 </c-col>
