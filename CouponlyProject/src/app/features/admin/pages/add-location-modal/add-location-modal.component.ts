@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ButtonCloseDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
+import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 
 @Component({
   selector: 'app-add-location-modal',
@@ -10,6 +10,10 @@ import { ButtonCloseDirective, ModalBodyComponent, ModalComponent, ModalFooterCo
     ButtonCloseDirective,
     ModalBodyComponent,
     ModalFooterComponent,
+    FormDirective,
+    FormLabelDirective,
+    FormControlDirective,
+    ButtonDirective
   ],
   templateUrl: './add-location-modal.component.html',
   styleUrl: './add-location-modal.component.scss'
