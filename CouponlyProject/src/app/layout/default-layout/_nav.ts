@@ -12,23 +12,33 @@ export const navItems: INavData[] = [
   },
   {
     title: true,
-    name: 'Theme'
+    name: 'Master Entries'
   },
   {
     name: 'Location',
-    url: 'location',
-    iconComponent: { name: 'cil-drop' }
+    url: '/admin/location',
+    iconComponent: { name: 'cil-location-pin' }
+  },
+  // {
+  //   name: 'Colors',
+  //   url: '/theme/colors',
+  //   iconComponent: { name: 'cil-drop' }
+  // },
+  // {
+  //   name: 'Typography',
+  //   url: '/theme/typography',
+  //   linkProps: { fragment: 'headings' },
+  //   iconComponent: { name: 'cil-pencil' }
+  // },
+  {
+    name: 'Pages',
+    title: true
   },
   {
-    name: 'Colors',
-    url: '/theme/colors',
-    iconComponent: { name: 'cil-drop' }
-  },
-  {
-    name: 'Typography',
-    url: '/theme/typography',
+    name: 'Redeem History',
+    url: '/admin/redeemhistory',
     linkProps: { fragment: 'headings' },
-    iconComponent: { name: 'cil-pencil' }
+    iconComponent: { name: 'cil-layers' }
   },
   {
     name: 'Components',
