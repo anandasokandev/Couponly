@@ -13,10 +13,7 @@ export const routes: Routes = [
       title: ''
     },
     children: [
-      // {
-      //   path: 'admin/dashboard',
-      //   loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
-      // },
+      
       // {
       //   path: 'location',
       //   loadChildren: () => import('./features/admin/admin.routes').then(m => m.routes)
@@ -82,6 +79,20 @@ export const routes: Routes = [
     loadComponent: () => import('./features/authentication/login/login.component').then(m => m.LoginComponent),
     data: {
       title: 'Login Page'
+    }
+  },
+    {
+    path: 'forgot-password',
+    loadComponent: () => import('./features/authentication/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
+    data: {
+      title: 'forgot-password'
+    }
+  },
+      {
+    path: 'resetpassword',
+    loadComponent: () => import('./features/authentication/resetpassword/resetpassword.component').then(m => m.ResetpasswordComponent),
+    data: {
+      title: 'resetpassword'
     }
   },
   {

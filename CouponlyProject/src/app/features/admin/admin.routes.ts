@@ -10,8 +10,15 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'admin',
+        redirectTo: 'dashboard',
         pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./../../views/dashboard/dashboard.component').then(m => m.DashboardComponent),
+        data: {
+          title: 'Dashboard'
+        }
       },
       {
         path: 'store',
