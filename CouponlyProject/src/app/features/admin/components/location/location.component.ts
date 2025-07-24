@@ -7,11 +7,10 @@ import {
   ColComponent,
   TableDirective
 } from '@coreui/angular';
-import { DocsExampleComponent } from '@docs-components/public-api';
 
 @Component({
   selector: 'app-location',
-  imports: [ColComponent, CardComponent, CardHeaderComponent, CardBodyComponent, DocsExampleComponent, TableDirective],
+  imports: [ColComponent, CardComponent, CardHeaderComponent, CardBodyComponent, TableDirective],
   templateUrl: './location.component.html',
   styleUrl: './location.component.scss'
 })
