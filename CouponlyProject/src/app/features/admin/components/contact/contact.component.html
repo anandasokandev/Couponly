@@ -1,9 +1,115 @@
+
+<c-modal #verticallyCenteredScrollableModal
+         [scrollable]="true"
+         alignment="center"
+         id="verticallyCenteredScrollableModal">
+  <c-modal-header>
+    <h5 cModalTitle>Add Contact</h5>
+    <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+        <form cForm>
+  <div class="mb-3">
+    <label cLabel for="nameInput">Name:</label>
+    <input
+      id="nameInput"
+      cFormControl
+      type="text"
+      placeholder="Enter name"
+      sizing="sm"
+      aria-label="Name input"
+      class="form-control"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label cLabel for="phoneInput">Phone Number:</label>
+    <input
+      id="phoneInput"
+      cFormControl
+      type="text"
+      placeholder="Enter phone number"
+      sizing="sm"
+      aria-label="Phone number input"
+      class="form-control"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label cLabel for="emailInput">Email Address:</label>
+    <input
+      id="emailInput"
+      cFormControl
+      type="email"
+      placeholder="name@example.com"
+      aria-label="Email input"
+      class="form-control"
+    />
+  </div>
+</form>
+
+  </c-modal-body>
+  <c-modal-footer>
+    <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButton color="secondary">
+      Close
+    </button>
+    <button cButton color="primary">Submit</button>
+  </c-modal-footer>
+</c-modal>
+
+
 <c-col xs="12">
-  <c-card class="mb-4">
-    <c-card-header>
-      <strong>Contact List</strong>
-    </c-card-header>
-    <c-card-body>
+    <c-card class="mb-4">
+        <c-card-header class="d-flex justify-content-between align-items-center">
+            <strong>Contact List</strong>
+
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <button class="btn btn-primary px-4 py-2 text-nowrap" [cModalToggle]="verticallyCenteredScrollableModal.id">
+    Add Contact
+  </button>
+
+  <button class="btn btn-success px-4 py-2 text-nowrap">
+    <i class="fas fa-file-import me-1"></i> Import
+  </button>
+
+  <button class="btn btn-secondary px-4 py-2 text-nowrap">
+    <i class="fas fa-file-export me-1"></i> Export
+  </button>
+</div>
+
+
+          
+        </c-card-header>
+        <c-card-body>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <input
+    type="text"
+    class="form-control me-2"
+    style="max-width: 300px"
+    placeholder="🔍 Search by Name"
+    aria-label="Search by Name"
+  />
+
+  <input
+    type="text"
+    class="form-control me-2"
+    style="max-width: 300px"
+    placeholder="📞 Search by Phone Number"
+    aria-label="Search by Phone"
+  />
+
+  <input
+    type="text"
+    class="form-control"
+    style="max-width: 300px"
+    placeholder="✉️ Search by Email"
+    aria-label="Search by Email"
+  />
+</div>
+
+
+
       <table [hover]="true" cTable>
         <thead>
           <tr>
@@ -12,7 +118,7 @@
             <th scope="col">Phone Number</th>
             <th scope="col">Email</th>
             <th scope="col">Edit</th>
-            <th scope="col">delete</th>
+           
           </tr>
         </thead>
         <tbody>
@@ -21,40 +127,42 @@
             <td>Akhil</td>
             <td>9876543210</td>
             <td>akhil&#64;example.com</td>
-            <td> <button class="btn btn-sm btn-outline-primary">
-        <i class="fas fa-pen"></i>
-      </button></td>
-            <td> <button class="btn btn-sm btn-outline-danger">
-        <i class="fas fa-trash"></i>
-      </button></td>
+            <td>  <button type="button" class="btn btn-link p-0" title="Edit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.439 9.439a.5.5 0 0 1-.168.11l-4 1.5a.5.5 0 0 1-.65-.65l1.5-4a.5.5 0 0 1 .11-.168l9.439-9.439zm.708-.708a1.5 1.5 0 0 0-2.121 0l-9.439 9.439a1.5 1.5 0 0 0-.329.504l-1.5 4a1.5 1.5 0 0 0 1.95 1.95l4-1.5a1.5 1.5 0 0 0 .504-.329l9.439-9.439a1.5 1.5 0 0 0 0-2.121l-2.292-2.292z" />
+                                    </svg>
+                                </button></td>
+            
           </tr>
           <tr>
             <th scope="row">2</th>
             <td>Meera</td>
             <td>9123456789</td>
             <td>meera&#64;example.com</td>
-            <td> <button class="btn btn-sm btn-outline-primary">
-        <i class="fas fa-pen"></i>
-      </button></td>
-            <td>
-               <button class="btn btn-sm btn-outline-danger">
-        <i class="fas fa-trash"></i>
-      </button>
-            </td>
+            <td>  <button type="button" class="btn btn-link p-0" title="Edit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.439 9.439a.5.5 0 0 1-.168.11l-4 1.5a.5.5 0 0 1-.65-.65l1.5-4a.5.5 0 0 1 .11-.168l9.439-9.439zm.708-.708a1.5 1.5 0 0 0-2.121 0l-9.439 9.439a1.5 1.5 0 0 0-.329.504l-1.5 4a1.5 1.5 0 0 0 1.95 1.95l4-1.5a1.5 1.5 0 0 0 .504-.329l9.439-9.439a1.5 1.5 0 0 0 0-2.121l-2.292-2.292z" />
+                                    </svg>
+                                </button></td>
+           
           </tr>
           <tr>
             <th scope="row">3</th>
             <td>Ravi</td>
             <td>9988776655</td>
             <td>Ravi&#64;example.com</td>
-            <td> <button class="btn btn-sm btn-outline-primary">
-        <i class="fas fa-pen"></i>
-      </button></td>
-            <td>
-               <button class="btn btn-sm btn-outline-danger">
-        <i class="fas fa-trash"></i>
-      </button>
-            </td>
+            <td>  <button type="button" class="btn btn-link p-0" title="Edit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.439 9.439a.5.5 0 0 1-.168.11l-4 1.5a.5.5 0 0 1-.65-.65l1.5-4a.5.5 0 0 1 .11-.168l9.439-9.439zm.708-.708a1.5 1.5 0 0 0-2.121 0l-9.439 9.439a1.5 1.5 0 0 0-.329.504l-1.5 4a1.5 1.5 0 0 0 1.95 1.95l4-1.5a1.5 1.5 0 0 0 .504-.329l9.439-9.439a1.5 1.5 0 0 0 0-2.121l-2.292-2.292z" />
+                                    </svg>
+                                </button></td>
+           
           </tr>
         </tbody>
       </table>
