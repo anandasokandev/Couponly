@@ -1,10 +1,10 @@
 <c-col xs="12">
     <c-card class="mb-4">
-        <c-card-header class="d-flex justify-content-between align-items-center">
+        <c-card-header class="d-md-flex justify-content-md-between align-items-center">
             <strong>Redeem History</strong>
-            <div class="d-grid gap-4 d-md-flex justify-content-md-end">
+            <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
                 <div class="d-flex align-items-center gap-3">
-                    <strong>From: </strong>
+                    <strong class="m-4">From: </strong>
                     <input type="date" class="form-control" />
                 </div>
                 <div class="d-flex align-items-center gap-3">
@@ -13,22 +13,22 @@
                 </div>
                 <div class="d-flex align-items-center gap-3">
                     <button class="btn btn-sm btn-outline-dark" data-bs-toggle="tooltip" title="Download History">
-                        <svg cIcon name="cil-cloud-download" size="lg"></svg>
+                        <svg cIcon name="cil-cloud-download" size="xl"></svg>
                     </button>
                     
                 </div>
             </div>
         </c-card-header>
         <c-card-body>
-            <div class="gap-4 d-md-flex align-items-center justify-content-md-end w-50 m-3">
-                <strong>Choose Store: </strong>
-                <select class="form-control w-50">
-                    <option value="">Select District</option>
-                    <option value="district1">District 1</option>
-                    <option value="district2">District 2</option>
-                    <option value="district3">District 3</option>
-                    <option value="district1">District 1</option>
-                </select>
+            <div class="d-md-flex justify-content-md-end">
+                <div class="d-flex gap-4 align-items-center m-3">
+                    <strong class="w-md-50">Store: </strong>
+                    <select class="form-control w-100" (change)="onStoreChange($event)">
+                        <option value="">All</option>
+                        <option value="Relience Thpzha">Relience Thpzha</option>
+                        <option value="More Koothattkulam">More Koothattkulam</option>
+                    </select>
+                </div>
             </div>
             <table [hover]="true" cTable class="responsive-table">
                 <thead>
@@ -62,26 +62,20 @@
                         <th>
                             
                         </th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <ng-container *ngFor="let loc of locations; let i = index">
+                    <ng-container *ngFor="let red of filteredData; let i = index">
                         <tr>
                             <td data-label="#">{{ i+1 }}</td>
-                            <td *ngIf="shouldShowDistrict(i)" [attr.rowspan]="getDistrictRowspan(i)"
-                                data-label="District Name">
-                                {{ loc.district }}
+                            <td data-label="District Name">
+                                {{ red.couponcode }}
                             </td>
-                            <td data-label="Location Name">{{ loc.location }}</td>
-                            <td data-label="Pincode">{{ loc.pincode }}</td>
-                            <td data-label="Latitude"></td>
-                            <td data-label="Longitude"></td>
-                            <td data-label="Active">
-                                <c-form-check [switch]="true">
-                                    <input cFormCheckInput checked type="checkbox" />
-                                </c-form-check>
-                            </td>
-                            <td data-label=""></td>
+                            <td data-label="Location Name">{{ red.couponname }}</td>
+                            <td data-label="Pincode">{{ red.user }}</td>
+                            <td data-label="Latitude">{{ red.store }}</td>
+                            <td data-label="">{{ red.redeemdate }}</td>
                         </tr>
                     </ng-container>
                 </tbody>
