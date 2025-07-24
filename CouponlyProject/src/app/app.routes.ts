@@ -81,6 +81,20 @@ export const routes: Routes = [
       title: 'Login Page'
     }
   },
+    {
+    path: 'forgot-password',
+    loadComponent: () => import('./features/authentication/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
+    data: {
+      title: 'forgot-password'
+    }
+  },
+      {
+    path: 'resetpassword',
+    loadComponent: () => import('./features/authentication/resetpassword/resetpassword.component').then(m => m.ResetpasswordComponent),
+    data: {
+      title: 'resetpassword'
+    }
+  },
   {
     path: 'register',
     loadComponent: () => import('./views/pages/register/register.component').then(m => m.RegisterComponent),

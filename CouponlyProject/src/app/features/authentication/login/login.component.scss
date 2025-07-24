@@ -1,3 +1,11 @@
+
+.bg-light {
+background: linear-gradient(to right, #5b8ce8 10%, #81a0ef 40%, #70b4ef 90%);
+
+
+
+}
+
 .card {
   border-radius: 10px;
   background-color: #ffffff;
@@ -12,11 +20,14 @@
   margin: 0 auto; /* Center the button */
 }
 .btn-login {
-  padding: 0.4rem 1.5rem;
-  font-size: 0.95rem;
-  width: 100%;
-  min-width: 120px; /* optional */
+  padding: 0.6rem 2rem;
+  font-size: 1rem;
+  width: 300px; /* Set a longer horizontal width */
+  max-width: 100%; /* Prevent overflow on smaller screens */
+  margin: 0 auto; /* Center the button */
+  display: block;
 }
+
 
 .btn-primary:hover {
   background-color: #004bb5;
@@ -34,4 +45,16 @@
 
 .auth-links a:hover {
   text-decoration: underline;
+}
+
+.input-group-text {
+  background-color: transparent;
+  border: none;
+  padding-right: 0.1rem;
+  padding-left: 0.1rem;
+  color: #6c757d; 
+}
+
+.input-group .form-control {
+  border-radius: 0.375rem;
 }
