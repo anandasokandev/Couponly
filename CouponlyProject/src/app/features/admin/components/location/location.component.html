@@ -4,49 +4,65 @@
             <strong>Location</strong>
         </c-card-header>
         <c-card-body>
-            <table [hover]="true" cTable>
+            <table [hover]="true" cTable class="responsive-table">
                 <thead>
                     <tr>
-                        <th></th>
-                        <th>
-                            <input type="text" placeholder="Filter District" class="form-control" />
+                        <th data-label="#"></th>
+                        <th data-label="District Filter">
+                            <select class="form-control">
+                                <option value="">Select District</option>
+                                <option value="district1">District 1</option>
+                                <option value="district2">District 2</option>
+                                <option value="district3">District 3</option>
+                            </select>
                         </th>
-                        <th>
-                            <input type="text" placeholder="Filter Location" class="form-control" />
+                        <th data-label="Location Filter">
+                            <div class="d-flex align-items-center">
+                                <input type="text" placeholder="Filter Location" class="form-control" />
+                                <button type="button" class="btn btn-link p-0 ms-2" title="Sort Ascending">
+                                    <span>&uarr;</span>
+                                </button>
+                            </div>
                         </th>
-                        <th>
+                        <th data-label="Pincode Filter">
                             <input type="text" placeholder="Filter Pincode" class="form-control" />
                         </th>
-                        <th>
-                            <input type="text" placeholder="Filter Pincode" class="form-control" />
-                        </th>
+                        <th data-label="Latitude Filter"></th>
+                        <th data-label="Longitude Filter"></th>
+                        <th data-label="Active Filter"></th>
+                        <th data-label="Action Filter"></th>
                     </tr>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">District Name</th>
-                        <th scope="col">Location Name</th>
-                        <th scope="col">Pincode</th>
-                        <th scope="col">Pincode</th>
+                        <th scope="col" data-label="#">#</th>
+                        <th scope="col" data-label="District Name">District Name</th>
+                        <th scope="col" data-label="Location Name">Location Name</th>
+                        <th scope="col" data-label="Pincode">Pincode</th>
+                        <th scope="col" data-label="Latitude">Latitude</th>
+                        <th scope="col" data-label="Longitude">Longitude</th>
+                        <th scope="col" data-label="Active">Active</th>
+                        <th scope="col" data-label="Actions">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>&#64;mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>&#64;fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colSpan="2">Larry the Bird</td>
-                        <td>&#64;twitter</td>
-                    </tr>
+                    <ng-container *ngFor="let loc of locations; let i = index">
+                        <tr>
+                            <td data-label="#">{{ i+1 }}</td>
+                            <td *ngIf="shouldShowDistrict(i)" [attr.rowspan]="getDistrictRowspan(i)"
+                                data-label="District Name">
+                                {{ loc.district }}
+                            </td>
+                            <td data-label="Location Name">{{ loc.location }}</td>
+                            <td data-label="Pincode">{{ loc.pincode }}</td>
+                            <td data-label="Latitude"></td>
+                            <td data-label="Longitude"></td>
+                            <td data-label="Active">
+                                <c-form-check [switch]="true">
+                                    <input cFormCheckInput checked type="checkbox" />
+                                </c-form-check>
+                            </td>
+                            <td data-label=""></td>
+                        </tr>
+                    </ng-container>
                 </tbody>
             </table>
         </c-card-body>
