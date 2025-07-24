@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, TableDirective } from '@coreui/angular';
+import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, TableDirective } from '@coreui/angular';
 
 @Component({
   selector: 'app-store',
@@ -8,7 +8,14 @@ import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, Ta
   CardHeaderComponent,
   ColComponent,
   TableDirective,
-  
+  ButtonDirective,
+    ModalToggleDirective,
+    ModalComponent,
+    ModalHeaderComponent,
+    ModalTitleDirective,
+    ButtonCloseDirective,
+    ModalBodyComponent,
+    ModalFooterComponent
 ],
   templateUrl: './store.component.html',
   styleUrl: './store.component.scss',
