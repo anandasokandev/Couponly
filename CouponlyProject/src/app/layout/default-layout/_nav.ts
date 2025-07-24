@@ -37,7 +37,6 @@ export const navItems: INavData[] = [
   {
     name: 'Redeem History',
     url: '/admin/redeemhistory',
-    linkProps: { fragment: 'headings' },
     iconComponent: { name: 'cil-layers' }
   },
   {

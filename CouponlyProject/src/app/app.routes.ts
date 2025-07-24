@@ -13,10 +13,7 @@ export const routes: Routes = [
       title: ''
     },
     children: [
-      // {
-      //   path: 'admin/dashboard',
-      //   loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
-      // },
+      
       // {
       //   path: 'location',
       //   loadChildren: () => import('./features/admin/admin.routes').then(m => m.routes)
