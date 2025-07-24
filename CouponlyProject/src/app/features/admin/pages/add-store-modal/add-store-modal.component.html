@@ -1,12 +1,10 @@
-<c-modal #verticallyCenteredScrollableModal
-         [scrollable]="true"
-         alignment="center"
-         id="verticallyCenteredScrollableModal">
-<c-modal-header>
-    <h5 cModalTitle>Add New Store</h5>
-    <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose></button>
-  </c-modal-header>
-  <c-modal-body>
+<c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
+    id="verticallyCenteredScrollableModal">
+    <c-modal-header>
+        <h5 cModalTitle>Add New Store</h5>
+        <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
         <form cForm>
             <div class="mb-3">
                 <label cLabel for="storeName">Store Name</label>
@@ -16,7 +14,7 @@
                 <label cLabel for="logoInput">Logo</label>
                 <input cFormControl id="logoInput" sizing="sm" type="file" />
             </div>
-             <div class="mb-3">
+            <div class="mb-3">
                 <label cLabel for="categorySelect">Category</label>
                 <select class="form-control" name="location" id="categorySelect">
                     <option value="">Select Category</option>
@@ -24,7 +22,7 @@
                     <option value="">Fashion</option>
                 </select>
             </div>
-             <div class="mb-3">
+            <div class="mb-3">
                 <label cLabel for="locationSelect">Location</label>
                 <select class="form-control" name="location" id="locationSelect">
                     <option value="">Select Location</option>
@@ -44,16 +42,16 @@
                 <label cLabel for="emailInput">Email address</label>
                 <input cFormControl id="exampleFormControlInput1" type="email" id="emailInput" />
             </div>
-             <div class="mb-3">
+            <div class="mb-3">
                 <label cLabel for="usernameInput">Username</label>
-                <input aria-label="sm input example" cFormControl  sizing="sm" type="text" id="usernameInput">
+                <input aria-label="sm input example" cFormControl sizing="sm" type="text" id="usernameInput">
             </div>
-             <div class="mb-3">
+            <div class="mb-3">
                 <label cLabel for="passwordInput">Password</label>
-                <input aria-label="sm input example" cFormControl placeholder="Small input" sizing="sm" type="password" id="passwordInput">
+                <input aria-label="sm input example" cFormControl sizing="sm" type="password" id="passwordInput">
             </div>
-             <div class="mb-3">
-                 <label cLabel for="typeSelect">Location</label>
+            <div class="mb-3">
+                <label cLabel for="typeSelect">Type</label>
                 <select class="form-control" name="location" id="typeSelect">
                     <option value="">Select Type</option>
                     <option value="">Offline</option>
@@ -61,11 +59,11 @@
                 </select>
             </div>
         </form>
-  </c-modal-body>
-  <c-modal-footer>
-    <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButton color="secondary">
-      Close
-    </button>
-    <button cButton color="primary">Understood</button>
-  </c-modal-footer>
-  </c-modal>
+    </c-modal-body>
+    <c-modal-footer>
+        <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButton color="secondary">
+            Close
+        </button>
+        <button cButton color="primary">Save</button>
+    </c-modal-footer>
+</c-modal>

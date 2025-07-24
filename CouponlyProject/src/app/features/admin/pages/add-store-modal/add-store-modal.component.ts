@@ -14,7 +14,7 @@ import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirect
     FormDirective,
     FormLabelDirective,
     FormControlDirective,
-    ButtonDirective],
+    ButtonDirective,],
   templateUrl: './add-store-modal.component.html',
   styleUrl: './add-store-modal.component.scss'
 })
