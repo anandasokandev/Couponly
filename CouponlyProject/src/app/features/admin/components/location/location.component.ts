@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AddLocationModalComponent } from '../../pages/add-location-modal/add-location-modal.component';
 import { FormsModule } from '@angular/forms';
+import { EditLocationModalComponent } from '../../pages/edit-location-modal/edit-location-modal.component';
 
 interface Location {
   district: string;
@@ -17,7 +18,7 @@ interface District {
 }
 
 
-type SortDirection = '' | 'asc' | 'desc'; 
+type SortDirection = '' | 'asc' | 'desc';
 
 import {
   ButtonDirective,
@@ -47,6 +48,7 @@ import {
     ModalToggleDirective,
     ModalComponent,
     AddLocationModalComponent,
+    EditLocationModalComponent,
     FormsModule
   ],
   templateUrl: './location.component.html',
@@ -97,23 +99,28 @@ export class LocationComponent {
     { value: 'Thiruvananthapuram', name: 'Thiruvananthapuram' },
     { value: 'Thrissur', name: 'Thrissur' },
     { value: 'Wayanad', name: 'Wayanad' }
-  ].sort((a,b) => a.name.localeCompare(b.name));
+  ].sort((a, b) => a.name.localeCompare(b.name));
 
   locationFilter: string = '';
   selectedDistrict: string = '';
   pincodeFilter: string = '';
   filteredLocations: Location[] = [];
   locationSortDirection: SortDirection = '';
+  selectedLocation: Location | null = null;
 
   ngOnInit(): void {
     this.applyFilters();
     this.locations.sort((a, b) => a.district.localeCompare(b.district));
   }
 
+  openEditModal(loc: Location) {
+    this.selectedLocation = { ...loc };
+  }
+
   applyFilters(): void {
 
     console.log(this.selectedDistrict);
-    
+
     let tempLocations = [...this.locations];
 
     if (this.selectedDistrict) {
@@ -158,7 +165,7 @@ export class LocationComponent {
       return [...locationsToSort].sort((a, b) => {
         const districtCompare = a.district.localeCompare(b.district);
         if (districtCompare !== 0) {
-            return districtCompare;
+          return districtCompare;
         }
         return a.location.localeCompare(b.location);
       });
@@ -180,24 +187,24 @@ export class LocationComponent {
     // based on how they first appear in the original allLocations, or your districts array.
     // To ensure consistent order, iterate through the `districts` array.
     this.districts
-        .filter(d => d.value !== '') // Exclude the "Select District" option
-        .map(d => d.name) // Get just the district names
-        .forEach(districtName => {
-            if (groupedLocations.has(districtName)) {
-                const locationsInDistrict = groupedLocations.get(districtName);
-                if (locationsInDistrict) {
-                    // 2. Sort locations within each district group
-                    locationsInDistrict.sort((a, b) => {
-                        const locationA = a.location.toLowerCase();
-                        const locationB = b.location.toLowerCase();
-                        let comparison = locationA.localeCompare(locationB);
-                        return this.locationSortDirection === 'desc' ? comparison * -1 : comparison;
-                    });
-                    // 3. Add the sorted group to the final list
-                    finalSortedLocations = finalSortedLocations.concat(locationsInDistrict);
-                }
-            }
-        });
+      .filter(d => d.value !== '') // Exclude the "Select District" option
+      .map(d => d.name) // Get just the district names
+      .forEach(districtName => {
+        if (groupedLocations.has(districtName)) {
+          const locationsInDistrict = groupedLocations.get(districtName);
+          if (locationsInDistrict) {
+            // 2. Sort locations within each district group
+            locationsInDistrict.sort((a, b) => {
+              const locationA = a.location.toLowerCase();
+              const locationB = b.location.toLowerCase();
+              let comparison = locationA.localeCompare(locationB);
+              return this.locationSortDirection === 'desc' ? comparison * -1 : comparison;
+            });
+            // 3. Add the sorted group to the final list
+            finalSortedLocations = finalSortedLocations.concat(locationsInDistrict);
+          }
+        }
+      });
 
     return finalSortedLocations;
   }
@@ -205,7 +212,7 @@ export class LocationComponent {
   shouldShowDistrict(index: number): boolean {
     if (index === 0) return true;
     return this.filteredLocations[index] && this.filteredLocations[index - 1] &&
-           this.filteredLocations[index].district !== this.filteredLocations[index - 1].district;
+      this.filteredLocations[index].district !== this.filteredLocations[index - 1].district;
   }
 
   getDistrictRowspan(index: number): number {

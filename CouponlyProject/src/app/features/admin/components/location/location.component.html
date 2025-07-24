@@ -1,3 +1,8 @@
+<c-modal #editLocationModal [scrollable]="true" alignment="center" id="editLocationModal">
+    <app-edit-location-modal [location]="selectedLocation"></app-edit-location-modal>
+</c-modal>
+
+
 <c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
     id="verticallyCenteredScrollableModal">
     <app-add-location-modal></app-add-location-modal>
@@ -15,16 +20,17 @@
                     <tr>
                         <th data-label="#"></th>
                         <th data-label="District Filter">
-                            <select class="form-control" [(ngModel)]="selectedDistrict" (ngModelChange)="applyFilters()">
-                            <option *ngFor="let district of districts" [value]="district.value">
-                                {{ district.name }}
-                            </option>
-                        </select>
+                            <select class="form-control" [(ngModel)]="selectedDistrict"
+                                (ngModelChange)="applyFilters()">
+                                <option *ngFor="let district of districts" [value]="district.value">
+                                    {{ district.name }}
+                                </option>
+                            </select>
                         </th>
                         <th data-label="Location Filter">
                             <div class="d-flex align-items-center">
-                                <input type="text" placeholder="Filter Location" [(ngModel)]="locationFilter" (input)="applyFilters()"
-                                    class="form-control" />
+                                <input type="text" placeholder="Filter Location" [(ngModel)]="locationFilter"
+                                    (input)="applyFilters()" class="form-control" />
                                 <button type="button" class="btn btn-link p-0 ms-2"
                                     [title]="locationSortDirection === 'asc' ? 'Sort Descending' : (locationSortDirection === 'desc' ? 'Clear Sort' : 'Sort Ascending')"
                                     (click)="toggleLocationSort()">
@@ -35,7 +41,8 @@
                             </div>
                         </th>
                         <th data-label="Pincode Filter">
-                            <input type="text" [(ngModel)]="pincodeFilter" placeholder="Filter Pincode" (input)="applyFilters()" class="form-control" />
+                            <input type="text" [(ngModel)]="pincodeFilter" placeholder="Filter Pincode"
+                                (input)="applyFilters()" class="form-control" />
                         </th>
                         <th data-label="Latitude Filter"></th>
                         <th data-label="Longitude Filter"></th>
@@ -71,7 +78,8 @@
                                 </c-form-check>
                             </td>
                             <td data-label="">
-                                <button type="button" class="d-flex btn btn-link p-0 align-items-center" title="Edit">
+                                <button type="button" class="d-flex btn btn-link p-0 align-items-center" title="Edit"
+                                    [cModalToggle]="editLocationModal.id" (click)="openEditModal(loc)">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
                                         viewBox="0 0 16 16">
                                         <path

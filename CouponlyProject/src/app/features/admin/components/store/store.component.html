@@ -6,6 +6,13 @@
          id="verticallyCenteredScrollableModal">
   <app-add-store-modal></app-add-store-modal>
 </c-modal>
+
+<c-modal #editStoreModal
+         [scrollable]="true"
+         alignment="center"
+         id="editStoreModal">
+  <app-edit-store-modal></app-edit-store-modal>
+</c-modal>
 <c-col xs="12">
     <c-card class="mb-4">
         <c-card-header class="d-flex justify-content-between align-items-center">
@@ -73,15 +80,16 @@
                         <td>Otto&#64;gmail.com</td>
                         <td>Makeup</td>
                         <td>Online</td>
-                        <td data-label="">
-                            <button type="button" class="d-flex btn btn-link p-0 align-items-center" title="Edit">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
-                                    viewBox="0 0 16 16">
-                                    <path
-                                        d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.439 9.439a.5.5 0 0 1-.168.11l-4 1.5a.5.5 0 0 1-.65-.65l1.5-4a.5.5 0 0 1 .11-.168l9.439-9.439zm.708-.708a1.5 1.5 0 0 0-2.121 0l-9.439 9.439a1.5 1.5 0 0 0-.329.504l-1.5 4a1.5 1.5 0 0 0 1.95 1.95l4-1.5a1.5 1.5 0 0 0 .504-.329l9.439-9.439a1.5 1.5 0 0 0 0-2.121l-2.292-2.292z" />
-                                </svg>
-                            </button>
-                        </td>
+                          <td data-label="">
+                                <button type="button" class="d-flex btn btn-link p-0 align-items-center" title="Edit"
+                                [cModalToggle]="editStoreModal.id">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.439 9.439a.5.5 0 0 1-.168.11l-4 1.5a.5.5 0 0 1-.65-.65l1.5-4a.5.5 0 0 1 .11-.168l9.439-9.439zm.708-.708a1.5 1.5 0 0 0-2.121 0l-9.439 9.439a1.5 1.5 0 0 0-.329.504l-1.5 4a1.5 1.5 0 0 0 1.95 1.95l4-1.5a1.5 1.5 0 0 0 .504-.329l9.439-9.439a1.5 1.5 0 0 0 0-2.121l-2.292-2.292z" />
+                                    </svg>
+                                </button>
+                            </td>
                     </tr>
                     <tr>
                         <td>2</td>

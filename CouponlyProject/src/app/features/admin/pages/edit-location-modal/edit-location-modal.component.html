@@ -1,0 +1,36 @@
+<c-modal-header>
+  <h5 cModalTitle>Edit Location</h5>
+  <button cModalToggle cButtonClose></button>
+</c-modal-header>
+<c-modal-body>
+  <form cForm *ngIf="location">
+    <div class="mb-3">
+        <label cLabel for="districtSelect">District</label>
+        <select class="form-control" [(ngModel)]="selectedDistrict" name="district" id="districtSelect">
+            <option *ngFor="let district of districts" [value]="district.value">
+                {{ district.name }}
+            </option>
+        </select>
+    </div>
+    <div class="mb-3">
+      <label cLabel for="locationName">Location</label>
+      <input cFormControl id="locationName" [value]="location.location" type="text" />
+    </div>
+    <div class="mb-3">
+      <label cLabel for="pincode">Pincode</label>
+      <input cFormControl id="pincode" [value]="location.pincode" type="text" />
+    </div>
+    <div class="mb-3">
+      <label cLabel for="latitude">Latitude</label>
+      <input cFormControl id="latitude" [value]="location.latitude" type="text" />
+    </div>
+    <div class="mb-3">
+      <label cLabel for="longitude">Longitude</label>
+      <input cFormControl id="longitude" [value]="location.longitude" type="text" />
+    </div>
+  </form>
+</c-modal-body>
+<c-modal-footer>
+  <button cModalToggle cButton color="secondary">Cancel</button>
+  <button cButton color="primary">Save</button>
+</c-modal-footer>
