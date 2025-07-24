@@ -21,6 +21,15 @@ export const routes: Routes = [
         }
       
       },
+
+       {
+        path: 'contact',
+        loadComponent: () => import('./components/contact/contact.component').then(m => m.ContactComponent),
+        data: {
+          title: 'contact'
+        }
+      
+      },
       {
         path: 'location',
         loadComponent: () => import('./components/location/location.component').then(m => m.LocationComponent ),
@@ -33,6 +42,13 @@ export const routes: Routes = [
         loadComponent: () => import('./components/manage-users/manage-users.component').then(m => m.ManageUsersComponent ),
         data: {
           title: 'ManageUsers'
+        }
+      },
+      {
+        path: 'redeemhistory',
+        loadComponent: () => import('./components/redeem-history/redeem-history.component').then(m => m.RedeemHistoryComponent ),
+        data: {
+          title: 'Redeem History'
         }
       }
     ]
