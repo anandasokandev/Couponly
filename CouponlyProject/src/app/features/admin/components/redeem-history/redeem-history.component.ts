@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormCheckComponent, FormCheckInputDirective, TableDirective } from '@coreui/angular';
+import { IconComponent, IconModule } from '@coreui/icons-angular';
 
 @Component({
   selector: 'app-redeem-history',
@@ -13,6 +14,7 @@ import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, Fo
     CardHeaderComponent, 
     CardBodyComponent, 
     TableDirective,
+    IconModule
   ],
   templateUrl: './redeem-history.component.html',
   styleUrl: './redeem-history.component.scss'
