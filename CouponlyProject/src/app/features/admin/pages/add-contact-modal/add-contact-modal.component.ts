@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ButtonCloseDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
+import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 
 @Component({
   selector: 'app-add-contact-modal',
@@ -10,7 +10,14 @@ import { ButtonCloseDirective, ModalBodyComponent, ModalComponent, ModalFooterCo
     ModalTitleDirective,
     ButtonCloseDirective,
     ModalBodyComponent,
-    ModalFooterComponent,CommonModule],
+    FormDirective,
+    FormControlDirective,
+    FormLabelDirective,
+    ModalFooterComponent,
+    CommonModule,
+    ModalFooterComponent,
+    ButtonDirective
+  ],
   templateUrl: './add-contact-modal.component.html',
   styleUrl: './add-contact-modal.component.scss'
 })
