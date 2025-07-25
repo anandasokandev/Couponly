@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
+
 @Component({
-  selector: 'app-edit-store-modal',
-  imports: [ ModalComponent,
+  selector: 'app-edit-contact-modal',
+  imports: [ModalComponent,
     ModalToggleDirective,
     ModalHeaderComponent,
     ModalTitleDirective,
@@ -13,9 +14,9 @@ import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirect
     FormLabelDirective,
     FormControlDirective,
     ButtonDirective],
-  templateUrl: './edit-store-modal.component.html',
-  styleUrl: './edit-store-modal.component.scss'
+  templateUrl: './edit-contact-modal.component.html',
+  styleUrl: './edit-contact-modal.component.scss'
 })
-export class EditStoreModalComponent {
+export class EditContactModalComponent {
 
 }

@@ -1,4 +1,17 @@
 
+
+<c-modal #editContactModal
+         [scrollable]="true"
+         alignment="center"
+         id="editContactModal">
+  <app-edit-contact-modal></app-edit-contact-modal>
+</c-modal>
+
+
+
+
+
+
 <c-modal #verticallyCenteredScrollableModal
          [scrollable]="true"
          alignment="center"
@@ -127,7 +140,8 @@
             <td>Akhil</td>
             <td>9876543210</td>
             <td>akhil&#64;example.com</td>
-            <td> <button class="btn btn-sm btn-outline-primary">
+            <td> <button class="btn btn-sm btn-outline-primary"  title="Edit"
+                                [cModalToggle]="editContactModal.id">
         <i class="fas fa-pen"></i>
       </button>
 
@@ -140,7 +154,8 @@
             <td>Meera</td>
             <td>9123456789</td>
             <td>meera&#64;example.com</td>
-            <td>  <button class="btn btn-sm btn-outline-primary">
+            <td>  <button class="btn btn-sm btn-outline-primary"  title="Edit"
+                               [cModalToggle]="editContactModal.id">
         <i class="fas fa-pen"></i>
       </button></td>
            
@@ -150,7 +165,8 @@
             <td>Ravi</td>
             <td>9988776655</td>
             <td>Ravi&#64;example.com</td>
-            <td>  <button class="btn btn-sm btn-outline-primary">
+            <td>  <button class="btn btn-sm btn-outline-primary"  title="Edit"
+                               [cModalToggle]="editContactModal.id">
         <i class="fas fa-pen"></i>
       </button></td>
            
