@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -16,6 +16,7 @@ import {
 
 @Component({
   selector: 'app-edit-user-modal',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -35,9 +36,20 @@ import {
 })
 export class EditUserModalComponent {
   @Input() user: any = null;
+  @Output() save: EventEmitter<void> = new EventEmitter<void>();
+
+  localUser: any = null;
 
   ngOnChanges(changes: SimpleChanges) {
-    // optional: copy values to local form model if needed
+    if (changes['user'] && this.user) {
+      this.localUser = { ...this.user };
+    }
   }
 
+  saveChanges() {
+    if (this.user && this.localUser) {
+      Object.assign(this.user, this.localUser);
+      this.save.emit();
+    }
+  }
 }
