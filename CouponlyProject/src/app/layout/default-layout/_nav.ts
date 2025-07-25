@@ -35,9 +35,23 @@ export const navItems: INavData[] = [
     title: true
   },
   {
+    name: 'Contacts',
+    url: '/admin/contact',
+    iconComponent: { name: 'cil-people' }
+  },
+  {
+    name: 'Store',
+    url: '/admin/store',
+    iconComponent: { name: 'cil-home' }
+  },
+  {
+    name: 'Users',
+    url: '/admin/manageusers',
+    iconComponent: { name: 'cil-people' }
+  },
+  {
     name: 'Redeem History',
     url: '/admin/redeemhistory',
-    linkProps: { fragment: 'headings' },
     iconComponent: { name: 'cil-layers' }
   },
   {

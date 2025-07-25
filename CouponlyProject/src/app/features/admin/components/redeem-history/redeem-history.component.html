@@ -1,1 +1,85 @@
-<p>redeem-history works!</p>
+<c-col xs="12">
+    <c-card class="mb-4">
+        <c-card-header class="d-md-flex justify-content-md-between align-items-center">
+            <strong>Redeem History</strong>
+            <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
+                <div class="d-flex align-items-center gap-3">
+                    <strong class="m-4">From: </strong>
+                    <input type="date" class="form-control" />
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <strong>To: </strong>
+                    <input type="date" class="form-control" />
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-sm btn-outline-dark" data-bs-toggle="tooltip" title="Download History">
+                        <svg cIcon name="cil-cloud-download" size="xl"></svg>
+                    </button>
+                    
+                </div>
+            </div>
+        </c-card-header>
+        <c-card-body>
+            <div class="d-md-flex justify-content-md-end">
+                <div class="d-flex gap-4 align-items-center m-3">
+                    <strong class="w-md-50">Store: </strong>
+                    <select class="form-control w-100" (change)="onStoreChange($event)">
+                        <option value="">All</option>
+                        <option value="Relience Thpzha">Relience Thpzha</option>
+                        <option value="More Koothattkulam">More Koothattkulam</option>
+                    </select>
+                </div>
+            </div>
+            <table [hover]="true" cTable class="responsive-table">
+                <thead>
+                    
+                    <tr>
+                        <th scope="col" data-label="#"> </th>
+                        <th scope="col" data-label="District Name">Coupon Code</th>
+                        <th scope="col" data-label="Location Name">Coupon Name</th>
+                        <th scope="col" data-label="Pincode">User</th>
+                        <th scope="col" data-label="Latitude">Store</th>
+                        <th scope="col" data-label="Longitude">Redeem Date</th>
+                    </tr>
+
+                    <tr>
+                        <th data-label="#"></th>
+                        <th data-label="Coupon Code Filter">
+                            <div class="d-flex align-items-center">
+                                <input type="text" placeholder="Coupon Code" class="form-control" />
+                                
+                            </div>
+                        </th>
+                        <th data-label="Coupon Name Filter">
+                            <div class="d-flex align-items-center">
+                                <input type="text" placeholder="Coupon Name" class="form-control" />
+                                
+                            </div>
+                        </th>
+                        <th data-label="Pincode Filter">
+                            <input type="text" placeholder="Filter Pincode" class="form-control" />
+                        </th>
+                        <th>
+                            
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let red of filteredData; let i = index">
+                        <tr>
+                            <td data-label="#">{{ i+1 }}</td>
+                            <td data-label="District Name">
+                                {{ red.couponcode }}
+                            </td>
+                            <td data-label="Location Name">{{ red.couponname }}</td>
+                            <td data-label="Pincode">{{ red.user }}</td>
+                            <td data-label="Latitude">{{ red.store }}</td>
+                            <td data-label="">{{ red.redeemdate }}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </c-card-body>
+    </c-card>
+</c-col>

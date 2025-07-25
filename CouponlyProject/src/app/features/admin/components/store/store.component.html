@@ -4,87 +4,116 @@
          [scrollable]="true"
          alignment="center"
          id="verticallyCenteredScrollableModal">
-  <c-modal-header>
-    <h5 cModalTitle>New Store</h5>
-    <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose></button>
-  </c-modal-header>
-  <c-modal-body>
-        <form cForm>
-            <div class="mb-3">
-                <label cLabel for="exampleFormControlTextarea1">Store Name</label>
-                <input aria-label="sm input example" cFormControl placeholder="Small input" sizing="sm" type="text">
-            </div>
-            <div class="mb-3">
-                <label cLabel for="exampleFormControlTextarea1">Address</label>
-                <textarea cFormControl id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
+  <app-add-store-modal></app-add-store-modal>
+</c-modal>
 
-            <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Email address</label>
-                <input cFormControl id="exampleFormControlInput1" placeholder="name@example.com" type="email" />
-            </div>
-            
-            <div class="mb-3">
-                <label cLabel for="exampleFormControlTextarea1">Example textarea</label>
-                <input aria-label="sm input example" cFormControl placeholder="Small input" sizing="sm" type="text">
-            </div>
-        </form>
-  </c-modal-body>
-  <c-modal-footer>
-    <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButton color="secondary">
-      Close
-    </button>
-    <button cButton color="primary">Understood</button>
-  </c-modal-footer>
+<c-modal #editStoreModal
+         [scrollable]="true"
+         alignment="center"
+         id="editStoreModal">
+  <app-edit-store-modal></app-edit-store-modal>
 </c-modal>
 <c-col xs="12">
     <c-card class="mb-4">
-        <c-card-header>
-            <strong>Location</strong>
+        <c-card-header class="d-flex justify-content-between align-items-center">
+            <strong>Store</strong>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
+                <button cButton color="primary" [cModalToggle]="verticallyCenteredScrollableModal.id">Add Store</button>
+            </div>
         </c-card-header>
         <c-card-body>
-                <table [hover]="true" cTable cTable class="responsive-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Logo </th>
-                            <th scope="col">Store Name</th>
-                            <th scope="col">Store Code</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Contact </th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td> <img src="assets/images/angular.jpg" alt="CoreUI for Angular"></td>
-                            <td>Otto</td>
-                            <td>sc32</td>
-                            <td>VH nagar</td>
-                            <td>Ravipuram</td>
-                            <td>4352635266</td>
-                            <td>Otto&#64;gmail.com</td>
-                            <td>Makeup</td>
-                            <td>Online</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td> <img src="assets/images/angular.jpg" alt="CoreUI for Angular"></td>
-                            <td>LAkshmi Components</td>
-                            <td>sc32</td>
-                            <td>VH nagar</td>
-                            <td>Ravipuram</td>
-                            <td>4352635266</td>
-                            <td>Otto&#64;gmail.com</td>
-                            <td>Lifestyle</td>
-                            <td>Offline</td>
-                        </tr>
-                    </tbody>
-                </table>
+      <div class="row g-3 mb-3">
+  <div class="col-md-3">
+    <input type="text" class="form-control" placeholder="🏪 Store Name" aria-label="Search by Store Name" />
+  </div>
+  <div class="col-md-3">
+    <input type="text" class="form-control" placeholder="🔢 Search By Store Code" aria-label="Search by Store Code" />
+  </div>
+  <div class="col-md-3">
+    <input type="text" class="form-control" placeholder="🗺️ Search By Location" aria-label="Search by Location" />
+  </div>
+  <div class="col-md-3">
+    <input type="text" class="form-control" placeholder="📬 Search By Address" aria-label="Search by Address" />
+  </div>
+
+  <div class="col-md-3">
+    <input type="text" class="form-control" placeholder="📞 Search By Contact Number" aria-label="Search by Contact" />
+  </div>
+  <div class="col-md-3">
+    <input type="text" class="form-control" placeholder="✉️ Search By Email" aria-label="Search by Email" />
+  </div>
+  <div class="col-md-3">
+    <input type="text" class="form-control" placeholder="🏷️ Search By Category" aria-label="Search by Category" />
+  </div>
+  <div class="col-md-3">
+    <input type="text" class="form-control" placeholder="🌐 Search By Type" aria-label="Search by Type" />
+  </div>
+</div>
+
+
+
+            <table [hover]="true" cTable cTable class="responsive-table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Logo </th>
+                        <th scope="col">Store Name</th>
+                        <th scope="col">Store Code</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Contact </th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td> <img src="assets/images/angular.jpg" alt="CoreUI for Angular"></td>
+                        <td>Otto</td>
+                        <td>sc32</td>
+                        <td>VH nagar</td>
+                        <td>Ravipuram</td>
+                        <td>4352635266</td>
+                        <td>Otto&#64;gmail.com</td>
+                        <td>Makeup</td>
+                        <td>Online</td>
+                          <td data-label="">
+                                <button type="button" class="d-flex btn btn-link p-0 align-items-center" title="Edit"
+                                [cModalToggle]="editStoreModal.id">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.439 9.439a.5.5 0 0 1-.168.11l-4 1.5a.5.5 0 0 1-.65-.65l1.5-4a.5.5 0 0 1 .11-.168l9.439-9.439zm.708-.708a1.5 1.5 0 0 0-2.121 0l-9.439 9.439a1.5 1.5 0 0 0-.329.504l-1.5 4a1.5 1.5 0 0 0 1.95 1.95l4-1.5a1.5 1.5 0 0 0 .504-.329l9.439-9.439a1.5 1.5 0 0 0 0-2.121l-2.292-2.292z" />
+                                    </svg>
+                                </button>
+                            </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td> <img src="assets/images/angular.jpg" alt="CoreUI for Angular"></td>
+                        <td>LAkshmi Components</td>
+                        <td>sc32</td>
+                        <td>VH nagar</td>
+                        <td>Ravipuram</td>
+                        <td>4352635266</td>
+                        <td>Otto&#64;gmail.com</td>
+                        <td>Lifestyle</td>
+                        <td>Offline</td>
+                        <td data-label="">
+                            <button type="button" class="d-flex btn btn-link p-0 align-items-center" title="Edit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.439 9.439a.5.5 0 0 1-.168.11l-4 1.5a.5.5 0 0 1-.65-.65l1.5-4a.5.5 0 0 1 .11-.168l9.439-9.439zm.708-.708a1.5 1.5 0 0 0-2.121 0l-9.439 9.439a1.5 1.5 0 0 0-.329.504l-1.5 4a1.5 1.5 0 0 0 1.95 1.95l4-1.5a1.5 1.5 0 0 0 .504-.329l9.439-9.439a1.5 1.5 0 0 0 0-2.121l-2.292-2.292z" />
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </c-card-body>
     </c-card>
 </c-col>

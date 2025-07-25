@@ -3,43 +3,36 @@
     <button cModalToggle cButtonClose></button>
 </c-modal-header>
 <c-modal-body>
-    <form cForm>
-
-            <div class="mb-3">
-                <label cLabel for="districtSelect">District</label>
-                <select class="form-control" name="district" id="districtSelect">
-                    <option value="">Select District</option>
-                    <option value="">District1</option>
-                    <option value="">District2</option>
-                </select>
-            </div>
-
-            
-            <div class="mb-3">
-                <label cLabel for="locationName">Location</label>
-                <input cFormControl id="locationName" placeholder="Kochi" type="email" />
-            </div>
-
-            <div class="mb-3">
-                <label cLabel for="pincode">Pincode</label>
-                <input cFormControl id="pincode" placeholder="682020" type="text" />
-            </div>
-
-            <div class="mb-3">
-                <label cLabel for="latitude">Latitude</label>
-                <input cFormControl id="latitude" placeholder="10.0232491" type="text" />
-            </div>
-
-            <div class="mb-3">
-                <label cLabel for="longitude">Longitude</label>
-                <input cFormControl id="longitude" placeholder="76.3265778" type="text" />
-            </div>
-            
-        </form>
+    <form cForm [formGroup]="locationForm">
+        <div class="mb-3">
+            <label cLabel for="districtSelect">District</label>
+            <select class="form-control" name="district" id="districtSelect" formControlName="district">
+                <option value="">Select District</option>
+                <option value="district1">District 1</option>
+                <option value="district2">District 2</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label cLabel for="locationName">Location</label>
+            <input cFormControl id="locationName" formControlName="locationName" placeholder="Kochi" type="text" />
+        </div>
+        <div class="mb-3">
+            <label cLabel for="pincode">Pincode</label>
+            <input cFormControl id="pincode" formControlName="pincode" placeholder="682020" type="text" />
+        </div>
+        <div class="mb-3">
+            <label cLabel for="latitude">Latitude</label>
+            <input cFormControl id="latitude" formControlName="latitude" placeholder="10.0232491" type="text" />
+        </div>
+        <div class="mb-3">
+            <label cLabel for="longitude">Longitude</label>
+            <input cFormControl id="longitude" formControlName="longitude" placeholder="76.3265778" type="text" />
+        </div>
+    </form>
 </c-modal-body>
 <c-modal-footer>
-    <button type="reset" cButton color="secondary">
+    <button type="reset" cButton color="secondary" (click)="locationForm.reset()">
         Reset
     </button>
-    <button cButton color="primary">Save</button>
+    <button cButton color="primary" (click)="save()">Save</button>
 </c-modal-footer>

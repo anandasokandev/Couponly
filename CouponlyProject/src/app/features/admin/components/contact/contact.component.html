@@ -1,9 +1,80 @@
+
+
+<c-modal #editContactModal
+         [scrollable]="true"
+         alignment="center"
+         id="editContactModal">
+  <app-edit-contact-modal></app-edit-contact-modal>
+</c-modal>
+
+
+<c-modal #verticallyCenteredScrollableModal
+         [scrollable]="true"
+         alignment="center"
+         id="verticallyCenteredScrollableModal">
+  <app-add-contact-modal></app-add-contact-modal>
+</c-modal>
+
+
+
+
+
 <c-col xs="12">
-  <c-card class="mb-4">
-    <c-card-header>
-      <strong>Contact List</strong>
-    </c-card-header>
-    <c-card-body>
+    <c-card class="mb-4">
+        <c-card-header class="d-flex justify-content-between align-items-center">
+            <strong>Contact List</strong>
+<div class="d-grid gap-3 d-md-flex justify-content-md-end">
+  <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap" [cModalToggle]="verticallyCenteredScrollableModal.id">
+    Add Contact
+  </button>
+
+  <button class="btn btn-success btn-sm px-3 py-1 text-nowrap text-white">
+    <i class="fas fa-file-import me-1 text-white"></i> Import
+  </button>
+
+  <button class="btn btn-secondary btn-sm px-3 py-1 text-nowrap">
+    <i class="fas fa-file-export me-1"></i> Export
+  </button>
+</div>
+
+
+
+          
+        </c-card-header>
+        <c-card-body>
+
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-4">
+  <input
+    type="text"
+    class="form-control form-control-sm"
+    style="max-width: 280px"
+    placeholder="🔍 Search by Name"
+    aria-label="Search by Name"
+  />
+
+  <input
+    type="text"
+    class="form-control form-control-sm"
+    style="max-width: 195px"
+    placeholder="📞Search by Phone Number"
+    aria-label="Search by Phone"
+  />
+
+  <input
+    type="text"
+    class="form-control form-control-sm"
+    style="max-width: 290px"
+    placeholder="✉️ Search by Email"
+    aria-label="Search by Email"
+  />
+
+  <button type="button" class="btn btn-danger btn-sm text-white" title="Reset">
+    <i class="fas fa-arrows-rotate"></i>
+  </button>
+</div>
+
+
+
       <table [hover]="true" cTable>
         <thead>
           <tr>
@@ -12,7 +83,7 @@
             <th scope="col">Phone Number</th>
             <th scope="col">Email</th>
             <th scope="col">Edit</th>
-            <th scope="col">delete</th>
+           
           </tr>
         </thead>
         <tbody>
@@ -21,40 +92,36 @@
             <td>Akhil</td>
             <td>9876543210</td>
             <td>akhil&#64;example.com</td>
-            <td> <button class="btn btn-sm btn-outline-primary">
+            <td> <button class="btn btn-sm btn-outline-primary"  title="Edit"
+                                [cModalToggle]="editContactModal.id">
         <i class="fas fa-pen"></i>
-      </button></td>
-            <td> <button class="btn btn-sm btn-outline-danger">
-        <i class="fas fa-trash"></i>
-      </button></td>
+      </button>
+
+
+</td>
+            
           </tr>
           <tr>
             <th scope="row">2</th>
             <td>Meera</td>
             <td>9123456789</td>
             <td>meera&#64;example.com</td>
-            <td> <button class="btn btn-sm btn-outline-primary">
+            <td>  <button class="btn btn-sm btn-outline-primary"  title="Edit"
+                               [cModalToggle]="editContactModal.id">
         <i class="fas fa-pen"></i>
       </button></td>
-            <td>
-               <button class="btn btn-sm btn-outline-danger">
-        <i class="fas fa-trash"></i>
-      </button>
-            </td>
+           
           </tr>
           <tr>
             <th scope="row">3</th>
             <td>Ravi</td>
             <td>9988776655</td>
             <td>Ravi&#64;example.com</td>
-            <td> <button class="btn btn-sm btn-outline-primary">
+            <td>  <button class="btn btn-sm btn-outline-primary"  title="Edit"
+                               [cModalToggle]="editContactModal.id">
         <i class="fas fa-pen"></i>
       </button></td>
-            <td>
-               <button class="btn btn-sm btn-outline-danger">
-        <i class="fas fa-trash"></i>
-      </button>
-            </td>
+           
           </tr>
         </tbody>
       </table>
