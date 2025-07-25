@@ -1,0 +1,37 @@
+<c-modal-header>
+  <h5 cModalTitle>Edit User</h5>
+  <button cModalToggle cButtonClose></button>
+</c-modal-header>
+
+<c-modal-body>
+  <form cForm *ngIf="user">
+    <div class="mb-3">
+      <label cLabel for="firstName">First Name</label>
+      <input cFormControl id="firstName" [(ngModel)]="user.firstName" name="firstName" type="text" />
+    </div>
+    <div class="mb-3">
+      <label cLabel for="lastName">Last Name</label>
+      <input cFormControl id="lastName" [(ngModel)]="user.lastName" name="lastName" type="text" />
+    </div>
+    <div class="mb-3">
+      <label cLabel for="email">Email</label>
+      <input cFormControl id="email" [(ngModel)]="user.email" name="email" type="email" />
+    </div>
+    <div class="mb-3">
+      <label cLabel for="phoneNumber">Phone Number</label>
+      <input cFormControl id="phoneNumber" [(ngModel)]="user.phoneNumber" name="phoneNumber" type="text" />
+    </div>
+    <div class="mb-3">
+      <label cLabel for="type">Type</label>
+      <select class="form-control" [(ngModel)]="user.type" name="type" id="type">
+        <option value="Admin">Admin</option>
+        <option value="User">User</option>
+      </select>
+    </div>
+  </form>
+</c-modal-body>
+
+<c-modal-footer>
+  <button cModalToggle cButton color="secondary">Cancel</button>
+  <button cButton color="primary">Save</button>
+</c-modal-footer>

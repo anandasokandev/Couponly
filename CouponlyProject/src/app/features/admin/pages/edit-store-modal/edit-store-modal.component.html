@@ -1,0 +1,61 @@
+<c-modal #editStoreModal [scrollable]="true" alignment="center" id="editStoreModal">
+    <c-modal-header>
+        <h5 cModalTitle>Edit Store</h5>
+        <button [cModalToggle]="editStoreModal.id" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+        <form cForm>
+            <div class="mb-3">
+                <label cLabel for="storeName">Store Name</label>
+                <input aria-label="sm input example" cFormControl sizing="sm" type="text" id="storeName">
+            </div>
+            <div class="mb-3">
+                <label cLabel for="logoInput">Logo</label>
+                <div><img src="assets/images/angular.jpg" alt="CoreUI for Angular"></div>
+                <input cFormControl id="logoInput" sizing="sm" type="file" />
+            </div>
+            <div class="mb-3">
+                <label cLabel for="categorySelect">Category</label>
+                <select class="form-control" name="location" id="categorySelect">
+                    <option value="">Select Category</option>
+                    <option value="">Lifestyle</option>
+                    <option value="">Fashion</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label cLabel for="locationSelect">Location</label>
+                <select class="form-control" name="location" id="locationSelect">
+                    <option value="">Select Location</option>
+                    <option value="">Kadavanthra</option>
+                    <option value="">Vytila</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label cLabel for="addressTextarea">Address</label>
+                <textarea cFormControl id="addressTextarea" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label cLabel for="contactInput">Contact</label>
+                <input aria-label="sm input example" cFormControl sizing="sm" type="text" id="contactInput">
+            </div>
+            <div class="mb-3">
+                <label cLabel for="emailInput">Email address</label>
+                <input cFormControl id="exampleFormControlInput1" type="email" id="emailInput" />
+            </div>
+            <div class="mb-3">
+                <label cLabel for="typeSelect">Type</label>
+                <select class="form-control" name="location" id="typeSelect">
+                    <option value="">Select Type</option>
+                    <option value="">Offline</option>
+                    <option value="">Online</option>
+                </select>
+            </div>
+        </form>
+    </c-modal-body>
+    <c-modal-footer>
+        <button [cModalToggle]="editStoreModal.id" cButton color="secondary">
+            Close
+        </button>
+        <button cButton color="primary">Save</button>
+    </c-modal-footer>
+</c-modal>
