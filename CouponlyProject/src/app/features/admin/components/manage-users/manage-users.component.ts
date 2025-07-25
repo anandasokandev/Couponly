@@ -95,6 +95,12 @@ get totalPages() {
 changePage(page: number) {
   this.currentPage = page;
 }
+onUserSaved() {
+  console.log('User successfully saved.');
+}
 
+openEditUserModal(user: any) {
+  this.selectedUser = { ...user }; 
+}
 
 }

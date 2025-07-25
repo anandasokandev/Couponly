@@ -7,7 +7,9 @@
   <c-modal-body>
     <form cForm>
       <div class="mb-3">
-        <label cLabel for="contactName">Name</label>
+        <label cLabel for="contactName">
+          Name <span style="color: red">*</span>
+        </label>
         <input
           id="contactName"
           type="text"
@@ -19,7 +21,9 @@
       </div>
 
       <div class="mb-3">
-        <label cLabel for="contactPhone">Phone Number</label>
+        <label cLabel for="contactPhone">
+          Phone Number <span style="color: red">*</span>
+        </label>
         <input
           id="contactPhone"
           type="text"
@@ -31,7 +35,9 @@
       </div>
 
       <div class="mb-3">
-        <label cLabel for="contactEmail">Email Address</label>
+        <label cLabel for="contactEmail">
+          Email Address <span style="color: red">*</span>
+        </label>
         <input
           id="contactEmail"
           type="email"
@@ -48,4 +54,3 @@
     <button cButton color="primary">Save</button>
   </c-modal-footer>
 </c-modal>
-
