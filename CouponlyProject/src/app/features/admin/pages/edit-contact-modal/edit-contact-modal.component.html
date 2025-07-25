@@ -1,0 +1,51 @@
+<c-modal #editContactModal [scrollable]="true" alignment="center" id="editContactModal">
+  <c-modal-header>
+    <h5 cModalTitle>Edit Contact</h5>
+    <button [cModalToggle]="editContactModal.id" cButtonClose></button>
+  </c-modal-header>
+
+  <c-modal-body>
+    <form cForm>
+      <div class="mb-3">
+        <label cLabel for="contactName">Name</label>
+        <input
+          id="contactName"
+          type="text"
+          cFormControl
+          sizing="sm"
+          placeholder="Enter name"
+          class="form-control"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label cLabel for="contactPhone">Phone Number</label>
+        <input
+          id="contactPhone"
+          type="text"
+          cFormControl
+          sizing="sm"
+          placeholder="Enter phone number"
+          class="form-control"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label cLabel for="contactEmail">Email Address</label>
+        <input
+          id="contactEmail"
+          type="email"
+          cFormControl
+          placeholder="name@example.com"
+          class="form-control"
+        />
+      </div>
+    </form>
+  </c-modal-body>
+
+  <c-modal-footer>
+    <button [cModalToggle]="editContactModal.id" cButton color="secondary">Close</button>
+    <button cButton color="primary">Save</button>
+  </c-modal-footer>
+</c-modal>
+
