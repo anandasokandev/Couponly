@@ -17,7 +17,7 @@ import { EditStoreModalComponent } from '../../pages/edit-store-modal/edit-store
     ReactiveFormsModule,
     FormsModule,
     AddStoreModalComponent,
-    EditStoreModalComponent
+    EditStoreModalComponent,
   ],
   templateUrl: './store.component.html',
   styleUrl: './store.component.scss',
