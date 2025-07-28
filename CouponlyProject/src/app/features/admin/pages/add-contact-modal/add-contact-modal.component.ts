@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
-
+import { CustomToastService } from '../../../../commons/services/custom-toast.service';
 @Component({
   selector: 'app-add-contact-modal',
   imports: [ ModalToggleDirective,
@@ -23,4 +23,9 @@ import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirect
 })
 export class AddContactModalComponent {
 
-}
+ constructor(private toastService: CustomToastService) {}
+ 
+ createContact() {
+   this.toastService.show('✅ Contact created successfully!', 'success');
+ }
+ }
