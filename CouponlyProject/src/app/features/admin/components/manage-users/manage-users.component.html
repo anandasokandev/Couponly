@@ -4,7 +4,7 @@
 </c-modal>
 
 <c-modal #editUserModal alignment="center" id="editUserModal">
-    <app-edit-user-modal [user]="selectedUser" (save)="onUserSaved()"></app-edit-user-modal>
+    <app-edit-user-modal [user]="selectedUser"></app-edit-user-modal>
 </c-modal>
 
 <c-col xs="12">
@@ -23,58 +23,76 @@
             <table [hover]="true" cTable class="responsive-table">
                 <thead>
                     <tr>
-                        <th data-label="#"></th>
-                        <th>
-                            <input type="text" placeholder="Filter FirstName" class="form-control"
-                                [(ngModel)]="filter.firstName" />
-                            <!-- <button type="button" class="btn btn-link p-0 ms-2" title="Sort Ascending">
-                                    <span>&uarr;</span>
-                                </button> -->
-                        </th>
-                        <th>
-                            <input type="text" placeholder="Filter LastName" class="form-control"
-                                [(ngModel)]="filter.lastName" />
-                        </th>
-                        <th>
-                            <input type="text" placeholder="Filter Email" class="form-control"
-                                [(ngModel)]="filter.email" />
-                        </th>
-                        <th>
-                            <input type="text" placeholder="Filter PhnNumber" class="form-control"
-                                [(ngModel)]="filter.phoneNumber" />
-                        </th>
-                        <th>
-                            <select class="form-control custom-select-wide" [(ngModel)]="filter.type">
-                                <option value="">Select Type</option>
-                                <option value="Admin">Admin</option>
-                                <option value="User">User</option>
-                            </select>
-                        </th>
-                        <th>
+                        <th colspan="2">
+                            <div
+                                style="border: 1px solid #ced4da; margin-top: -12px; border-radius: 6px; margin-bottom: 1px; padding: 12px; background-color: #f8f9fa;">
 
-                            <select id="status" class="form-control custom-select-wide">
-                                <option value="">Select Status</option>
-                                <option value="district1">Enabled</option>
-                                <option value="district2">Disabled</option>
-                            </select>
+                                <input type="text" class="form-control d-inline-block" placeholder="🔍 Search By..."
+                                    style="width: 270px; display: inline-block; margin-right: 12px;" />
+
+                                <select id="searchField" class="form-control d-inline-block"
+                                    style="width: 160px; display: inline-block;">
+                                    <option value="select0">All</option>
+                                    <option value="select1">FirstName</option>
+                                    <option value="select2">LastName</option>
+                                    <option value="select3">Email</option>
+                                    <option value="select4">Phone No.</option>
+                                </select>
+                            </div>
                         </th>
                         <th></th>
 
-                    </tr>
-                    <tr>
+                        <th colspan="2">
+                            <div style="
+                            border: 1px solid #ffffff;
+                            margin-top: -12px;
+                            border-radius: 6px;
+                            margin-bottom: 1px;
+                            padding: 12px;
+                            background-color: #ffffff;
+                            ">
+                                <div style="display: flex; gap: 12px;">
+                                    <select class="form-control custom-select-wide" >
+                                        <option value="">🧩 Select Type</option>
+                                        <option value="Admin">🛡️ Admin</option>
+                                        <option value="User">👤 User</option>
+                                    </select>
+                                    <select id="status" class="form-control custom-select-wide" >
+                                        <option value="">🔘 Select Status</option>
+                                        <option value="district1">🟢 Active</option>
+                                        <option value="district2">🔴 Inactive</option>
+                                    </select>
 
+                                </div>
+                            </div>
+                        </th>
+                        <th></th>
+                        <th colspan="2">
+                            <div
+                                style="border: 1px solid #ffffff; margin-top: -12px; border-radius: 6px; margin-bottom: 1px; padding: 12px; background-color: #ffffff;">
+
+                                <button type="button" class="btn btn-danger btn-sm text-white" title="Reset">
+                                    <i class="fas fa-arrows-rotate"></i>
+                                </button>
+                            </div>
+                        </th>
+
+                    </tr>
+
+
+                    <tr>
                         <th scope="col">#</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Phn Number</th>
+                        <th scope="col">Phone No.</th>
                         <th scope="col">Type</th>
                         <th scope="col">Active</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <ng-container *ngFor="let user of pagedUsers; let i = index">
+                    <ng-container *ngFor="let user of users; let i = index">
                         <tr>
                             <td>{{ i + 1 }}</td>
                             <td>{{ user.firstName }}</td>
