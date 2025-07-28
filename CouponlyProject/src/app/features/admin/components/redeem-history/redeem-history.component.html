@@ -1,7 +1,7 @@
 <c-col xs="12">
     <c-card class="mb-4">
         <c-card-header class="d-md-flex justify-content-md-between align-items-center">
-            <strong>Redeem History</strong>
+            <strong class="w-100">Redeem History</strong>
             <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
                 <div class="d-flex align-items-center gap-3">
                     <strong class="m-4">From: </strong>
@@ -12,7 +12,7 @@
                     <input type="date" class="form-control" />
                 </div>
                 <div class="d-flex align-items-center gap-3">
-                    <button class="btn btn-sm btn-outline-dark" data-bs-toggle="tooltip" title="Download History">
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="Download History">
                         <svg cIcon name="cil-cloud-download" size="xl"></svg>
                     </button>
                     
@@ -20,7 +20,7 @@
             </div>
         </c-card-header>
         <c-card-body>
-            <div class="d-md-flex justify-content-md-end">
+            <!-- <div class="d-md-flex justify-content-md-end">
                 <div class="d-flex gap-4 align-items-center m-3">
                     <strong class="w-md-50">Store: </strong>
                     <select class="form-control w-100" (change)="onStoreChange($event)">
@@ -29,53 +29,68 @@
                         <option value="More Koothattkulam">More Koothattkulam</option>
                     </select>
                 </div>
-            </div>
+            </div> -->
             <table [hover]="true" cTable class="responsive-table">
                 <thead>
                     
-                    <tr>
+                    <tr class="">
                         <th scope="col" data-label="#"> </th>
-                        <th scope="col" data-label="District Name">Coupon Code</th>
-                        <th scope="col" data-label="Location Name">Coupon Name</th>
-                        <th scope="col" data-label="Pincode">User</th>
-                        <th scope="col" data-label="Latitude">Store</th>
-                        <th scope="col" data-label="Longitude">Redeem Date</th>
+                        <th scope="col" data-label="District Name">
+                            Coupon Code
+                            <svg [cIcon]="icons.cilSortAlphaUp"></svg>
+                        </th>
+                        <th scope="col" data-label="Location Name">
+                            Coupon Name
+                            <svg [cIcon]="icons.cilSortAlphaUp"></svg>
+                        </th>
+                        <th scope="col" data-label="Pincode">
+                            User
+                            <svg [cIcon]="icons.cilSortAlphaUp"></svg>
+                        </th>
+                        <th scope="col" data-label="Latitude">
+                            Store
+                            <svg [cIcon]="icons.cilSortAlphaUp"></svg>
+                        </th>
+                        <th scope="col" data-label="Longitude">
+                            Redeem Date
+                            <svg [cIcon]="icons.cilSortAlphaUp"></svg>
+                        </th>
                     </tr>
 
                     <tr>
                         <th data-label="#"></th>
                         <th data-label="Coupon Code Filter">
                             <div class="d-flex align-items-center">
-                                <input type="text" placeholder="Coupon Code" class="form-control" />
+                                <input type="text" placeholder="Coupon Code" [(ngModel)]="filterCouponCode" class="form-control" />
                                 
                             </div>
                         </th>
                         <th data-label="Coupon Name Filter">
                             <div class="d-flex align-items-center">
-                                <input type="text" placeholder="Coupon Name" class="form-control" />
+                                <input type="text" placeholder="Coupon Name" [(ngModel)]="filterCouponName" class="form-control" />
                                 
                             </div>
                         </th>
-                        <th data-label="Pincode Filter">
-                            <input type="text" placeholder="Filter Pincode" class="form-control" />
+                        <th data-label="User Filter">
+                            <input type="text" placeholder="Filter Users" [(ngModel)]="filterUsers" class="form-control" />
                         </th>
-                        <th>
-                            
+                        <th data-label="Store Filter">
+                            <input type="text" placeholder="Filter Stores" [(ngModel)]="filterStores" class="form-control" />
                         </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <ng-container *ngFor="let red of filteredData; let i = index">
+                    <ng-container *ngFor="let red of filteredData | filterstore: filterStores | filteruser: filterUsers | filtercouponname: filterCouponName | filtercouponcode: filterCouponCode; let i = index">
                         <tr>
                             <td data-label="#">{{ i+1 }}</td>
                             <td data-label="District Name">
-                                {{ red.couponcode }}
+                                {{ red.couponCode }}
                             </td>
-                            <td data-label="Location Name">{{ red.couponname }}</td>
+                            <td data-label="Location Name">{{ red.couponName }}</td>
                             <td data-label="Pincode">{{ red.user }}</td>
                             <td data-label="Latitude">{{ red.store }}</td>
-                            <td data-label="">{{ red.redeemdate }}</td>
+                            <td data-label="">{{ red.redeemDate }}</td>
                         </tr>
                     </ng-container>
                 </tbody>

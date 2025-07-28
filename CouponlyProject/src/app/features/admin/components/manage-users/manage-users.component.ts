@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
 
 import {
   ButtonCloseDirective,
-  ButtonDirective,
   CardBodyComponent,
   CardComponent,
   CardHeaderComponent,
@@ -34,7 +33,6 @@ import { EditUserModalComponent } from '../../pages/edit-user-modal/edit-user-mo
     CardHeaderComponent,
     CardBodyComponent,
     TableDirective,
-    ButtonDirective,
     ModalToggleDirective,
     ModalComponent,
     AddUserModalComponent,
