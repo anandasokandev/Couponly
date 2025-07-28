@@ -43,62 +43,29 @@ import { EditUserModalComponent } from '../../pages/edit-user-modal/edit-user-mo
   styleUrl: './manage-users.component.scss'
 })
 export class ManageUsersComponent {
-  filter = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  phoneNumber: '',
-  type: ''
-};
-selectedUser: any = null;
+
+  selectedUser: any = null;
 
   users = [
-  {
-    firstName: 'Alice',
-    lastName: 'Joseph',
-    email: 'alice@example.com',
-    phoneNumber: '9876543210',
-    type: 'Admin'
-  },
-  {
-    firstName: 'Bob',
-    lastName: 'Mathew',
-    email: 'bob@example.com',
-    phoneNumber: '9876541230',
-    type: 'User'
+    {
+      firstName: 'Emma',
+      lastName: 'Joseph',
+      email: 'emma@gmail.com',
+      phoneNumber: '9876543210',
+      type: 'Admin'
+    },
+    {
+      firstName: 'Andrews',
+      lastName: 'Thomas',
+      email: 'andrews@gmail.com',
+      phoneNumber: '9876541230',
+      type: 'User'
+    }
+  ];
+
+
+  openEditUserModal(user: any) {
+    this.selectedUser = { ...user };
   }
-];
-get filteredUsers() {
-  return this.users.filter(user =>
-    user.firstName.toLowerCase().includes(this.filter.firstName.toLowerCase()) &&
-    user.lastName.toLowerCase().includes(this.filter.lastName.toLowerCase()) &&
-    user.email.toLowerCase().includes(this.filter.email.toLowerCase()) &&
-    user.phoneNumber.includes(this.filter.phoneNumber) &&
-    (this.filter.type === '' || user.type === this.filter.type)
-  );
-}
-
-currentPage = 1;
-itemsPerPage = 5;
-
-get pagedUsers() {
-  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-  return this.filteredUsers.slice(startIndex, startIndex + this.itemsPerPage);
-}
-
-get totalPages() {
-  return Math.ceil(this.filteredUsers.length / this.itemsPerPage);
-}
-
-changePage(page: number) {
-  this.currentPage = page;
-}
-onUserSaved() {
-  console.log('User successfully saved.');
-}
-
-openEditUserModal(user: any) {
-  this.selectedUser = { ...user }; 
-}
 
 }
