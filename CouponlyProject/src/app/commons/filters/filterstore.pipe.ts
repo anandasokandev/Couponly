@@ -7,7 +7,7 @@ export class FilterStorePipe implements PipeTransform {
 
   transform(list: any[], search: string): any[] {
     if(search) {
-            return list.filter(list => list.store.toLowerCase().includes(search.toLowerCase()))
+            return list.filter(list => list.storeName.toLowerCase().includes(search.toLowerCase()))
         }
         else
             return list

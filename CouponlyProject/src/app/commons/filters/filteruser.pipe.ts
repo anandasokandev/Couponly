@@ -7,7 +7,7 @@ export class FilteruserPipe implements PipeTransform {
 
   transform(list: any[], search: string): any[] {
     if(search) {
-            return list.filter(list => list.user.toLowerCase().includes(search.toLowerCase()))
+            return list.filter(list => list.userName.toLowerCase().includes(search.toLowerCase()))
         }
         else
             return list

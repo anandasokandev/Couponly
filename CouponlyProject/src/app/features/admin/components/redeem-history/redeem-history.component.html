@@ -3,17 +3,10 @@
         <c-card-header class="d-md-flex justify-content-md-between align-items-center">
             <strong class="w-100">Redeem History</strong>
             <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
-                <div class="d-flex align-items-center gap-3">
-                    <strong class="m-4">From: </strong>
-                    <input type="date" class="form-control" />
-                </div>
-                <div class="d-flex align-items-center gap-3">
-                    <strong>To: </strong>
-                    <input type="date" class="form-control" />
-                </div>
-                <div class="d-flex align-items-center gap-3">
-                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="Download History">
-                        <svg cIcon name="cil-cloud-download" size="xl"></svg>
+                
+                <div class="">
+                    <button class="btn btn-sm btn-outline-primary d-flex align-items-center" data-bs-toggle="tooltip" title="Download History">
+                        <svg cIcon name="cil-cloud-download" size="lg"></svg> &nbsp; Download
                     </button>
                     
                 </div>
@@ -30,6 +23,41 @@
                     </select>
                 </div>
             </div> -->
+            <div class="d-md-flex justify-content m-3">
+                <div class="d-flex gap-4 align-items-center m-2">
+                    <strong class="w-md-50">District: </strong>
+                    <select class="form-control w-100">
+                        <option value=0>All</option>
+                        <option *ngFor="let district of districts">{{ district.districtName }}</option>
+                    </select>
+                </div>
+                <div class="d-flex gap-4 align-items-center m-2">
+                    <strong class="w-md-50">Location: </strong>
+                    <!-- <select class="form-control w-100" [(ngModel)]="selectedDistirctId"> -->
+                    <select class="form-control w-100">
+                        <option value=0>All</option>                        
+                        <!-- <option *ngFor="let location of getLocations(selectedDistirctId)">{{ location.locationName }}</option> -->
+                        <option *ngFor="let location of locations">{{ location.locationName }}</option>
+
+                    </select>
+                </div>
+                <div class="d-flex align-items-center gap-4 m-2">
+                    <strong>From: </strong>
+                    <input type="date" class="form-control" />
+                </div>
+                <div class="d-flex align-items-center gap-4 m-2">
+                    <strong>To: </strong>
+                    <input type="date" class="form-control" />
+                </div>
+            </div>
+            <div class="d-md-flex justify-content m-3 mb-5 gap-5">
+                <button class="btn btn-sm btn-outline-primary w-50" title="Search">
+                    <i class="fas fa-search"></i> Search
+                </button>
+                <button class="btn btn-sm btn-outline-danger w-50" title="Reset">
+                    <i class="fas fa-arrows-rotate"></i> Reset
+                </button>
+            </div>
             <table [hover]="true" cTable class="responsive-table">
                 <thead>
                     
@@ -81,15 +109,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <ng-container *ngFor="let red of filteredData | filterstore: filterStores | filteruser: filterUsers | filtercouponname: filterCouponName | filtercouponcode: filterCouponCode; let i = index">
+                    <ng-container *ngFor="let red of redeems | filterstore: filterStores | filteruser: filterUsers | filtercouponname: filterCouponName | filtercouponcode: filterCouponCode; let i = index">
                         <tr>
                             <td data-label="#">{{ i+1 }}</td>
                             <td data-label="District Name">
                                 {{ red.couponCode }}
                             </td>
                             <td data-label="Location Name">{{ red.couponName }}</td>
-                            <td data-label="Pincode">{{ red.user }}</td>
-                            <td data-label="Latitude">{{ red.store }}</td>
+                            <td data-label="Pincode">{{ red.userName }}</td>
+                            <td data-label="Latitude">{{ red.storeName }}</td>
                             <td data-label="">{{ red.redeemDate }}</td>
                         </tr>
                     </ng-container>
