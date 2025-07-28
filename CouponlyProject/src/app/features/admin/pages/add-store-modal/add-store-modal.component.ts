@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
+import { CustomToastService } from 'src/app/commons/services/custom-toast.service';
 
 @Component({
   selector: 'app-add-store-modal',
@@ -19,5 +20,9 @@ import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirect
   styleUrl: './add-store-modal.component.scss'
 })
 export class AddStoreModalComponent {
+constructor(private toastService: CustomToastService) {}
 
+createStore() {
+  this.toastService.show('✅ Store created successfully!', 'success');
+}
 }

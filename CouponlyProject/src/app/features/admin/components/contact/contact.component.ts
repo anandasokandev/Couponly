@@ -6,10 +6,12 @@ import { AddContactModalComponent } from '../../pages/add-contact-modal/add-cont
 
 @Component({
   selector: 'app-contact',
-  imports: [ColComponent,CardComponent,CardHeaderComponent,CardBodyComponent,TableDirective,
+  imports: [ColComponent,CardComponent
+    ,CardHeaderComponent,CardBodyComponent,TableDirective,
     ModalToggleDirective,
     ModalComponent,
-    CommonModule,EditContactModalComponent,AddContactModalComponent],
+    CommonModule,
+    EditContactModalComponent,AddContactModalComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })
