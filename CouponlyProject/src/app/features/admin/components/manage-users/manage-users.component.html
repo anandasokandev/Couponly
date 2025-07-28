@@ -19,67 +19,77 @@
                 </button>
             </div>
         </c-card-header>
+
         <c-card-body>
-            <table [hover]="true" cTable class="responsive-table">
-                <thead>
-                    <tr>
-                        <th colspan="2">
-                            <div
-                                style="border: 1px solid #ced4da; margin-top: -12px; border-radius: 6px; margin-bottom: 1px; padding: 12px; background-color: #f8f9fa;">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-4">
 
-                                <input type="text" class="form-control d-inline-block" placeholder="🔍 Search By..."
-                                    style="width: 270px; display: inline-block; margin-right: 12px;" />
-
-                                <select id="searchField" class="form-control d-inline-block"
-                                    style="width: 160px; display: inline-block;">
-                                    <option value="select0">All</option>
-                                    <option value="select1">FirstName</option>
-                                    <option value="select2">LastName</option>
-                                    <option value="select3">Email</option>
-                                    <option value="select4">Phone No.</option>
-                                </select>
-                            </div>
-                        </th>
-                        <th></th>
-
-                        <th colspan="2">
-                            <div style="
+                <div style="
                             border: 1px solid #ffffff;
-                            margin-top: -12px;
+                            margin-top: 12px;
                             border-radius: 6px;
                             margin-bottom: 1px;
                             padding: 12px;
                             background-color: #ffffff;
                             ">
-                                <div style="display: flex; gap: 12px;">
-                                    <select class="form-control custom-select-wide" >
-                                        <option value="">🧩 Select Type</option>
-                                        <option value="Admin">🛡️ Admin</option>
-                                        <option value="User">👤 User</option>
-                                    </select>
-                                    <select id="status" class="form-control custom-select-wide" >
-                                        <option value="">🔘 Select Status</option>
-                                        <option value="district1">🟢 Active</option>
-                                        <option value="district2">🔴 Inactive</option>
-                                    </select>
+                    <div style="display: flex; gap: 12px;">
+                        <select class="form-control custom-select-wide">
+                            <option value="">🧩 Select Type</option>
+                            <option value="Admin">🛡️ Admin</option>
+                            <option value="User">👤 User</option>
+                        </select>
+                    </div>
+                </div>
 
-                                </div>
-                            </div>
-                        </th>
-                        <th></th>
-                        <th colspan="2">
-                            <div
-                                style="border: 1px solid #ffffff; margin-top: -12px; border-radius: 6px; margin-bottom: 1px; padding: 12px; background-color: #ffffff;">
+                <div
+                    style="border: 1px solid #ced4da; margin-top: 12px; border-radius: 6px; margin-bottom: 1px; padding: 12px; background-color: #f8f9fa;">
 
-                                <button type="button" class="btn btn-danger btn-sm text-white" title="Reset">
-                                    <i class="fas fa-arrows-rotate"></i>
-                                </button>
-                            </div>
-                        </th>
+                    <input type="text" class="form-control d-inline-block" placeholder="🔍 Search By..."
+                        style="width: 270px; display: inline-block; margin-right: 12px;" />
 
-                    </tr>
+                    <select id="searchField" class="form-control d-inline-block"
+                        style="width: 160px; display: inline-block;">
+                        <option value="select0">All</option>
+                        <option value="select1">FirstName</option>
+                        <option value="select2">LastName</option>
+                        <option value="select3">Email</option>
+                        <option value="select4">Phone No.</option>
+                    </select>
+                </div>
 
+                <div style="
+                        border: 1px solid #ffffff;
+                        margin-top: 12px;
+                        border-radius: 6px;
+                        margin-bottom: 1px;
+                        padding: 12px;
+                        background-color: #ffffff;
+                        ">
+                    <div style="display: flex; gap: 12px;">
 
+                        <select id="status" class="form-control custom-select-wide">
+                            <option value="">🔘 Select Status</option>
+                            <option value="district1">🟢 Active</option>
+                            <option value="district2">🔴 Inactive</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div
+                    style="border: 1px solid #ffffff; margin-top: 12px; border-radius: 6px; margin-bottom: 1px; padding: 12px; background-color: #ffffff;">
+
+                    <button type="button" class="btn btn-danger btn-sm text-white" title="Reset">
+                        <i class="fas fa-arrows-rotate"></i>
+                    </button>
+                </div>
+
+            </div>
+
+            <table [hover]="true" cTable class="responsive-table">
+                <thead>
+                    <th>
+
+                    </th>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">First Name</th>
@@ -111,13 +121,10 @@
                                     <i class="fas fa-pen"></i>
                                 </button>
                             </td>
-
                         </tr>
                     </ng-container>
                 </tbody>
-
             </table>
-
         </c-card-body>
     </c-card>
 </c-col>

@@ -5,39 +5,38 @@
 
  <c-modal-header>
     <h5 cModalTitle>New User</h5>
-   <!-- <button cModalToggle cButtonClose></button> -->
     <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose></button>
   </c-modal-header>
  
   <c-modal-body>
         <form cForm>
             <div class="mb-3">
-                <label cLabel for="exampleFormControlTextarea1">First Name</label>
+                <label cLabel for="exampleFormControlTextarea1">First Name*</label>
                 <input aria-label="sm input example" cFormControl  sizing="sm" type="text">
             </div>
             <div class="mb-3">
-                <label cLabel for="exampleFormControlTextarea1">Last Name</label>
+                <label cLabel for="exampleFormControlTextarea1">Last Name*</label>
                 <input aria-label="sm input example" cFormControl  sizing="sm" type="text">
             </div>
 
             <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Email</label>
+                <label cLabel for="exampleFormControlInput1">Email*</label>
                 <input cFormControl id="exampleFormControlInput1"  type="email" />
             </div>
                <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Phone Number</label>
+                <label cLabel for="exampleFormControlInput1">Phone Number*</label>
                 <input cFormControl id="exampleFormControlInput1"  type="email" />
             </div>
                <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">UserName</label>
+                <label cLabel for="exampleFormControlInput1">UserName*</label>
                 <input cFormControl id="exampleFormControlInput1"  type="email" />
             </div>
                <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Password</label>
+                <label cLabel for="exampleFormControlInput1">Password*</label>
                 <input cFormControl id="exampleFormControlInput1"  type="email" />
             </div>
             <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Type</label>
+                <label cLabel for="exampleFormControlInput1">Type*</label>
                 <select class="form-control" name="type" id="typeselect">
                     <option value="">Select Type</option>
                     <option value="">Admin</option>
