@@ -51,6 +51,6 @@
 
   <c-modal-footer>
     <button [cModalToggle]="editContactModal.id" cButton color="secondary">Close</button>
-    <button cButton color="primary">Save</button>
+    <button cButton color="primary" (click)="createContacts()">Save</button>
   </c-modal-footer>
 </c-modal>
