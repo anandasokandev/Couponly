@@ -4,7 +4,7 @@ import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, Fo
 import { IconComponent, IconModule } from '@coreui/icons-angular';
 import { IconSubset } from '../../../../icons/icon-subset';
 import { cilSortAlphaUp } from '@coreui/icons';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterStorePipe } from '../../../../commons/filters/filterstore.pipe';
 import { FilteruserPipe } from '../../../../commons/filters/filteruser.pipe';
 import { FiltercouponcodePipe } from '../../../../commons/filters/filtercouponcode.pipe';
@@ -27,7 +27,8 @@ import { Location } from '../../../../commons/models/location.model';
     FilteruserPipe,
     FiltercouponcodePipe,
     FiltercouponnamePipe,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './redeem-history.component.html',
   styleUrl: './redeem-history.component.scss'
@@ -40,6 +41,7 @@ export class RedeemHistoryComponent {
   filterUsers: string = ''
   filterCouponName: string = ''
   filterCouponCode: string = ''
+  distirctId: number = 0
   // selectedDistirctId: string = ''
 
   redeems: RedeemHistory[] = [
@@ -57,8 +59,8 @@ export class RedeemHistoryComponent {
     { id:1, districtName: 'Thrissur' },
     { id:2, districtName: 'Ernakulam' },
     { id:3, districtName: 'Kottayam' },
-    { id:1, districtName: 'Thiruvanandhapuram' },
-    { id:4, districtName: 'Idukki' }
+    { id:4, districtName: 'Thiruvanandhapuram' },
+    { id:5, districtName: 'Idukki' }
   ]
 
   locations: Location[] = [
@@ -72,13 +74,33 @@ export class RedeemHistoryComponent {
 
   ]
 
+  filterForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.filterForm = this.fb.group({
+      district: ['0'],
+      location: ['0'],
+      from: [''],
+      to: ['']
+    });
+  }
+
   selectedStore: string = '';
   filteredLocations = [...this.locations];
   
-  getLocations(distirctId: number): Location[] {
-    if(distirctId == 0)
+  getLocations() {
+    if(this.distirctId == 0) {
       return this.locations
-    else 
-      return this.locations.filter(item => item.districtId == distirctId)
+    }
+    else {
+      
+      return this.locations.filter(item => item.districtId == this.distirctId)
+    }
+  }
+
+  districtChange(event: any) {
+    this.distirctId = event.target.value;
+    this.filterForm.get('location')?.setValue('0')
+    this.filteredLocations = this.getLocations();
   }
 }
