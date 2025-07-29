@@ -24,12 +24,16 @@
   
 }
 
-.error {
+.danger {
   background-color: #f44336;
 }
 
 .info {
   background-color: #2196f3;
+}
+
+.warning {
+  background-color: #e4e650;
 }
 
 /* Header section */
@@ -64,8 +68,8 @@
 }
 
 .toast-icon {
-  width: 24px;
-  height: 24px;
+  width: 48px;
+  height: 48px;
   background-size: contain;
   background-repeat: no-repeat;
   margin-right: 8px;
@@ -73,17 +77,22 @@
 
 /* Icon for success toast */
 .success .toast-icon {
-  background-image: url('src/assets/toastIcons/OIP.webp');
+  background-image: url('src/assets/toastIcons/success.png');
 }
 
 /* Icon for error toast */
-.error .toast-icon {
-  // background-image: url('error-icon.png');
+.danger .toast-icon {
+  background-image: url('src/assets/toastIcons/danger.png');
 }
 
 /* Icon for info toast */
 .info .toast-icon {
-  // background-image: url('info-icon.png');
+  background-image: url('src/assets/toastIcons/info.png');
+}
+
+/* Icon for info toast */
+.warning .toast-icon {
+  background-image: url('src/assets/toastIcons/warning.png');
 }
 
 /* Simple fade-in/out animation */
