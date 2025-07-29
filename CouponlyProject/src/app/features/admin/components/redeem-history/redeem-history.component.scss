@@ -26,3 +26,24 @@
     display: revert;
   }
 }
+
+.input-container {
+  position: relative;
+  display: inline-block;
+}
+
+.input-label {
+  position: absolute;
+  top: -4px; /* adjust to sit over the border */
+  left: 10px;
+  background: white;
+  padding: 0 4px;
+  font-size: 13px;
+  color: #333;
+}
+
+.form-control {
+  // padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
