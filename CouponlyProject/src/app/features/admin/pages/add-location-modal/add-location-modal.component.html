@@ -1,3 +1,4 @@
+
 <c-modal-header>
     <h5 cModalTitle>Add New Location</h5>
     <button cModalToggle cButtonClose></button>
@@ -5,27 +6,27 @@
 <c-modal-body>
     <form cForm [formGroup]="locationForm">
         <div class="mb-3">
-            <label cLabel for="districtSelect">District</label>
-            <select class="form-control" name="district" id="districtSelect" formControlName="district">
+            <label cLabel for="districtSelect">District <span class="text-danger">*</span></label>
+            <select class="form-control" name="district" id="districtSelect" formControlName="district" required="">
                 <option value="">Select District</option>
                 <option value="district1">District 1</option>
                 <option value="district2">District 2</option>
             </select>
         </div>
         <div class="mb-3">
-            <label cLabel for="locationName">Location</label>
-            <input cFormControl id="locationName" formControlName="locationName" placeholder="Kochi" type="text" />
+            <label cLabel for="locationName">Location <span class="text-danger">*</span></label>
+            <input cFormControl id="locationName" formControlName="locationName" placeholder="Kochi" type="text" required="" />
         </div>
         <div class="mb-3">
-            <label cLabel for="pincode">Pincode</label>
-            <input cFormControl id="pincode" formControlName="pincode" placeholder="682020" type="text" />
+            <label cLabel for="pincode">Pincode <span class="text-danger">*</span></label>
+            <input cFormControl id="pincode" formControlName="pincode" placeholder="682020" type="text" required="" />
         </div>
         <div class="mb-3">
-            <label cLabel for="latitude">Latitude</label>
+            <label cLabel for="latitude">Latitude <span class="text-danger">*</span></label>
             <input cFormControl id="latitude" formControlName="latitude" placeholder="10.0232491" type="text" />
         </div>
         <div class="mb-3">
-            <label cLabel for="longitude">Longitude</label>
+            <label cLabel for="longitude">Longitude <span class="text-danger">*</span></label>
             <input cFormControl id="longitude" formControlName="longitude" placeholder="76.3265778" type="text" />
         </div>
     </form>

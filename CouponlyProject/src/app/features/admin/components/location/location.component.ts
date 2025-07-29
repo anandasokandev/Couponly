@@ -32,6 +32,8 @@ import {
   ModalToggleDirective,
   TableDirective
 } from '@coreui/angular';
+import { IconModule } from '@coreui/icons-angular';
+import { cilSortAlphaUp } from '@coreui/icons';
 
 @Component({
   selector: 'app-location',
@@ -49,7 +51,8 @@ import {
     ModalComponent,
     AddLocationModalComponent,
     EditLocationModalComponent,
-    FormsModule
+    FormsModule,
+    IconModule
   ],
   templateUrl: './location.component.html',
   styleUrl: './location.component.scss'
@@ -107,6 +110,7 @@ export class LocationComponent {
   filteredLocations: Location[] = [];
   locationSortDirection: SortDirection = '';
   selectedLocation: Location | null = null;
+  icons = {cilSortAlphaUp}
 
   ngOnInit(): void {
     this.applyFilters();
@@ -115,6 +119,14 @@ export class LocationComponent {
 
   openEditModal(loc: Location) {
     this.selectedLocation = { ...loc };
+  }
+
+  resetFilters() {
+    this.selectedDistrict = '';
+    this.locationFilter = '';
+    this.pincodeFilter = '';
+    // Reset other filters if any
+    this.applyFilters();
   }
 
   applyFilters(): void {
