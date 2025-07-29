@@ -15,11 +15,13 @@ import { CustomToastService } from '../../../../commons/services/custom-toast.se
     FormDirective,
     FormLabelDirective,
     FormControlDirective,
-    ButtonDirective,],
+    ButtonDirective
+  ],
   templateUrl: './add-store-modal.component.html',
   styleUrl: './add-store-modal.component.scss'
 })
 export class AddStoreModalComponent {
+  
 constructor(private toastService: CustomToastService) {}
 
 createStore() {
