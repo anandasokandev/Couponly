@@ -1,4 +1,4 @@
-<c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
+<c-modal *ngIf="isModalOpen" #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
     id="verticallyCenteredScrollableModal">
     <c-modal-header>
         <h5 cModalTitle>Add New Store</h5>
@@ -64,6 +64,6 @@
         <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButton color="secondary">
             Close
         </button>
-        <button cButton color="primary" (click)="createStore()">Save</button>
+        <button cButton color="primary" (click)="createStore()" [cModalToggle]="verticallyCenteredScrollableModal.id">Save</button>
     </c-modal-footer>
 </c-modal>

@@ -4,7 +4,7 @@
   left: 40%;
   transform: translateX(-50%);
   z-index: 99999;
-  min-width: 260px;
+  // min-width: 260px;
   min-width: 340px;
   border-radius: 8px;
   font-family: sans-serif;
@@ -20,12 +20,15 @@
 .success {
   background-color: #d4edda;
   color: #155724;
-  border: 2px solid #155724;
+  border: 1px solid #155724;
   
 }
 
 .danger {
-  background-color: #f44336;
+  background-color: #ffe7e5;
+  
+  color: #931e1e;
+  border: 1px solid #931e1e;
 }
 
 .info {
@@ -33,7 +36,9 @@
 }
 
 .warning {
-  background-color: #e4e650;
+  background-color: #f7f8dd;
+  color: #7d7921;
+  border: 1px solid #7d7921;
 }
 
 /* Header section */
@@ -57,7 +62,7 @@
   cursor: pointer;
   font-size: 18px;
   font-weight: bold;
-  line-height: 1;
+  // line-height: 1;
 }
 
 /* Body section */

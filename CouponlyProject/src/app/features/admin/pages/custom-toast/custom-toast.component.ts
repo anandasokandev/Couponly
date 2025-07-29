@@ -10,15 +10,15 @@ import { Component, Input } from '@angular/core';
 })
 export class CustomToastComponent {
   @Input() message = '';
-  @Input() type: 'success' | 'error' | 'info' = 'info';
+  @Input() type: 'success' | 'danger' | 'warning' |'info' = 'info'  ;
   show = false;
 
-  showToast(message: string, type: 'success' | 'error' | 'info' = 'info') {
+  showToast(message: string, type:'success' | 'danger' | 'warning' |'info' = 'info') {
     console.log('ToastComponent received:', message, type);
     this.message = message;
     this.type = type;
     this.show = true;
-    setTimeout(() => this.show = false, 3000);
+    setTimeout(() => this.show = false, 2500);
   }
 
     closeToast() {
