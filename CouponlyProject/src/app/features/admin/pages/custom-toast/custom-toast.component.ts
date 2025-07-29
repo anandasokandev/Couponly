@@ -18,7 +18,7 @@ export class CustomToastComponent {
     this.message = message;
     this.type = type;
     this.show = true;
-    setTimeout(() => this.show = false, 1000);
+    setTimeout(() => this.show = false, 3000);
   }
 
     closeToast() {
