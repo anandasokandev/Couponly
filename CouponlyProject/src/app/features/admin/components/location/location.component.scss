@@ -5,10 +5,19 @@
   overflow-x: auto;
 }
 
+td[data-label="District Name"] {
+  vertical-align: middle;
+}
+
 .responsive-table thead tr th,
 .responsive-table tbody tr td {
   white-space: nowrap;
 }
+
+thead th {
+  vertical-align: middle !important;
+}
+
 
 @media (max-width: 991.98px) {
   .responsive-table {

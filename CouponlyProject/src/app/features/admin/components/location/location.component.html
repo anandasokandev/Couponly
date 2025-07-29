@@ -15,7 +15,7 @@
             <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButton color="primary">Add Location</button>
         </c-card-header>
         <c-card-body>
-            <table [hover]="true" cTable class="responsive-table">
+            <table cTable class="responsive-table">
                 <thead>
                     <tr>
                         <th data-label="#"></th>
@@ -34,17 +34,24 @@
                                 <button type="button" class="btn btn-link p-0 ms-2"
                                     [title]="locationSortDirection === 'asc' ? 'Sort Descending' : (locationSortDirection === 'desc' ? 'Clear Sort' : 'Sort Ascending')"
                                     (click)="toggleLocationSort()">
-                                    <span *ngIf="locationSortDirection === 'asc'">&uarr;</span>
+                                    <svg [cIcon]="icons.cilSortAlphaUp"></svg>
+                                    <!-- <span *ngIf="locationSortDirection === 'asc'">&uarr;</span>
                                     <span *ngIf="locationSortDirection === 'desc'">&darr;</span>
-                                    <span *ngIf="locationSortDirection === ''">&#x2195;</span>
+                                    <span *ngIf="locationSortDirection === ''">&#x2195;</span> -->
                                 </button>
+
                             </div>
                         </th>
                         <th data-label="Pincode Filter">
-                            <input type="text" [(ngModel)]="pincodeFilter" placeholder="Filter Pincode"
-                                (input)="applyFilters()" class="form-control" />
+                            <input type="text" [(ngModel)]="pincodeFilter" placeholder="Filter Pincode" (input)="applyFilters()"
+                                class="form-control" />
                         </th>
-                        <th data-label="Latitude Filter"></th>
+                        <th data-label="Reset" class="text-center">
+                            <button (click)="resetFilters()" type="button" class="btn btn-danger btn-sm text-white align-items-center"
+                                title="Reset">
+                                <i class="fas fa-arrows-rotate"></i>
+                            </button>
+                        </th>
                         <th data-label="Longitude Filter"></th>
                         <th data-label="Active Filter"></th>
                         <th data-label="Action Filter"></th>
@@ -65,7 +72,7 @@
                         <tr>
                             <td data-label="#">{{ i+1 }}</td>
                             <td *ngIf="shouldShowDistrict(i)" [attr.rowspan]="getDistrictRowspan(i)"
-                                data-label="District Name">
+                                data-label="District Name" style="vertical-align: middle;">
                                 {{ loc.district }}
                             </td>
                             <td data-label="Location Name">{{ loc.location }}</td>

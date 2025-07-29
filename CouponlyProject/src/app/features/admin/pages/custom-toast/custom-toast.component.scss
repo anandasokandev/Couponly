@@ -5,7 +5,7 @@
   transform: translateX(-50%);
   z-index: 99999;
   min-width: 260px;
-  max-width: 340px;
+  min-width: 340px;
   border-radius: 8px;
   font-family: sans-serif;
   font-size: 15px;
@@ -18,7 +18,10 @@
 
 /* Toast type colors */
 .success {
-  background-color: #42d847;
+  background-color: #d4edda;
+  color: #155724;
+  border: 2px solid #155724;
+  
 }
 
 .error {
@@ -34,7 +37,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  padding: 8px 20px;
   font-weight: bold;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -57,6 +60,30 @@
 .toast-body {
   padding: 14px 16px;
   font-size: 14px;
+  font-weight: normal;
+}
+
+.toast-icon {
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 8px;
+}
+
+/* Icon for success toast */
+.success .toast-icon {
+  background-image: url('src/assets/toastIcons/OIP.webp');
+}
+
+/* Icon for error toast */
+.error .toast-icon {
+  // background-image: url('error-icon.png');
+}
+
+/* Icon for info toast */
+.info .toast-icon {
+  // background-image: url('info-icon.png');
 }
 
 /* Simple fade-in/out animation */
