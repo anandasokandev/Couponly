@@ -8,11 +8,7 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Couponly.Infrastructure
-<<<<<<< HEAD
-build_property.ProjectDir = C:\Users\helen.a\Couponly\CouponlyBackend\Couponly.Infrastructure\
-=======
 build_property.ProjectDir = C:\Couponly\Couponly\CouponlyBackend\Couponly.Infrastructure\
->>>>>>> 24b1d04159abc8028b480397d7e138f2edb2558d
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
