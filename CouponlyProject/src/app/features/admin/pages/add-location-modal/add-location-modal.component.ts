@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, FormModule, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, ToasterComponent, ToasterPlacement } from '@coreui/angular';
+import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, ToastComponent, ToasterComponent, ToasterPlacement } from '@coreui/angular';
 
 @Component({
   selector: 'app-add-location-modal',
@@ -27,10 +27,10 @@ export class AddLocationModalComponent {
   constructor(private fb: FormBuilder) {
     this.locationForm = this.fb.group({
       district: ['', Validators.minLength(2)],
-      locationName: ['', Validators.minLength(2)],
-      pincode: [''],
-      latitude: [''],
-      longitude: ['']
+      locationName: ['', Validators.minLength(4)],
+      pincode: ['',[Validators.required, Validators.minLength(6)]],
+      latitude: ['', Validators.required],
+      longitude: ['', Validators.required]
     });
   }
 
