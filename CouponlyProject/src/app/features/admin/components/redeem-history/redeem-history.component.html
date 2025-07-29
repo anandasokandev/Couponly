@@ -6,7 +6,8 @@
                 
                 <div class="">
                     <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap d-flex align-items-center" data-bs-toggle="tooltip" title="Download History">
-                        <svg cIcon name="cil-cloud-download" size="md"></svg> &nbsp; Download
+                        <!-- <svg cIcon name="cib-cloud-download" size="md"></svg> -->
+                        <svg [cIcon]="icons.cilCloudDownload"></svg> &nbsp; Download
                     </button>
                     
                 </div>
@@ -42,12 +43,12 @@
 
                         </select>
                     </div>
-                    <div class="input-container d-flex gap-4 align-items-center m-2">
-                        <label for="fromDate" class="input-label">From</label>
+                    <div class="input-container d-flex gap-1 align-items-center m-2">
+                        <label for="fromDate" class="input-label">From:</label>
                         <input type="date" id="fromDate" class="form-control form-control-sm" formControlName="from" />
                     </div>
-                    <div class="input-container d-flex gap-4 align-items-center m-2">
-                        <label for="toDateDate" class="input-label">To</label>
+                    <div class="input-container d-flex gap-1 align-items-center m-2">
+                        <label for="toDateDate" class="input-label">To:</label>
                         <input type="date" id="toDate" class="form-control form-control-sm" formControlName="to" />
                     </div>
                     <button class="btn btn-sm btn-danger text-white m-3" title="Reset">
