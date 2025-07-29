@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Couponly.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a6e32306d37c74d3776a5996671583c78c48cb8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+124d35f882494493075bf903b6d7cd7910b15a70")]
 [assembly: System.Reflection.AssemblyProductAttribute("Couponly.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Couponly.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
