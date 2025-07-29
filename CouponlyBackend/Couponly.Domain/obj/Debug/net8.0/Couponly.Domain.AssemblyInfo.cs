@@ -15,10 +15,14 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 <<<<<<< HEAD
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a6e32306d37c74d3776a5996671583c78c48cb8")]
+=======
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad8cc9981c1eec5c2414fc5e2fcd0ff309818ec2")]
 =======
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a6e32306d37c74d3776a5996671583c78c48cb8")]
 >>>>>>> abe7f450101d5004dd9aa7e911ae1a83aeb3401e
+>>>>>>> 24b1d04159abc8028b480397d7e138f2edb2558d
 [assembly: System.Reflection.AssemblyProductAttribute("Couponly.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Couponly.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
