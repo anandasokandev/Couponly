@@ -5,8 +5,9 @@
             <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
                 
                 <div class="">
-                    <button class="btn btn-sm btn-outline-primary d-flex align-items-center" data-bs-toggle="tooltip" title="Download History">
-                        <svg cIcon name="cil-cloud-download" size="lg"></svg> &nbsp; Download
+                    <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap d-flex align-items-center" data-bs-toggle="tooltip" title="Download History">
+                        <!-- <svg cIcon name="cib-cloud-download" size="md"></svg> -->
+                        <svg [cIcon]="icons.cilCloudDownload"></svg> &nbsp; Download
                     </button>
                     
                 </div>
@@ -24,39 +25,34 @@
                 </div>
             </div> -->
             <form [formGroup]="filterForm">
-                <div class="d-md-flex justify-content-between m-3">
+                <div class="d-md-flex justify-content-start">
                     <div class="d-flex gap-4 align-items-center m-2">
-                        <strong class="w-md-50">District: </strong>
-                        <select class="form-control w-100" (change)="districtChange($event)" formControlName="district">
-                            <option value=0>All</option>
+                        <!-- <strong class="w-md-50">District: </strong> -->
+                        <select class="form-select form-select-sm" (change)="districtChange($event)" formControlName="district">
+                            <option value=0>All Distircts</option>
                             <option *ngFor="let district of districts" [value]="district.id">{{ district.districtName }}</option>
                         </select>
                     </div>
                     <div class="d-flex gap-4 align-items-center m-2">
-                        <strong class="w-md-50">Location: </strong>
+                        <!-- <strong class="w-md-50">Location: </strong> -->
                         <!-- <select class="form-control w-100" [(ngModel)]="selectedDistirctId"> -->
-                        <select class="form-control w-100" formControlName="location">
-                            <option value=0>All</option>                        
+                        <select class="form-select form-select-sm" formControlName="location">
+                            <option value=0>All Locations</option>                        
                             <!-- <option *ngFor="let location of getLocations(selectedDistirctId)">{{ location.locationName }}</option> -->
                             <option *ngFor="let location of getLocations()">{{ location.locationName }}</option>
 
                         </select>
                     </div>
-                    <div class="d-flex align-items-center gap-4 m-2">
-                        <strong>From: </strong>
-                        <input type="date" class="form-control" formControlName="from" />
+                    <div class="input-container d-flex gap-1 align-items-center m-2">
+                        <label for="fromDate" class="input-label">From:</label>
+                        <input type="date" id="fromDate" class="form-control form-control-sm" formControlName="from" />
                     </div>
-                    <div class="d-flex align-items-center gap-4 m-2">
-                        <strong>To: </strong>
-                        <input type="date" class="form-control" formControlName="to" />
+                    <div class="input-container d-flex gap-1 align-items-center m-2">
+                        <label for="toDateDate" class="input-label">To:</label>
+                        <input type="date" id="toDate" class="form-control form-control-sm" formControlName="to" />
                     </div>
-                </div>
-                <div class="d-md-flex justify-content-between m-3 mb-5 gap-5">
-                    <button class="btn btn-sm btn-outline-primary w-50" title="Search">
-                        <i class="fas fa-search"></i> Search
-                    </button>
-                    <button class="btn btn-sm btn-outline-danger w-50" title="Reset">
-                        <i class="fas fa-arrows-rotate"></i> Reset
+                    <button class="btn btn-sm btn-danger text-white m-3" title="Reset">
+                        <i class="fas fa-arrows-rotate"></i>
                     </button>
                 </div>
             </form>
@@ -91,21 +87,21 @@
                         <th data-label="#"></th>
                         <th data-label="Coupon Code Filter">
                             <div class="d-flex align-items-center">
-                                <input type="text" placeholder="Coupon Code" [(ngModel)]="filterCouponCode" class="form-control" />
+                                <input type="text" placeholder="Coupon Code" [(ngModel)]="filterCouponCode" class="form-control form-control-sm" />
                                 
                             </div>
                         </th>
                         <th data-label="Coupon Name Filter">
                             <div class="d-flex align-items-center">
-                                <input type="text" placeholder="Coupon Name" [(ngModel)]="filterCouponName" class="form-control" />
+                                <input type="text" placeholder="Coupon Name" [(ngModel)]="filterCouponName" class="form-control form-control-sm" />
                                 
                             </div>
                         </th>
                         <th data-label="User Filter">
-                            <input type="text" placeholder="Filter Users" [(ngModel)]="filterUsers" class="form-control" />
+                            <input type="text" placeholder="Filter Users" [(ngModel)]="filterUsers" class="form-control form-control-sm" />
                         </th>
                         <th data-label="Store Filter">
-                            <input type="text" placeholder="Filter Stores" [(ngModel)]="filterStores" class="form-control" />
+                            <input type="text" placeholder="Filter Stores" [(ngModel)]="filterStores" class="form-control form-control-sm" />
                         </th>
                         <th></th>
                     </tr>
