@@ -9,7 +9,7 @@
 <c-col xs="12">
   <c-card class="mb-4">
     <c-card-header class="d-flex justify-content-between align-items-center">
-      <strong>Store</strong>
+      <h4><strong>Stores</strong></h4>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
         <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap"
           [cModalToggle]="verticallyCenteredScrollableModal.id">
@@ -19,15 +19,13 @@
     </c-card-header>
     <c-card-body>
       <div class="d-flex flex-wrap gap-2 mb-3 justify-content-start align-items-center">
-
-
         <select class="form-select form-select-sm" style="max-width: 160px;" name="storeType">
           <option value="">All Stores</option>
           <option value="online">Online</option>
           <option value="offline">Offline</option>
         </select>
 
-        <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy">
+        <select class="form-select form-select-sm" style="max-width: 160px;" name="searchBy">
           <option value="">Search All</option>
           <option value="name">By Name</option>
           <option value="storeCode">By Store Code</option>

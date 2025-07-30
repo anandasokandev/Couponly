@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonDirective, CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, ModalComponent, ModalToggleDirective, TableDirective } from '@coreui/angular';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, ModalComponent, ModalToggleDirective, TableDirective } from '@coreui/angular';
 import { AddStoreModalComponent } from '../../pages/add-store-modal/add-store-modal.component';
 import { EditStoreModalComponent } from '../../pages/edit-store-modal/edit-store-modal.component';
 
@@ -12,7 +12,6 @@ import { EditStoreModalComponent } from '../../pages/edit-store-modal/edit-store
     CardHeaderComponent,
     ColComponent,
     TableDirective,
-    ButtonDirective,
     ModalToggleDirective,
     ModalComponent,
     ReactiveFormsModule,
