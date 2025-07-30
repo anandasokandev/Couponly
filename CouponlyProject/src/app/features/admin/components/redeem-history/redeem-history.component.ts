@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormCheckComponent, FormCheckInputDirective, TableDirective } from '@coreui/angular';
 import { IconComponent, IconModule } from '@coreui/icons-angular';
 import { IconSubset } from '../../../../icons/icon-subset';
-import { cibIcloud, cibSoundcloud, cilCloudDownload, cilSortAlphaUp } from '@coreui/icons';
+import { cibIcloud, cibSoundcloud, cilCloudDownload, cilSortAlphaDown, cilSortAlphaUp } from '@coreui/icons';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterStorePipe } from '../../../../commons/filters/filterstore.pipe';
 import { FilteruserPipe } from '../../../../commons/filters/filteruser.pipe';
@@ -12,6 +12,7 @@ import { FiltercouponnamePipe } from '../../../../commons/filters/filtercouponna
 import { RedeemHistory } from '../../../../commons/models/redeem-history.model';
 import { District } from '../../../../commons/models/district.model';
 import { Location } from '../../../../commons/models/location.model';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-redeem-history',
@@ -36,12 +37,14 @@ import { Location } from '../../../../commons/models/location.model';
 export class RedeemHistoryComponent {
 
   // constructor (private redeemHistory: RedeemHistory){}
-  icons = {cilSortAlphaUp, cibSoundcloud, cilCloudDownload}
+  icons = {cilSortAlphaUp, cibSoundcloud, cilCloudDownload, cilSortAlphaDown}
   filterStores: string = ''
   filterUsers: string = ''
   filterCouponName: string = ''
   filterCouponCode: string = ''
   distirctId: number = 0
+  fromDate: Date = new Date();
+  toDate: Date = new Date();
   // selectedDistirctId: string = ''
 
   redeems: RedeemHistory[] = [
@@ -101,6 +104,11 @@ export class RedeemHistoryComponent {
   districtChange(event: any) {
     this.distirctId = event.target.value;
     this.filterForm.get('location')?.setValue('0')
-    this.filteredLocations = this.getLocations();
+    this.getLocations();
   }
+
+  getRedeems() {
+    
+  }
+
 }
