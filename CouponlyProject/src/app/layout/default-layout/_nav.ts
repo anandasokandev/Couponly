@@ -12,12 +12,17 @@ export const navItems: INavData[] = [
   },
   {
     title: true,
-    name: 'Master Entries'
+    name: 'Settings'
   },
   {
     name: 'Location',
     url: '/admin/location',
     iconComponent: { name: 'cil-location-pin' }
+  },
+  {
+    name: 'Users',
+    url: '/admin/manageusers',
+    iconComponent: { name: 'cil-user' }
   },
   // {
   //   name: 'Colors',
@@ -31,13 +36,13 @@ export const navItems: INavData[] = [
   //   iconComponent: { name: 'cil-pencil' }
   // },
   {
-    name: 'Pages',
+    name: 'Main Menu',
     title: true
   },
   {
-    name: 'Contacts',
-    url: '/admin/contact',
-    iconComponent: { name: 'cil-people' }
+    name: 'Coupons',
+    // url: '/admin/store',
+    iconComponent: { name: 'cil-tags' }
   },
   {
     name: 'Store',
@@ -45,14 +50,14 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-home' }
   },
   {
-    name: 'Users',
-    url: '/admin/manageusers',
-    iconComponent: { name: 'cil-people' }
-  },
-  {
     name: 'Redeem History',
     url: '/admin/redeemhistory',
     iconComponent: { name: 'cil-layers' }
+  },
+  {
+    name: 'Contacts',
+    url: '/admin/contact',
+    iconComponent: { name: 'cil-people' }
   },
   {
     name: 'Components',
