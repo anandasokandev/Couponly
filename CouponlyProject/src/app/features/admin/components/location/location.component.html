@@ -30,9 +30,12 @@
                         <input type="text" placeholder="Filter Location" [(ngModel)]="locationFilter"
                             (input)="applyFilters()" class="form-control form-control-sm" />
                         <button type="button" class="btn btn-link p-0 ms-2"
-                            [title]="locationSortDirection === 'asc' ? 'Sort Descending' : (locationSortDirection === 'desc' ? 'Clear Sort' : 'Sort Ascending')"
+                            [title]="locationSortDirection === 'asc' ? 'Sort Descending' : (locationSortDirection === 'desc' ? 'Sort Ascending' : 'Sort Descending')"
                             (click)="toggleLocationSort()">
-                            <svg [cIcon]="icons.cilSortAlphaUp"></svg>
+                            <ng-container [ngSwitch]="locationSortDirection">
+                                <svg *ngSwitchCase="'desc'" [cIcon]="icons.cilSortAlphaDown"></svg>
+                                <svg *ngSwitchDefault [cIcon]="icons.cilSortAlphaUp"></svg>
+                            </ng-container>
                         </button>
                     </div>
                 </th>

@@ -33,7 +33,7 @@ import {
   TableDirective
 } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
-import { cilSortAlphaUp } from '@coreui/icons';
+import { cilSortAlphaUp ,cilSortAlphaDown} from '@coreui/icons';
 
 @Component({
   selector: 'app-location',
@@ -52,7 +52,7 @@ import { cilSortAlphaUp } from '@coreui/icons';
     AddLocationModalComponent,
     EditLocationModalComponent,
     FormsModule,
-    IconModule
+    IconModule,
   ],
   templateUrl: './location.component.html',
   styleUrl: './location.component.scss'
@@ -110,7 +110,7 @@ export class LocationComponent {
   filteredLocations: Location[] = [];
   locationSortDirection: SortDirection = '';
   selectedLocation: Location | null = null;
-  icons = {cilSortAlphaUp}
+  icons = {cilSortAlphaUp, cilSortAlphaDown}
 
   ngOnInit(): void {
     this.applyFilters();
@@ -157,23 +157,21 @@ export class LocationComponent {
   }
 
   toggleLocationSort(): void {
-    // Cycle through sort directions: '' -> 'asc' -> 'desc' -> ''
-    if (this.locationSortDirection === '') {
+    if (this.locationSortDirection === 'desc') {
       this.locationSortDirection = 'asc';
     } else if (this.locationSortDirection === 'asc') {
       this.locationSortDirection = 'desc';
     } else {
-      this.locationSortDirection = '';
+      this.locationSortDirection = 'asc';
     }
-    // Re-apply filters to ensure sorting is re-done on the current data set
+
     this.applyFilters();
   }
 
-  // New: Internal method to perform the actual sorting
+
   private sortLocationsWithinDistricts(locationsToSort: Location[]): Location[] {
     if (this.locationSortDirection === '') {
-      // If no specific location sort is active, ensure consistent grouping
-      // by simply sorting by district, then location.
+     
       return [...locationsToSort].sort((a, b) => {
         const districtCompare = a.district.localeCompare(b.district);
         if (districtCompare !== 0) {
@@ -185,7 +183,6 @@ export class LocationComponent {
 
     const groupedLocations = new Map<string, Location[]>();
 
-    // 1. Group locations by district
     locationsToSort.forEach(loc => {
       if (!groupedLocations.has(loc.district)) {
         groupedLocations.set(loc.district, []);
@@ -195,24 +192,21 @@ export class LocationComponent {
 
     let finalSortedLocations: Location[] = [];
 
-    // Maintain the original order of districts for the final output
-    // based on how they first appear in the original allLocations, or your districts array.
-    // To ensure consistent order, iterate through the `districts` array.
     this.districts
-      .filter(d => d.value !== '') // Exclude the "Select District" option
-      .map(d => d.name) // Get just the district names
+      .filter(d => d.value !== '')
+      .map(d => d.name)
       .forEach(districtName => {
         if (groupedLocations.has(districtName)) {
           const locationsInDistrict = groupedLocations.get(districtName);
           if (locationsInDistrict) {
-            // 2. Sort locations within each district group
+         
             locationsInDistrict.sort((a, b) => {
               const locationA = a.location.toLowerCase();
               const locationB = b.location.toLowerCase();
               let comparison = locationA.localeCompare(locationB);
               return this.locationSortDirection === 'desc' ? comparison * -1 : comparison;
             });
-            // 3. Add the sorted group to the final list
+           
             finalSortedLocations = finalSortedLocations.concat(locationsInDistrict);
           }
         }
