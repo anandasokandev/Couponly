@@ -11,32 +11,32 @@
   <c-modal-body>
         <form cForm>
             <div class="mb-3">
-                <label cLabel for="exampleFormControlTextarea1">First Name*</label>
+                <label cLabel for="exampleFormControlTextarea1">First Name<span style="color: red">*</span></label>
                 <input aria-label="sm input example" cFormControl  sizing="sm" type="text">
             </div>
             <div class="mb-3">
-                <label cLabel for="exampleFormControlTextarea1">Last Name*</label>
+                <label cLabel for="exampleFormControlTextarea1">Last Name<span style="color: red">*</span></label>
                 <input aria-label="sm input example" cFormControl  sizing="sm" type="text">
             </div>
 
             <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Email*</label>
+                <label cLabel for="exampleFormControlInput1">Email<span style="color: red">*</span></label>
                 <input cFormControl id="exampleFormControlInput1"  type="email" />
             </div>
                <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Phone Number*</label>
+                <label cLabel for="exampleFormControlInput1">Phone Number<span style="color: red">*</span></label>
                 <input cFormControl id="exampleFormControlInput1"  type="email" />
             </div>
                <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">UserName*</label>
+                <label cLabel for="exampleFormControlInput1">UserName<span style="color: red">*</span></label>
                 <input cFormControl id="exampleFormControlInput1"  type="email" />
             </div>
                <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Password*</label>
+                <label cLabel for="exampleFormControlInput1">Password<span style="color: red">*</span></label>
                 <input cFormControl id="exampleFormControlInput1"  type="email" />
             </div>
             <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Type*</label>
+                <label cLabel for="exampleFormControlInput1">Type<span style="color: red">*</span></label>
                 <select class="form-control" name="type" id="typeselect">
                     <option value="">Select Type</option>
                     <option value="">Admin</option>
@@ -50,7 +50,7 @@
     <button type="reset"  cButton color="secondary">
         Reset
     </button>
-    <button cButton color="primary">Save</button>
+    <button cButton color="primary" (click)="createUser()">Save</button>
 </c-modal-footer>
 
 
