@@ -13,7 +13,7 @@
             <strong>Users</strong>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-primary px-4 py-2 text-nowrap"
+                <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap"
                     [cModalToggle]="verticallyCenteredScrollableModal.id">
                     Add User
                 </button>
@@ -21,69 +21,34 @@
         </c-card-header>
 
         <c-card-body>
-            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-4">
-
-                <div style="
-                            border: 1px solid #ffffff;
-                            margin-top: 12px;
-                            border-radius: 6px;
-                            margin-bottom: 1px;
-                            padding: 12px;
-                            background-color: #ffffff;
-                            ">
-                    <div style="display: flex; gap: 12px;">
-                        <select class="form-control custom-select-wide">
-                            <option value="">🧩 Select Type</option>
-                            <option value="Admin">🛡️ Admin</option>
-                            <option value="User">👤 User</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div
-                    style="border: 1px solid #ced4da; margin-top: 12px; border-radius: 6px; margin-bottom: 1px; padding: 12px; background-color: #f8f9fa;">
-
-                    <input type="text" class="form-control d-inline-block" placeholder="🔍 Search By..."
-                        style="width: 270px; display: inline-block; margin-right: 12px;" />
-
-                    <select id="searchField" class="form-control d-inline-block"
-                        style="width: 160px; display: inline-block;">
-                        <option value="select0">All</option>
+                <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
+                    <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy">
+                        <option value="">All</option>
                         <option value="select1">First Name</option>
                         <option value="select2">Last Name</option>
                         <option value="select3">Email</option>
                         <option value="select4">Phone No.</option>
                     </select>
-                </div>
+                    
+                    <input type="text" class="form-control form-control-sm" style="max-width: 280px"
+                        placeholder="🔍 Search By..." aria-label="Search by " />
 
-                <div style="
-                        border: 1px solid #ffffff;
-                        margin-top: 12px;
-                        border-radius: 6px;
-                        margin-bottom: 1px;
-                        padding: 12px;
-                        background-color: #ffffff;
-                        ">
-                    <div style="display: flex; gap: 12px;">
+                    <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy">
+                       <option value="">🧩 All Type</option>
+                            <option value="Admin">🛡️ Admin</option>
+                            <option value="User">👤 User</option>
+                    </select>
 
-                        <select id="status" class="form-control custom-select-wide">
-                            <option value="">🔘 Select Status</option>
+                    <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy">
+                        <option value="">🔘 All Status</option>
                             <option value="district1">🟢 Active</option>
                             <option value="district2">🔴 Inactive</option>
-                        </select>
-
-                    </div>
-                </div>
-
-                <div
-                    style="border: 1px solid #ffffff; margin-top: 12px; border-radius: 6px; margin-bottom: 1px; padding: 12px; background-color: #ffffff;">
+                    </select>
 
                     <button type="button" class="btn btn-danger btn-sm text-white" title="Reset">
                         <i class="fas fa-arrows-rotate"></i>
                     </button>
                 </div>
-
-            </div>
 
             <table [hover]="true" cTable class="responsive-table">
                 <thead>

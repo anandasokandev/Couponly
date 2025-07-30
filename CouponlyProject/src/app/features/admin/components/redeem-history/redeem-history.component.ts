@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormCheckComponent, FormCheckInputDirective, TableDirective } from '@coreui/angular';
 import { IconComponent, IconModule } from '@coreui/icons-angular';
 import { IconSubset } from '../../../../icons/icon-subset';
-import { cilSortAlphaUp } from '@coreui/icons';
+import { cibIcloud, cibSoundcloud, cilCloudDownload, cilSortAlphaUp } from '@coreui/icons';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterStorePipe } from '../../../../commons/filters/filterstore.pipe';
 import { FilteruserPipe } from '../../../../commons/filters/filteruser.pipe';
@@ -36,7 +36,7 @@ import { Location } from '../../../../commons/models/location.model';
 export class RedeemHistoryComponent {
 
   // constructor (private redeemHistory: RedeemHistory){}
-  icons = {cilSortAlphaUp}
+  icons = {cilSortAlphaUp, cibSoundcloud, cilCloudDownload}
   filterStores: string = ''
   filterUsers: string = ''
   filterCouponName: string = ''
