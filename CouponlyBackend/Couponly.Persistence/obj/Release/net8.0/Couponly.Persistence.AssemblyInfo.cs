@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Couponly.Persistence")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+124d35f882494493075bf903b6d7cd7910b15a70")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ef617bde717aea2e279c31ac7ae10ec3754de86f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Couponly.Persistence")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Couponly.Persistence")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
