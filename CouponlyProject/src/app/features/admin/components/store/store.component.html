@@ -1,6 +1,5 @@
-<c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
-  id="verticallyCenteredScrollableModal">
-  <app-add-store-modal></app-add-store-modal>
+<c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center" id="verticallyCenteredScrollableModal" >
+  <app-add-store-modal ></app-add-store-modal>
 </c-modal>
 
 <c-modal #editStoreModal [scrollable]="true" alignment="center" id="editStoreModal">
@@ -9,12 +8,15 @@
 <c-col xs="12">
   <c-card class="mb-4">
     <c-card-header class="d-flex justify-content-between align-items-center">
+<<<<<<< HEAD
       <strong class="fs-5">Stores</strong>
+=======
+      <h5><strong>Stores</strong></h5>
+>>>>>>> c2fe4d613f6acf943dea83e133d0bd2109d9bbc6
       <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
-        <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap"
-          [cModalToggle]="verticallyCenteredScrollableModal.id">
-          Add Store
-        </button>
+      <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap" [cModalToggle]="verticallyCenteredScrollableModal.id">
+        Add Store
+      </button>
       </div>
     </c-card-header>
     <c-card-body>
@@ -44,11 +46,7 @@
         <button type="button" class="btn btn-danger btn-sm text-white" title="Reset">
           <i class="fas fa-arrows-rotate"></i>
         </button>
-
       </div>
-
-
-
 
       <table [hover]="true" cTable cTable class="responsive-table">
         <thead>
@@ -81,10 +79,7 @@
             <td> <button class="btn btn-sm btn-outline-primary" title="Edit" [cModalToggle]="editStoreModal.id">
                 <i class="fas fa-pen"></i>
               </button>
-
-
             </td>
-
           </tr>
           <tr>
             <td>2</td>
@@ -100,8 +95,6 @@
             <td> <button class="btn btn-sm btn-outline-primary" title="Edit" [cModalToggle]="editStoreModal.id">
                 <i class="fas fa-pen"></i>
               </button>
-
-
             </td>
           </tr>
         </tbody>
