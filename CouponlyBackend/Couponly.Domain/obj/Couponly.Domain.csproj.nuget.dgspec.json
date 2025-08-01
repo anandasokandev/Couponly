@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Couponly\\Couponly\\CouponlyBackend\\Couponly.Domain\\Couponly.Domain.csproj": {}
+    "C:\\Users\\anand.a\\OneDrive - JTSIINDIA\\Desktop\\Couponly\\CouponlyBackend\\Couponly.Domain\\Couponly.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Couponly\\Couponly\\CouponlyBackend\\Couponly.Domain\\Couponly.Domain.csproj": {
+    "C:\\Users\\anand.a\\OneDrive - JTSIINDIA\\Desktop\\Couponly\\CouponlyBackend\\Couponly.Domain\\Couponly.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Couponly\\Couponly\\CouponlyBackend\\Couponly.Domain\\Couponly.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\anand.a\\OneDrive - JTSIINDIA\\Desktop\\Couponly\\CouponlyBackend\\Couponly.Domain\\Couponly.Domain.csproj",
         "projectName": "Couponly.Domain",
-        "projectPath": "C:\\Couponly\\Couponly\\CouponlyBackend\\Couponly.Domain\\Couponly.Domain.csproj",
-        "packagesPath": "C:\\Users\\merlin.vb\\.nuget\\packages\\",
-        "outputPath": "C:\\Couponly\\Couponly\\CouponlyBackend\\Couponly.Domain\\obj\\",
+        "projectPath": "C:\\Users\\anand.a\\OneDrive - JTSIINDIA\\Desktop\\Couponly\\CouponlyBackend\\Couponly.Domain\\Couponly.Domain.csproj",
+        "packagesPath": "C:\\Users\\anand.a\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\anand.a\\OneDrive - JTSIINDIA\\Desktop\\Couponly\\CouponlyBackend\\Couponly.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\merlin.vb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\anand.a\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
