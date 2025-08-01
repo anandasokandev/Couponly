@@ -1,69 +1,139 @@
-<c-modal *ngIf="isModalOpen" #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
+<c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
     id="verticallyCenteredScrollableModal">
     <c-modal-header>
         <h5 cModalTitle>Add New Store</h5>
-        <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose></button>
+        <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose (click)="resetForm()"></button>
     </c-modal-header>
     <c-modal-body>
-        <form cForm>
+        <form cForm [formGroup]="addStoreForm">
             <div class="mb-3">
                 <label cLabel for="storeName">Store Name</label>
-                <input aria-label="sm input example" cFormControl sizing="sm" type="text" id="storeName">
+                <input aria-label="sm input example" cFormControl sizing="sm" type="text" id="storeName"
+                    formControlName="storeName">
+                <div *ngIf="addStoreForm.get('storeName')?.touched && addStoreForm.get('storeName')?.invalid">
+                    <span class="text-danger" *ngIf="addStoreForm.get('storeName')?.errors?.['required']">
+                        *store name is required.
+                    </span>
+                </div>
             </div>
             <div class="mb-3">
                 <label cLabel for="logoInput">Logo</label>
-                <input cFormControl id="logoInput" sizing="sm" type="file" />
+                <input cFormControl id="logoInput" sizing="sm" type="file" formControlName="storeLogo" />
+                <div *ngIf="addStoreForm.get('storeLogo')?.touched && addStoreForm.get('storeLogo')?.invalid">
+                    <span class="text-danger" *ngIf="addStoreForm.get('storeLogo')?.errors?.['required']">
+                        *store logo is required.
+                    </span>
+                </div>
             </div>
             <div class="mb-3">
                 <label cLabel for="categorySelect">Category</label>
-                <select class="form-control" name="location" id="categorySelect">
+                <select class="form-select form-select-sm" name="location" id="categorySelect"
+                    formControlName="storeCategory">
                     <option value="">Select Category</option>
-                    <option value="">Lifestyle</option>
-                    <option value="">Fashion</option>
+                    <option>Lifestyle</option>
+                    <option>Fashion</option>
                 </select>
+                <div *ngIf="addStoreForm.get('storeCategory')?.touched && addStoreForm.get('storeCategory')?.invalid">
+                    <span class="text-danger" *ngIf="addStoreForm.get('storeCategory')?.errors?.['required']">
+                        *choose the category.
+                    </span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label cLabel for="districtSelect">District</label>
+                <select class="form-select form-select-sm" name="district" id="districtSelect"
+                    formControlName="district">
+                    <option value="">Select District</option>
+                    <option>Idukki</option>
+                    <option>Ernakulam</option>
+                </select>
+                 <div *ngIf="addStoreForm.get('district')?.touched && addStoreForm.get('district')?.invalid">
+                    <span class="text-danger" *ngIf="addStoreForm.get('district')?.errors?.['required']">
+                        *choose the district.
+                    </span>
+                </div>
             </div>
             <div class="mb-3">
                 <label cLabel for="locationSelect">Location</label>
-                <select class="form-control" name="location" id="locationSelect">
+                <select class="form-select form-select-sm" name="location" id="locationSelect"
+                    formControlName="storeLocation">
                     <option value="">Select Location</option>
-                    <option value="">Kadavanthra</option>
-                    <option value="">Vytila</option>
+                    <option>Kadavanthra</option>
+                    <option>Vytila</option>
                 </select>
+                 <div *ngIf="addStoreForm.get('storeLocation')?.touched && addStoreForm.get('storeLocation')?.invalid">
+                    <span class="text-danger" *ngIf="addStoreForm.get('storeLocation')?.errors?.['required']">
+                        *choose the location.
+                    </span>
+                </div>
             </div>
             <div class="mb-3">
                 <label cLabel for="addressTextarea">Address</label>
-                <textarea cFormControl id="addressTextarea" rows="3"></textarea>
+                <textarea cFormControl id="addressTextarea" rows="3" formControlName="storeAddress"></textarea>
+                 <div *ngIf="addStoreForm.get('storeAddress')?.touched && addStoreForm.get('storeAddress')?.invalid">
+                    <span class="text-danger" *ngIf="addStoreForm.get('storeAddress')?.errors?.['required']">
+                        *store address is required.
+                    </span>
+                </div>
             </div>
             <div class="mb-3">
                 <label cLabel for="contactInput">Contact</label>
-                <input aria-label="sm input example" cFormControl sizing="sm" type="text" id="contactInput">
+                <input aria-label="sm input example" cFormControl sizing="sm" type="number" id="contactInput"
+                    formControlName="storeContact" (keypress)="allowOnlyNumbers($event)">
+                     <div *ngIf="addStoreForm.get('storeContact')?.touched && addStoreForm.get('storeContact')?.invalid">
+                    <span class="text-danger" *ngIf="addStoreForm.get('storeContact')?.errors?.['required']">
+                        *contact is required.
+                    </span>
+                    <span class="text-danger" *ngIf="addStoreForm.get('storeContact')?.errors?.['pattern']">
+                        *contact should contain 10 digits.
+                    </span>
+                </div>
             </div>
             <div class="mb-3">
                 <label cLabel for="emailInput">Email address</label>
-                <input cFormControl id="exampleFormControlInput1" type="email" id="emailInput" />
-            </div>
-            <div class="mb-3">
-                <label cLabel for="usernameInput">Username</label>
-                <input aria-label="sm input example" cFormControl sizing="sm" type="text" id="usernameInput">
+                <input cFormControl id="exampleFormControlInput1" sizing="sm" type="email" id="emailInput"
+                    formControlName="storeEmail" />
+                        <div *ngIf="addStoreForm.get('storeEmail')?.touched && addStoreForm.get('storeEmail')?.invalid">
+                    <span class="text-danger" *ngIf="addStoreForm.get('storeEmail')?.errors?.['required']">
+                        *email is required.
+                    </span>
+                    <span class="text-danger" *ngIf="addStoreForm.get('storeEmail')?.errors?.['email']">
+                        *invalid email.
+                    </span>
+                </div>
             </div>
             <div class="mb-3">
                 <label cLabel for="passwordInput">Password</label>
-                <input aria-label="sm input example" cFormControl sizing="sm" type="password" id="passwordInput">
+                <input aria-label="sm input example" cFormControl sizing="sm" type="password" id="passwordInput"
+                    formControlName="storePassword">
+                        <div *ngIf="addStoreForm.get('storePassword')?.touched && addStoreForm.get('storePassword')?.invalid">
+                    <span class="text-danger" *ngIf="addStoreForm.get('storePassword')?.errors?.['required']">
+                        *password is required.
+                    </span>
+                    <span class="text-danger" *ngIf="addStoreForm.get('storePassword')?.errors?.['pattern']">
+                        *Password must be at least 8 characters long, include uppercase and lowercase letters, a number, a special character, and contain no spaces..
+                    </span>
+                </div>
             </div>
             <div class="mb-3">
                 <label cLabel for="typeSelect">Type</label>
-                <select class="form-control" name="location" id="typeSelect">
+                <select class="form-select form-select-sm" name="location" id="typeSelect" formControlName="storeType">
                     <option value="">Select Type</option>
-                    <option value="">Offline</option>
-                    <option value="">Online</option>
+                    <option>Offline</option>
+                    <option>Online</option>
                 </select>
+                    <div *ngIf="addStoreForm.get('storeType')?.touched && addStoreForm.get('storeType')?.invalid">
+                    <span class="text-danger" *ngIf="addStoreForm.get('storeType')?.errors?.['required']">
+                        *choose store type.
+                    </span>
+                </div>
             </div>
         </form>
     </c-modal-body>
     <c-modal-footer>
-        <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButton color="secondary">
+        <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButton color="secondary" (click)="resetForm()">
             Close
         </button>
-        <button cButton color="primary" (click)="createStore()" [cModalToggle]="verticallyCenteredScrollableModal.id">Save</button>
+        <button cButton color="primary" (click)="createStore()">Save</button>
     </c-modal-footer>
 </c-modal>

@@ -10,7 +10,6 @@ import { AddContactModalComponent } from '../../pages/add-contact-modal/add-cont
     CardComponent,
     CardHeaderComponent,
     CardBodyComponent,
-    TableDirective,
     ModalToggleDirective,
     ModalComponent,
     CommonModule,
