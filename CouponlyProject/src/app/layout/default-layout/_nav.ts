@@ -10,20 +10,6 @@ export const navItems: INavData[] = [
       text: 'NEW'
     }
   },
-  {
-    title: true,
-    name: 'Settings'
-  },
-  {
-    name: 'Location',
-    url: '/admin/location',
-    iconComponent: { name: 'cil-location-pin' }
-  },
-  {
-    name: 'Users',
-    url: '/admin/manageusers',
-    iconComponent: { name: 'cil-user' }
-  },
   // {
   //   name: 'Colors',
   //   url: '/theme/colors',
@@ -58,6 +44,20 @@ export const navItems: INavData[] = [
     name: 'Contacts',
     url: '/admin/contact',
     iconComponent: { name: 'cil-people' }
+  },
+  {
+    title: true,
+    name: 'Settings'
+  },
+  {
+    name: 'Location',
+    url: '/admin/location',
+    iconComponent: { name: 'cil-location-pin' }
+  },
+  {
+    name: 'Users',
+    url: '/admin/manageusers',
+    iconComponent: { name: 'cil-user' }
   },
   {
     name: 'Components',
