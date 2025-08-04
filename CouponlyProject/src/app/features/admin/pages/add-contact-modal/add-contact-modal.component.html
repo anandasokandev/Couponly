@@ -2,55 +2,63 @@
          [scrollable]="true"
          alignment="center"
          id="verticallyCenteredScrollableModal">
+
   <c-modal-header>
     <h5 cModalTitle>Add Contact</h5>
     <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose></button>
   </c-modal-header>
 
   <c-modal-body>
-    <form cForm>
+    <form [formGroup]="contactForm" cForm>
+      <!-- Name Field -->
       <div class="mb-3">
-        <label cLabel for="nameInput">
-          Name <span style="color: red">*</span>
-        </label>
-        <input
-          id="nameInput"
-          cFormControl
-          type="text"
-          placeholder="Enter name"
-          sizing="sm"
-          aria-label="Name input"
-          class="form-control"
-        />
+        <label cLabel for="nameInput">Name <span style="color: red">*</span></label>
+       <input
+  formControlName="name"
+  id="nameInput"
+  type="text"
+  sizing="sm"
+  placeholder="Enter name"
+  class="form-control"
+  (keypress)="validateNameInput($event)"
+/>
+        <div *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid" class="text-danger">
+          Name is required.
+        </div>
       </div>
 
+      <!-- Phone Field -->
       <div class="mb-3">
-        <label cLabel for="phoneInput">
-          Phone Number <span style="color: red">*</span>
-        </label>
-        <input
-          id="phoneInput"
-          cFormControl
-          type="text"
-          placeholder="Enter phone number"
-          sizing="sm"
-          aria-label="Phone number input"
-          class="form-control"
-        />
+        <label cLabel for="phoneInput">Phone Number <span style="color: red">*</span></label>
+       <input
+  formControlName="phone"
+  id="phoneInput"
+  type="text"
+  sizing="sm"
+  placeholder="Enter phone number"
+  class="form-control"
+  (keypress)="validatePhoneInput($event)"
+/>
+        <div *ngIf="contactForm.get('phone')?.touched && contactForm.get('phone')?.invalid" class="text-danger">
+          <div *ngIf="contactForm.get('phone')?.errors?.['required']">Phone number is required.</div>
+          <div *ngIf="contactForm.get('phone')?.errors?.['pattern']">Enter a valid 10-digit phone number.</div>
+        </div>
       </div>
 
+      <!-- Email Field -->
       <div class="mb-3">
-        <label cLabel for="emailInput">
-          Email Address <span style="color: red">*</span>
-        </label>
+        <label cLabel for="emailInput">Email Address <span style="color: red">*</span></label>
         <input
+          formControlName="email"
           id="emailInput"
-          cFormControl
           type="email"
           placeholder="name@example.com"
-          aria-label="Email input"
           class="form-control"
         />
+        <div *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid" class="text-danger">
+          <div *ngIf="contactForm.get('email')?.errors?.['required']">Email is required.</div>
+          <div *ngIf="contactForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+        </div>
       </div>
     </form>
   </c-modal-body>

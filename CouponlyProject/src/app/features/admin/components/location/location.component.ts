@@ -125,7 +125,7 @@ export class LocationComponent {
     this.selectedDistrict = '';
     this.locationFilter = '';
     this.pincodeFilter = '';
-    // Reset other filters if any
+
     this.applyFilters();
   }
 

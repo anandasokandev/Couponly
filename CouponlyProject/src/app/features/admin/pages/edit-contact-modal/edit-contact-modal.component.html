@@ -5,46 +5,67 @@
   </c-modal-header>
 
   <c-modal-body>
-    <form cForm>
+   <form [formGroup]="editContactForm" cForm>
+
       <div class="mb-3">
         <label cLabel for="contactName">
           Name <span style="color: red">*</span>
         </label>
         <input
-          id="contactName"
-          type="text"
-          cFormControl
-          sizing="sm"
-          placeholder="Enter name"
-          class="form-control"
-        />
+  id="contactName"
+  type="text"
+  cFormControl
+  sizing="sm"
+  placeholder="Enter name"
+  class="form-control"
+  (keypress)="validateNameInputs($event)"
+  formControlName="name"
+/>
+
+<div *ngIf="editContactForm.get('name')?.touched && editContactForm.get('name')?.invalid" class="text-danger">
+          Name is required.
+        </div>
       </div>
 
       <div class="mb-3">
         <label cLabel for="contactPhone">
           Phone Number <span style="color: red">*</span>
         </label>
-        <input
-          id="contactPhone"
-          type="text"
-          cFormControl
-          sizing="sm"
-          placeholder="Enter phone number"
-          class="form-control"
-        />
+       <input
+  id="contactPhone"
+  type="text"
+  cFormControl
+  sizing="sm"
+  placeholder="Enter phone number"
+  class="form-control"
+  (keypress)="validatePhoneInputs($event)"
+  formControlName="phone"
+  maxlength="10"
+/>
+
+ <div *ngIf="editContactForm.get('phone')?.touched && editContactForm.get('phone')?.invalid" class="text-danger">
+          <div *ngIf="editContactForm.get('phone')?.errors?.['required']">Phone number is required.</div>
+          <div *ngIf="editContactForm.get('phone')?.errors?.['pattern']">Enter a valid 10-digit phone number.</div>
+        </div>
       </div>
 
       <div class="mb-3">
         <label cLabel for="contactEmail">
           Email Address <span style="color: red">*</span>
         </label>
-        <input
-          id="contactEmail"
-          type="email"
-          cFormControl
-          placeholder="name@example.com"
-          class="form-control"
-        />
+      <input
+  id="contactEmail"
+  type="email"
+  cFormControl
+  placeholder="name@example.com"
+  class="form-control"
+  formControlName="email"
+/>
+
+<div *ngIf="editContactForm.get('email')?.touched && editContactForm.get('email')?.invalid" class="text-danger">
+          <div *ngIf="editContactForm.get('email')?.errors?.['required']">Email is required.</div>
+          <div *ngIf="editContactForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+        </div>
       </div>
     </form>
   </c-modal-body>
