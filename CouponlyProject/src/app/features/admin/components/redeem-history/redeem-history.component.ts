@@ -14,6 +14,7 @@ import { District } from '../../../../commons/models/district.model';
 import { Location } from '../../../../commons/models/location.model';
 import { from } from 'rxjs';
 import { DownloadRedeemsModelComponent } from '../../pages/download-redeems-model/download-redeems-model.component';
+import { RedeemsHistoryServiceService } from 'src/app/commons/services/Coupon/redeems-history-service.service';
 
 @Component({
   selector: 'app-redeem-history',
@@ -46,9 +47,10 @@ export class RedeemHistoryComponent {
   filterUsers: string = ''
   filterCouponName: string = ''
   filterCouponCode: string = ''
-  distirctId: number = 0
-  fromDate: Date = new Date();
-  toDate: Date = new Date();
+  distirctId: number = 0;
+  locationId: number = 0;
+  fromDate: string = '';
+  toDate: string = '';
   // selectedDistirctId: string = ''
 
   redeems: RedeemHistory[] = [
@@ -83,7 +85,7 @@ export class RedeemHistoryComponent {
 
   filterForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private redeemHistoryService: RedeemsHistoryServiceService) {
     this.filterForm = this.fb.group({
       district: ['0'],
       location: ['0'],
