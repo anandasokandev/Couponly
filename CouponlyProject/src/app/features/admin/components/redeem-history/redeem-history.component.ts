@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormCheckComponent, FormCheckInputDirective, TableDirective } from '@coreui/angular';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormCheckComponent, FormCheckInputDirective, ModalComponent, ModalToggleDirective, TableDirective } from '@coreui/angular';
 import { IconComponent, IconModule } from '@coreui/icons-angular';
 import { IconSubset } from '../../../../icons/icon-subset';
 import { cibIcloud, cibSoundcloud, cilCloudDownload, cilSortAlphaDown, cilSortAlphaUp } from '@coreui/icons';
@@ -13,6 +13,7 @@ import { RedeemHistory } from '../../../../commons/models/redeem-history.model';
 import { District } from '../../../../commons/models/district.model';
 import { Location } from '../../../../commons/models/location.model';
 import { from } from 'rxjs';
+import { DownloadRedeemsModelComponent } from '../../pages/download-redeems-model/download-redeems-model.component';
 
 @Component({
   selector: 'app-redeem-history',
@@ -28,8 +29,11 @@ import { from } from 'rxjs';
     FilteruserPipe,
     FiltercouponcodePipe,
     FiltercouponnamePipe,
+    DownloadRedeemsModelComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModalToggleDirective,
+    ModalComponent,
   ],
   templateUrl: './redeem-history.component.html',
   styleUrl: './redeem-history.component.scss'

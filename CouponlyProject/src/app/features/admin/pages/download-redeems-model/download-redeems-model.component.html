@@ -1,0 +1,27 @@
+<c-modal #DownloadRedeemsModal
+         [scrollable]="true"
+         alignment="center"
+         id="DownloadRedeemsModal">
+
+  <c-modal-header>
+    <h5 cModalTitle>Download Redeems History</h5>
+    <button [cModalToggle]="DownloadRedeemsModal.id" cButtonClose></button>
+  </c-modal-header>
+
+  <c-modal-body>
+    <div class="d-flex justify-content-around px-3 py-3 gap-4">
+      <button cButton color="primary" (click)="downloadRedeemsHistory()">
+        Download Here
+      </button>
+      <button cButton color="success" (click)="sendRedeemsHistoryEmail()">
+        Send via Email
+      </button>
+    </div>
+  </c-modal-body>
+
+  <c-modal-footer>
+    <button [cModalToggle]="DownloadRedeemsModal.id" cButton color="secondary">
+      Close
+    </button>
+  </c-modal-footer>
+</c-modal>
