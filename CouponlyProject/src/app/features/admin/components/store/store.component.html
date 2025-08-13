@@ -61,33 +61,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
+          <tr *ngFor="let store of stores; let i=index">
+            <td>{{i+1}}</td>
             <td> <img src="assets/images/angular.jpg" alt="CoreUI for Angular"></td>
-            <td>Otto</td>
-            <td>sc32</td>
-            <td>VH nagar</td>
-            <td>Ravipuram</td>
-            <td>4352635266</td>
-            <td>Otto&#64;gmail.com</td>
-            <td>Makeup</td>
-            <td>Online</td>
-            <td> <button class="btn btn-sm btn-outline-primary" title="Edit" [cModalToggle]="editStoreModal.id">
-                <i class="fas fa-pen"></i>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td> <img src="assets/images/angular.jpg" alt="CoreUI for Angular"></td>
-            <td>LAkshmi Components</td>
-            <td>sc32</td>
-            <td>VH nagar</td>
-            <td>Ravipuram</td>
-            <td>4352635266</td>
-            <td>Otto&#64;gmail.com</td>
-            <td>Lifestyle</td>
-            <td>Offline</td>
+            <td>{{store.store}}</td>
+            <td>{{store.code}}</td>
+            <td>{{store.storeAddress}}</td>
+            <td>{{store.location}}</td>
+            <td>{{store.contact}}</td>
+            <td>{{store.storeEmail}}</td>
+            <td>{{store.category}}</td>
+            <td>{{store.type}}</td>
             <td> <button class="btn btn-sm btn-outline-primary" title="Edit" [cModalToggle]="editStoreModal.id">
                 <i class="fas fa-pen"></i>
               </button>
