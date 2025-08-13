@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -15,8 +15,15 @@ export class StoreService {
   //Fetching Stores 
   FetchStores(): Observable <any[]>{
     return this.http.get<any[]>(this.baseUrl+'/AllStores')
-
   }
+
+  searchStores(type: number, searchtype: number, searchtext: string): Observable<any> {
+  const params = new HttpParams()
+    .set('type', type)
+    .set('searchtype', searchtype)
+    .set('searchtext', searchtext);
+
+  return this.http.get(`${this.baseUrl}/FilterStore`, { params });}
 
   
 
