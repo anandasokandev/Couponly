@@ -29,6 +29,9 @@ import { CommonModule } from '@angular/common';
 export class StoreComponent {
 
   stores:any[]=[];
+  type:number=0;
+  searchtype:number=0;
+  searchtext:string='';
 
   constructor(private api:StoreService){}
   ngOnInit(){
@@ -39,4 +42,13 @@ export class StoreComponent {
         }
       })
 }
+
+    FilterStore(){
+    this.api.searchStores(this.type,this.searchtype,this.searchtext).subscribe({
+      next:(response: any) =>{
+        this.stores=response.data;
+      }
+    })
+    }
+
 }
