@@ -29,11 +29,24 @@ export class AddStoreModalComponent {
 
   addStoreForm!: FormGroup;
   categories:any[]=[];
+  districts:any[]=[];
 
 constructor(private toastService: CustomToastService,private fb: FormBuilder,private api:StoreService) {}
 
 
 ngOnInit(){
+  this.api.FetchCategories().subscribe({
+        next:(response: any) =>{
+          this.categories=response.data;
+        }
+      })
+
+      this.api.FetchDistricts().subscribe({
+        next:(response: any) =>{
+          this.districts=response.data;
+        }
+      })
+
   this.addStoreForm=this.fb.group({
     storeName:['',Validators.required],
     storeLogo:['',Validators.required],
