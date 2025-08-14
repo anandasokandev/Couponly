@@ -37,14 +37,15 @@
         <input type="text" class="form-control form-control-sm" style="max-width: 210px"  [(ngModel)]="name"  placeholder="🔍 Search by Name" (input)="FilterContact()" />
         <span class="input-group-text" (click)="FilterContact()"><i class="fas fa-search"></i></span>
 
-        <input type="text" class="form-control form-control-sm" style="max-width: 210px"   [(ngModel)]="email" placeholder="📞 Search by Phone Number"  (input)="FilterContact()"/>
+        <input type="text" class="form-control form-control-sm" style="max-width: 210px"   [(ngModel)]="phonenumber" placeholder="📞 Search by Phone Number"  (input)="FilterContact()"/>
         <span class="input-group-text" (click)="FilterContact()"><i class="fas fa-search"></i></span>
 
-        <input type="text" class="form-control form-control-sm" style="max-width: 210px"  [(ngModel)]="phonenumber"  placeholder="✉️ Search by Email"  (input)="FilterContact()"/>
+        <input type="text" class="form-control form-control-sm" style="max-width: 210px"  [(ngModel)]="email"  placeholder="✉️ Search by Email"  (input)="FilterContact()"/>
         <span class="input-group-text" (click)="FilterContact()"><i class="fas fa-search"></i></span>
-        <button type="button" class="btn btn-danger btn-sm text-white" title="Reset">
-          <i class="fas fa-arrows-rotate"></i>
-        </button>
+        <button type="button" class="btn btn-danger btn-sm text-white" title="Reset" (click)="ResetFilters()">
+  <i class="fas fa-arrows-rotate"></i>
+</button>
+
       </div>
 
       <!-- 📱 Responsive Table Container -->

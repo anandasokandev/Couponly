@@ -5,7 +5,7 @@ import { EditContactModalComponent } from '../../pages/edit-contact-modal/edit-c
 import { AddContactModalComponent } from '../../pages/add-contact-modal/add-contact-modal.component';
 
 import { FormsModule } from '@angular/forms';
-import { ContactService } from '../../../../commons/services/contact.service';
+import { ContactService } from '../../../../commons/services/Contacts/contact.service';
 
 @Component({
   selector: 'app-contact',
@@ -39,6 +39,7 @@ export class ContactComponent {
       next: (response: any) => {
         this.contacts = response.data;
         this.isLoading = false;
+        console.log(response)
       },
       error: (err) => {
         console.error('Error loading contacts:', err);
@@ -62,6 +63,23 @@ FilterContact() {
   });
 }
 
+ResetFilters() {
+  this.name = '';
+  this.email = '';
+  this.phonenumber = '';
+  this.isLoading = true;
+
+  this.api.FetchContacts().subscribe({
+    next: (response: any) => {
+      this.contacts = response.data;
+      this.isLoading = false;
+    },
+    error: (err) => {
+      console.error('Error resetting contacts:', err);
+      this.isLoading = false;
+    }
+  });
+}
 
 
 }

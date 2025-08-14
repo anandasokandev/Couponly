@@ -20,5 +20,9 @@ export const environment = {
       fetchstores:'Store/AllStores',
       filterstore: 'Store/FilterStore'
     },
+    contact: {
+      AllContacts: 'Contact/AllContacts',
+      AllFilters: 'Contact/AllFilters'
+    }
   }
 };
