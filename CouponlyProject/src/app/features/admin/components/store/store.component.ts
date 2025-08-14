@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, ModalComponent, ModalToggleDirective, TableDirective } from '@coreui/angular';
 import { AddStoreModalComponent } from '../../pages/add-store-modal/add-store-modal.component';
 import { EditStoreModalComponent } from '../../pages/edit-store-modal/edit-store-modal.component';
-import { StoreService } from 'src/app/commons/services/Store/store.service';
+import { StoreService } from '../../../../commons/services/Store/store.service';
 import { CommonModule } from '@angular/common';
 
 
@@ -51,4 +51,11 @@ export class StoreComponent {
     })
     }
 
+
+    reset(){
+      this.type=0;
+      this.searchtype=0;
+      this.searchtext='';
+      this.FilterStore();
+    }
 }

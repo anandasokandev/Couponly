@@ -12,8 +12,17 @@ export const environment = {
       getRedeemsByStoreId: 'Redeems/getRedeemsByStoreId',
     },
     user: {
-      login: 'user/login'
+      login: 'user/login',
+      
     },
-    
+     store: {
+      fetchcategories:'Store/Categories',
+      fetchstores:'Store/AllStores',
+      filterstore: 'Store/FilterStore'
+    },
+    contact: {
+      AllContacts: 'Contact/AllContacts',
+      AllFilters: 'Contact/AllFilters'
+    }
   }
 };

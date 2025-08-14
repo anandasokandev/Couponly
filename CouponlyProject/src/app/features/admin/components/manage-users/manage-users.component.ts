@@ -46,22 +46,23 @@ export class ManageUsersComponent {
 
   selectedUser: any = null;
 
-  users = [
-    {
-      firstName: 'Emma',
-      lastName: 'Joseph',
-      email: 'emma@gmail.com',
-      phoneNumber: '9876543210',
-      type: 'Admin'
-    },
-    {
-      firstName: 'Andrews',
-      lastName: 'Thomas',
-      email: 'andrews@gmail.com',
-      phoneNumber: '9876541230',
-      type: 'User'
-    }
-  ];
+  // users = [
+  //   {
+  //     firstName: 'Emma',
+  //     lastName: 'Joseph',
+  //     email: 'emma@gmail.com',
+  //     phoneNumber: '9876543210',
+  //     type: 'Admin'
+  //   },
+  //   {
+  //     firstName: 'Andrews',
+  //     lastName: 'Thomas',
+  //     email: 'andrews@gmail.com',
+  //     phoneNumber: '9876541230',
+  //     type: 'User'
+  //   }
+  // ];
+  users:any[]=[];
 
 
   openEditUserModal(user: any) {
