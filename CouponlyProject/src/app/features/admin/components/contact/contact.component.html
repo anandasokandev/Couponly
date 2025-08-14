@@ -27,19 +27,36 @@
     </c-card-header>
 
     <c-card-body>
+
+
+
+
+
       <!-- 🔍 Search Filters -->
       <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
-        <input type="text" class="form-control form-control-sm" style="max-width: 210px" placeholder="🔍 Search by Name" />
-        <input type="text" class="form-control form-control-sm" style="max-width: 210px" placeholder="📞 Search by Phone Number" />
-        <input type="text" class="form-control form-control-sm" style="max-width: 210px" placeholder="✉️ Search by Email" />
-        <button type="button" class="btn btn-danger btn-sm text-white" title="Reset">
-          <i class="fas fa-arrows-rotate"></i>
-        </button>
+        <input type="text" class="form-control form-control-sm" style="max-width: 210px"  [(ngModel)]="name"  placeholder="🔍 Search by Name" (input)="FilterContact()" />
+        <span class="input-group-text" (click)="FilterContact()"><i class="fas fa-search"></i></span>
+
+        <input type="text" class="form-control form-control-sm" style="max-width: 210px"   [(ngModel)]="phonenumber" placeholder="📞 Search by Phone Number"  (input)="FilterContact()"/>
+        <span class="input-group-text" (click)="FilterContact()"><i class="fas fa-search"></i></span>
+
+        <input type="text" class="form-control form-control-sm" style="max-width: 210px"  [(ngModel)]="email"  placeholder="✉️ Search by Email"  (input)="FilterContact()"/>
+        <span class="input-group-text" (click)="FilterContact()"><i class="fas fa-search"></i></span>
+        <button type="button" class="btn btn-danger btn-sm text-white" title="Reset" (click)="ResetFilters()">
+  <i class="fas fa-arrows-rotate"></i>
+</button>
+
       </div>
 
       <!-- 📱 Responsive Table Container -->
-      <div class="table-responsive">
-        <table class="table table-hover">
+      <div *ngIf="isLoading" class="d-flex justify-content-center my-5">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="!isLoading" class="table-responsive">
+  <table class="table table-hover">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -50,33 +67,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Akhil</td>
-              <td>9876543210</td>
-              <td>akhil&#64;example.com</td>
-              <td>
-                <button class="btn btn-sm btn-outline-primary" title="Edit" [cModalToggle]="editContactModal.id">
-                  <i class="fas fa-pen"></i>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Meera</td>
-              <td>9123456789</td>
-              <td>meera&#64;example.com</td>
-              <td>
-                <button class="btn btn-sm btn-outline-primary" title="Edit" [cModalToggle]="editContactModal.id">
-                  <i class="fas fa-pen"></i>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Ravi</td>
-              <td>9988776655</td>
-              <td>ravi&#64;example.com</td>
+            
+
+         <tr *ngFor="let contact of contacts; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ contact.name }}</td>
+              <td>{{ contact.contact }}</td>
+              <td>{{ contact.mail }}</td>
               <td>
                 <button class="btn btn-sm btn-outline-primary" title="Edit" [cModalToggle]="editContactModal.id">
                   <i class="fas fa-pen"></i>
