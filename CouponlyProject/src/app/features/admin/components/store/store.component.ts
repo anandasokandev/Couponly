@@ -51,4 +51,11 @@ export class StoreComponent {
     })
     }
 
+
+    reset(){
+      this.type=0;
+      this.searchtype=0;
+      this.searchtext='';
+      this.FilterStore();
+    }
 }
