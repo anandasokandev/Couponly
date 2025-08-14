@@ -15,6 +15,10 @@ export const environment = {
       login: 'user/login',
       
     },
-    
+     store: {
+      fetchcategories:'Store/Categories',
+      fetchstores:'Store/AllStores',
+      filterstore: 'Store/FilterStore'
+    },
   }
 };
