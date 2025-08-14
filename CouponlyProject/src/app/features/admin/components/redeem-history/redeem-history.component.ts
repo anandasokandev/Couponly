@@ -52,6 +52,7 @@ export class RedeemHistoryComponent {
   locationId: number = 0;
   fromDate: string = '';
   toDate: string = '';
+  isLoading: boolean = false;
   // selectedDistirctId: string = ''
 
   redeems: RedeemHistory[] = []
@@ -129,6 +130,7 @@ export class RedeemHistoryComponent {
 
 
   getRedeems() {
+    this.isLoading = true;
     this.redeemHistoryService.getAllRedeems(
       this.distirctId,
       this.locationId,
@@ -136,8 +138,7 @@ export class RedeemHistoryComponent {
       this.toDate
     )?.subscribe((data: RedeemHistory[]) => {
       this.redeems = data;
-      console.log(this.redeems);
-      console.log(this.distirctId, this.locationId, this.fromDate, this.toDate)
+      this.isLoading = false;
     });
   }
 

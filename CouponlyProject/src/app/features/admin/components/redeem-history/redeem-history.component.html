@@ -111,20 +111,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <ng-container *ngFor="let red of redeems | filterstore: filterStores | filteruser: filterUsers | filtercouponname: filterCouponName | filtercouponcode: filterCouponCode; let i = index">
-                        <tr>
-                            <td data-label="#">{{ i+1 }}</td>
-                            <td data-label="District Name">
-                                {{ red.redeemCouponCode }}
-                            </td>
-                            <td data-label="Location Name">{{ red.redeemCouponName }}</td>
-                            <td data-label="Pincode">{{ red.user }}</td>
-                            <td data-label="Latitude">{{ red.store }}</td>
-                            <td data-label="">{{ red.date }}</td>
-                        </tr>
+                    
+                    <ng-container *ngIf="!isLoading">
+                        <ng-container *ngFor="let red of redeems | filterstore: filterStores | filteruser: filterUsers | filtercouponname: filterCouponName | filtercouponcode: filterCouponCode; let i = index">
+                            <tr>
+                                <td data-label="#">{{ i+1 }}</td>
+                                <td data-label="District Name">
+                                    {{ red.redeemCouponCode }}
+                                </td>
+                                <td data-label="Location Name">{{ red.redeemCouponName }}</td>
+                                <td data-label="Pincode">{{ red.user }}</td>
+                                <td data-label="Latitude">{{ red.store }}</td>
+                                <td data-label="">{{ red.date }}</td>
+                            </tr>
+                        </ng-container>
                     </ng-container>
+                    
                 </tbody>
             </table>
+            <ng-container *ngIf="isLoading" class="d-flex justify-content-center my-5 w-100">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden"></span>
+                </div>Loading...
+            </ng-container>
         </c-card-body>
     </c-card>
 </c-col>
