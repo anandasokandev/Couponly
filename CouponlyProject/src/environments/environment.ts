@@ -12,7 +12,8 @@ export const environment = {
       getRedeemsByStoreId: 'Redeems/getRedeemsByStoreId',
     },
     user: {
-      login: 'user/login'
+      login: 'user/login',
+      
     },
     
   }
