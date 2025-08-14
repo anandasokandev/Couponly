@@ -14,7 +14,8 @@ import { District } from '../../../../commons/models/district.model';
 import { Location } from '../../../../commons/models/location.model';
 import { from } from 'rxjs';
 import { DownloadRedeemsModelComponent } from '../../pages/download-redeems-model/download-redeems-model.component';
-import { RedeemsHistoryServiceService } from 'src/app/commons/services/Coupon/redeems-history-service.service';
+import { RedeemsHistoryServiceService } from '../../../../commons/services/Coupon/redeems-history-service.service';
+// import { RedeemsHistoryServiceService } from 'src/app/commons/services/Coupon/redeems-history-service.service';
 
 @Component({
   selector: 'app-redeem-history',
@@ -53,16 +54,7 @@ export class RedeemHistoryComponent {
   toDate: string = '';
   // selectedDistirctId: string = ''
 
-  redeems: RedeemHistory[] = [
-    { id: 1, couponCode: 'COUP101', couponName: 'XBGD', userName: 'Ebin', storeName: "More Koothattkulam", redeemDate: "2025-01-26 15:15:20" },
-    { id: 2, couponCode: 'COUP102', couponName: 'dfdf', userName: 'Parvathi', storeName: "Relience Thpzha", redeemDate: "2025-01-26 15:15:20" },
-    { id: 3, couponCode: 'COUP103', couponName: 'vadfvf', userName: 'Anand', storeName: "Relience Thpzha", redeemDate: "2025-01-26 15:15:20" },
-    { id: 4, couponCode: 'COUP104', couponName: 'fdvdfvsfv', userName: 'helen', storeName: "More Koothattkulam", redeemDate: "2025-01-26 15:15:20" },
-    { id: 5, couponCode: 'COUP105', couponName: 'dvarvare', userName: 'Abhijith', storeName: "More Koothattkulam", redeemDate: "2025-01-26 15:15:20" },
-    { id: 6, couponCode: 'COUP106', couponName: 'dvarvare', userName: 'Merlin', storeName: "Relience Thpzha", redeemDate: "2025-01-26 15:15:20" },
-    { id: 7, couponCode: 'COUP107', couponName: 'dvarvare', userName: 'Anumol', storeName: "More Koothattkulam", redeemDate: "2025-01-26 15:15:20" },
-    { id: 8, couponCode: 'COUP107', couponName: 'dvarvare', userName: 'Gopika', storeName: "More Koothattkulam", redeemDate: "2025-01-26 15:15:20" },
-  ]
+  redeems: RedeemHistory[] = []
 
   districts: District[] = [
     { id:1, districtName: 'Thrissur' },
@@ -94,7 +86,18 @@ export class RedeemHistoryComponent {
     });
   }
 
-  selectedStore: string = '';
+  ngOnInit() {
+    this.redeemHistoryService.getAllRedeems(
+      this.distirctId,
+      this.locationId,
+      this.fromDate ? new Date(this.fromDate) : new Date(0),
+      this.toDate ? new Date(this.toDate) : new Date()
+    )?.subscribe((data: RedeemHistory[]) => {
+      this.redeems = data;
+      console.log(this.redeems);
+    });
+  }
+
   filteredLocations = [...this.locations];
   
   getLocations() {
