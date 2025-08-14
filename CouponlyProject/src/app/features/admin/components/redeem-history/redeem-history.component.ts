@@ -58,7 +58,7 @@ export class RedeemHistoryComponent {
 
   districts: District[] = [
     { id:1, districtName: 'Thrissur' },
-    { id:2, districtName: 'Ernakulam' },
+    { id:7, districtName: 'Ernakulam' },
     { id:3, districtName: 'Kottayam' },
     { id:4, districtName: 'Thiruvanandhapuram' },
     { id:5, districtName: 'Idukki' }
@@ -69,8 +69,8 @@ export class RedeemHistoryComponent {
     { id: 2, districtId: 1, locationName: 'Thriprayar', pincode: '263515', latitude: '10.4136° N', longitude: '76.1131° E' },
     { id: 3, districtId: 3, locationName: 'Pala', pincode: '465978', latitude: '9.7084° N', longitude: '76.6849° E' },
     { id: 4, districtId: 1, locationName: 'Kunnamkulam', pincode: '659545', latitude: '10.6484° N', longitude: '76.0706° E' },
-    { id: 5, districtId: 2, locationName: 'Thripunithura', pincode: '656268', latitude: '9.9439° N', longitude: '76.3494° E' },
-    { id: 6, districtId: 2, locationName: 'Kakanadu', pincode: '636261', latitude: '10.017° N', longitude: '76.344° E' },
+    { id: 5, districtId: 7, locationName: 'Thripunithura', pincode: '656268', latitude: '9.9439° N', longitude: '76.3494° E' },
+    { id: 3, districtId: 7, locationName: 'Moovattupuzha', pincode: '636261', latitude: '10.017° N', longitude: '76.344° E' },
     { id: 7, districtId: 5, locationName: 'Vazhithala', pincode: '646853', latitude: '9.8833° N', longitude: '76.6417° E' },
 
   ]
@@ -87,37 +87,58 @@ export class RedeemHistoryComponent {
   }
 
   ngOnInit() {
-    this.redeemHistoryService.getAllRedeems(
-      this.distirctId,
-      this.locationId,
-      this.fromDate ? new Date(this.fromDate) : new Date(0),
-      this.toDate ? new Date(this.toDate) : new Date()
-    )?.subscribe((data: RedeemHistory[]) => {
-      this.redeems = data;
-      console.log(this.redeems);
+    this.getRedeems();
+    this.filterForm.get('district')?.valueChanges.subscribe(value => {
+      this.distirctId = value;
+      this.filterForm.get('location')?.setValue('0');
+      this.getLocations();
+      this.getRedeems();
     });
+    this.filterForm.get('location')?.valueChanges.subscribe(value => {
+      this.locationId = value;
+      this.getRedeems();
+    });
+    this.filterForm.get('from')?.valueChanges.subscribe(value => {
+      this.fromDate = value;
+      this.getRedeems();
+    });
+    this.filterForm.get('to')?.valueChanges.subscribe(value => {
+      this.toDate = value;
+      this.getRedeems();
+    });
+    this.getLocations();
   }
-
-  filteredLocations = [...this.locations];
   
   getLocations() {
     if(this.distirctId == 0) {
       return this.locations
     }
     else {
-      
       return this.locations.filter(item => item.districtId == this.distirctId)
     }
   }
 
-  districtChange(event: any) {
-    this.distirctId = event.target.value;
-    this.filterForm.get('location')?.setValue('0')
-    this.getLocations();
+  resetFilter() {
+    this.distirctId = 0;
+    this.locationId = 0;
+    this.filterForm.get('to')?.setValue('');
+    this.filterForm.get('from')?.setValue('');
+    this.getRedeems()
   }
 
+
+
   getRedeems() {
-    
+    this.redeemHistoryService.getAllRedeems(
+      this.distirctId,
+      this.locationId,
+      this.fromDate,
+      this.toDate
+    )?.subscribe((data: RedeemHistory[]) => {
+      this.redeems = data;
+      console.log(this.redeems);
+      console.log(this.distirctId, this.locationId, this.fromDate, this.toDate)
+    });
   }
 
 }
