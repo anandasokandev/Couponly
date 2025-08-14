@@ -9,7 +9,14 @@ import { environment } from 'src/environments/environment';
 export class StoreService {
 
   constructor(private http: HttpClient) { }
-
+  //Fetching Categories
+  FetchCategories():  Observable <any[]>{
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchcategories}`)
+  }
+  //Fetching District
+  FetchDistricts():  Observable <any[]>{
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchdistricts}`)
+  }
   //Fetching Stores 
   FetchStores(): Observable <any[]>{
     return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchstores}`)

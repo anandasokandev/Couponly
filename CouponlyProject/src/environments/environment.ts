@@ -15,6 +15,7 @@ export const environment = {
       login: 'user/login'
     },
      store: {
+      fetchdistricts:'District',
       fetchcategories:'Store/Categories',
       fetchstores:'Store/AllStores',
       filterstore: 'Store/FilterStore'
