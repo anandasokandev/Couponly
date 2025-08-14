@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 })
 export class StoreService {
   
-  
   private baseUrl = "https://api.couponly.store/api/Store";
 
   constructor(private http: HttpClient) { }
