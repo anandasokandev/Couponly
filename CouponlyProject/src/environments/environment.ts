@@ -17,6 +17,7 @@ export const environment = {
     location: {
       fetchDistrict: 'District',
       fetchLocation: 'Location',
+      filterLocation: 'Location/filter'
     },
      store: {
       fetchdistricts:'District',

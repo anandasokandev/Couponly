@@ -31,4 +31,14 @@ export class LocationService {
       { params }
     );
   }
+
+  filterLocation(districtId: number | null, location: string, pincode: string): Observable<any> {
+  const params: any = {};
+  
+  if (districtId != null) params.districtId = districtId;
+  if (location) params.location = location;
+  if (pincode) params.pincode = pincode;
+
+  return this.http.get<any>(`${environment.apiBaseUrl}/${environment.endpoints.location.filterLocation}`, { params });
+}
 }

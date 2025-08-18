@@ -92,7 +92,7 @@ export class LocationComponent {
       });
   }
 
-  filterLocation(): void {
+  filterLocation() {
     const location = this.locationFilter || '';
     const pincode = this.pincodeFilter || '';
 
