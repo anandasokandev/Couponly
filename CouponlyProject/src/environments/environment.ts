@@ -19,5 +19,8 @@ export const environment = {
       fetchstores:'Store/AllStores',
       filterstore: 'Store/FilterStore'
     },
+    login:{
+      signup:'/Login'
+    },
   }
 };
