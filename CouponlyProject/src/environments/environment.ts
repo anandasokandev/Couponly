@@ -28,14 +28,12 @@ export const environment = {
     },
     contact: {
       AllContacts: 'Contact/AllContacts',
-      AllFilters: 'Contact/AllFilters'
-    },
-    login:{
-      signup:'/Login'
-    },
       AllFilters: 'Contact/AllFilters',
       AddContact : 'Contact/AddContact',
       EditContact : 'Contact/updatebyid'
+    },
+    login:{
+      signup:'/Login'
     }
   }
 };
