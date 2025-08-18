@@ -30,4 +30,18 @@ export class RedeemsHistoryServiceService {
     );
   
   }
+
+  exportRedeemsToExcel(districtId: number, locationId: number, fromDate?: string, toDate?: string) {
+    const params: any = {
+      districtid: districtId,
+      locationid: locationId
+    };
+    if (fromDate) params.fromdate = fromDate;
+    if (toDate) params.todate = toDate;
+
+    return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.redeem.ExportExcel}`, {
+      params,
+      responseType: 'blob'
+    });
+  }
 }

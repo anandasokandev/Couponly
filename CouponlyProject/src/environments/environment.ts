@@ -10,6 +10,7 @@ export const environment = {
       getRedeemById: 'Redeems/getRedeemById',
       getRedeemsByUserId: 'Redeems/getRedeemsByUserId',
       getRedeemsByStoreId: 'Redeems/getRedeemsByStoreId',
+      ExportExcel: 'Redeems/ExportRedeemsToExcel'
     },
     user: {
       login: 'user/login',

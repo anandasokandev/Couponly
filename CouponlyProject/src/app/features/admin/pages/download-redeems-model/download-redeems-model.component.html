@@ -10,8 +10,8 @@
 
   <c-modal-body>
     <div class="d-flex justify-content-around px-3 py-3 gap-4">
-      <button cButton color="primary" (click)="downloadRedeemsHistory()">
-        Download Here
+      <button cButton color="primary" (click)="downloadRedeemsHistory()" [cModalToggle]="DownloadRedeemsModal.id">
+          Download Here
       </button>
       <button cButton color="success" (click)="sendRedeemsHistoryEmail()">
         Send via Email
