@@ -28,6 +28,9 @@ export const environment = {
     contact: {
       AllContacts: 'Contact/AllContacts',
       AllFilters: 'Contact/AllFilters'
-    }
+    },
+    login:{
+      signup:'/Login'
+    },
   }
 };
