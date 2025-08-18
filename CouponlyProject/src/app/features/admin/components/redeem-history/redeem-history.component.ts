@@ -127,6 +127,23 @@ export class RedeemHistoryComponent {
     this.getRedeems()
   }
 
+  downloadExcel() {
+    this.redeemHistoryService.exportRedeemsToExcel(
+      this.distirctId,
+      this.locationId,
+      this.fromDate,
+      this.toDate
+    )?.subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Redeems History.xlsx';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }, error => {
+      console.error('Download failed', error);
+    });
+  }
 
 
   getRedeems() {

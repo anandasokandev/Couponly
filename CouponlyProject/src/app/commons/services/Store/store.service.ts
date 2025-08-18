@@ -14,10 +14,6 @@ export class StoreService {
   FetchCategories():  Observable <any[]>{
     return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchcategories}`)
   }
-  //Fetching District
-  FetchDistricts():  Observable <any[]>{
-    return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchdistricts}`)
-  }
   //Fetching Stores 
   FetchStores(): Observable <any[]>{
     return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchstores}`)

@@ -5,16 +5,16 @@
 <c-modal-body>
   <form cForm *ngIf="location">
     <div class="mb-3">
-        <label cLabel for="districtSelect">District</label>
-        <select class="form-control" [(ngModel)]="selectedDistrict" name="district" id="districtSelect">
-            <option *ngFor="let district of districts" [value]="district.value">
-                {{ district.name }}
-            </option>
-        </select>
+      <label cLabel for="districtSelect">District</label>
+      <select class="form-control" [(ngModel)]="location.districtId" name="district" id="districtSelect">
+        <option *ngFor="let district of districts" [value]="district.id">
+          {{ district.districtName }}
+        </option>
+      </select>
     </div>
     <div class="mb-3">
       <label cLabel for="locationName">Location</label>
-      <input cFormControl id="locationName" [value]="location.location" type="text" />
+      <input cFormControl id="locationName" [value]="location.locationName" type="text" />
     </div>
     <div class="mb-3">
       <label cLabel for="pincode">Pincode</label>
