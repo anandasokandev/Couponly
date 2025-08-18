@@ -9,8 +9,9 @@
             <label cLabel for="districtSelect">District <span class="text-danger">*</span></label>
             <select class="form-control" name="district" id="districtSelect" formControlName="district" required="">
                 <option value="">Select District</option>
-                <option value="district1">District 1</option>
-                <option value="district2">District 2</option>
+                <option *ngFor="let district of districts" [value]="district.id">
+                    {{ district.districtName }}
+                </option>
             </select>
         </div>
         <div class="mb-3">

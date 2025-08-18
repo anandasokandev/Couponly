@@ -14,7 +14,11 @@ export const environment = {
     },
     user: {
       login: 'user/login',
-      
+    },
+    location: {
+      fetchDistrict: 'District',
+      fetchLocation: 'Location',
+      filterLocation: 'Location/filter'
     },
      store: {
       fetchdistricts:'District',
@@ -25,6 +29,9 @@ export const environment = {
     contact: {
       AllContacts: 'Contact/AllContacts',
       AllFilters: 'Contact/AllFilters'
-    }
+    },
+    login:{
+      signup:'/Login'
+    },
   }
 };
