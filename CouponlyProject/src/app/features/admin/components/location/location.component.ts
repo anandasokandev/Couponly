@@ -1,24 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AddLocationModalComponent } from '../../pages/add-location-modal/add-location-modal.component';
 import { FormsModule } from '@angular/forms';
+import { AddLocationModalComponent } from '../../pages/add-location-modal/add-location-modal.component';
 import { EditLocationModalComponent } from '../../pages/edit-location-modal/edit-location-modal.component';
-
-interface Location {
-  district: string;
-  location: string;
-  pincode: string;
-  latitude: string;
-  longitude: string;
-}
-
-interface District {
-  value: string;
-  name: string;
-}
-
-
-type SortDirection = '' | 'asc' | 'desc';
 
 import {
   ButtonDirective,
@@ -33,14 +17,19 @@ import {
   TableDirective
 } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
-import { cilSortAlphaUp ,cilSortAlphaDown} from '@coreui/icons';
+import { cilSortAlphaUp, cilSortAlphaDown } from '@coreui/icons';
+import { Location } from '../../../../commons/models/location.model';
+import { LocationService } from '../../../../commons/services/Admin/location.service';
+import { District } from '../../../../commons/models/district.model';
+
+type SortDirection = '' | 'asc' | 'desc';
 
 @Component({
   selector: 'app-location',
+  standalone: true,
   imports: [
     CommonModule,
-    FormCheckComponent,
-    FormCheckInputDirective,
+    FormsModule,
     ColComponent,
     CardComponent,
     CardHeaderComponent,
@@ -49,184 +38,151 @@ import { cilSortAlphaUp ,cilSortAlphaDown} from '@coreui/icons';
     ButtonDirective,
     ModalToggleDirective,
     ModalComponent,
+    FormCheckComponent,
+    FormCheckInputDirective,
     AddLocationModalComponent,
     EditLocationModalComponent,
-    FormsModule,
-    IconModule,
+    IconModule
   ],
   templateUrl: './location.component.html',
-  styleUrl: './location.component.scss'
+  styleUrls: ['./location.component.scss']
 })
 export class LocationComponent {
+  constructor(private locationApi: LocationService) { }
 
-  locations: Location[] = [
-    // Ernakulam District
-    { district: 'Ernakulam', location: 'Kochi (Marine Drive)', pincode: '682011', latitude: '9.9754', longitude: '76.2874' },
-    { district: 'Ernakulam', location: 'Kakkanad', pincode: '682030', latitude: '10.0216', longitude: '76.3533' },
-    { district: 'Ernakulam', location: 'Aluva', pincode: '683101', latitude: '10.1089', longitude: '76.3517' },
-    { district: 'Ernakulam', location: 'Muvattupuzha', pincode: '686661', latitude: '9.9806', longitude: '76.5779' },
-    { district: 'Ernakulam', location: 'Perumbavoor', pincode: '683542', latitude: '10.1062', longitude: '76.5332' },
-
-    // Thrissur District
-    { district: 'Thrissur', location: 'Thrissur City', pincode: '680001', latitude: '10.5276', longitude: '76.2144' },
-    { district: 'Thrissur', location: 'Guruvayoor', pincode: '680101', latitude: '10.6033', longitude: '76.0354' },
-    { district: 'Thrissur', location: 'Chalakudy', pincode: '680307', latitude: '10.2974', longitude: '76.3475' },
-
-    // Kottayam District
-    { district: 'Kottayam', location: 'Kottayam Town', pincode: '686001', latitude: '9.5916', longitude: '76.5222' },
-    { district: 'Kottayam', location: 'Pala', pincode: '686575', latitude: '9.7196', longitude: '76.6806' },
-    { district: 'Kottayam', location: 'Vaikom', pincode: '686141', latitude: '9.7423', longitude: '76.3905' },
-
-    // Alappuzha District
-    { district: 'Alappuzha', location: 'Alappuzha Beach', pincode: '688001', latitude: '9.4981', longitude: '76.3388' },
-    { district: 'Alappuzha', location: 'Cherthala', pincode: '688524', latitude: '9.6917', longitude: '76.3432' },
-
-    // Idukki District (closer to Vazhithala as well)
-    { district: 'Idukki', location: 'Thodupuzha', pincode: '685584', latitude: '9.8974', longitude: '76.7118' },
-    { district: 'Idukki', location: 'Munnar', pincode: '685612', latitude: '10.0889', longitude: '77.0595' },
-  ];
-
-  districts: District[] = [
-    { value: '', name: 'Select District' },
-    { value: 'Alappuzha', name: 'Alappuzha' },
-    { value: 'Ernakulam', name: 'Ernakulam' },
-    { value: 'Idukki', name: 'Idukki' },
-    { value: 'Kasaragod', name: 'Kasaragod' },
-    { value: 'Kannur', name: 'Kannur' },
-    { value: 'Kollam', name: 'Kollam' },
-    { value: 'Kottayam', name: 'Kottayam' },
-    { value: 'Kozhikode', name: 'Kozhikode' },
-    { value: 'Malappuram', name: 'Malappuram' },
-    { value: 'Palakkad', name: 'Palakkad' },
-    { value: 'Pathanamthitta', name: 'Pathanamthitta' },
-    { value: 'Thiruvananthapuram', name: 'Thiruvananthapuram' },
-    { value: 'Thrissur', name: 'Thrissur' },
-    { value: 'Wayanad', name: 'Wayanad' }
-  ].sort((a, b) => a.name.localeCompare(b.name));
-
-  locationFilter: string = '';
-  selectedDistrict: string = '';
-  pincodeFilter: string = '';
+  districts: District[] = [];
+  locations: Location[] = [];
   filteredLocations: Location[] = [];
+
+  locationFilter = '';
+  selectedDistrict: number | null = null;
+  pincodeFilter = '';
   locationSortDirection: SortDirection = '';
   selectedLocation: Location | null = null;
-  icons = {cilSortAlphaUp, cilSortAlphaDown}
+  icons = { cilSortAlphaUp, cilSortAlphaDown };
+
+  // Pagination
+  currentPage = 1;
+  pageSize = 10;
+  totalPages = 1;
+  pagedLocations: Location[] = [];
 
   ngOnInit(): void {
-    this.applyFilters();
-    this.locations.sort((a, b) => a.district.localeCompare(b.district));
+    this.fetchDistrict();
+    this.fetchLocation();
   }
 
-  openEditModal(loc: Location) {
+  fetchLocation(): void {
+    this.locationApi.fetchLocation(this.currentPage, this.pageSize, this.pageSize)
+      .subscribe({
+        next: (data) => {
+          this.locations = data.data.items || [];
+          this.filteredLocations = [...this.locations];
+          this.calculatePagination();
+        },
+        error: (err) => console.error('Error fetching locations:', err)
+      });
+  }
+
+  fetchDistrict(): void {
+    this.locationApi.fetchDistrict()
+      .subscribe({
+        next: (data) => this.districts = data.data || [],
+        error: (err) => console.error('Error fetching districts:', err)
+      });
+  }
+
+  filterLocation(): void {
+    const location = this.locationFilter || '';
+    const pincode = this.pincodeFilter || '';
+
+    const districtId = (this.selectedDistrict && this.selectedDistrict > 0) ? this.selectedDistrict : null;
+    this.locationApi.filterLocation(districtId, this.locationFilter || '', this.pincodeFilter || '')
+      .subscribe({
+        next: (data) => {
+          this.filteredLocations = data.data || [];
+          this.currentPage = 1;
+          this.calculatePagination();
+        },
+        error: (err) => console.error('Error fetching locations:', err)
+      });
+
+  }
+
+  resetFilters(): void {
+    this.selectedDistrict = null;
+    this.locationFilter = '';
+    this.pincodeFilter = '';
+    this.locationSortDirection = '';
+    this.filteredLocations = [...this.locations];
+    this.currentPage = 1;
+    this.calculatePagination();
+  }
+
+  openEditModal(loc: Location): void {
     this.selectedLocation = { ...loc };
   }
 
-  resetFilters() {
-    this.selectedDistrict = '';
-    this.locationFilter = '';
-    this.pincodeFilter = '';
-
-    this.applyFilters();
-  }
-
-  applyFilters(): void {
-
-    console.log(this.selectedDistrict);
-
-    let tempLocations = [...this.locations];
-
-    if (this.selectedDistrict) {
-      tempLocations = tempLocations.filter(loc => loc.district === this.selectedDistrict);
-    }
-
-    if (this.locationFilter) {
-      const searchTerm = this.locationFilter.toLowerCase();
-      tempLocations = tempLocations.filter(loc =>
-        loc.location.toLowerCase().includes(searchTerm)
-      );
-    }
-
-    if (this.pincodeFilter) {
-      const searchTerm = this.pincodeFilter.toLowerCase();
-      tempLocations = tempLocations.filter(loc =>
-        loc.pincode.toLowerCase().includes(searchTerm)
-      );
-    }
-
-    this.filteredLocations = this.sortLocationsWithinDistricts(tempLocations);
-  }
-
   toggleLocationSort(): void {
-    if (this.locationSortDirection === 'desc') {
+    if (this.locationSortDirection === '') {
       this.locationSortDirection = 'asc';
     } else if (this.locationSortDirection === 'asc') {
       this.locationSortDirection = 'desc';
     } else {
-      this.locationSortDirection = 'asc';
+      this.locationSortDirection = '';
     }
 
-    this.applyFilters();
+    this.applySort();
   }
 
-
-  private sortLocationsWithinDistricts(locationsToSort: Location[]): Location[] {
+  applySort(): void {
     if (this.locationSortDirection === '') {
-     
-      return [...locationsToSort].sort((a, b) => {
-        const districtCompare = a.district.localeCompare(b.district);
-        if (districtCompare !== 0) {
-          return districtCompare;
-        }
-        return a.location.localeCompare(b.location);
-      });
+      this.filteredLocations = [...this.filteredLocations];
+      return;
     }
 
-    const groupedLocations = new Map<string, Location[]>();
-
-    locationsToSort.forEach(loc => {
-      if (!groupedLocations.has(loc.district)) {
-        groupedLocations.set(loc.district, []);
-      }
-      groupedLocations.get(loc.district)?.push(loc);
+    this.filteredLocations.sort((a, b) => {
+      const nameA = a.locationName.toLowerCase();
+      const nameB = b.locationName.toLowerCase();
+      if (nameA < nameB) return this.locationSortDirection === 'asc' ? -1 : 1;
+      if (nameA > nameB) return this.locationSortDirection === 'asc' ? 1 : -1;
+      return 0;
     });
 
-    let finalSortedLocations: Location[] = [];
-
-    this.districts
-      .filter(d => d.value !== '')
-      .map(d => d.name)
-      .forEach(districtName => {
-        if (groupedLocations.has(districtName)) {
-          const locationsInDistrict = groupedLocations.get(districtName);
-          if (locationsInDistrict) {
-         
-            locationsInDistrict.sort((a, b) => {
-              const locationA = a.location.toLowerCase();
-              const locationB = b.location.toLowerCase();
-              let comparison = locationA.localeCompare(locationB);
-              return this.locationSortDirection === 'desc' ? comparison * -1 : comparison;
-            });
-           
-            finalSortedLocations = finalSortedLocations.concat(locationsInDistrict);
-          }
-        }
-      });
-
-    return finalSortedLocations;
+    this.calculatePagination();
   }
 
+  // Pagination logic
+  calculatePagination(): void {
+    this.totalPages = Math.ceil(this.filteredLocations.length / this.pageSize);
+    this.updatePagedLocations();
+  }
+
+  updatePagedLocations(): void {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.pagedLocations = this.filteredLocations.slice(start, end);
+  }
+
+  goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.updatePagedLocations();
+  }
+
+  // Table utilities
   shouldShowDistrict(index: number): boolean {
     if (index === 0) return true;
-    return this.filteredLocations[index] && this.filteredLocations[index - 1] &&
-      this.filteredLocations[index].district !== this.filteredLocations[index - 1].district;
+    return this.pagedLocations[index] && this.pagedLocations[index - 1] &&
+      this.pagedLocations[index].districtName !== this.pagedLocations[index - 1].districtName;
   }
 
   getDistrictRowspan(index: number): number {
     let rowspan = 1;
-    if (!this.filteredLocations[index]) return 1;
-    const currentDistrict = this.filteredLocations[index].district;
-    for (let i = index + 1; i < this.filteredLocations.length; i++) {
-      if (this.filteredLocations[i].district === currentDistrict) {
+    if (!this.pagedLocations[index]) return 1;
+    const currentDistrict = this.pagedLocations[index].districtName;
+    for (let i = index + 1; i < this.pagedLocations.length; i++) {
+      if (this.pagedLocations[i].districtName === currentDistrict) {
         rowspan++;
       } else {
         break;

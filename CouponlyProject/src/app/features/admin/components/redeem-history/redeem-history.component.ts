@@ -66,7 +66,7 @@ export class RedeemHistoryComponent {
     { id:5, districtName: 'Idukki' }
   ]
 
-  locations: Location[] = [
+  locations = [
     { id: 1, districtId: 4, locationName: 'Kazhakuttam', pincode: '265947', latitude: '8.5673° N', longitude: '76.8741° E' },
     { id: 2, districtId: 1, locationName: 'Thriprayar', pincode: '263515', latitude: '10.4136° N', longitude: '76.1131° E' },
     { id: 3, districtId: 3, locationName: 'Pala', pincode: '465978', latitude: '9.7084° N', longitude: '76.6849° E' },
