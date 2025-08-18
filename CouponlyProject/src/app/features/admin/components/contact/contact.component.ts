@@ -7,6 +7,7 @@ import { AddContactModalComponent } from '../../pages/add-contact-modal/add-cont
 import { FormsModule } from '@angular/forms';
 import { ContactService } from '../../../../commons/services/Contacts/contact.service';
 
+
 @Component({
   selector: 'app-contact',
   imports: [ColComponent,
@@ -67,7 +68,7 @@ ResetFilters() {
   this.name = '';
   this.email = '';
   this.phonenumber = '';
-  this.isLoading = true;
+  this.isLoading = false;
 
   this.api.FetchContacts().subscribe({
     next: (response: any) => {
@@ -76,7 +77,7 @@ ResetFilters() {
     },
     error: (err) => {
       console.error('Error resetting contacts:', err);
-      this.isLoading = false;
+      this.isLoading = true;
     }
   });
 }

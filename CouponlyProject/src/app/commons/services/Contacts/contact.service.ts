@@ -31,4 +31,10 @@ searchContacts(name: string, email: string, phonenumber: string): Observable<any
 
 
 }
+
+
+addContact(contactData: any): Observable<any> {
+  return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.contact.AddContact}`, contactData);
+}
+
 }

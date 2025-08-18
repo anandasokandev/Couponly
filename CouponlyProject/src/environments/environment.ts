@@ -23,7 +23,9 @@ export const environment = {
     },
     contact: {
       AllContacts: 'Contact/AllContacts',
-      AllFilters: 'Contact/AllFilters'
+      AllFilters: 'Contact/AllFilters',
+      AddContact : 'Contact/AddContact',
+      EditContact : 'Contact/updatebyid'
     }
   }
 };
