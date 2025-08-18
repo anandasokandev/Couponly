@@ -32,7 +32,7 @@
                 <div class="d-md-flex justify-content-start">
                     <div class="d-flex gap-4 align-items-center m-2">
                         <!-- <strong class="w-md-50">District: </strong> -->
-                        <select class="form-select form-select-sm" (change)="districtChange($event)" formControlName="district">
+                        <select class="form-select form-select-sm"  formControlName="district">
                             <option value=0>All Distircts</option>
                             <option *ngFor="let district of districts" [value]="district.id">{{ district.districtName }}</option>
                         </select>
@@ -43,7 +43,7 @@
                         <select class="form-select form-select-sm" formControlName="location">
                             <option value=0>All Locations</option>                        
                             <!-- <option *ngFor="let location of getLocations(selectedDistirctId)">{{ location.locationName }}</option> -->
-                            <option *ngFor="let location of getLocations()">{{ location.locationName }}</option>
+                            <option *ngFor="let location of getLocations()" [value]="location.id">{{ location.locationName }}</option>
 
                         </select>
                     </div>
@@ -55,7 +55,7 @@
                         <label for="toDateDate" class="input-label">To:</label>
                         <input type="date" id="toDate" class="form-control form-control-sm" formControlName="to" />
                     </div>
-                    <button class="btn btn-sm btn-danger text-white m-3" title="Reset">
+                    <button class="btn btn-sm btn-danger text-white m-3" title="Reset" (click)="resetFilter()">
                         <i class="fas fa-arrows-rotate"></i>
                     </button>
                 </div>
@@ -111,20 +111,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <ng-container *ngFor="let red of redeems | filterstore: filterStores | filteruser: filterUsers | filtercouponname: filterCouponName | filtercouponcode: filterCouponCode; let i = index">
-                        <tr>
-                            <td data-label="#">{{ i+1 }}</td>
-                            <td data-label="District Name">
-                                {{ red.redeemCouponCode }}
-                            </td>
-                            <td data-label="Location Name">{{ red.redeemCouponName }}</td>
-                            <td data-label="Pincode">{{ red.user }}</td>
-                            <td data-label="Latitude">{{ red.store }}</td>
-                            <td data-label="">{{ red.date }}</td>
-                        </tr>
+                    
+                    <ng-container *ngIf="!isLoading">
+                        <ng-container *ngFor="let red of redeems | filterstore: filterStores | filteruser: filterUsers | filtercouponname: filterCouponName | filtercouponcode: filterCouponCode; let i = index">
+                            <tr>
+                                <td data-label="#">{{ i+1 }}</td>
+                                <td data-label="District Name">
+                                    {{ red.redeemCouponCode }}
+                                </td>
+                                <td data-label="Location Name">{{ red.redeemCouponName }}</td>
+                                <td data-label="Pincode">{{ red.user }}</td>
+                                <td data-label="Latitude">{{ red.store }}</td>
+                                <td data-label="">{{ red.date }}</td>
+                            </tr>
+                        </ng-container>
                     </ng-container>
+                    
                 </tbody>
             </table>
+            <ng-container *ngIf="isLoading" class="d-flex justify-content-center my-5 w-100">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden"></span>
+                </div>Loading...
+            </ng-container>
         </c-card-body>
     </c-card>
 </c-col>
