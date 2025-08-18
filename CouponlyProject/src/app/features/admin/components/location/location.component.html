@@ -19,7 +19,7 @@
             <div class="d-flex flex-wrap gap-2 mb-3 justify-content-start align-items-center">
                 <th data-label="District Filter">
                     <select class="form-select form-select-sm" [(ngModel)]="selectedDistrict" (change)="filterLocation()">
-                        <option value="">Select District</option>
+                        <option value="null">Select District</option>
                         <option *ngFor="let district of districts" [value]="district.id">
                             {{ district.districtName }}
                         </option>
@@ -77,7 +77,7 @@
                             <td data-label="Longitude">{{ loc.longitude }}</td>
                             <td data-label="Active">
                                 <c-form-check [switch]="true">
-                                    <input cFormCheckInput checked type="checkbox" />
+                                    <input cFormCheckInput checked type="checkbox" *ngIf="" />
                                 </c-form-check>
                             </td>
                             <td data-label="">

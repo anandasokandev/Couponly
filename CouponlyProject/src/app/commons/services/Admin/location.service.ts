@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Location } from '../../models/location.model';
 import { Observable } from 'rxjs';
+import { environment } from './../../../../environments/environment';
 import { PaginatedData, PaginatedResponse } from '../../models/response.model';
 
 @Injectable({
@@ -9,12 +10,10 @@ import { PaginatedData, PaginatedResponse } from '../../models/response.model';
 })
 export class LocationService {
 
-  private baseUrl = "https://localhost:7224/api";
-
   constructor(private http: HttpClient) { }
 
   fetchDistrict(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/District`);
+    return this.http.get<any>(`${environment.apiBaseUrl}/${environment.endpoints.location.fetchDistrict}`);
   }
 
   fetchLocation(
@@ -28,7 +27,7 @@ export class LocationService {
       .set('ValidPageSize', validPageSize.toString());
 
     return this.http.get<PaginatedResponse<PaginatedData<Location>>>(
-      `${this.baseUrl}/Location`,
+      `${environment.apiBaseUrl}/${environment.endpoints.location.fetchLocation}`,
       { params }
     );
   }
@@ -40,7 +39,7 @@ export class LocationService {
   if (location) params.location = location;
   if (pincode) params.pincode = pincode;
 
-  return this.http.get<any>(`${this.baseUrl}/Location/filter`, { params });
+  return this.http.get<any>(`${environment.apiBaseUrl}/${environment.endpoints.location.fetchLocation}`, { params });
 }
 
 

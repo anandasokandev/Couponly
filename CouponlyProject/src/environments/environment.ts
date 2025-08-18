@@ -13,7 +13,10 @@ export const environment = {
     },
     user: {
       login: 'user/login',
-      
+    },
+    location: {
+      fetchDistrict: 'District',
+      fetchLocation: 'Location',
     },
      store: {
       fetchdistricts:'District',
