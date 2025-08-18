@@ -3,6 +3,7 @@ import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirect
 import { CustomToastService } from '../../../../commons/services/custom-toast.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { StoreService } from 'src/app/commons/services/Store/store.service';
 @Component({
   selector: 'app-add-store-modal',
   imports: [
@@ -26,8 +27,26 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 export class AddStoreModalComponent {
   
 
-  addStoreForm: FormGroup;
-constructor(private toastService: CustomToastService,private fb: FormBuilder) {
+  addStoreForm!: FormGroup;
+  categories:any[]=[];
+  districts:any[]=[];
+
+constructor(private toastService: CustomToastService,private fb: FormBuilder,private api:StoreService) {}
+
+
+ngOnInit(){
+  this.api.FetchCategories().subscribe({
+        next:(response: any) =>{
+          this.categories=response.data;
+        }
+      })
+
+      this.api.FetchDistricts().subscribe({
+        next:(response: any) =>{
+          this.districts=response.data;
+        }
+      })
+
   this.addStoreForm=this.fb.group({
     storeName:['',Validators.required],
     storeLogo:['',Validators.required],

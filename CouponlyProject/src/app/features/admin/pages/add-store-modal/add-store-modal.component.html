@@ -30,8 +30,7 @@
                 <select class="form-select form-select-sm" name="location" id="categorySelect"
                     formControlName="storeCategory">
                     <option value="">Select Category</option>
-                    <option>Lifestyle</option>
-                    <option>Fashion</option>
+                    <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
                 </select>
                 <div *ngIf="addStoreForm.get('storeCategory')?.touched && addStoreForm.get('storeCategory')?.invalid">
                     <span class="text-danger" *ngIf="addStoreForm.get('storeCategory')?.errors?.['required']">
@@ -44,8 +43,7 @@
                 <select class="form-select form-select-sm" name="district" id="districtSelect"
                     formControlName="district">
                     <option value="">Select District</option>
-                    <option>Idukki</option>
-                    <option>Ernakulam</option>
+                    <option *ngFor="let district of districts" value="{{district.id}}">{{district.districtName}}</option>
                 </select>
                  <div *ngIf="addStoreForm.get('district')?.touched && addStoreForm.get('district')?.invalid">
                     <span class="text-danger" *ngIf="addStoreForm.get('district')?.errors?.['required']">

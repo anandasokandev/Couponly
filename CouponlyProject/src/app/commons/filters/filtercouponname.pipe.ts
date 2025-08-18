@@ -7,7 +7,7 @@ export class FiltercouponnamePipe implements PipeTransform {
 
   transform(list: any[], search: string): any[] {
     if(search) {
-            return list.filter(list => list.couponName.toLowerCase().includes(search.toLowerCase()))
+            return list.filter(list => list.redeemCouponName.toLowerCase().includes(search.toLowerCase()))
         }
         else
             return list
