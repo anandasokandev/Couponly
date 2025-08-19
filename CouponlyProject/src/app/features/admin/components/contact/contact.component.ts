@@ -36,6 +36,7 @@ export class ContactComponent {
 
   constructor(private api:ContactService){}
   ngOnInit() {
+    this.isLoading = true;
     this.api.FetchContacts().subscribe({
       next: (response: any) => {
         this.contacts = response.data;
@@ -68,7 +69,7 @@ ResetFilters() {
   this.name = '';
   this.email = '';
   this.phonenumber = '';
-  this.isLoading = false;
+  this.isLoading = true;
 
   this.api.FetchContacts().subscribe({
     next: (response: any) => {
@@ -77,7 +78,7 @@ ResetFilters() {
     },
     error: (err) => {
       console.error('Error resetting contacts:', err);
-      this.isLoading = true;
+      this.isLoading = false;
     }
   });
 }
