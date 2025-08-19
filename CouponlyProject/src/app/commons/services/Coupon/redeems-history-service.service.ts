@@ -54,7 +54,6 @@ export class RedeemsHistoryServiceService {
     if (toDate) params.todate = toDate;
 
     const id = sessionStorage.getItem('userId') || '';
-    console.log("haiiii", id);  
     const headers = new HttpHeaders().set('userid', id);
     return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.redeem.ExportEmail}`, { headers, params });
   }
