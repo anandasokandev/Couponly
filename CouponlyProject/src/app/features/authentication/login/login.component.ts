@@ -48,7 +48,7 @@ export class LoginComponent {
                      
                       sessionStorage.setItem('token', response.token);
                       sessionStorage.setItem('role', response.role);
-                      sessionStorage.getItem('userId');
+                      sessionStorage.setItem('userId',response.userId);
                        
 
                       console.log(response)
