@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from './../../../../environments/environment'
@@ -37,4 +37,15 @@ addContact(contactData: any): Observable<any> {
   return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.contact.AddContact}`, contactData);
 }
 
+updateContact(contactId: number, contactData: any): Observable<any> {
+  const headers = new HttpHeaders({
+    id: contactId
+  });
+
+  return this.http.put(
+      `${environment.apiBaseUrl}/${environment.endpoints.contact.EditContact}`,
+      contactData,
+      { headers }
+    );
+  }
 }

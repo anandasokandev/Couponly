@@ -10,8 +10,8 @@
 <c-col xs="12">
     <c-card class="mb-4">
         <c-card-header class="d-flex justify-content-between align-items-center">
-            
-             <strong class="fs-5">Users</strong>
+
+            <strong class="fs-5">Users</strong>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap"
@@ -22,36 +22,40 @@
         </c-card-header>
 
         <c-card-body>
-                <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
-                    <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy">
-                        <option value="">All</option>
-                        <option value="select1">First Name</option>
-                        <option value="select2">Last Name</option>
-                        <option value="select3">Email</option>
-                        <option value="select4">Phone No.</option>
-                    </select>
-                    
-                    <input type="text" class="form-control form-control-sm" style="max-width: 280px"
-                        placeholder="🔍 Search By..." aria-label="Search by " />
+            <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
+                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy" [(ngModel)]="searchType"
+        (change)="FilterUser()">
+                    <option value="5">All</option>
+                    <option value="1">First Name</option>
+                    <option value="2">Last Name</option>
+                    <option value="3">Email</option>
+                    <option value="4">Phone No.</option>
+                </select>
 
-                    <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy">
-                       <option value="">🧩 All Type</option>
-                            <option value="Admin">🛡️ Admin</option>
-                            <option value="User">👤 User</option>
-                             <option value="User">🏬 Store</option>
-                            
-                    </select>
+                <input type="text" class="form-control form-control-sm" style="max-width: 280px"
+                    placeholder="🔍 Search By..." aria-label="Search by " [(ngModel)]="searchText"
+       (keyup.enter)="FilterUser()"/>
 
-                    <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy">
-                        <option value="">🔘 All Status</option>
-                            <option value="district1">🟢 Active</option>
-                            <option value="district2">🔴 Inactive</option>
-                    </select>
+                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy" [(ngModel)]="userType"
+        (change)="FilterUser()">
+                    <option value="0">🧩 All Type</option>
+                    <option value="5">🛡️ Admin</option>
+                    <option value="3">👤 User</option>
+                    <option value="4">🏬 Store</option>
 
-                    <button type="button" class="btn btn-danger btn-sm text-white" title="Reset">
-                        <i class="fas fa-arrows-rotate"></i>
-                    </button>
-                </div>
+                </select>
+
+                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy" [(ngModel)]="statusFilter" (change)="onStatusChange()">
+                    <option value="">🔘 All Status</option>
+                    <option value="true">🟢 Active</option>
+                    <option value="false">🔴 Inactive</option>
+                </select>
+
+
+                <button type="button" class="btn btn-danger btn-sm text-white" title="Reset" (click)="reset()">
+                    <i class="fas fa-arrows-rotate"></i>
+                </button>
+            </div>
 
             <table [hover]="true" cTable class="responsive-table">
                 <thead>
