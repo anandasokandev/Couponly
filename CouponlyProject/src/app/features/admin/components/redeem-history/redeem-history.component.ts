@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormCheckComponent, FormCheckInputDirective, ModalComponent, ModalToggleDirective, TableDirective } from '@coreui/angular';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormCheckComponent, FormCheckInputDirective, ModalComponent, ModalToggleDirective, SpinnerComponent, TableDirective } from '@coreui/angular';
 import { IconComponent, IconModule } from '@coreui/icons-angular';
 import { IconSubset } from '../../../../icons/icon-subset';
 import { cibIcloud, cibSoundcloud, cilCloudDownload, cilSortAlphaDown, cilSortAlphaUp } from '@coreui/icons';
@@ -15,6 +15,7 @@ import { Location } from '../../../../commons/models/location.model';
 import { from } from 'rxjs';
 import { DownloadRedeemsModelComponent } from '../../pages/download-redeems-model/download-redeems-model.component';
 import { RedeemsHistoryServiceService } from '../../../../commons/services/Coupon/redeems-history-service.service';
+import { CustomToastService } from '../../../../commons/services/custom-toast.service';
 // import { RedeemsHistoryServiceService } from 'src/app/commons/services/Coupon/redeems-history-service.service';
 
 @Component({
@@ -36,6 +37,8 @@ import { RedeemsHistoryServiceService } from '../../../../commons/services/Coupo
     ReactiveFormsModule,
     ModalToggleDirective,
     ModalComponent,
+    SpinnerComponent,
+
   ],
   templateUrl: './redeem-history.component.html',
   styleUrl: './redeem-history.component.scss'
@@ -78,7 +81,7 @@ export class RedeemHistoryComponent {
 
   filterForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private redeemHistoryService: RedeemsHistoryServiceService) {
+  constructor(private fb: FormBuilder, private redeemHistoryService: RedeemsHistoryServiceService, private toastService: CustomToastService) {
     this.filterForm = this.fb.group({
       district: ['0'],
       location: ['0'],
@@ -145,6 +148,26 @@ export class RedeemHistoryComponent {
     });
   }
 
+  emailExcel() {
+    this.redeemHistoryService.ExportToExcelAndMail(
+      this.distirctId,
+      this.locationId,
+      this.fromDate,
+      this.toDate
+    ).subscribe({
+      next: (response) => {
+        if (response.isSuccess) {
+          this.toastService.show(response.data, 'success');
+        } else {
+          this.toastService.show('Failed to send redeem history email.', 'danger');
+        }
+      },
+      error: (error) => {
+        this.toastService.show(error, 'danger');
+        console.log(error);
+      }
+    });
+  }
 
   getRedeems() {
     this.isLoading = true;

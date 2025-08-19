@@ -5,22 +5,24 @@
 
   <c-modal-header>
     <h5 cModalTitle>Download Redeems History</h5>
-    <button [cModalToggle]="DownloadRedeemsModal.id" cButtonClose></button>
+    <button [cModalToggle]="DownloadRedeemsModal.id" class="btn btn-sm" cButtonClose></button>
   </c-modal-header>
 
   <c-modal-body>
     <div class="d-flex justify-content-around px-3 py-3 gap-4">
-      <button cButton color="primary" (click)="downloadRedeemsHistory()" [cModalToggle]="DownloadRedeemsModal.id">
+      <button cButton color="primary" class="d-flex align-items-center btn btn-sm gap-2" (click)="downloadRedeemsHistory()" [cModalToggle]="DownloadRedeemsModal.id">
+        <svg [cIcon]="icons.cilCloudDownload"></svg>
           Download Here
       </button>
-      <button cButton color="success" (click)="sendRedeemsHistoryEmail()">
+      <button cButton color="success" class="d-flex align-items-center btn btn-sm gap-2" (click)="sendRedeemsHistoryEmail()" [cModalToggle]="DownloadRedeemsModal.id">
+        <svg [cIcon]="icons.cilEnvelopeOpen"></svg>
         Send via Email
       </button>
     </div>
   </c-modal-body>
 
   <c-modal-footer>
-    <button [cModalToggle]="DownloadRedeemsModal.id" cButton color="secondary">
+    <button [cModalToggle]="DownloadRedeemsModal.id" class=" btn btn-sm" cButton color="secondary">
       Close
     </button>
   </c-modal-footer>
