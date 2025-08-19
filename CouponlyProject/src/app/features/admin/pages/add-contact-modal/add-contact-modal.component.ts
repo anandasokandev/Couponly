@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 import { CustomToastService } from '../../../../commons/services/custom-toast.service';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
+import { ContactService } from '../../../../commons/services/Contacts/contact.service';
 
 @Component({
   selector: 'app-add-contact-modal',
@@ -26,25 +27,38 @@ import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular
 export class AddContactModalComponent {
  contactForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private toastService: CustomToastService) {
+  constructor(private fb: FormBuilder, private toastService: CustomToastService,private contactService: ContactService) {
     this.contactForm = this.fb.group({
-      name: ['', Validators.required],
-      phone: ['', [ Validators.required, Validators.pattern(/^[6-9]\d{9}$/) ]],
-      email: ['', [Validators.required, Validators.email]]
+      Name: ['', Validators.required],
+      PhoneNumber: ['', [ Validators.required, Validators.pattern(/^[6-9]\d{9}$/) ]],
+      Email: ['', [Validators.required, Validators.email]]
     });
   }
 
   createContact() {
-    if (this.contactForm.invalid) {
-      this.contactForm.markAllAsTouched();
-      this.toastService.show('❌ Please correct the errors before submitting.');
-      return;
-    }
-
-    // Save logic can go here
-    console.log(this.contactForm.value);
-    this.toastService.show('✅ Contact created successfully!', 'success');
+  if (this.contactForm.invalid) {
+    this.contactForm.markAllAsTouched();
+    this.toastService.show('❌ Please correct the errors before submitting.');
+    return;
   }
+
+  const contactData = this.contactForm.value;
+
+  this.contactService.addContact(contactData).subscribe({
+    next: (response : any) => {
+      this.toastService.show('✅ Contact created successfully!', 'success');
+     
+      // console.log(this.contactService);
+
+      this.contactForm.reset(); // Optional: clear the form
+    },
+    error: (err) => {
+      console.error('Error creating contact:', err);
+      // console.log(this.contactService);
+      this.toastService.show('❌ Failed to create contact.', 'danger');
+    }
+  });
+}
 
   validateNameInput(event: KeyboardEvent): void {
   const inputChar = event.key;

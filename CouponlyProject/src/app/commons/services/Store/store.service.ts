@@ -1,7 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+// import { environment } from 'src/environments/environment';
+import { environment } from './../../../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,10 @@ import { environment } from 'src/environments/environment';
 export class StoreService {
 
   constructor(private http: HttpClient) { }
-
+  //Fetching Categories
+  FetchCategories():  Observable <any[]>{
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchcategories}`)
+  }
   //Fetching Stores 
   FetchStores(): Observable <any[]>{
     return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchstores}`)

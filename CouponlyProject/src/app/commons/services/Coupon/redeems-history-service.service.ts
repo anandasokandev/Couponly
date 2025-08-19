@@ -12,8 +12,13 @@ export class RedeemsHistoryServiceService {
 
   
 
-  getAllRedeems(districtid: number, locationid: number, fromdate: Date, todate: Date) {
-    const params = new HttpParams().set('districtid', districtid).set('locationid', locationid);
+  getAllRedeems(districtid: number, locationid: number, fromdate: string, todate: string) {
+    let params = new HttpParams().set('districtid', districtid).set('locationid', locationid);
+    console.log(fromdate, todate)
+    if(fromdate !== '')
+      params = params.append('fromdate', fromdate);
+    if(todate !== '')
+      params = params.append('todate', todate);
     return this.http.get<any>(`${environment.apiBaseUrl}/${environment.endpoints.redeem.getAllRedeems}`, { params })
     .pipe(
       map((response: any) => {
@@ -24,5 +29,19 @@ export class RedeemsHistoryServiceService {
       })
     );
   
+  }
+
+  exportRedeemsToExcel(districtId: number, locationId: number, fromDate?: string, toDate?: string) {
+    const params: any = {
+      districtid: districtId,
+      locationid: locationId
+    };
+    if (fromDate) params.fromdate = fromDate;
+    if (toDate) params.todate = toDate;
+
+    return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.redeem.ExportExcel}`, {
+      params,
+      responseType: 'blob'
+    });
   }
 }

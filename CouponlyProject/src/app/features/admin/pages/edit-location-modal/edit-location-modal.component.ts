@@ -2,11 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
-
-interface District {
-  value: string;
-  name: string;
-}
+import { LocationService } from '../../../../commons/services/Admin/location.service';
+import { District } from '../../../../commons/models/district.model';
 
 @Component({
   selector: 'app-edit-location-modal',
@@ -31,27 +28,22 @@ export class EditLocationModalComponent {
   @Input() location: any = null;
   selectedDistrict: string = '';
 
-  districts: District[] = [
-    { value: 'Alappuzha', name: 'Alappuzha' },
-    { value: 'Ernakulam', name: 'Ernakulam' },
-    { value: 'Idukki', name: 'Idukki' },
-    { value: 'Kasaragod', name: 'Kasaragod' },
-    { value: 'Kannur', name: 'Kannur' },
-    { value: 'Kollam', name: 'Kollam' },
-    { value: 'Kottayam', name: 'Kottayam' },
-    { value: 'Kozhikode', name: 'Kozhikode' },
-    { value: 'Malappuram', name: 'Malappuram' },
-    { value: 'Palakkad', name: 'Palakkad' },
-    { value: 'Pathanamthitta', name: 'Pathanamthitta' },
-    { value: 'Thiruvananthapuram', name: 'Thiruvananthapuram' },
-    { value: 'Thrissur', name: 'Thrissur' },
-    { value: 'Wayanad', name: 'Wayanad' }
-  ].sort((a, b) => a.name.localeCompare(b.name));
+  constructor(private locationApi: LocationService) {}
+
+  districts: District[] = [];
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['location'] && this.location) {
-      this.selectedDistrict = this.location.district;
+      this.selectedDistrict = this.location.districtName;
     }
+    this.fetchDistrict();
   }
-
+  
+  fetchDistrict(): void {
+    this.locationApi.fetchDistrict()
+      .subscribe({
+        next: (data) => this.districts = data.data || [],
+        error: (err) => console.error('Error fetching districts:', err)
+      });
+  }
 }

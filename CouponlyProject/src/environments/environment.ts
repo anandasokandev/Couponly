@@ -10,6 +10,7 @@ export const environment = {
       getRedeemById: 'Redeems/getRedeemById',
       getRedeemsByUserId: 'Redeems/getRedeemsByUserId',
       getRedeemsByStoreId: 'Redeems/getRedeemsByStoreId',
+      ExportExcel: 'Redeems/ExportRedeemsToExcel'
     },
     user: {
       login: 'user/login',
@@ -18,10 +19,25 @@ export const environment = {
       addusers:'User/AddUser'
 
     },
+    location: {
+      fetchDistrict: 'District',
+      fetchLocation: 'Location',
+      filterLocation: 'Location/filter'
+    },
      store: {
+      fetchdistricts:'District',
       fetchcategories:'Store/Categories',
       fetchstores:'Store/AllStores',
       filterstore: 'Store/FilterStore'
     },
+    contact: {
+      AllContacts: 'Contact/AllContacts',
+      AllFilters: 'Contact/AllFilters',
+      AddContact : 'Contact/AddContact',
+      EditContact : 'Contact/updatebyid'
+    },
+    login:{
+      signup:'/Login'
+    }
   }
 };
