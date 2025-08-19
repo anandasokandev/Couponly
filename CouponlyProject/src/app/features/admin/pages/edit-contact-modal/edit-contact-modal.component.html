@@ -19,10 +19,10 @@
   placeholder="Enter name"
   class="form-control"
   (keypress)="validateNameInputs($event)"
-  formControlName="name"
+  formControlName="Name"
 />
 
-<div *ngIf="editContactForm.get('name')?.touched && editContactForm.get('name')?.invalid" class="text-danger">
+<div *ngIf="editContactForm.get('Name')?.touched && editContactForm.get('Name')?.invalid" class="text-danger">
           Name is required.
         </div>
       </div>
@@ -39,13 +39,13 @@
   placeholder="Enter phone number"
   class="form-control"
   (keypress)="validatePhoneInputs($event)"
-  formControlName="phone"
+  formControlName="PhoneNumber"
   maxlength="10"
 />
 
- <div *ngIf="editContactForm.get('phone')?.touched && editContactForm.get('phone')?.invalid" class="text-danger">
-          <div *ngIf="editContactForm.get('phone')?.errors?.['required']">Phone number is required.</div>
-          <div *ngIf="editContactForm.get('phone')?.errors?.['pattern']">Enter a valid 10-digit phone number.</div>
+ <div *ngIf="editContactForm.get('PhoneNumber')?.touched && editContactForm.get('PhoneNumber')?.invalid" class="text-danger">
+          <div *ngIf="editContactForm.get('PhoneNumber')?.errors?.['required']">Phone number is required.</div>
+          <div *ngIf="editContactForm.get('PhoneNumber')?.errors?.['pattern']">Enter a valid 10-digit phone number & start with 6-9.</div>
         </div>
       </div>
 
@@ -59,12 +59,12 @@
   cFormControl
   placeholder="name@example.com"
   class="form-control"
-  formControlName="email"
+  formControlName="Email"
 />
 
-<div *ngIf="editContactForm.get('email')?.touched && editContactForm.get('email')?.invalid" class="text-danger">
-          <div *ngIf="editContactForm.get('email')?.errors?.['required']">Email is required.</div>
-          <div *ngIf="editContactForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+<div *ngIf="editContactForm.get('Email')?.touched && editContactForm.get('Email')?.invalid" class="text-danger">
+          <div *ngIf="editContactForm.get('Email')?.errors?.['required']">Email is required.</div>
+          <div *ngIf="editContactForm.get('Email')?.errors?.['email']">Please enter a valid email address.</div>
         </div>
       </div>
     </form>

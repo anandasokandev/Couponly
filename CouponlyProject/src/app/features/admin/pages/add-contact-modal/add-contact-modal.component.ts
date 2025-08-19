@@ -30,7 +30,7 @@ export class AddContactModalComponent {
   constructor(private fb: FormBuilder, private toastService: CustomToastService,private contactService: ContactService) {
     this.contactForm = this.fb.group({
       Name: ['', Validators.required],
-      PhoneNumber: ['', [ Validators.required, Validators.pattern(/^[6-9]\d{9}$/) ]],
+      PhoneNumber: ['', [ Validators.required, Validators.pattern(/^[6-9][0-9]{9}$/) ]],
       Email: ['', [Validators.required, Validators.email]]
     });
   }
@@ -79,11 +79,7 @@ validatePhoneInput(event: KeyboardEvent): void {
     return;
   }
 
-  // First digit must be 6–9
-  if (currentValue.length === 0 && !/[6-9]/.test(inputChar)) {
-    event.preventDefault();
-    return;
-  }
+ 
 
   // Max 10 digits
   if (currentValue.length >= 10) {

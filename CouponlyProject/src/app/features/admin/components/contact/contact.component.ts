@@ -32,6 +32,9 @@ export class ContactComponent {
 
  isLoading: boolean = false;
 
+ selectedContact: any = null;
+
+
 
 
   constructor(private api:ContactService){}
@@ -49,6 +52,16 @@ export class ContactComponent {
       }
     });
   }
+
+  openEditModal(contact: any) {
+  this.selectedContact = {
+    id: contact.id,
+    name: contact.name,
+    phoneNumber: contact.contact,
+    email: contact.mail
+  };
+}
+
 
 
 FilterContact() {
