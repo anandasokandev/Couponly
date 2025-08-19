@@ -39,8 +39,17 @@
     <c-container breakpoint="lg" class="h-auto px-4">
       <app-custom-toast></app-custom-toast>
       <router-outlet></router-outlet>
-    </c-container>
+      <div class="toaster-container">
+    <app-toast 
+      *ngFor="let t of (toast.toasts$ | async)" 
+      [toast]="t"
+      (remove)="onRemove($event)">
+    </app-toast>
   </div>
+    </c-container>
+    
+  </div>
+  
   <!--app footer-->
   <app-default-footer />
 </div>
