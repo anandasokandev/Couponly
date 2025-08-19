@@ -45,6 +45,7 @@ ngOnInit(){
       this.locationapi.fetchDistrict().subscribe({
         next:(response: any) =>{
           this.districts=response.data;
+          console.log(this.districts)
         }
       })
 
