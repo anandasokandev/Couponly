@@ -7,6 +7,7 @@ import { AddContactModalComponent } from '../../pages/add-contact-modal/add-cont
 import { FormsModule } from '@angular/forms';
 import { ContactService } from '../../../../commons/services/Contacts/contact.service';
 
+
 @Component({
   selector: 'app-contact',
   imports: [ColComponent,
@@ -31,10 +32,14 @@ export class ContactComponent {
 
  isLoading: boolean = false;
 
+ selectedContact: any = null;
+
+
 
 
   constructor(private api:ContactService){}
   ngOnInit() {
+    this.isLoading = true;
     this.api.FetchContacts().subscribe({
       next: (response: any) => {
         this.contacts = response.data;
@@ -47,6 +52,16 @@ export class ContactComponent {
       }
     });
   }
+
+  openEditModal(contact: any) {
+  this.selectedContact = {
+    id: contact.id,
+    name: contact.name,
+    phoneNumber: contact.contact,
+    email: contact.mail
+  };
+}
+
 
 
 FilterContact() {

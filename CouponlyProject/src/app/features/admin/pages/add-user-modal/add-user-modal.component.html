@@ -1,57 +1,88 @@
-<c-modal #verticallyCenteredScrollableModal
-         [scrollable]="true"
-         alignment="center"
-         id="verticallyCenteredScrollableModal">
+<c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
+    id="verticallyCenteredScrollableModal">
 
- <c-modal-header>
-    <h5 cModalTitle>New User</h5>
-    <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose></button>
-  </c-modal-header>
- 
-  <c-modal-body>
-        <form cForm>
+    <c-modal-header>
+        <h5 cModalTitle>New User</h5>
+        <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose></button>
+    </c-modal-header>
+
+    <c-modal-body>
+
+        <form [formGroup]="userForm">
             <div class="mb-3">
-                <label cLabel for="exampleFormControlTextarea1">First Name<span style="color: red">*</span></label>
-                <input aria-label="sm input example" cFormControl  sizing="sm" type="text">
-            </div>
-            <div class="mb-3">
-                <label cLabel for="exampleFormControlTextarea1">Last Name<span style="color: red">*</span></label>
-                <input aria-label="sm input example" cFormControl  sizing="sm" type="text">
+                <label cLabel>First Name<span style="color: red">*</span></label>
+                <input cFormControl type="text" formControlName="firstName" />
+                <div *ngIf="userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched"
+                    class="text-danger">
+                    First name is required.
+                </div>
             </div>
 
             <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Email<span style="color: red">*</span></label>
-                <input cFormControl id="exampleFormControlInput1"  type="email" />
+                <label cLabel>Last Name</label>
+                <input cFormControl type="text" formControlName="lastName" />
             </div>
-               <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Phone Number<span style="color: red">*</span></label>
-                <input cFormControl id="exampleFormControlInput1"  type="email" />
-            </div>
-               <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">UserName<span style="color: red">*</span></label>
-                <input cFormControl id="exampleFormControlInput1"  type="email" />
-            </div>
-               <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Password<span style="color: red">*</span></label>
-                <input cFormControl id="exampleFormControlInput1"  type="email" />
-            </div>
+
             <div class="mb-3">
-                <label cLabel for="exampleFormControlInput1">Type<span style="color: red">*</span></label>
-                <select class="form-control" name="type" id="typeselect">
+                <label cLabel>Email<span style="color: red">*</span></label>
+                <input cFormControl type="email" formControlName="email" />
+                <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-danger">
+                    Valid email is required.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label cLabel>Phone Number<span style="color: red">*</span></label>
+                <input cFormControl type="text" formControlName="phoneNumber" />
+                <div *ngIf="userForm.get('phoneNumber')?.touched && userForm.get('phoneNumber')?.invalid"
+                    class="text-danger">
+                    <div *ngIf="userForm.get('phoneNumber')?.errors?.['required']">
+                        Phone number is required.
+                    </div>
+                    <div *ngIf="userForm.get('phoneNumber')?.errors?.['pattern']">
+                        Phone number must be exactly 10 digits.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label cLabel>Password<span style="color: red">*</span></label>
+                <input cFormControl type="password" formControlName="password" />
+                <div *ngIf="userForm.get('password')?.touched && userForm.get('password')?.invalid" class="text-danger">
+                    <div *ngIf="userForm.get('password')?.errors?.['required']">
+                        Password is required.
+                    </div>
+                    <div *ngIf="userForm.get('password')?.errors?.['minlength']">
+                        Password must be at least 6 characters.
+                    </div>
+                    <div *ngIf="userForm.get('password')?.errors?.['maxlength']">
+                        Password must not exceed 100 characters.
+                    </div>
+                    <div *ngIf="userForm.get('password')?.errors?.['pattern']">
+                        Password must contain at least one uppercase letter, one lowercase letter, one number, and one
+                        special character.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label cLabel>Type<span style="color: red">*</span></label>
+                <select class="form-control" formControlName="type">
                     <option value="">Select Type</option>
-                    <option value="">Admin</option>
-                    <option value="">User</option>
+                    <option value="5">Admin</option>
+                    <option value="3">User</option>
+                    <option value="4">Store</option>
                 </select>
+                <div *ngIf="userForm.get('type')?.invalid && userForm.get('type')?.touched" class="text-danger">
+                    Please select a user type.
+                </div>
             </div>
-         
         </form>
-  </c-modal-body>
-<c-modal-footer>
-    <button type="reset"  cButton color="secondary">
-        Reset
-    </button>
-    <button cButton color="primary" (click)="createUser()">Save</button>
-</c-modal-footer>
 
-
-          
+    </c-modal-body>
+    <c-modal-footer>
+        <button type="reset" cButton color="secondary" (click)="resetForm()">
+            Reset
+        </button>
+        <button cButton color="primary" (click)="createUser()">Save</button>
+    </c-modal-footer>

@@ -14,7 +14,7 @@
       <div class="mb-3">
         <label cLabel for="nameInput">Name <span style="color: red">*</span></label>
        <input
-  formControlName="name"
+  formControlName="Name"
   id="nameInput"
   type="text"
   sizing="sm"
@@ -22,7 +22,7 @@
   class="form-control"
   (keypress)="validateNameInput($event)"
 />
-        <div *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid" class="text-danger">
+        <div *ngIf="contactForm.get('Name')?.touched && contactForm.get('Name')?.invalid" class="text-danger">
           Name is required.
         </div>
       </div>
@@ -31,7 +31,7 @@
       <div class="mb-3">
         <label cLabel for="phoneInput">Phone Number <span style="color: red">*</span></label>
        <input
-  formControlName="phone"
+  formControlName="PhoneNumber"
   id="phoneInput"
   type="text"
   sizing="sm"
@@ -39,9 +39,9 @@
   class="form-control"
   (keypress)="validatePhoneInput($event)"
 />
-        <div *ngIf="contactForm.get('phone')?.touched && contactForm.get('phone')?.invalid" class="text-danger">
-          <div *ngIf="contactForm.get('phone')?.errors?.['required']">Phone number is required.</div>
-          <div *ngIf="contactForm.get('phone')?.errors?.['pattern']">Enter a valid 10-digit phone number.</div>
+        <div *ngIf="contactForm.get('PhoneNumber')?.touched && contactForm.get('PhoneNumber')?.invalid" class="text-danger">
+          <div *ngIf="contactForm.get('PhoneNumber')?.errors?.['required']">Phone number is required.</div>
+          <div *ngIf="contactForm.get('PhoneNumber')?.errors?.['pattern']">Enter a valid 10-digit phone number & start with 6-9.</div>
         </div>
       </div>
 
@@ -49,15 +49,15 @@
       <div class="mb-3">
         <label cLabel for="emailInput">Email Address <span style="color: red">*</span></label>
         <input
-          formControlName="email"
+          formControlName="Email"
           id="emailInput"
           type="email"
           placeholder="name@example.com"
           class="form-control"
         />
-        <div *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid" class="text-danger">
-          <div *ngIf="contactForm.get('email')?.errors?.['required']">Email is required.</div>
-          <div *ngIf="contactForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
+        <div *ngIf="contactForm.get('Email')?.touched && contactForm.get('Email')?.invalid" class="text-danger">
+          <div *ngIf="contactForm.get('Email')?.errors?.['required']">Email is required.</div>
+          <div *ngIf="contactForm.get('Email')?.errors?.['email']">Please enter a valid email address.</div>
         </div>
       </div>
     </form>

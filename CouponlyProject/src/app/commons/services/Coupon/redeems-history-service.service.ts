@@ -1,8 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RedeemHistory } from '../../models/redeem-history.model';
 import { environment } from '../../../../environments/environment';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +29,32 @@ export class RedeemsHistoryServiceService {
       })
     );
   
+  }
+
+  exportRedeemsToExcel(districtId: number, locationId: number, fromDate?: string, toDate?: string) {
+    const params: any = {
+      districtid: districtId,
+      locationid: locationId
+    };
+    if (fromDate) params.fromdate = fromDate;
+    if (toDate) params.todate = toDate;
+
+    return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.redeem.ExportExcel}`, {
+      params,
+      responseType: 'blob'
+    });
+  }
+
+  ExportToExcelAndMail(districtId: number, locationId: number, fromDate?: string, toDate?: string): Observable<any>  {
+      const params: any = {
+      districtid: districtId,
+      locationid: locationId
+    };
+    if (fromDate) params.fromdate = fromDate;
+    if (toDate) params.todate = toDate;
+
+    const id = sessionStorage.getItem('userId') || '';
+    const headers = new HttpHeaders().set('userid', id);
+    return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.redeem.ExportEmail}`, { headers, params });
   }
 }

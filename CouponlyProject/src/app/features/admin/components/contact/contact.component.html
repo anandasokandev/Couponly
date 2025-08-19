@@ -1,7 +1,8 @@
 <!-- 📦 Contact Modals -->
 <c-modal #editContactModal [scrollable]="true" alignment="center" id="editContactModal">
-  <app-edit-contact-modal></app-edit-contact-modal>
+  <app-edit-contact-modal [contactToEdit]="selectedContact"></app-edit-contact-modal>
 </c-modal>
+
 
 <c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center" id="verticallyCenteredScrollableModal">
   <app-add-contact-modal></app-add-contact-modal>
@@ -75,9 +76,15 @@
               <td>{{ contact.contact }}</td>
               <td>{{ contact.mail }}</td>
               <td>
-                <button class="btn btn-sm btn-outline-primary" title="Edit" [cModalToggle]="editContactModal.id">
-                  <i class="fas fa-pen"></i>
-                </button>
+               <button
+  class="btn btn-sm btn-outline-primary"
+  title="Edit"
+  [cModalToggle]="editContactModal.id"
+  (click)="openEditModal(contact)"
+>
+  <i class="fas fa-pen"></i>
+</button>
+
               </td>
             </tr>
           </tbody>
