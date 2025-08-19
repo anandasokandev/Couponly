@@ -31,6 +31,9 @@ export class AddStoreModalComponent {
   addStoreForm!: FormGroup;
   categories:any[]=[];
   districts:any[]=[];
+  locations:any[]=[];
+  default:string="Choose a District";
+  selectedFile: File | null = null;
 
 constructor(private toastService: CustomToastService,private fb: FormBuilder,private api:StoreService, private locationapi:LocationService) {}
 
@@ -45,7 +48,6 @@ ngOnInit(){
       this.locationapi.fetchDistrict().subscribe({
         next:(response: any) =>{
           this.districts=response.data;
-          console.log(this.districts)
         }
       })
 
@@ -63,6 +65,20 @@ ngOnInit(){
   });
 }
 
+selectLocationByDistrict(){
+  const districtId=this.addStoreForm.value.district;
+  if(districtId!=""){
+    this.default="choose a Location"
+  this.locationapi.filterLocation(districtId,'','').subscribe({
+    next:(response: any) =>{
+          this.locations=response.data;
+        }
+  })
+}
+else{
+  this.locations=[];
+}
+}
 allowOnlyNumbers(event: KeyboardEvent) {
   const charCode = event.charCode;
   if (charCode < 48 || charCode > 57) {
@@ -70,13 +86,45 @@ allowOnlyNumbers(event: KeyboardEvent) {
   }
 }
 
+onFileSelected(event: any) {
+  this.selectedFile = event.target.files[0];
+}
+
 createStore() {
   if (this.addStoreForm.valid) {
-    this.toastService.show('Store created successfully!', 'success');
-    this.addStoreForm.reset();
+    if (this.selectedFile) {
+      this.api.UploadImage(this.selectedFile).subscribe({
+        next: res => {
+          const payload = {
+            StoreName: this.addStoreForm.value.storeName,
+            Address: this.addStoreForm.value.storeAddress,
+            Logo: res.fileName,
+            Contact: this.addStoreForm.value.storeContact,
+            Email: this.addStoreForm.value.storeEmail,
+            LocationId: this.addStoreForm.value.storeLocation,
+            CategoryId: this.addStoreForm.value.storeCategory,
+            ApprovedBy: 5,
+            Type: this.addStoreForm.value.storeType,
+            Password: this.addStoreForm.value.storePassword
+          };
+            console.log('Result',payload)
+          this.api.AddStore(payload).subscribe({
+            next: () => {
+              this.toastService.show('Store created successfully!', 'success');
+              this.addStoreForm.reset();
+              this.selectedFile = null;
+            },
+            error: err => console.error('Store creation failed', err)
+          });
+        },
+        error: err => console.error('Image upload failed', err)
+      });
+    } else {
+      console.warn('No image selected');
+    }
   } else {
     this.addStoreForm.markAllAsTouched();
-    console.log('Invalid', this.addStoreForm.value);
+    console.log('Invalid form', this.addStoreForm.value);
   }
 }
 

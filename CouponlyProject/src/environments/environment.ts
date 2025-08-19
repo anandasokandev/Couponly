@@ -23,7 +23,9 @@ export const environment = {
       fetchdistricts:'District',
       fetchcategories:'Store/Categories',
       fetchstores:'Store/AllStores',
-      filterstore: 'Store/FilterStore'
+      filterstore: 'Store/FilterStore',
+      upload:'ImageUpload',
+      addStore:'Store/AddStore'
     },
     contact: {
       AllContacts: 'Contact/AllContacts',
