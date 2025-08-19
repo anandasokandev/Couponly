@@ -46,12 +46,12 @@ export class LoginComponent {
   console.log('Login successful:', response);
 
                      
-                      sessionStorage.setItem('token', response.token);
-                      sessionStorage.setItem('role', response.role);
-                      sessionStorage.setItem('userId',response.userId);
+                      sessionStorage.setItem('token', response.data.token);
+                      sessionStorage.setItem('role', response.data.role);
+                      sessionStorage.setItem('userId',response.data.userId);
                        
 
-                      console.log(response)
+                    
 
                       if (response.data.role === 'Admin') {
                         this.router.navigate(['/admin']);
