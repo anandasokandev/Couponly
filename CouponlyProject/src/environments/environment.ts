@@ -13,7 +13,10 @@ export const environment = {
     },
     user: {
       login: 'user/login',
-      
+      fetchusers: 'User/AllUsers',
+      filterusers: 'User/FilterUser',
+      addusers:'User/AddUser'
+
     },
      store: {
       fetchcategories:'Store/Categories',
