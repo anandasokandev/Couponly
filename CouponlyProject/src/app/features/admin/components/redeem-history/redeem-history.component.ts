@@ -16,7 +16,6 @@ import { from } from 'rxjs';
 import { DownloadRedeemsModelComponent } from '../../pages/download-redeems-model/download-redeems-model.component';
 import { RedeemsHistoryServiceService } from '../../../../commons/services/Coupon/redeems-history-service.service';
 import { CustomToastService } from '../../../../commons/services/custom-toast.service';
-// import { RedeemsHistoryServiceService } from 'src/app/commons/services/Coupon/redeems-history-service.service';
 
 @Component({
   selector: 'app-redeem-history',
@@ -159,11 +158,11 @@ export class RedeemHistoryComponent {
         if (response.isSuccess) {
           this.toastService.show(response.data, 'success');
         } else {
-          this.toastService.show('Failed to send redeem history email.', 'danger');
+          this.toastService.show('Failed to send redeem history email.', 'error');
         }
       },
       error: (error) => {
-        this.toastService.show(error, 'danger');
+        this.toastService.show(error, 'error');
         console.log(error);
       }
     });

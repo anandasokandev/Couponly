@@ -98,13 +98,13 @@ export class AddUserModalComponent {
       const errorMsg = err.error?.errors?.[0]?.toLowerCase();
 
       if (errorMsg?.includes('email') && errorMsg?.includes('phone')) {
-        this.toastService.show('📧📱 Email and phone number already exist.', 'danger');
+        this.toastService.show('📧📱 Email and phone number already exist.', 'error');
       } else if (errorMsg?.includes('email')) {
-        this.toastService.show('📧 Email already exists.', 'danger');
+        this.toastService.show('📧 Email already exists.', 'error');
       } else if (errorMsg?.includes('phone')) {
-        this.toastService.show('📱 Phone number already exists.', 'danger');
+        this.toastService.show('📱 Phone number already exists.', 'error');
       } else {
-        this.toastService.show('❌ Error adding user!', 'danger');
+        this.toastService.show('❌ Error adding user!', 'error');
       }
     }
   });

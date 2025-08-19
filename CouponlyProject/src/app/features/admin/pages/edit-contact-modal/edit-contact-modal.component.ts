@@ -58,7 +58,7 @@ ngOnChanges(changes: SimpleChanges): void {
 createContacts() {
   if (this.editContactForm.invalid) {
     this.editContactForm.markAllAsTouched();
-    this.toastService.show('❌ Please correct the errors before submitting.');
+    this.toastService.show('❌ Please correct the errors before submitting.', 'error');
     return;
   }
 
@@ -74,7 +74,7 @@ createContacts() {
   },
   error: (error) => {
     console.error('Error updating contact:', error);  // Log the error for more details
-    this.toastService.show('❌ Failed to update contact.', 'danger');
+    this.toastService.show('❌ Failed to update contact.', 'error');
   }
 });
 }

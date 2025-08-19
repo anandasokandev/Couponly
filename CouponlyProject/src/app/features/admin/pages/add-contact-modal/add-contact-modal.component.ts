@@ -38,7 +38,7 @@ export class AddContactModalComponent {
   createContact() {
   if (this.contactForm.invalid) {
     this.contactForm.markAllAsTouched();
-    this.toastService.show('❌ Please correct the errors before submitting.');
+    this.toastService.show('❌ Please correct the errors before submitting.', 'error');
     return;
   }
 
@@ -55,7 +55,7 @@ export class AddContactModalComponent {
     error: (err) => {
       console.error('Error creating contact:', err);
       // console.log(this.contactService);
-      this.toastService.show('❌ Failed to create contact.', 'danger');
+      this.toastService.show('❌ Failed to create contact.', 'error');
     }
   });
 }

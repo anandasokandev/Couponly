@@ -11,7 +11,7 @@ export class CustomToastService {
     this.toastComponent = toast;
   }
 
-  show(message: string, type:'success' | 'danger' | 'warning' |'info' = 'info') {
+  show(message: string, type:'success' | 'error' | 'warning' |'info' = 'info') {
     if (this.toastComponent) {
       this.toastComponent.showToast(message, type);
     } else {
