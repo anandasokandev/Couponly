@@ -41,13 +41,16 @@ export class LoginComponent {
 
     this.api.login(payload).subscribe({
       next: (response: any) => {
-        console.log(response.IsSuccess)
+        console.log(response)
        if (response.isSuccess) {
   console.log('Login successful:', response);
 
                      
                       sessionStorage.setItem('token', response.token);
                       sessionStorage.setItem('role', response.role);
+                      sessionStorage.getItem('userId');
+                       
+
                       console.log(response)
 
                       if (response.data.role === 'Admin') {
