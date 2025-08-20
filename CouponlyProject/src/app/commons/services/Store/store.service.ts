@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 // import { environment } from 'src/environments/environment';
@@ -28,11 +28,20 @@ export class StoreService {
   return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.store.filterstore}`, { params });}
 
   //uploadImage
-  UploadImage(file: File): Observable<{ fileName: string }> {
+  UploadImage(file: File): Observable<any> {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('image', file); // 'image' must match the expected field name
 
-    return this.http.post<{ fileName: string }>( `${environment.apiBaseUrl}/${environment.endpoints.store.upload}`,formData);}
+    const headers = new HttpHeaders({
+      'x-api-key': environment.imageKey
+    });
+
+    return this.http.post(
+      `${environment.imageUploadUrl}`,
+      formData,
+      { headers }
+    );
+  }
     //addstore
 
     AddStore(data: any): Observable<any> {

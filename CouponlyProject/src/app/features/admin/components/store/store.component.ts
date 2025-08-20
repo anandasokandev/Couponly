@@ -5,7 +5,6 @@ import { AddStoreModalComponent } from '../../pages/add-store-modal/add-store-mo
 import { EditStoreModalComponent } from '../../pages/edit-store-modal/edit-store-modal.component';
 import { StoreService } from '../../../../commons/services/Store/store.service';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../../../../environments/environment';
 
 
 @Component({
@@ -33,7 +32,6 @@ export class StoreComponent {
   type:number=0;
   searchtype:number=0;
   searchtext:string='';
-  environment=environment;
   constructor(private api:StoreService){}
   ngOnInit(){
 

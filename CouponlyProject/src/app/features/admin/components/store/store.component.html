@@ -44,7 +44,7 @@
         </button>
       </div>
 
-      <table [hover]="true" cTable cTable class="responsive-table">
+      <table [hover]="true" cTable  class="responsive-table">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -63,7 +63,7 @@
         <tbody>
           <tr *ngFor="let store of stores; let i=index">
             <td>{{i+1}}</td>
-            <td> <img src="https://api.couponly.store/images/2aae179c-a2b3-4c9a-bd63-96af8977df50.jpg" alt="{{store.storeLogo}}"></td>
+            <td><img [src]="store.storeLogo"></td>
             <td>{{store.store}}</td>
             <td>{{store.code}}</td>
             <td>{{store.storeAddress}}</td>
