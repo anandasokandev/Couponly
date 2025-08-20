@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, ToastComponent, ToasterComponent, ToasterPlacement } from '@coreui/angular';
 import { CommonModule } from '@angular/common';
@@ -30,6 +30,7 @@ export class AddLocationModalComponent implements OnInit{
   locationForm!: FormGroup;
   districts: District[] = [];
   @Output() locationAdded = new EventEmitter<Location>();
+  @ViewChild('closeButton') closeButton!: ElementRef;
   
   constructor(private fb: FormBuilder, private toastService: ToastService, private locationApi: LocationService) {
   }
@@ -57,6 +58,11 @@ export class AddLocationModalComponent implements OnInit{
     return this.locationForm.controls;
   }
 
+  closeModal(): void {
+    // You can also call this method from anywhere
+    this.closeButton.nativeElement.click();
+  }
+
   save() {
     if (this.locationForm.valid) {
 
@@ -73,8 +79,7 @@ export class AddLocationModalComponent implements OnInit{
             if(isSuccess) {
               this.toastService.show({ type: 'success', message: 'Location added successfully' });
               this.locationForm.reset();
-
-              this.locationAdded.emit();
+              this.closeModal();
 
             } else {
               this.toastService.show({ type: 'error', message: 'Failed to add location' });

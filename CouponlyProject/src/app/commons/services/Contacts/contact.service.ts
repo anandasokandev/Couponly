@@ -48,4 +48,20 @@ updateContact(contactId: number, contactData: any): Observable<any> {
       { headers }
     );
   }
+
+
+
+ExportContactsToCsv(name?: string, email?: string, phonenumber?: string) {
+  const params: any = {};
+
+  if (name) params.name = name;
+  if (email) params.email = email;
+  if (phonenumber) params.phonenumber = phonenumber;
+
+  return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.contact.ExportCSV}`, {
+    params,
+    responseType: 'blob' // Important for downloading CSV
+  });
+}
+
 }
