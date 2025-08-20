@@ -15,7 +15,6 @@ import { Location } from '../../../../commons/models/location.model';
 import { from } from 'rxjs';
 import { DownloadRedeemsModelComponent } from '../../pages/download-redeems-model/download-redeems-model.component';
 import { RedeemsHistoryServiceService } from '../../../../commons/services/Coupon/redeems-history-service.service';
-import { CustomToastService } from '../../../../commons/services/custom-toast.service';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 @Component({
@@ -83,7 +82,7 @@ export class RedeemHistoryComponent {
 
   filterForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private redeemHistoryService: RedeemsHistoryServiceService, private toastService: CustomToastService) {
+  constructor(private fb: FormBuilder, private redeemHistoryService: RedeemsHistoryServiceService) {
     this.filterForm = this.fb.group({
       district: ['0'],
       location: ['0'],

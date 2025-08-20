@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
-import { CustomToastService } from '../../../../commons/services/custom-toast.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LocationService } from '../../../../commons/services/Admin/location.service';
 import { StoreService } from '../../../../commons/services/Store/store.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 @Component({
   selector: 'app-add-store-modal',
   imports: [
@@ -34,8 +34,8 @@ export class AddStoreModalComponent {
   locations:any[]=[];
   default:string="Choose a District";
   selectedFile: File | null = null;
-
-constructor(private toastService: CustomToastService,private fb: FormBuilder,private api:StoreService, private locationapi:LocationService) {}
+  private toast = inject(ToastService);
+  constructor(private fb: FormBuilder,private api:StoreService, private locationapi:LocationService) {}
 
 
 ngOnInit(){
@@ -110,7 +110,7 @@ createStore() {
             console.log('Result',payload)
           this.api.AddStore(payload).subscribe({
             next: () => {
-              this.toastService.show('Store created successfully!', 'success');
+              this.toast.show({ type: 'success', message: 'Store created successfully!' });
               this.addStoreForm.reset();
               this.selectedFile = null;
             },
