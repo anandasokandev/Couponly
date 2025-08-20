@@ -24,7 +24,7 @@
   
 }
 
-.danger {
+.error {
   background-color: #ffe7e5;
   
   color: #931e1e;
@@ -86,7 +86,7 @@
 }
 
 /* Icon for error toast */
-.danger .toast-icon {
+.error .toast-icon {
   background-image: url('src/assets/toastIcons/danger.png');
 }
 
