@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, ToastComponent, ToasterComponent, ToasterPlacement } from '@coreui/angular';
+import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, SpinnerComponent, ToastComponent, ToasterComponent, ToasterPlacement } from '@coreui/angular';
 import { CommonModule } from '@angular/common';
 import { District } from '../../../../commons/models/district.model';
 import { LocationService } from '../../../../commons/services/Admin/location.service';
@@ -20,7 +20,9 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
     FormControlDirective,
     ButtonDirective,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    ButtonDirective, 
+    SpinnerComponent
   ],
   templateUrl: './add-location-modal.component.html',
   styleUrl: './add-location-modal.component.scss'
@@ -31,6 +33,7 @@ export class AddLocationModalComponent implements OnInit{
   districts: District[] = [];
   @Output() locationAdded = new EventEmitter<Location>();
   @ViewChild('closeButton') closeButton!: ElementRef;
+  isLoading: boolean = false;
   
   constructor(private fb: FormBuilder, private toastService: ToastService, private locationApi: LocationService) {
   }
@@ -64,6 +67,7 @@ export class AddLocationModalComponent implements OnInit{
   }
 
   save() {
+    this.isLoading = !this.isLoading;
     if (this.locationForm.valid) {
 
       const formValue = {
@@ -79,8 +83,8 @@ export class AddLocationModalComponent implements OnInit{
             if(isSuccess) {
               this.toastService.show({ type: 'success', message: 'Location added successfully' });
               this.locationForm.reset();
+              this.isLoading = !this.isLoading;
               this.closeModal();
-
             } else {
               this.toastService.show({ type: 'error', message: 'Failed to add location' });
             }
