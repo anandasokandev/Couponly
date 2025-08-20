@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
@@ -23,7 +23,7 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
   styleUrl: './edit-store-modal.component.scss'
 })
 export class EditStoreModalComponent {
-
+ @Input() storeToEdit: any;
   editStoreForm: FormGroup;
 constructor(private fb: FormBuilder) {
   this.editStoreForm=this.fb.group({

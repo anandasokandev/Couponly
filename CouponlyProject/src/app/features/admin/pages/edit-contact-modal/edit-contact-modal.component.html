@@ -1,7 +1,7 @@
 <c-modal #editContactModal [scrollable]="true" alignment="center" id="editContactModal">
   <c-modal-header>
     <h5 cModalTitle>Edit Contact</h5>
-    <button [cModalToggle]="editContactModal.id" cButtonClose></button>
+    <button  #closeButton cModalToggle cButtonClose [cModalToggle]="editContactModal.id" cButtonClose></button>
   </c-modal-header>
 
   <c-modal-body>
