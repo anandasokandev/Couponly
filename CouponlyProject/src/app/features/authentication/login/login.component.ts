@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/commons/services/Authentication/login.service';
+import { LoginService } from './../../../commons/services/Authentication/login.service';
 
 @Component({
   selector: 'app-login',
@@ -46,12 +46,12 @@ export class LoginComponent {
   console.log('Login successful:', response);
 
                      
-                      sessionStorage.setItem('token', response.token);
-                      sessionStorage.setItem('role', response.role);
-                      sessionStorage.getItem('userId');
+                      sessionStorage.setItem('token', response.data.token);
+                      sessionStorage.setItem('role', response.data.role);
+                      sessionStorage.setItem('userId',response.data.userId);
                        
 
-                      console.log(response)
+                    
 
                       if (response.data.role === 'Admin') {
                         this.router.navigate(['/admin']);

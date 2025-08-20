@@ -1,0 +1,5 @@
+<div class="toast-card" [ngClass]="toast.type" @toastState>
+  <div class="toast-icon" [innerHTML]="iconSvg"></div>
+  <p class="toast-message">{{ toast.message }}</p>
+  <button class="toast-close" (click)="onClose()">×</button>
+</div>

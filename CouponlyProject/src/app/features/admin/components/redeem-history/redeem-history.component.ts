@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormCheckComponent, FormCheckInputDirective, ModalComponent, ModalToggleDirective, TableDirective } from '@coreui/angular';
+import { Component, inject } from '@angular/core';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormCheckComponent, FormCheckInputDirective, ModalComponent, ModalToggleDirective, SpinnerComponent, TableDirective } from '@coreui/angular';
 import { IconComponent, IconModule } from '@coreui/icons-angular';
 import { IconSubset } from '../../../../icons/icon-subset';
 import { cibIcloud, cibSoundcloud, cilCloudDownload, cilSortAlphaDown, cilSortAlphaUp } from '@coreui/icons';
@@ -15,7 +15,7 @@ import { Location } from '../../../../commons/models/location.model';
 import { from } from 'rxjs';
 import { DownloadRedeemsModelComponent } from '../../pages/download-redeems-model/download-redeems-model.component';
 import { RedeemsHistoryServiceService } from '../../../../commons/services/Coupon/redeems-history-service.service';
-// import { RedeemsHistoryServiceService } from 'src/app/commons/services/Coupon/redeems-history-service.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-redeem-history',
@@ -36,6 +36,8 @@ import { RedeemsHistoryServiceService } from '../../../../commons/services/Coupo
     ReactiveFormsModule,
     ModalToggleDirective,
     ModalComponent,
+    SpinnerComponent,
+
   ],
   templateUrl: './redeem-history.component.html',
   styleUrl: './redeem-history.component.scss'
@@ -54,6 +56,8 @@ export class RedeemHistoryComponent {
   toDate: string = '';
   isLoading: boolean = false;
   // selectedDistirctId: string = ''
+
+  private toast = inject(ToastService);
 
   redeems: RedeemHistory[] = []
 
@@ -140,11 +144,33 @@ export class RedeemHistoryComponent {
       a.download = 'Redeems History.xlsx';
       a.click();
       window.URL.revokeObjectURL(url);
+      this.toast.show({ type: 'success', message: 'Redeem history downloaded successfully!' });
     }, error => {
       console.error('Download failed', error);
+      this.toast.show({ type: 'error', message: 'Failed to download redeem history.' });
     });
   }
 
+  emailExcel() {
+    this.redeemHistoryService.ExportToExcelAndMail(
+      this.distirctId,
+      this.locationId,
+      this.fromDate,
+      this.toDate
+    ).subscribe({
+      next: (response) => {
+        if (response.isSuccess) {
+          this.toast.show({ type: 'success', message: response.data });
+        } else {
+          this.toast.show({ type: 'error', message: 'Failed to send redeem history email.' });
+        }
+      },
+      error: (error) => {
+        this.toast.show({ type: 'error', message: 'Failed to send redeem history email.' });
+        console.log(error);
+      }
+    });
+  }
 
   getRedeems() {
     this.isLoading = true;
