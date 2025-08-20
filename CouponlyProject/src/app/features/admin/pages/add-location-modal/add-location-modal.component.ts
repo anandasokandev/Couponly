@@ -21,8 +21,7 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
     ButtonDirective,
     ReactiveFormsModule,
     CommonModule,
-    ButtonDirective, 
-    SpinnerComponent
+    ButtonDirective
   ],
   templateUrl: './add-location-modal.component.html',
   styleUrl: './add-location-modal.component.scss'
