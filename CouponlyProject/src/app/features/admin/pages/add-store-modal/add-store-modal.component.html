@@ -1,8 +1,8 @@
 <c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
     id="verticallyCenteredScrollableModal">
     <c-modal-header>
-        <h5 cModalTitle>Add New Store</h5>
-        <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose (click)="resetForm()"></button>
+        <h5 cModalTitle>Edit Location</h5>
+        <button #closeButton cModalToggle cButtonClose></button>
     </c-modal-header>
     <c-modal-body>
         <form cForm [formGroup]="addStoreForm">
