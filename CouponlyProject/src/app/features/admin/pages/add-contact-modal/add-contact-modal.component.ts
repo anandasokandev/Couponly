@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
-import { CustomToastService } from '../../../../commons/services/custom-toast.service';
+
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
 import { ContactService } from '../../../../commons/services/Contacts/contact.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-add-contact-modal',
@@ -26,8 +27,8 @@ import { ContactService } from '../../../../commons/services/Contacts/contact.se
 })
 export class AddContactModalComponent {
  contactForm: FormGroup;
-
-  constructor(private fb: FormBuilder, private toastService: CustomToastService,private contactService: ContactService) {
+  private toast = inject(ToastService);
+  constructor(private fb: FormBuilder, private contactService: ContactService) {
     this.contactForm = this.fb.group({
       Name: ['', Validators.required],
       PhoneNumber: ['', [ Validators.required, Validators.pattern(/^[6-9][0-9]{9}$/) ]],
@@ -38,7 +39,7 @@ export class AddContactModalComponent {
   createContact() {
   if (this.contactForm.invalid) {
     this.contactForm.markAllAsTouched();
-    this.toastService.show('❌ Please correct the errors before submitting.', 'error');
+    this.toast.show({ type: 'error', message: 'Please correct the errors before submitting.' });
     return;
   }
 
@@ -46,8 +47,8 @@ export class AddContactModalComponent {
 
   this.contactService.addContact(contactData).subscribe({
     next: (response : any) => {
-      this.toastService.show('✅ Contact created successfully!', 'success');
-     
+      this.toast.show({ type: 'success', message: 'Contact created successfully!' });
+
       // console.log(this.contactService);
 
       this.contactForm.reset(); // Optional: clear the form
@@ -55,7 +56,7 @@ export class AddContactModalComponent {
     error: (err) => {
       console.error('Error creating contact:', err);
       // console.log(this.contactService);
-      this.toastService.show('❌ Failed to create contact.', 'error');
+      this.toast.show({ type: 'error', message: 'Failed to create contact.' });
     }
   });
 }
@@ -86,7 +87,5 @@ validatePhoneInput(event: KeyboardEvent): void {
     event.preventDefault();
   }
 }
-
-
   
 }

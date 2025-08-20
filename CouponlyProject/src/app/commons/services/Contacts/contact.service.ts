@@ -42,7 +42,7 @@ updateContact(contactId: number, contactData: any): Observable<any> {
     id: contactId
   });
 
-  return this.http.put(
+  return this.http.post(
       `${environment.apiBaseUrl}/${environment.endpoints.contact.EditContact}`,
       contactData,
       { headers }
