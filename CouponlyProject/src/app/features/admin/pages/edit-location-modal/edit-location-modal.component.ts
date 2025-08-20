@@ -32,11 +32,16 @@ export class EditLocationModalComponent {
 
   districts: District[] = [];
 
+  ngOnInit() {
+    this.fetchDistrict();
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['location'] && this.location) {
       this.selectedDistrict = this.location.districtName;
     }
-    this.fetchDistrict();
+
+    console.log(this.selectedDistrict);
   }
   
   fetchDistrict(): void {

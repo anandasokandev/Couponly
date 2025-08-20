@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, ToastComponent, ToasterComponent, ToasterPlacement } from '@coreui/angular';
+import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, ToastComponent, ToasterComponent, ToasterPlacement } from '@coreui/angular';
 import { CustomToastService } from '../../../../commons/services/custom-toast.service';
-import { LocationService } from 'src/app/commons/services/Admin/location.service';
-import { District } from 'src/app/commons/models/district.model';
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { District } from '../../../../commons/models/district.model';
+import { LocationService } from '../../../../commons/services/Admin/location.service';
 
 @Component({
   selector: 'app-add-location-modal',
@@ -27,19 +27,21 @@ import { CommonModule, NgClass } from '@angular/common';
 })
 export class AddLocationModalComponent implements OnInit{
 
-  locationForm: FormGroup;
+  locationForm!: FormGroup;
   districts: District[] = [];
-
+  @Output() locationAdded = new EventEmitter<Location>();
+  
   constructor(private fb: FormBuilder, private toastService: CustomToastService, private locationApi: LocationService) {
-    this.locationForm = this.fb.group({
-      district: ['', Validators.minLength(2)],
-      locationName: ['', Validators.minLength(4)],
-      pincode: ['',[Validators.required, Validators.minLength(6)]],
-      latitude: ['', Validators.required],
-      longitude: ['', Validators.required]
-    });
   }
   ngOnInit(): void {
+    this.locationForm = this.fb.group({
+      district: ['', Validators.required],
+      locationName: ['', [Validators.required, Validators.minLength(3)]],
+      pincode: ['', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
+      latitude: ['', [Validators.required, Validators.pattern(/^[-+]?[0-9]*\.?[0-9]+$/)]],
+      longitude: ['', [Validators.required, Validators.pattern(/^[-+]?[0-9]*\.?[0-9]+$/)]],
+    });
+
     this.fetchDistrict();
   }
 
@@ -50,10 +52,39 @@ export class AddLocationModalComponent implements OnInit{
       error: (err) => console.error('Error fetching districts:', err)
     })
   }
+
+  get f() {
+    return this.locationForm.controls;
+  }
+
   save() {
     if (this.locationForm.valid) {
-      this.toastService.show('✅ Location Created Successfully', 'success');
-      console.log(this.locationForm.value);
+
+      const formValue = {
+      ...this.locationForm.value,
+      districtId: Number(this.locationForm.value.district),
+      pincode: Number(this.locationForm.value.pincode)
+      };
+
+      console.log(formValue);
+      this.locationApi.addLocation(formValue)
+        .subscribe({
+          next: ({isSuccess, statusMessage}) => {
+            if(isSuccess) {
+              this.toastService.show('✅ Location created successfully', 'success');
+              this.locationForm.reset();
+
+              this.locationAdded.emit();
+
+            } else {
+              this.toastService.show(`❌, ${statusMessage}`, 'danger');
+            }
+          },
+          error: (err) => {
+            console.error('Error creating location:', err);
+            this.toastService.show('❌', 'danger');
+          }
+        });
     }
   }
 

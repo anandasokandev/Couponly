@@ -76,7 +76,5 @@ validatePhoneInput(event: KeyboardEvent): void {
     event.preventDefault();
   }
 }
-
-
   
 }

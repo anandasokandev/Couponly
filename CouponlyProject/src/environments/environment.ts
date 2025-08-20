@@ -16,8 +16,10 @@ export const environment = {
     },
     location: {
       fetchDistrict: 'District',
+      addLocation: "Location",
       fetchLocation: 'Location',
-      filterLocation: 'Location/filter'
+      filterLocation: 'Location/filter',
+      toggleLocation: 'Location/toggle'
     },
      store: {
       fetchdistricts:'District',
