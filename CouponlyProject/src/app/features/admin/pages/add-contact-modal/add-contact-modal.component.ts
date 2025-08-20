@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, inject, viewChild } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
 import { ContactService } from '../../../../commons/services/Contacts/contact.service';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
+import { ViewChild } from '@angular/core';
+import { Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-add-contact-modal',
@@ -26,6 +29,9 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
   styleUrl: './add-contact-modal.component.scss'
 })
 export class AddContactModalComponent {
+@Output() contactAdded = new EventEmitter<void>();
+
+
  contactForm: FormGroup;
   private toast = inject(ToastService);
   constructor(private fb: FormBuilder, private contactService: ContactService) {
@@ -51,7 +57,10 @@ export class AddContactModalComponent {
 
       // console.log(this.contactService);
 
-      this.contactForm.reset(); // Optional: clear the form
+      this.contactForm.reset(); 
+      this.contactAdded.emit();
+      
+      this.closeModal(); 
     },
     error: (err) => {
       console.error('Error creating contact:', err);
@@ -60,6 +69,15 @@ export class AddContactModalComponent {
     }
   });
 }
+
+
+@ViewChild('closeButton') closeButton!: ElementRef;
+
+
+closeModal(): void {
+    // You can also call this method from anywhere
+    this.closeButton.nativeElement.click();
+  }
 
   validateNameInput(event: KeyboardEvent): void {
   const inputChar = event.key;

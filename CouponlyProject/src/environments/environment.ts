@@ -1,6 +1,8 @@
 export const environment = {
   production: true,
   apiBaseUrl: 'https://api.couponly.store/api',
+  imageUploadUrl: 'https://images.couponly.store/api/upload',
+  imageKey: '5dtg419dtny9y84nu67ry7',
   endpoints: {
     redeem: {
       downloadexel: 'Redeems/downloadexel',
@@ -39,7 +41,8 @@ export const environment = {
       AllContacts: 'Contact/AllContacts',
       AllFilters: 'Contact/AllFilters',
       AddContact : 'Contact/AddContact',
-      EditContact : 'Contact/updatebyid'
+      EditContact : 'Contact/updatebyid',
+      ExportCSV: 'Contact/ExportContactsToCsv'
     },
     login:{
       signup:'/Login'

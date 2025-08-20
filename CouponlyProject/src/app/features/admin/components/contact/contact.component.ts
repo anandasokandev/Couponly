@@ -6,6 +6,8 @@ import { AddContactModalComponent } from '../../pages/add-contact-modal/add-cont
 
 import { FormsModule } from '@angular/forms';
 import { ContactService } from '../../../../commons/services/Contacts/contact.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
+
 
 
 @Component({
@@ -37,7 +39,7 @@ export class ContactComponent {
 
 
 
-  constructor(private api:ContactService){}
+  constructor(private api:ContactService,private toast:ToastService){}
   ngOnInit() {
     this.isLoading = true;
     this.api.FetchContacts().subscribe({
@@ -52,6 +54,26 @@ export class ContactComponent {
       }
     });
   }
+
+
+  
+emailCsv() {
+  this.api.ExportContactsToCsv(this.name, this.email, this.phonenumber).subscribe({
+    next: (blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'contacts.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+      this.toast.show({ type: 'success', message: 'CSV downloaded successfully.' });
+    },
+    error: (error: any) => {
+      this.toast.show({ type: 'error', message: 'Failed to download CSV.' });
+      console.error(error);
+    }
+  });
+}
 
   openEditModal(contact: any) {
   this.selectedContact = {
@@ -78,6 +100,8 @@ FilterContact() {
   });
 }
 
+
+
 ResetFilters() {
   this.name = '';
   this.email = '';
@@ -95,6 +119,33 @@ ResetFilters() {
     }
   });
 }
+
+
+
+ContactList() {
+  this.api.FetchContacts().subscribe({
+    next: (response: any) => {
+      this.contacts = response.data;
+      // this.toast.show({ type: 'info', message: 'Contact list updated.' });
+    },
+    error: (err) => {
+      console.error('Error refreshing contacts:', err);
+    }
+  });
+}
+
+refreshContactList() {
+ this.api.FetchContacts().subscribe({
+    next: (response: any) => {
+      this.contacts = response.data;
+      // this.toast.show({ type: 'info', message: 'Contact list updated.' });
+    },
+    error: (err) => {
+      console.error('Error refreshing contacts:', err);
+    }
+  });
+}
+
 
 
 }
