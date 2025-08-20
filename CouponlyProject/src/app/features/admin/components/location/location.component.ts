@@ -21,7 +21,7 @@ import { cilSortAlphaUp, cilSortAlphaDown } from '@coreui/icons';
 import { Location } from '../../../../commons/models/location.model';
 import { LocationService } from '../../../../commons/services/Admin/location.service';
 import { District } from '../../../../commons/models/district.model';
-import { Toast } from '../../../../commons/services/Toaster/toast.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 type SortDirection = '' | 'asc' | 'desc';
 
@@ -49,7 +49,7 @@ type SortDirection = '' | 'asc' | 'desc';
   styleUrls: ['./location.component.scss']
 })
 export class LocationComponent {
-  constructor(private locationApi: LocationService,  private toastService: Toast) { }
+  constructor(private locationApi: LocationService,  private toastService: ToastService) { }
 
   districts: District[] = [];
   locations: Location[] = [];
@@ -123,9 +123,9 @@ export class LocationComponent {
       next: (data) => {
         console.log(data);
           if(data.isSuccess) {
-            this.toastService.show('Location status changed','success');
+            this.toastService.show({ type: 'success', message: 'Success' });
           }else {
-            this.toastService.show('Failed to change location status','danger');
+            this.toastService.show({ type: 'error', message: `Failed to change status` });
           }
         },
         error: (err) => console.error('Error toggling location:', err)

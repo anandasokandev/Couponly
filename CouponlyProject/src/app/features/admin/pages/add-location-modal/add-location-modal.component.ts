@@ -1,16 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, ToastComponent, ToasterComponent, ToasterPlacement } from '@coreui/angular';
-import { LocationService } from '../../../../commons/services/Admin/location.service';
-import { District } from '../../../../commons/models/district.model';
-import { CommonModule, NgClass } from '@angular/common';
-import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, ToastComponent, ToasterComponent, ToasterPlacement } from '@coreui/angular';
-import { CustomToastService } from '../../../../commons/services/custom-toast.service';
 import { CommonModule } from '@angular/common';
 import { District } from '../../../../commons/models/district.model';
 import { LocationService } from '../../../../commons/services/Admin/location.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-add-location-modal',
@@ -35,11 +29,9 @@ export class AddLocationModalComponent implements OnInit{
 
   locationForm!: FormGroup;
   districts: District[] = [];
-  private toast = inject(ToastService);
-  constructor(private fb: FormBuilder, private locationApi: LocationService) {
   @Output() locationAdded = new EventEmitter<Location>();
   
-  constructor(private fb: FormBuilder, private toastService: CustomToastService, private locationApi: LocationService) {
+  constructor(private fb: FormBuilder, private toastService: ToastService, private locationApi: LocationService) {
   }
   ngOnInit(): void {
     this.locationForm = this.fb.group({
@@ -79,22 +71,20 @@ export class AddLocationModalComponent implements OnInit{
         .subscribe({
           next: ({isSuccess, statusMessage}) => {
             if(isSuccess) {
-              this.toastService.show('✅ Location created successfully', 'success');
+              this.toastService.show({ type: 'success', message: 'Location added successfully' });
               this.locationForm.reset();
 
               this.locationAdded.emit();
 
             } else {
-              this.toastService.show(`❌, ${statusMessage}`, 'danger');
+              this.toastService.show({ type: 'error', message: 'Failed to add location' });
             }
           },
           error: (err) => {
             console.error('Error creating location:', err);
-            this.toastService.show('❌', 'danger');
+            this.toastService.show({ type: 'error', message: 'Error adding location' });
           }
         });
-      this.toast.show({ type: 'success', message: 'Location Created Successfully' });
-      console.log(this.locationForm.value);
     }
   }
 
