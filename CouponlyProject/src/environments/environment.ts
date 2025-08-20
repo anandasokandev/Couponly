@@ -17,7 +17,9 @@ export const environment = {
       login: 'user/login',
       fetchusers: 'User/AllUsers',
       filterusers: 'User/FilterUser',
-      addusers:'User/AddUser'
+      addusers:'User/AddUser',
+      disableusers:'User/DisableUser'
+      
 
     },
     location: {

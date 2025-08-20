@@ -23,8 +23,8 @@
 
         <c-card-body>
             <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
-                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy" [(ngModel)]="searchType"
-        (change)="FilterUser()">
+                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy"
+                    [(ngModel)]="searchType" (change)="FilterUser()">
                     <option value="5">All</option>
                     <option value="1">First Name</option>
                     <option value="2">Last Name</option>
@@ -34,10 +34,12 @@
 
                 <input type="text" class="form-control form-control-sm" style="max-width: 280px"
                     placeholder="🔍 Search By..." aria-label="Search by " [(ngModel)]="searchText"
-       (keyup.enter)="FilterUser()"/>
+                    (input)="FilterUser()" />
 
-                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy" [(ngModel)]="userType"
-        (change)="FilterUser()">
+
+
+                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy"
+                    [(ngModel)]="userType" (change)="FilterUser()">
                     <option value="0">🧩 All Type</option>
                     <option value="5">🛡️ Admin</option>
                     <option value="3">👤 User</option>
@@ -45,7 +47,8 @@
 
                 </select>
 
-                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy" [(ngModel)]="statusFilter" (change)="onStatusChange()">
+                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy"
+                    [(ngModel)]="statusFilter" (change)="onStatusChange()">
                     <option value="">🔘 All Status</option>
                     <option value="true">🟢 Active</option>
                     <option value="false">🔴 Inactive</option>
@@ -84,9 +87,12 @@
                             <td>{{ user.type }}</td>
                             <td data-label="Active">
                                 <c-form-check [switch]="true">
-                                    <input cFormCheckInput checked type="checkbox" />
+                                    <input cFormCheckInput type="checkbox" [checked]="user.isActive"
+                                        (change)="onToggleUserStatus(user)" />
                                 </c-form-check>
                             </td>
+
+
                             <td data-label="">
                                 <button class="btn btn-sm btn-outline-primary" [cModalToggle]="'editUserModal'"
                                     (click)="openEditUserModal(user)">
