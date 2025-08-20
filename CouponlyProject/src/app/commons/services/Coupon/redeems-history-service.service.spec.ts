@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { RedeemsHistoryServiceService } from './redeems-history-service.service';
 
 describe('RedeemsHistoryServiceService', () => {

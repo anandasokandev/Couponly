@@ -27,7 +27,18 @@ export class StoreService {
 
   return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.store.filterstore}`, { params });}
 
-  
+  //uploadImage
+  UploadImage(file: File): Observable<{ fileName: string }> {
+    const formData = new FormData();
+    formData.append('file', file);
 
+    return this.http.post<{ fileName: string }>( `${environment.apiBaseUrl}/${environment.endpoints.store.upload}`,formData);}
+    //addstore
 
+    AddStore(data: any): Observable<any> {
+  return this.http.post(
+    `${environment.apiBaseUrl}/${environment.endpoints.store.addStore}`,
+    data
+  );
+}
 }

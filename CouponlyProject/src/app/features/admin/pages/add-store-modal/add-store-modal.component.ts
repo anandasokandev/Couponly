@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
-import { CustomToastService } from '../../../../commons/services/custom-toast.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LocationService } from '../../../../commons/services/Admin/location.service';
 import { StoreService } from '../../../../commons/services/Store/store.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 @Component({
   selector: 'app-add-store-modal',
   imports: [
@@ -31,8 +31,11 @@ export class AddStoreModalComponent {
   addStoreForm!: FormGroup;
   categories:any[]=[];
   districts:any[]=[];
-
-constructor(private toastService: CustomToastService,private fb: FormBuilder,private api:StoreService, private locationapi:LocationService) {}
+  locations:any[]=[];
+  default:string="Choose a District";
+  selectedFile: File | null = null;
+  private toast = inject(ToastService);
+  constructor(private fb: FormBuilder,private api:StoreService, private locationapi:LocationService) {}
 
 
 ngOnInit(){
@@ -62,6 +65,20 @@ ngOnInit(){
   });
 }
 
+selectLocationByDistrict(){
+  const districtId=this.addStoreForm.value.district;
+  if(districtId!=""){
+    this.default="choose a Location"
+  this.locationapi.filterLocation(districtId,'','').subscribe({
+    next:(response: any) =>{
+          this.locations=response.data;
+        }
+  })
+}
+else{
+  this.locations=[];
+}
+}
 allowOnlyNumbers(event: KeyboardEvent) {
   const charCode = event.charCode;
   if (charCode < 48 || charCode > 57) {
@@ -69,13 +86,45 @@ allowOnlyNumbers(event: KeyboardEvent) {
   }
 }
 
+onFileSelected(event: any) {
+  this.selectedFile = event.target.files[0];
+}
+
 createStore() {
   if (this.addStoreForm.valid) {
-    this.toastService.show('Store created successfully!', 'success');
-    this.addStoreForm.reset();
+    if (this.selectedFile) {
+      this.api.UploadImage(this.selectedFile).subscribe({
+        next: res => {
+          const payload = {
+            StoreName: this.addStoreForm.value.storeName,
+            Address: this.addStoreForm.value.storeAddress,
+            Logo: res.fileName,
+            Contact: this.addStoreForm.value.storeContact,
+            Email: this.addStoreForm.value.storeEmail,
+            LocationId: this.addStoreForm.value.storeLocation,
+            CategoryId: this.addStoreForm.value.storeCategory,
+            ApprovedBy: 5,
+            Type: this.addStoreForm.value.storeType,
+            Password: this.addStoreForm.value.storePassword
+          };
+            console.log('Result',payload)
+          this.api.AddStore(payload).subscribe({
+            next: () => {
+              this.toast.show({ type: 'success', message: 'Store created successfully!' });
+              this.addStoreForm.reset();
+              this.selectedFile = null;
+            },
+            error: err => console.error('Store creation failed', err)
+          });
+        },
+        error: err => console.error('Image upload failed', err)
+      });
+    } else {
+      console.warn('No image selected');
+    }
   } else {
     this.addStoreForm.markAllAsTouched();
-    console.log('Invalid', this.addStoreForm.value);
+    console.log('Invalid form', this.addStoreForm.value);
   }
 }
 

@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
-import { CustomToastService } from '../../../../commons/services/custom-toast.service';
+
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ContactService } from '../../../../commons/services/Contacts/contact.service';
+import { OnChanges, SimpleChanges } from '@angular/core';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 
 @Component({
@@ -26,27 +29,57 @@ import { CommonModule } from '@angular/common';
   styleUrl: './edit-contact-modal.component.scss'
 })
 export class EditContactModalComponent {
-  editContactForm: FormGroup;
+  @Input() contactToEdit: any;
 
-  constructor(private fb: FormBuilder , private toastService: CustomToastService) {
+  editContactForm: FormGroup;
+  private toast = inject(ToastService);
+  constructor(
+    private fb: FormBuilder,
+    private contactService: ContactService
+  ) {
     this.editContactForm = this.fb.group({
-      name: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)]],
-      email: ['', [Validators.required, Validators.email]]
+      Name: ['', Validators.required],
+      PhoneNumber: ['', [Validators.required, Validators.pattern(/^[6-9][0-9]{9}$/)]],
+      Email: ['', [Validators.required, Validators.email]]
     });
   }
 
-  createContacts() {
-    if (this.editContactForm.invalid) {
-      this.editContactForm.markAllAsTouched();
-      this.toastService.show('❌ Please correct the errors before submitting.');
-      return;
-    }
-
-    // Save logic can go here
-    console.log(this.editContactForm.value);
-    this.toastService.show('✅ Contact created successfully!', 'success');
+ngOnChanges(changes: SimpleChanges): void {
+  if (changes['contactToEdit'] && this.contactToEdit) {
+    this.editContactForm.patchValue({
+      Name: this.contactToEdit.name,
+      PhoneNumber: this.contactToEdit.phoneNumber,
+      Email: this.contactToEdit.email
+    });
   }
+}
+
+
+createContacts() {
+  if (this.editContactForm.invalid) {
+    this.editContactForm.markAllAsTouched();
+    this.toast.show({ type: 'error', message: 'Please correct the errors before submitting.' });
+    return;
+  }
+
+  const contactData = this.editContactForm.value;
+
+  if (this.contactToEdit?.id) {
+    // Edit mode
+    this.contactService.updateContact(this.contactToEdit.id, contactData).subscribe({
+   
+  next: (response) => {
+    console.log('Update response:', response);  // Check response here
+    this.toast.show({ type: 'success', message: 'Contact updated successfully!' });
+  },
+  error: (error) => {
+    console.error('Error updating contact:', error);  // Log the error for more details
+    this.toast.show({ type: 'error', message: 'Failed to update contact.' });
+  }
+});
+}
+  }
+
 
   validateNameInputs(event: KeyboardEvent): void {
   const inputChar = event.key;
@@ -59,7 +92,7 @@ export class EditContactModalComponent {
 
 validatePhoneInputs(event: KeyboardEvent): void {
   const inputChar = event.key;
-  const currentValue = this.editContactForm.get('phone')?.value || '';
+  const currentValue = this.editContactForm.get('PhoneNumber')?.value || '';
 
   // Only allow digits
   if (!/^\d$/.test(inputChar)) {
@@ -67,11 +100,6 @@ validatePhoneInputs(event: KeyboardEvent): void {
     return;
   }
 
-  // First digit must be 6–9
-  if (currentValue.length === 0 && !/[6-9]/.test(inputChar)) {
-    event.preventDefault();
-    return;
-  }
 
   // Max 10 digits
   if (currentValue.length >= 10) {
