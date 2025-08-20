@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, ElementRef, inject, Input } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { ContactService } from '../../../../commons/services/Contacts/contact.service';
 import { OnChanges, SimpleChanges } from '@angular/core';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
+import { ViewChild } from '@angular/core';
+import { Output, EventEmitter } from '@angular/core';
 
 
 @Component({
@@ -29,6 +31,7 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
   styleUrl: './edit-contact-modal.component.scss'
 })
 export class EditContactModalComponent {
+  @Output() contactUpdated = new EventEmitter<void>();
   @Input() contactToEdit: any;
 
   editContactForm: FormGroup;
@@ -55,6 +58,14 @@ ngOnChanges(changes: SimpleChanges): void {
 }
 
 
+@ViewChild('closeButton') closeButton!: ElementRef;
+
+
+closeModal(): void {
+    // You can also call this method from anywhere
+    this.closeButton.nativeElement.click();
+  }
+
 createContacts() {
   if (this.editContactForm.invalid) {
     this.editContactForm.markAllAsTouched();
@@ -71,6 +82,10 @@ createContacts() {
   next: (response) => {
     console.log('Update response:', response);  // Check response here
     this.toast.show({ type: 'success', message: 'Contact updated successfully!' });
+    this.contactUpdated.emit();
+    this.closeModal(); 
+    
+
   },
   error: (error) => {
     console.error('Error updating contact:', error);  // Log the error for more details
