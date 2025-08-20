@@ -21,6 +21,7 @@ import { cilSortAlphaUp, cilSortAlphaDown } from '@coreui/icons';
 import { Location } from '../../../../commons/models/location.model';
 import { LocationService } from '../../../../commons/services/Admin/location.service';
 import { District } from '../../../../commons/models/district.model';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 type SortDirection = '' | 'asc' | 'desc';
 
@@ -48,7 +49,7 @@ type SortDirection = '' | 'asc' | 'desc';
   styleUrls: ['./location.component.scss']
 })
 export class LocationComponent {
-  constructor(private locationApi: LocationService) { }
+  constructor(private locationApi: LocationService,  private toastService: ToastService) { }
 
   districts: District[] = [];
   locations: Location[] = [];
@@ -60,6 +61,7 @@ export class LocationComponent {
   locationSortDirection: SortDirection = '';
   selectedLocation: Location | null = null;
   icons = { cilSortAlphaUp, cilSortAlphaDown };
+  isLoading: boolean = false;
 
   // Pagination
   currentPage = 1;
@@ -73,21 +75,27 @@ export class LocationComponent {
   }
 
   fetchLocation(): void {
+    this.isLoading = true;
     this.locationApi.fetchLocation(this.currentPage, this.pageSize, this.pageSize)
       .subscribe({
         next: (data) => {
           this.locations = data.data.items || [];
           this.filteredLocations = [...this.locations];
           this.calculatePagination();
+          this.isLoading = false;
         },
         error: (err) => console.error('Error fetching locations:', err)
       });
   }
 
   fetchDistrict(): void {
+    this.isLoading = true;
     this.locationApi.fetchDistrict()
       .subscribe({
-        next: (data) => this.districts = data.data || [],
+        next: (data) => {
+          this.districts = data.data || [];
+          this.isLoading = false;
+        },
         error: (err) => console.error('Error fetching districts:', err)
       });
   }
@@ -107,6 +115,26 @@ export class LocationComponent {
         error: (err) => console.error('Error fetching locations:', err)
       });
 
+  }
+
+  toggleLocation(id: number) {
+    this.locationApi.toggleLocation(id)
+    .subscribe({
+      next: (data) => {
+        console.log(data);
+          if(data.isSuccess) {
+            this.toastService.show({ type: 'success', message: 'Success' });
+          }else {
+            this.toastService.show({ type: 'error', message: `Failed to change status` });
+          }
+        },
+        error: (err) => console.error('Error toggling location:', err)
+    })
+  }
+
+  onLocationAdded(newLocation: Location) {
+    console.log('New location added:', newLocation);
+    this.fetchLocation();
   }
 
   resetFilters(): void {

@@ -1,40 +1,69 @@
-
 <c-modal-header>
-    <h5 cModalTitle>Add New Location</h5>
-    <button cModalToggle cButtonClose></button>
+  <h5 cModalTitle>Add New Location</h5>
+  <button cModalToggle cButtonClose></button>
 </c-modal-header>
+
 <c-modal-body>
-    <form cForm [formGroup]="locationForm">
-        <div class="mb-3">
-            <label cLabel for="districtSelect">District <span class="text-danger">*</span></label>
-            <select class="form-control" name="district" id="districtSelect" formControlName="district" required="">
-                <option value="">Select District</option>
-                <option *ngFor="let district of districts" [value]="district.id">
-                    {{ district.districtName }}
-                </option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label cLabel for="locationName">Location <span class="text-danger">*</span></label>
-            <input cFormControl id="locationName" formControlName="locationName" placeholder="Kochi" type="text" required="" />
-        </div>
-        <div class="mb-3">
-            <label cLabel for="pincode">Pincode <span class="text-danger">*</span></label>
-            <input cFormControl id="pincode" formControlName="pincode" placeholder="682020" type="text" required="" />
-        </div>
-        <div class="mb-3">
-            <label cLabel for="latitude">Latitude <span class="text-danger">*</span></label>
-            <input cFormControl id="latitude" formControlName="latitude" placeholder="10.0232491" type="text" />
-        </div>
-        <div class="mb-3">
-            <label cLabel for="longitude">Longitude <span class="text-danger">*</span></label>
-            <input cFormControl id="longitude" formControlName="longitude" placeholder="76.3265778" type="text" />
-        </div>
-    </form>
+  <form cForm [formGroup]="locationForm">
+    <!-- District -->
+    <div class="mb-3">
+      <label cLabel for="districtSelect">District <span class="text-danger">*</span></label>
+      <select class="form-control" id="districtSelect" formControlName="district">
+        <option value="">Select District</option>
+        <option *ngFor="let district of districts" [value]="district.id">
+          {{ district.districtName }}
+        </option>
+      </select>
+      <div class="text-danger" *ngIf="f['district'].touched && f['district'].hasError('required')">
+        District is required.
+      </div>
+    </div>
+
+    <!-- Location Name -->
+    <div class="mb-3">
+      <label cLabel for="locationName">Location <span class="text-danger">*</span></label>
+      <input cFormControl id="locationName" formControlName="locationName" placeholder="Kochi" type="text" />
+      <div class="text-danger" *ngIf="f['locationName'].touched && f['locationName'].errors">
+        <small *ngIf="f['locationName'].hasError('required')">Location is required.</small>
+        <small *ngIf="f['locationName'].hasError('minlength')">Minimum 3 characters required.</small>
+      </div>
+    </div>
+
+    <!-- Pincode -->
+    <div class="mb-3">
+      <label cLabel for="pincode">Pincode <span class="text-danger">*</span></label>
+      <input cFormControl id="pincode" formControlName="pincode" placeholder="682020" type="text" />
+      <div class="text-danger" *ngIf="f['pincode'].touched && f['pincode'].errors">
+        <small *ngIf="f['pincode'].hasError('required')">Pincode is required.</small>
+        <small *ngIf="f['pincode'].hasError('pattern')">Enter a valid 6-digit pincode.</small>
+      </div>
+    </div>
+
+    <!-- Latitude -->
+    <div class="mb-3">
+      <label cLabel for="latitude">Latitude <span class="text-danger">*</span></label>
+      <input cFormControl id="latitude" formControlName="latitude" placeholder="10.0232491" type="text" />
+      <div class="text-danger" *ngIf="f['latitude'].touched && f['latitude'].errors">
+        <small *ngIf="f['latitude'].hasError('required')">Latitude is required.</small>
+        <small *ngIf="f['latitude'].hasError('pattern')">Enter a valid latitude.</small>
+      </div>
+    </div>
+
+    <!-- Longitude -->
+    <div class="mb-3">
+      <label cLabel for="longitude">Longitude <span class="text-danger">*</span></label>
+      <input cFormControl id="longitude" formControlName="longitude" placeholder="76.3265778" type="text" />
+      <div class="text-danger" *ngIf="f['longitude'].touched && f['longitude'].errors">
+        <small *ngIf="f['longitude'].hasError('required')">Longitude is required.</small>
+        <small *ngIf="f['longitude'].hasError('pattern')">Enter a valid longitude.</small>
+      </div>
+    </div>
+  </form>
 </c-modal-body>
+
 <c-modal-footer>
-    <button type="reset" cButton color="secondary" (click)="locationForm.reset()">
-        Reset
-    </button>
-    <button cButton color="primary" (click)="save()">Save</button>
+  <button type="reset" cButton color="secondary" (click)="locationForm.reset()">
+    Reset
+  </button>
+  <button cButton color="primary" (click)="save()">Save</button>
 </c-modal-footer>

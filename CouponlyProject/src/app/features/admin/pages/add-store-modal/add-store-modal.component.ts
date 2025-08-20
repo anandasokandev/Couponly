@@ -95,10 +95,11 @@ createStore() {
     if (this.selectedFile) {
       this.api.UploadImage(this.selectedFile).subscribe({
         next: res => {
+          console.log("RESULTTT",res)
           const payload = {
             StoreName: this.addStoreForm.value.storeName,
             Address: this.addStoreForm.value.storeAddress,
-            Logo: res.fileName,
+            Logo: res.url,
             Contact: this.addStoreForm.value.storeContact,
             Email: this.addStoreForm.value.storeEmail,
             LocationId: this.addStoreForm.value.storeLocation,

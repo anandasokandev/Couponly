@@ -33,12 +33,25 @@ export class LocationService {
   }
 
   filterLocation(districtId: number | null, location: string, pincode: string): Observable<any> {
-  const params: any = {};
-  
-  if (districtId != null) params.districtId = districtId;
-  if (location) params.location = location;
-  if (pincode) params.pincode = pincode;
+    const params: any = {};
 
-  return this.http.get<any>(`${environment.apiBaseUrl}/${environment.endpoints.location.filterLocation}`, { params });
-}
+    if (districtId != null) params.districtId = districtId;
+    if (location) params.location = location;
+    if (pincode) params.pincode = pincode;
+
+    return this.http.get<any>(`${environment.apiBaseUrl}/${environment.endpoints.location.filterLocation}`, { params });
+  }
+
+  toggleLocation(id: number): Observable<any> {
+    return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.location.toggleLocation}`,{},
+      {
+      headers: {
+        id: id.toString()
+      }
+    });
+  }
+
+  addLocation(location: Location): Observable<any> {
+    return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.location.addLocation}`, location);
+  }
 }
