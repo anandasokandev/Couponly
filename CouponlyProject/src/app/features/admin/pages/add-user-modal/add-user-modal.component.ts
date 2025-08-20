@@ -6,10 +6,8 @@ import {
   ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective,
   ModalToggleDirective
 } from '@coreui/angular';
-
 import { AddUserDTO } from '../../../../commons/models/adduser.module';
 import { UserService } from '../../../../commons/services/Users/user.service';
-import { FormsModule, NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';

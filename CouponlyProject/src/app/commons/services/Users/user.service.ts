@@ -1,4 +1,5 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
@@ -27,11 +28,29 @@ searchUsers(userType: number, isActive: boolean | null, searchType: number, sear
   return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.user.filterusers}`, { params });}
   
 
-
-
   addUser(user: AddUserDTO): Observable<any> {
   return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.user.addusers}`, user);
 }
+
+// disableuser(userId: number): Observable<any> {
+//   return this.http.post(
+//     `${environment.apiBaseUrl}/${environment.endpoints.user.disableusers}`,
+//     { userId }
+//   );
+// }
+disableuser(userId: number): Observable<any> {
+  const headers = new HttpHeaders().set('userId', userId.toString());
+  return this.http.post(
+    `${environment.apiBaseUrl}/${environment.endpoints.user.disableusers}`,
+    {}, // empty body
+    { headers }
+  );
+}
+
+
+
+
+
 
 }
 

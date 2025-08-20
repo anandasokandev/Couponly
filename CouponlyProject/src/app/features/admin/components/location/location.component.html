@@ -1,7 +1,7 @@
 <c-modal #editLocationModal [scrollable]="true" alignment="center" id="editLocationModal">
-    <app-edit-location-modal [location]="selectedLocation"></app-edit-location-modal>
+    <app-edit-location-modal [location]="selectedLocation">
+    </app-edit-location-modal>
 </c-modal>
-
 
 <c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
     id="verticallyCenteredScrollableModal">
@@ -50,46 +50,82 @@
                     </button>
                 </th>
             </div>
-            <table cTable class="responsive-table">
-                <thead>
-                    <tr>
-                        <th scope="col" data-label="#">#</th>
-                        <th scope="col" data-label="District Name">District Name</th>
-                        <th scope="col" data-label="Location Name">Location Name</th>
-                        <th scope="col" data-label="Pincode">Pincode</th>
-                        <th scope="col" data-label="Latitude">Latitude</th>
-                        <th scope="col" data-label="Longitude">Longitude</th>
-                        <th scope="col" data-label="Active">Active</th>
-                        <th scope="col" data-label="Edit">Edit</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <ng-container *ngFor="let loc of filteredLocations; let i = index">
+            <div *ngIf="isLoading" class="d-flex justify-content-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div *ngIf="isLoading == false">
+                <table cTable class="responsive-table">
+                    <thead>
                         <tr>
-                            <td data-label="#">{{ i+1 }}</td>
-                            <td *ngIf="shouldShowDistrict(i)" [attr.rowspan]="getDistrictRowspan(i)"
-                                data-label="District Name" style="vertical-align: middle;">
-                                {{ loc.districtName }}
-                            </td>
-                            <td data-label="Location Name">{{ loc.locationName }}</td>
-                            <td data-label="Pincode">{{ loc.pincode }}</td>
-                            <td data-label="Latitude">{{ loc.latitude }}</td>
-                            <td data-label="Longitude">{{ loc.longitude }}</td>
-                            <td data-label="Active">
-                                <c-form-check [switch]="true">
-                                    <input cFormCheckInput type="checkbox" [checked]="loc.isActive" />
-                                </c-form-check>
-                            </td>
-                            <td data-label="">
-                                <button class="btn btn-sm btn-outline-primary" title="Edit"
-                                    [cModalToggle]="editLocationModal.id" (click)="openEditModal(loc)">
-                                    <i class="fas fa-pen"></i>
-                                </button>
-                            </td>
+                            <th scope="col" data-label="#">#</th>
+                            <th scope="col" data-label="District Name">District Name</th>
+                            <th scope="col" data-label="Location Name">Location Name</th>
+                            <th scope="col" data-label="Pincode">Pincode</th>
+                            <th scope="col" data-label="Latitude">Latitude</th>
+                            <th scope="col" data-label="Longitude">Longitude</th>
+                            <th scope="col" data-label="Active">Active</th>
+                            <th scope="col" data-label="Edit">Edit</th>
                         </tr>
-                    </ng-container>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let loc of filteredLocations; let i = index">
+                            <tr>
+                                <td data-label="#">{{ i+1 }}</td>
+                                <td *ngIf="shouldShowDistrict(i)" [attr.rowspan]="getDistrictRowspan(i)"
+                                    data-label="District Name" style="vertical-align: middle;">
+                                    {{ loc.districtName }}
+                                </td>
+                                <td data-label="Location Name">{{ loc.locationName }}</td>
+                                <td data-label="Pincode">{{ loc.pincode }}</td>
+                                <td data-label="Latitude">{{ loc.latitude }}</td>
+                                <td data-label="Longitude">{{ loc.longitude }}</td>
+                                <td data-label="Active">
+                                    <c-form-check [switch]="true">
+                                        <input cFormCheckInput type="checkbox" (click)="toggleLocation(loc.id)"
+                                            [checked]="loc.isActive" />
+                                    </c-form-check>
+                                </td>
+                                <td data-label="">
+                                    <button class="btn btn-sm btn-outline-primary" title="Edit"
+                                        [cModalToggle]="editLocationModal.id" (click)="openEditModal(loc)">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-between align-items-center mt-3 mx-5" *ngIf="totalPages > 1">
+                    <div class="text-muted">
+                        Showing {{ (currentPage - 1) * pageSize + 1 }} to
+                        {{ Math.min(currentPage * pageSize, totalItems) }} of
+                        {{ totalItems }} entries
+                    </div>
+
+                    <c-pagination aria-label="Page navigation">
+                        <li cPageItem [disabled]="!hasPrevious">
+                            <a cPageLink (click)="goToPreviousPage()"
+                                [style.cursor]="hasPrevious ? 'pointer' : 'not-allowed'">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        <li *ngFor="let page of getPageNumbers()" cPageItem [active]="page === currentPage">
+                            <a cPageLink (click)="goToPage(page)" style="cursor: pointer">
+                                {{ page }}
+                            </a>
+                        </li>
+
+                        <li cPageItem [disabled]="!hasNext">
+                            <a cPageLink (click)="goToNextPage()" [style.cursor]="hasNext ? 'pointer' : 'not-allowed'">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </c-pagination>
+                </div>
+            </div>
         </c-card-body>
     </c-card>
 </c-col>
