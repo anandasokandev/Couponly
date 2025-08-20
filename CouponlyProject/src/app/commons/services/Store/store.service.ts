@@ -50,4 +50,9 @@ export class StoreService {
     data
   );
 }
+//fetchstore
+
+FetchStore(id: number):Observable<any>{
+  return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchstore}${id}`)
+}
 }

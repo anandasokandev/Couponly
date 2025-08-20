@@ -34,6 +34,7 @@ export const environment = {
       fetchcategories:'Store/Categories',
       fetchstores:'Store/AllStores',
       filterstore: 'Store/FilterStore',
+      fetchstore:'Store/id',
       upload:'ImageUpload',
       addStore:'Store/AddStore'
     },
