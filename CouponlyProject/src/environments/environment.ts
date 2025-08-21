@@ -19,7 +19,9 @@ export const environment = {
       login: 'user/login',
       fetchusers: 'User/AllUsers',
       filterusers: 'User/FilterUser',
-      addusers:'User/AddUser'
+      addusers:'User/AddUser',
+      disableusers:'User/DisableUser'
+      
 
     },
     location: {
@@ -34,6 +36,7 @@ export const environment = {
       fetchcategories:'Store/Categories',
       fetchstores:'Store/AllStores',
       filterstore: 'Store/FilterStore',
+      fetchstore:'Store/id',
       upload:'ImageUpload',
       addStore:'Store/AddStore'
     },

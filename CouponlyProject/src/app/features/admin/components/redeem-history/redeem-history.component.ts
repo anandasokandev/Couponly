@@ -48,6 +48,7 @@ export class RedeemHistoryComponent {
   icons = {cilSortAlphaUp, cibSoundcloud, cilCloudDownload, cilSortAlphaDown}
   filterStores: string = ''
   filterUsers: string = ''
+  filterLocations: string = ''
   filterCouponName: string = ''
   filterCouponCode: string = ''
   distirctId: number = 0;
@@ -121,6 +122,18 @@ export class RedeemHistoryComponent {
     else {
       return this.locations.filter(item => item.districtId == this.distirctId)
     }
+  }
+
+  getRedeemsFiltered() {
+    if(this.filterLocations != "") {
+      return this.redeems.filter(redeem =>
+        redeem.location.toLowerCase().includes(this.filterLocations.toLowerCase())
+      );
+    }
+    else {
+      return this.redeems;
+    }
+
   }
 
   resetFilter() {

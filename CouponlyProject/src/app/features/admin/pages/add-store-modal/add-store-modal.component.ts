@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -27,7 +27,7 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
 })
 export class AddStoreModalComponent {
   
-
+   @ViewChild('closeButton') closeButton!: ElementRef;
   addStoreForm!: FormGroup;
   categories:any[]=[];
   districts:any[]=[];
@@ -38,20 +38,25 @@ export class AddStoreModalComponent {
   constructor(private fb: FormBuilder,private api:StoreService, private locationapi:LocationService) {}
 
 
-ngOnInit(){
-  this.api.FetchCategories().subscribe({
-        next:(response: any) =>{
-          this.categories=response.data;
-        }
-      })
+  ngOnInit() {
+    //fetching Categories
+    this.api.FetchCategories().subscribe({
+      next: (response: any) => {
+        this.categories = response.data;
+      }
+    })
+    //fetching Districts
+    this.locationapi.fetchDistrict().subscribe({
+      next: (response: any) => {
+        this.districts = response.data;
+      }
+    })
+    //InitiateForm
+    this.initiateForm();
+  }
 
-      this.locationapi.fetchDistrict().subscribe({
-        next:(response: any) =>{
-          this.districts=response.data;
-        }
-      })
-
-  this.addStoreForm=this.fb.group({
+private initiateForm(){
+   this.addStoreForm=this.fb.group({
     storeName:['',Validators.required],
     storeLogo:['',Validators.required],
     storeCategory:['',Validators.required],
@@ -65,20 +70,20 @@ ngOnInit(){
   });
 }
 
-selectLocationByDistrict(){
-  const districtId=this.addStoreForm.value.district;
-  if(districtId!=""){
-    this.default="choose a Location"
-  this.locationapi.filterLocation(districtId,'','').subscribe({
-    next:(response: any) =>{
-          this.locations=response.data;
-        }
-  })
-}
-else{
-  this.locations=[];
-}
-}
+  selectLocationByDistrict() {
+    const districtId = this.addStoreForm.value.district;
+    if (districtId != "") {
+      this.default = "choose a Location"
+      this.locationapi.filterLocation(districtId, '', '').subscribe({
+        next: (response: any) => {
+          this.locations = response.data;
+        }})
+    }
+    else 
+      this.locations = [];
+  }
+
+  
 allowOnlyNumbers(event: KeyboardEvent) {
   const charCode = event.charCode;
   if (charCode < 48 || charCode > 57) {
@@ -95,31 +100,22 @@ createStore() {
     if (this.selectedFile) {
       this.api.UploadImage(this.selectedFile).subscribe({
         next: res => {
-          console.log("RESULTTT",res)
-          const payload = {
-            StoreName: this.addStoreForm.value.storeName,
-            Address: this.addStoreForm.value.storeAddress,
-            Logo: res.url,
-            Contact: this.addStoreForm.value.storeContact,
-            Email: this.addStoreForm.value.storeEmail,
-            LocationId: this.addStoreForm.value.storeLocation,
-            CategoryId: this.addStoreForm.value.storeCategory,
-            ApprovedBy: 5,
-            Type: this.addStoreForm.value.storeType,
-            Password: this.addStoreForm.value.storePassword
-          };
-            console.log('Result',payload)
+          if(res.status){
+            const payload = this.buildStorePayload(res.url);
           this.api.AddStore(payload).subscribe({
             next: () => {
               this.toast.show({ type: 'success', message: 'Store created successfully!' });
               this.addStoreForm.reset();
+              this.closeModal();
               this.selectedFile = null;
             },
-            error: err => console.error('Store creation failed', err)
+            error:() => this.toast.show({ type: 'error', message: 'Store created failed' })
           });
+          }
         },
         error: err => console.error('Image upload failed', err)
       });
+      
     } else {
       console.warn('No image selected');
     }
@@ -129,7 +125,29 @@ createStore() {
   }
 }
 
+private buildStorePayload(url: string): any {
+  const form = this.addStoreForm.value;
+  return {
+    StoreName: form.storeName,
+    Address: form.storeAddress,
+    Logo: url,
+    Contact: form.storeContact,
+    Email: form.storeEmail,
+    LocationId: form.storeLocation,
+    CategoryId: form.storeCategory,
+    ApprovedBy: 5,
+    Type: form.storeType,
+    Password: form.storePassword
+  };
+}
+
 resetForm() {
   this.addStoreForm.reset();
 }
+
+closeModal(): void {
+    // You can also call this method from anywhere
+    this.closeButton.nativeElement.click();
+  }
+
 }

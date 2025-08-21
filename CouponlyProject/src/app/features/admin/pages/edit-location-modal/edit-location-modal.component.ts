@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 import { LocationService } from '../../../../commons/services/Admin/location.service';
 import { District } from '../../../../commons/models/district.model';
+import { Location } from '../../../../commons/models/location.model';
 
 @Component({
   selector: 'app-edit-location-modal',
@@ -25,12 +26,21 @@ import { District } from '../../../../commons/models/district.model';
   styleUrl: './edit-location-modal.component.scss'
 })
 export class EditLocationModalComponent {
-  @Input() location: any = null;
-  selectedDistrict: string = '';
-
-  constructor(private locationApi: LocationService) {}
+  @Input() location: Location | null = null;
+  @Output() locationUpdated = new EventEmitter<Location>();
+  @Output() modalClosed = new EventEmitter<void>();
 
   districts: District[] = [];
+
+  @ViewChild('closeButton') closeButton!: ElementRef;
+  
+  // Create a working copy of the location to avoid direct mutation
+  editLocation: Location | null = null;
+
+  constructor(private locationApi: LocationService) {
+    console.log(this.location);
+    
+  }
 
   ngOnInit() {
     this.fetchDistrict();
@@ -38,10 +48,9 @@ export class EditLocationModalComponent {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['location'] && this.location) {
-      this.selectedDistrict = this.location.districtName;
+      // Create a deep copy to avoid mutating the original location
+      this.editLocation = { ...this.location };
     }
-
-    console.log(this.selectedDistrict);
   }
   
   fetchDistrict(): void {
@@ -50,5 +59,34 @@ export class EditLocationModalComponent {
         next: (data) => this.districts = data.data || [],
         error: (err) => console.error('Error fetching districts:', err)
       });
+  }
+
+  onSave(): void {
+    if (this.editLocation) {
+      // Call the API to update the location
+      // this.locationApi.updateLocation(this.editableLocation)
+      //   .subscribe({
+      //     next: (updatedLocation) => {
+      //       this.locationUpdated.emit(updatedLocation);
+      //       this.closeModal();
+      //     },
+      //     error: (err) => console.error('Error updating location:', err)
+      //   });
+
+      console.log(this.editLocation);
+      this.closeModal();     
+    }
+  }
+
+
+  closeModal(): void {
+    // You can also call this method from anywhere
+    this.closeButton.nativeElement.click();
+  }
+
+  // Helper method to get district name by ID
+  getDistrictName(districtId: number): string {
+    const district = this.districts.find(d => d.id === districtId);
+    return district ? district.districtName : '';
   }
 }
