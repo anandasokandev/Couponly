@@ -20,7 +20,8 @@ export const environment = {
       fetchusers: 'User/AllUsers',
       filterusers: 'User/FilterUser',
       addusers:'User/AddUser',
-      disableusers:'User/DisableUser'
+      disableusers:'User/DisableUser',
+      updateusers:'User/Update'
       
 
     },

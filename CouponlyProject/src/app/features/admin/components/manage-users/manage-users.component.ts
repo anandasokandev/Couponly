@@ -52,18 +52,24 @@ export class ManageUsersComponent {
   searchText: string = '';
   statusFilter: string = ''; // '' = All, 'true' = Active, 'false' = Inactive
 
+  isLoading: boolean = false;
+
   constructor(
     private api: UserService,
     private toastService: ToastService
   ) { }
-  ngOnInit() {
 
+  ngOnInit() {
+     this.isLoading = true;
     this.api.FetchUsers().subscribe({
       next: (response: any) => {
         //  console.log('Filtered response:', response.data);
-
         this.users = response.data;
         // console.log('Fetched users:', this.users);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.isLoading = false;
       }
     })
   }
@@ -72,13 +78,20 @@ export class ManageUsersComponent {
 
 
   FilterUser() {
+    this.isLoading = true;
     this.api.searchUsers(this.userType, this.isActive, this.searchType, this.searchText).subscribe({
       next: (response: any) => {
-        console.log('Filtered response:', response.data);
+        // console.log('Filtered response:', response.data);
         this.users = response.data;
-      }
+        this.isLoading = false;
+      },
+      error: (err) => {
+      this.isLoading = false;
+    }
+
     });
   }
+
 
 
   onStatusChange() {
@@ -101,16 +114,16 @@ export class ManageUsersComponent {
 
 
   onToggleUserStatus(user: any): void {
-    console.log('Toggling user status:', user); // Confirm user.id is valid
+    // console.log('Toggling user status:', user); // Confirm user.id is valid
 
     this.api.disableuser(user.id).subscribe({
       next: (res) => {
-        console.log('Success:', res);
+        // console.log('Success:', res);
         user.isActive = !user.isActive; // Optimistically update UI
         this.toastService.show({ type: 'success', message: res.statusMessage });
       },
       error: (err) => {
-        console.error('Error toggling user status:', err);
+        // console.error('Error toggling user status:', err);
         this.toastService.show({ type: 'error', message: 'Failed to toggle user status' });
       }
     });
