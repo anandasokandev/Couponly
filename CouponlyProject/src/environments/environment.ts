@@ -48,7 +48,8 @@ export const environment = {
       ExportCSV: 'Contact/ExportContactsToCsv'
     },
     login:{
-      signup:'/Login'
+      signup:'/Login',
+      forgotPassword:'/login/forgot-password'
     }
   }
 };
