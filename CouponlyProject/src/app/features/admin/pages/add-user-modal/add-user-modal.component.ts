@@ -1,19 +1,17 @@
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import {
   ButtonCloseDirective, ButtonDirective, FormControlDirective,
   FormLabelDirective, ModalBodyComponent, ModalComponent,
   ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective,
   ModalToggleDirective
 } from '@coreui/angular';
-
-import { CustomToastService } from '../../../../commons/services/custom-toast.service';
 import { AddUserDTO } from '../../../../commons/models/adduser.module';
 import { UserService } from '../../../../commons/services/Users/user.service';
-import { FormsModule, NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 
 @Component({
@@ -42,10 +40,9 @@ export class AddUserModalComponent {
   @ViewChild('verticallyCenteredScrollableModal') modal?: ModalComponent;
 
   userForm: FormGroup;
-
+  private toast = inject(ToastService);
   constructor(
     private fb: FormBuilder,
-    private toastService: CustomToastService,
     private userService: UserService
   ) 
   {
@@ -77,7 +74,7 @@ export class AddUserModalComponent {
 
   createUser() {
   if (this.userForm.invalid) {
-    this.toastService.show('⚠️ Please fill all required fields.', 'warning');
+    this.toast.show({ type: 'warning', message: 'Please fill all required fields.' });
     return;
   }
 
@@ -85,12 +82,12 @@ export class AddUserModalComponent {
     next: (res) => {
       // This block will only run if the backend returns a 2xx status
       if (res.isSuccess) {
-        this.toastService.show('✅ User created successfully!', 'success');
+        this.toast.show({ type: 'success', message: 'User created successfully!' });
         document.getElementById('verticallyCenteredScrollableModal')?.click();
         setTimeout(() => window.location.reload(), 500);
       } else {
         // Optional: handle unexpected non-error responses
-        this.toastService.show('⚠️ ' + res.statusMessage, 'warning');
+        this.toast.show({ type: 'warning', message: res.statusMessage });
       }
     },
     error: (err) => {
@@ -98,13 +95,13 @@ export class AddUserModalComponent {
       const errorMsg = err.error?.errors?.[0]?.toLowerCase();
 
       if (errorMsg?.includes('email') && errorMsg?.includes('phone')) {
-        this.toastService.show('📧📱 Email and phone number already exist.', 'danger');
+        this.toast.show({ type: 'error', message: '📧📱 Email and phone number already exist.' });
       } else if (errorMsg?.includes('email')) {
-        this.toastService.show('📧 Email already exists.', 'danger');
+        this.toast.show({ type: 'error', message: '📧 Email already exists.' });
       } else if (errorMsg?.includes('phone')) {
-        this.toastService.show('📱 Phone number already exists.', 'danger');
+        this.toast.show({ type: 'error', message: '📱 Phone number already exists.' });
       } else {
-        this.toastService.show('❌ Error adding user!', 'danger');
+        this.toast.show({ type: 'error', message: '❌ Error adding user!' });
       }
     }
   });

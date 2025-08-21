@@ -1,8 +1,8 @@
 <c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
     id="verticallyCenteredScrollableModal">
     <c-modal-header>
-        <h5 cModalTitle>Add New Store</h5>
-        <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButtonClose (click)="resetForm()"></button>
+        <h5 cModalTitle>Edit Location</h5>
+        <button #closeButton cModalToggle cButtonClose></button>
     </c-modal-header>
     <c-modal-body>
         <form cForm [formGroup]="addStoreForm">
@@ -18,7 +18,7 @@
             </div>
             <div class="mb-3">
                 <label cLabel for="logoInput">Logo</label>
-                <input cFormControl id="logoInput" sizing="sm" type="file" formControlName="storeLogo" />
+                <input cFormControl id="logoInput" sizing="sm" type="file" (change)="onFileSelected($event)" formControlName="storeLogo" />
                 <div *ngIf="addStoreForm.get('storeLogo')?.touched && addStoreForm.get('storeLogo')?.invalid">
                     <span class="text-danger" *ngIf="addStoreForm.get('storeLogo')?.errors?.['required']">
                         *store logo is required.
@@ -41,7 +41,7 @@
             <div class="mb-3">
                 <label cLabel for="districtSelect">District</label>
                 <select class="form-select form-select-sm" name="district" id="districtSelect"
-                    formControlName="district">
+                    formControlName="district" (change)="selectLocationByDistrict()">
                     <option value="">Select District</option>
                     <option *ngFor="let district of districts" value="{{district.id}}">{{district.districtName}}</option>
                 </select>
@@ -55,9 +55,8 @@
                 <label cLabel for="locationSelect">Location</label>
                 <select class="form-select form-select-sm" name="location" id="locationSelect"
                     formControlName="storeLocation">
-                    <option value="">Select Location</option>
-                    <option>Kadavanthra</option>
-                    <option>Vytila</option>
+                    <option value="">{{default}}</option>
+                    <option *ngFor="let location of locations" value="{{location.id}}">{{location.locationName}}
                 </select>
                  <div *ngIf="addStoreForm.get('storeLocation')?.touched && addStoreForm.get('storeLocation')?.invalid">
                     <span class="text-danger" *ngIf="addStoreForm.get('storeLocation')?.errors?.['required']">
@@ -76,7 +75,7 @@
             </div>
             <div class="mb-3">
                 <label cLabel for="contactInput">Contact</label>
-                <input aria-label="sm input example" cFormControl sizing="sm" type="number" id="contactInput"
+                <input aria-label="sm input example" cFormControl sizing="sm" type="text" id="contactInput"
                     formControlName="storeContact" (keypress)="allowOnlyNumbers($event)">
                      <div *ngIf="addStoreForm.get('storeContact')?.touched && addStoreForm.get('storeContact')?.invalid">
                     <span class="text-danger" *ngIf="addStoreForm.get('storeContact')?.errors?.['required']">
@@ -117,8 +116,8 @@
                 <label cLabel for="typeSelect">Type</label>
                 <select class="form-select form-select-sm" name="location" id="typeSelect" formControlName="storeType">
                     <option value="">Select Type</option>
-                    <option>Offline</option>
-                    <option>Online</option>
+                    <option value=2>Offline</option>
+                    <option value=1>Online</option>
                 </select>
                     <div *ngIf="addStoreForm.get('storeType')?.touched && addStoreForm.get('storeType')?.invalid">
                     <span class="text-danger" *ngIf="addStoreForm.get('storeType')?.errors?.['required']">

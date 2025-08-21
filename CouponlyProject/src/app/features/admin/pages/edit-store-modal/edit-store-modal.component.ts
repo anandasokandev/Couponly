@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
-import { CustomToastService } from 'src/app/commons/services/custom-toast.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
+
 @Component({
   selector: 'app-edit-store-modal',
   imports: [ ModalComponent,
@@ -22,9 +23,9 @@ import { CustomToastService } from 'src/app/commons/services/custom-toast.servic
   styleUrl: './edit-store-modal.component.scss'
 })
 export class EditStoreModalComponent {
-
+ @Input() storeToEdit: any;
   editStoreForm: FormGroup;
-constructor(private toastService: CustomToastService,private fb: FormBuilder) {
+constructor(private fb: FormBuilder) {
   this.editStoreForm=this.fb.group({
     storeName:['',Validators.required],
     storeLogo:['',Validators.required],
@@ -38,9 +39,11 @@ constructor(private toastService: CustomToastService,private fb: FormBuilder) {
   });
 }
 
+private toast = inject(ToastService);
+
 editStore() {
   if (this.editStoreForm.valid) {
-    this.toastService.show('Store updated successfully!', 'success');
+    this.toast.show({ type: 'success', message: 'Store updated successfully!' });
   } else {
     this.editStoreForm.markAllAsTouched();
     console.log('Invalid', this.editStoreForm.value);

@@ -29,10 +29,10 @@ import { CommonModule } from '@angular/common';
 export class StoreComponent {
 
   stores:any[]=[];
+  selectedStore: any = null;
   type:number=0;
   searchtype:number=0;
   searchtext:string='';
-
   constructor(private api:StoreService){}
   ngOnInit(){
 
@@ -58,4 +58,12 @@ export class StoreComponent {
       this.searchtext='';
       this.FilterStore();
     }
+    openEditModal(id: number) {
+  this.api.FetchStore(id).subscribe({
+    next:(response: any) =>{
+      this.selectedStore=response.data;
+      console.log(this.selectedStore)
+    }
+  })
+}
 }

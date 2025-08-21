@@ -1,6 +1,6 @@
 <c-modal-header>
   <h5 cModalTitle>Edit Location</h5>
-  <button cModalToggle cButtonClose></button>
+  <button #closeButton cModalToggle cButtonClose></button>
 </c-modal-header>
 <c-modal-body>
   <form cForm *ngIf="location">
@@ -32,5 +32,5 @@
 </c-modal-body>
 <c-modal-footer>
   <button cModalToggle cButton color="secondary">Cancel</button>
-  <button cButton color="primary">Save</button>
+  <button cButton color="primary" (click)="onSave()">Save</button>
 </c-modal-footer>

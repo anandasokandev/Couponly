@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormCheckComponent, FormCheckInputDirective, ModalComponent, ModalToggleDirective, SpinnerComponent, TableDirective } from '@coreui/angular';
 import { IconComponent, IconModule } from '@coreui/icons-angular';
 import { IconSubset } from '../../../../icons/icon-subset';
@@ -15,8 +15,7 @@ import { Location } from '../../../../commons/models/location.model';
 import { from } from 'rxjs';
 import { DownloadRedeemsModelComponent } from '../../pages/download-redeems-model/download-redeems-model.component';
 import { RedeemsHistoryServiceService } from '../../../../commons/services/Coupon/redeems-history-service.service';
-import { CustomToastService } from '../../../../commons/services/custom-toast.service';
-// import { RedeemsHistoryServiceService } from 'src/app/commons/services/Coupon/redeems-history-service.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-redeem-history',
@@ -49,6 +48,7 @@ export class RedeemHistoryComponent {
   icons = {cilSortAlphaUp, cibSoundcloud, cilCloudDownload, cilSortAlphaDown}
   filterStores: string = ''
   filterUsers: string = ''
+  filterLocations: string = ''
   filterCouponName: string = ''
   filterCouponCode: string = ''
   distirctId: number = 0;
@@ -57,6 +57,8 @@ export class RedeemHistoryComponent {
   toDate: string = '';
   isLoading: boolean = false;
   // selectedDistirctId: string = ''
+
+  private toast = inject(ToastService);
 
   redeems: RedeemHistory[] = []
 
@@ -81,7 +83,7 @@ export class RedeemHistoryComponent {
 
   filterForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private redeemHistoryService: RedeemsHistoryServiceService, private toastService: CustomToastService) {
+  constructor(private fb: FormBuilder, private redeemHistoryService: RedeemsHistoryServiceService) {
     this.filterForm = this.fb.group({
       district: ['0'],
       location: ['0'],
@@ -122,6 +124,18 @@ export class RedeemHistoryComponent {
     }
   }
 
+  getRedeemsFiltered() {
+    if(this.filterLocations != "") {
+      return this.redeems.filter(redeem =>
+        redeem.location.toLowerCase().includes(this.filterLocations.toLowerCase())
+      );
+    }
+    else {
+      return this.redeems;
+    }
+
+  }
+
   resetFilter() {
     this.distirctId = 0;
     this.locationId = 0;
@@ -143,8 +157,10 @@ export class RedeemHistoryComponent {
       a.download = 'Redeems History.xlsx';
       a.click();
       window.URL.revokeObjectURL(url);
+      this.toast.show({ type: 'success', message: 'Redeem history downloaded successfully!' });
     }, error => {
       console.error('Download failed', error);
+      this.toast.show({ type: 'error', message: 'Failed to download redeem history.' });
     });
   }
 
@@ -157,13 +173,13 @@ export class RedeemHistoryComponent {
     ).subscribe({
       next: (response) => {
         if (response.isSuccess) {
-          this.toastService.show(response.data, 'success');
+          this.toast.show({ type: 'success', message: response.data });
         } else {
-          this.toastService.show('Failed to send redeem history email.', 'danger');
+          this.toast.show({ type: 'error', message: 'Failed to send redeem history email.' });
         }
       },
       error: (error) => {
-        this.toastService.show(error, 'danger');
+        this.toast.show({ type: 'error', message: 'Failed to send redeem history email.' });
         console.log(error);
       }
     });

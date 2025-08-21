@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, SpinnerModule } from '@coreui/angular';
 import { RedeemHistoryComponent } from '../../components/redeem-history/redeem-history.component';
-import { CustomToastService } from '../../../../commons/services/custom-toast.service';
+
 import { IconModule } from '@coreui/icons-angular';
 import { cilCloudDownload, cilEnvelopeOpen } from '@coreui/icons';
 import { RedeemsHistoryServiceService } from '../../../../commons/services/Coupon/redeems-history-service.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-download-redeems-model',
@@ -32,13 +33,15 @@ export class DownloadRedeemsModelComponent {
     cilEnvelopeOpen: cilEnvelopeOpen
   };
 
-  constructor(private component: RedeemHistoryComponent, private toastService: CustomToastService, private redeemsHistoryService: RedeemsHistoryServiceService) {}
+  private toast = inject(ToastService);
+
+  constructor(private component: RedeemHistoryComponent) {}
   downloadRedeemsHistory() {
-    this.toastService.show('Redeem history will downloaded shortly!', 'success');
+    this.toast.show({ type: 'success', message: 'Redeem history will downloaded shortly!' });
     this.component.downloadExcel();
   }
   sendRedeemsHistoryEmail() {
-    this.toastService.show('Redeem history will sent via email shortly! Check your inbox.', 'success');
+    this.toast.show({ type: 'success', message: 'Redeem history will sent via email shortly! Check your inbox.' });
     this.component.emailExcel();
   }
 }

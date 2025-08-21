@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RedeemHistory } from '../../models/redeem-history.model';
 import { environment } from '../../../../environments/environment';
@@ -54,8 +54,7 @@ export class RedeemsHistoryServiceService {
     if (toDate) params.todate = toDate;
 
     const id = sessionStorage.getItem('userId') || '';
-    console.log("haiiii", id);  
-    const headers = { 'id': id };
+    const headers = new HttpHeaders().set('userid', id);
     return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.redeem.ExportEmail}`, { headers, params });
   }
 }

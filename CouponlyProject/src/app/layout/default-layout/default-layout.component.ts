@@ -17,8 +17,9 @@ import {
 
 import { DefaultFooterComponent, DefaultHeaderComponent } from './';
 import { navItems } from './_nav';
-import { CustomToastComponent } from '../../features/admin/pages/custom-toast/custom-toast.component';
-import { CustomToastService } from '../../commons/services/custom-toast.service';
+import { ToastService } from '../../commons/services/Toaster/toast.service';
+import { ToastComponent } from '../../features/admin/pages/toast/toast.component';
+import { CommonModule } from '@angular/common';
 
 function isOverflown(element: HTMLElement) {
   return (
@@ -46,17 +47,17 @@ function isOverflown(element: HTMLElement) {
     RouterOutlet,
     RouterLink,
     ShadowOnScrollDirective,
-    CustomToastComponent
+    ToastComponent,
+    CommonModule
   ]
 })
 export class DefaultLayoutComponent {
   public navItems = [...navItems];
 
- @ViewChild(CustomToastComponent) toastComponent!: CustomToastComponent;
+  constructor(public toast: ToastService) {}
 
-  constructor(private toastService: CustomToastService) {}
-
-  ngAfterViewInit(): void {
-    this.toastService.register(this.toastComponent);
+  onRemove(id: number) {
+    this.toast.remove(id);
   }
+
 }

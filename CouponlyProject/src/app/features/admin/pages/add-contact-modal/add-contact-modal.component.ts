@@ -1,9 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, inject, viewChild } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
-import { CustomToastService } from '../../../../commons/services/custom-toast.service';
+
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
 import { ContactService } from '../../../../commons/services/Contacts/contact.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
+import { ViewChild } from '@angular/core';
+import { Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-add-contact-modal',
@@ -25,9 +29,12 @@ import { ContactService } from '../../../../commons/services/Contacts/contact.se
   styleUrl: './add-contact-modal.component.scss'
 })
 export class AddContactModalComponent {
- contactForm: FormGroup;
+@Output() contactAdded = new EventEmitter<void>();
 
-  constructor(private fb: FormBuilder, private toastService: CustomToastService,private contactService: ContactService) {
+
+ contactForm: FormGroup;
+  private toast = inject(ToastService);
+  constructor(private fb: FormBuilder, private contactService: ContactService) {
     this.contactForm = this.fb.group({
       Name: ['', Validators.required],
       PhoneNumber: ['', [ Validators.required, Validators.pattern(/^[6-9][0-9]{9}$/) ]],
@@ -38,7 +45,7 @@ export class AddContactModalComponent {
   createContact() {
   if (this.contactForm.invalid) {
     this.contactForm.markAllAsTouched();
-    this.toastService.show('❌ Please correct the errors before submitting.');
+    this.toast.show({ type: 'error', message: 'Please correct the errors before submitting.' });
     return;
   }
 
@@ -46,19 +53,31 @@ export class AddContactModalComponent {
 
   this.contactService.addContact(contactData).subscribe({
     next: (response : any) => {
-      this.toastService.show('✅ Contact created successfully!', 'success');
-     
+      this.toast.show({ type: 'success', message: 'Contact created successfully!' });
+
       // console.log(this.contactService);
 
-      this.contactForm.reset(); // Optional: clear the form
+      this.contactForm.reset(); 
+      this.contactAdded.emit();
+      
+      this.closeModal(); 
     },
     error: (err) => {
       console.error('Error creating contact:', err);
       // console.log(this.contactService);
-      this.toastService.show('❌ Failed to create contact.', 'danger');
+      this.toast.show({ type: 'error', message: 'Failed to create contact.' });
     }
   });
 }
+
+
+@ViewChild('closeButton') closeButton!: ElementRef;
+
+
+closeModal(): void {
+    // You can also call this method from anywhere
+    this.closeButton.nativeElement.click();
+  }
 
   validateNameInput(event: KeyboardEvent): void {
   const inputChar = event.key;
@@ -86,7 +105,5 @@ validatePhoneInput(event: KeyboardEvent): void {
     event.preventDefault();
   }
 }
-
-
   
 }
