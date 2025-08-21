@@ -75,12 +75,11 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'login',
-    loadComponent: () => import('./features/authentication/login/login.component').then(m => m.LoginComponent),
-    data: {
-      title: 'Login Page'
-    }
-  },
+  path: 'login',
+  loadComponent: () => import('./features/authentication/login/login.component').then(m => m.LoginComponent),
+  data: { 
+    title: 'Login Page' }
+},
     {
     path: 'forgot-password',
     loadComponent: () => import('./features/authentication/forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
