@@ -60,49 +60,60 @@
                 </button>
             </div>
 
-            <table [hover]="true" cTable class="responsive-table">
-                <thead>
-                    <th>
+            <div *ngIf="isLoading" class="d-flex justify-content-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
 
-                    </th>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Phone No.</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Active</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <ng-container *ngFor="let user of users; let i = index">
+            <div *ngIf="!isLoading" class="table-responsive">
+
+
+                <table [hover]="true" cTable class="responsive-table">
+                    <thead>
+                        <th>
+
+                        </th>
                         <tr>
-                            <td>{{ i + 1 }}</td>
-                            <td>{{ user.firstName }}</td>
-                            <td>{{ user.lastName }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.phoneNumber }}</td>
-                            <td>{{ user.type }}</td>
-                            <td data-label="Active">
-                                <c-form-check [switch]="true">
-                                    <input cFormCheckInput type="checkbox" [checked]="user.isActive"
-                                        (change)="onToggleUserStatus(user)" />
-                                </c-form-check>
-                            </td>
-
-
-                            <td data-label="">
-                                <button class="btn btn-sm btn-outline-primary" [cModalToggle]="'editUserModal'"
-                                    (click)="openEditUserModal(user)">
-                                    <i class="fas fa-pen"></i>
-                                </button>
-                            </td>
+                            <th scope="col">#</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone No.</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Active</th>
+                            <th scope="col">Actions</th>
                         </tr>
-                    </ng-container>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let user of users; let i = index">
+                            <tr>
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ user.firstName }}</td>
+                                <td>{{ user.lastName }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phoneNumber }}</td>
+                                <td>{{ user.type }}</td>
+                                <td data-label="Active">
+                                    <c-form-check [switch]="true">
+                                        <input cFormCheckInput type="checkbox" [checked]="user.isActive"
+                                            (change)="onToggleUserStatus(user)" />
+                                    </c-form-check>
+                                </td>
+
+
+                                <td data-label="">
+                                    <button class="btn btn-sm btn-outline-primary" [cModalToggle]="'editUserModal'"
+                                        (click)="openEditUserModal(user)">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+
         </c-card-body>
     </c-card>
 </c-col>

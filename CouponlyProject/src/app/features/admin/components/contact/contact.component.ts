@@ -7,10 +7,12 @@ import { AddContactModalComponent } from '../../pages/add-contact-modal/add-cont
 import { FormsModule } from '@angular/forms';
 import { ContactService } from '../../../../commons/services/Contacts/contact.service';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
+import { ExportContactModalComponent } from '../../pages/export-contact-modal/export-contact-modal.component';
 
 
 
 @Component({
+  standalone:true,
   selector: 'app-contact',
   imports: [ColComponent,
     CardComponent,
@@ -21,6 +23,7 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
     CommonModule,
     EditContactModalComponent,
     AddContactModalComponent,
+    ExportContactModalComponent,
     FormsModule],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
@@ -145,6 +148,35 @@ refreshContactList() {
     }
   });
 }
+
+
+exportAsCSV() {
+  this.emailCsv(); // or your actual CSV logic
+}
+
+
+
+exportAsVCard() {
+  console.log('Exporting as vCard...');
+
+  this.api.ExportContactsToVCard(this.name, this.email, this.phonenumber).subscribe({
+    next: (blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'contacts.vcf'; // vCard file extension
+      a.click();
+      window.URL.revokeObjectURL(url);
+
+      this.toast.show({ type: 'success', message: 'vCard downloaded successfully.' });
+    },
+    error: (error: any) => {
+      this.toast.show({ type: 'error', message: 'Failed to download vCard.' });
+      console.error(error);
+    }
+  });
+}
+
 
 
 

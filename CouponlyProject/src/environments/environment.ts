@@ -20,7 +20,8 @@ export const environment = {
       fetchusers: 'User/AllUsers',
       filterusers: 'User/FilterUser',
       addusers:'User/AddUser',
-      disableusers:'User/DisableUser'
+      disableusers:'User/DisableUser',
+      updateusers:'User/Update'
       
 
     },
@@ -45,7 +46,8 @@ export const environment = {
       AllFilters: 'Contact/AllFilters',
       AddContact : 'Contact/AddContact',
       EditContact : 'Contact/updatebyid',
-      ExportCSV: 'Contact/ExportContactsToCsv'
+      ExportCSV: 'Contact/ExportContactsToCsv',
+      ExportVcard:'Contact/ExportContactsToVCard'
     },
     login:{
       signup:'/Login',
