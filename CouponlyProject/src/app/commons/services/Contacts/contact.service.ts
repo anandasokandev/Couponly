@@ -14,9 +14,16 @@ export class ContactService {
 
   constructor(private http: HttpClient) { }
 
+
+
   //Fetching contacts 
-  FetchContacts(): Observable <any[]>{
-    return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.contact.AllContacts}`)
+  FetchContacts(pageNumber: number, pagesize: number): Observable <any[]>{
+
+    const params = new HttpParams()
+      .set('PageNumber', pageNumber.toString())
+      .set('PageSize', pagesize.toString());
+
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.contact.AllContacts}`, { params });
 
   }
   
