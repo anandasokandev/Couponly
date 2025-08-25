@@ -88,7 +88,7 @@
                     <tbody>
                         <ng-container *ngFor="let user of users; let i = index">
                             <tr>
-                                <td>{{ i + 1 }}</td>
+                                <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
                                 <td>{{ user.firstName }}</td>
                                 <td>{{ user.lastName }}</td>
                                 <td>{{ user.email }}</td>
@@ -113,7 +113,11 @@
                     </tbody>
                 </table>
             </div>
-
+            <!-- Pagination Component -->
+            <app-pagination *ngIf="!isLoading" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+                [currentPage]="currentPage" (pageChange)="onPageChange($event)"
+                (itemsPerPageChange)="itemsPerPage = $event; onPageChange(1)">
+            </app-pagination>
         </c-card-body>
     </c-card>
 </c-col>
