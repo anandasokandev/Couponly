@@ -13,7 +13,6 @@ import { ImportContactModalComponent } from '../../pages/import-contact-modal/im
 
 
 
-
 @Component({
   standalone:true,
   selector: 'app-contact',
@@ -40,6 +39,9 @@ export class ContactComponent {
   name:string='';
   email:string='';
   phonenumber:string='';
+
+  isFiltered: boolean = false;
+  
 
  isLoading: boolean = false;
 
@@ -99,10 +101,16 @@ emailCsv() {
 
 
 FilterContact() {
+   this.isFiltered = true;
   this.isLoading = true;
-  this.api.searchContacts(this.name, this.email, this.phonenumber).subscribe({
+
+  this.api.searchContacts(this.currentPage, this.itemsPerPage, this.name, this.email, this.phonenumber).subscribe({
     next: (response: any) => {
-      this.contacts = response.data;
+      this.contacts = response.data.items; // assuming this is an array
+
+      this.totalItems = response.data.totalCount;
+
+
       this.isLoading = false;
     },
     error: (err) => {
@@ -114,16 +122,19 @@ FilterContact() {
 
 
 
+
+
 ResetFilters() {
   this.name = '';
   this.email = '';
   this.phonenumber = '';
   this.isLoading = true;
+  this.isFiltered = false;
 
   this.api.FetchContacts(this.currentPage, this.itemsPerPage).subscribe({
     next: (response: any) => {
       this.contacts = response.data.items;
-        this.totalItems = response.data.totalCount;
+      this.totalItems = response.data.totalCount;
       this.isLoading = false;
     },
     error: (err) => {
@@ -132,6 +143,7 @@ ResetFilters() {
     }
   });
 }
+
 
 
 
@@ -149,6 +161,7 @@ ContactList() {
 }
 
 refreshContactList() {
+  this.isFiltered = false;
  this.api.FetchContacts(this.currentPage, this.itemsPerPage).subscribe({
     next: (response: any) => {
       this.contacts = response.data.items;
@@ -192,10 +205,14 @@ exportAsVCard() {
 
 
   //pagination
+onPageChange(page: number) {
 
-  onPageChange(page: number) {
-    this.currentPage = page;
-    this.ResetFilters();
-  }
+  
+  this.currentPage = page;
+  this.isFiltered ? this.FilterContact() : this.ResetFilters();
+
+ 
+}
+
 
 }

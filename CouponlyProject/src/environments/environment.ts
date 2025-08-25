@@ -47,7 +47,9 @@ export const environment = {
       AddContact : 'Contact/AddContact',
       EditContact : 'Contact/updatebyid',
       ExportCSV: 'Contact/ExportContactsToCsv',
-      ExportVcard:'Contact/ExportContactsToVCard'
+      ExportVcard:'Contact/ExportContactsToVCard',
+      importcsv:'Contact/ImportContactsFromCsv',
+      importvcard :'Contact/ImportContactsFromVCard'
     },
     login:{
       signup:'/Login',
