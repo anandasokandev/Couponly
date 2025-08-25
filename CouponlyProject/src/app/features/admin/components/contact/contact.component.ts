@@ -9,6 +9,8 @@ import { ContactService } from '../../../../commons/services/Contacts/contact.se
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 import { ExportContactModalComponent } from '../../pages/export-contact-modal/export-contact-modal.component';
 import { PaginationComponent } from '../../pages/pagination/pagination.component';
+import { ImportContactModalComponent } from '../../pages/import-contact-modal/import-contact-modal.component';
+
 
 
 
@@ -25,6 +27,7 @@ import { PaginationComponent } from '../../pages/pagination/pagination.component
     EditContactModalComponent,
     AddContactModalComponent,
     ExportContactModalComponent,
+    ImportContactModalComponent,
     FormsModule,
     PaginationComponent
   ],
