@@ -5,6 +5,7 @@ import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirect
 import { LocationService } from '../../../../commons/services/Admin/location.service';
 import { District } from '../../../../commons/models/district.model';
 import { Location } from '../../../../commons/models/location.model';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-edit-location-modal',
@@ -37,9 +38,7 @@ export class EditLocationModalComponent {
   // Create a working copy of the location to avoid direct mutation
   editLocation: Location | null = null;
 
-  constructor(private locationApi: LocationService) {
-    console.log(this.location);
-    
+  constructor(private locationApi: LocationService, private toastService: ToastService) {
   }
 
   ngOnInit() {
@@ -63,24 +62,26 @@ export class EditLocationModalComponent {
 
   onSave(): void {
     if (this.editLocation) {
-      // Call the API to update the location
-      // this.locationApi.updateLocation(this.editableLocation)
-      //   .subscribe({
-      //     next: (updatedLocation) => {
-      //       this.locationUpdated.emit(updatedLocation);
-      //       this.closeModal();
-      //     },
-      //     error: (err) => console.error('Error updating location:', err)
-      //   });
-
-      console.log(this.editLocation);
-      this.closeModal();     
+      this.locationApi.editLocation(this.editLocation)
+        .subscribe({
+          next: ({isSuccess, statusMessage}) => {
+            if(isSuccess) {
+              this.toastService.show({ type: 'success', message: 'Location added successfully' });
+              this.closeModal();
+            } else {
+              this.toastService.show({ type: 'error', message: 'Failed to add location' });
+            }
+          },
+          error: (err) => {
+            console.error('Error creating location:', err);
+            this.toastService.show({ type: 'error', message: 'Error adding location' });
+          }
+        });
     }
   }
 
 
   closeModal(): void {
-    // You can also call this method from anywhere
     this.closeButton.nativeElement.click();
   }
 
