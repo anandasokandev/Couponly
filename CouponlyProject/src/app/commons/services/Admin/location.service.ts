@@ -51,6 +51,16 @@ export class LocationService {
     });
   }
 
+  editLocation(location: Location): Observable<any> {
+    return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.location.editLocation}`, location, 
+      {
+        headers: {
+          id: location.id.toString()
+        }
+      });
+    };
+    
+
   addLocation(location: Location): Observable<any> {
     return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.location.addLocation}`, location);
   }

@@ -28,6 +28,7 @@ export const environment = {
     location: {
       fetchDistrict: 'District',
       addLocation: "Location",
+      editLocation: 'Location/Edit',
       fetchLocation: 'Location',
       filterLocation: 'Location/filter',
       toggleLocation: 'Location/toggle'
