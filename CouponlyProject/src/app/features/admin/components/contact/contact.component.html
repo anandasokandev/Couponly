@@ -25,6 +25,17 @@
 
 
 
+<c-modal
+  #importContactModal
+  [scrollable]="true"
+  alignment="center"
+  id="importContactModal"
+>
+  <app-import-contact-modal
+    (contactsImported)="refreshContactList()"
+    (closeModal)="importContactModal.visible = false"
+  ></app-import-contact-modal>
+</c-modal>
 
 
 
@@ -39,9 +50,14 @@
         <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap" [cModalToggle]="verticallyCenteredScrollableModal.id">
           Add Contact
         </button>
-        <button class="btn btn-success btn-sm px-3 py-1 text-nowrap text-white">
-          <i class="fas fa-file-import me-1 text-white"></i> Import
-        </button>
+        
+        <button
+  class="btn btn-success btn-sm px-3 py-1 text-nowrap text-white"
+  [cModalToggle]="importContactModal.id"
+>
+  <i class="fas fa-file-import me-1 text-white"></i> Import
+</button>
+
 
 
      <button

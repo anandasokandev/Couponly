@@ -12,19 +12,50 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   //Fetching Users 
-  FetchUsers(): Observable<any[]> {
-    return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.user.fetchusers}`)
+  // FetchUsers(): Observable<any[]> {
+  //   return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.user.fetchusers}`)
+  // }
+
+  FetchUsers(pageNumber: number, pagesize: number): Observable<any[]> {
+
+    const params = new HttpParams()
+      .set('PageNumber', pageNumber.toString())
+      .set('PageSize', pagesize.toString());
+
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.user.fetchusers}`, { params })
   }
 
-  searchUsers(userType: number, isActive: boolean | null, searchType: number, searchText: string): Observable<any> {
+
+  // searchUsers(userType: number, isActive: boolean | null, searchType: number, searchText: string): Observable<any> {
+  //   let params = new HttpParams()
+  //     .set('userType', userType)
+  //     .set('searchType', searchType)
+  //     .set('searchText', searchText);
+
+  //   if (isActive !== null) {
+  //     params = params.set('isActive', isActive);
+  //   }
+  //   return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.user.filterusers}`, { params });
+  // }
+  searchUsers(
+    userType: number,
+    isActive: boolean | null,
+    searchType: number,
+    searchText: string,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<any> {
     let params = new HttpParams()
       .set('userType', userType)
       .set('searchType', searchType)
-      .set('searchText', searchText);
+      .set('searchText', searchText)
+      .set('pageNumber', pageNumber)
+      .set('pageSize', pageSize);
 
     if (isActive !== null) {
       params = params.set('isActive', isActive);
     }
+
     return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.user.filterusers}`, { params });
   }
 
