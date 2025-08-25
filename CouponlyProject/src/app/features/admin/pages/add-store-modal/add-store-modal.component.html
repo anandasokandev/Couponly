@@ -56,7 +56,7 @@
                 <select class="form-select form-select-sm" name="location" id="locationSelect"
                     formControlName="storeLocation">
                     <option value="">{{default}}</option>
-                    <option *ngFor="let location of locations" value="{{location.id}}">{{location.locationName}}
+                    <option *ngFor="let location of locations" value="{{location.id}}">{{location.locationName}}</option>
                 </select>
                  <div *ngIf="addStoreForm.get('storeLocation')?.touched && addStoreForm.get('storeLocation')?.invalid">
                     <span class="text-danger" *ngIf="addStoreForm.get('storeLocation')?.errors?.['required']">

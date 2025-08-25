@@ -23,8 +23,8 @@
 
         <c-card-body>
             <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
-                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy" [(ngModel)]="searchType"
-        (change)="FilterUser()">
+                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy"
+                    [(ngModel)]="searchType" (change)="FilterUser()">
                     <option value="5">All</option>
                     <option value="1">First Name</option>
                     <option value="2">Last Name</option>
@@ -34,10 +34,12 @@
 
                 <input type="text" class="form-control form-control-sm" style="max-width: 280px"
                     placeholder="🔍 Search By..." aria-label="Search by " [(ngModel)]="searchText"
-       (keyup.enter)="FilterUser()"/>
+                    (input)="FilterUser()" />
 
-                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy" [(ngModel)]="userType"
-        (change)="FilterUser()">
+
+
+                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy"
+                    [(ngModel)]="userType" (change)="FilterUser()">
                     <option value="0">🧩 All Type</option>
                     <option value="5">🛡️ Admin</option>
                     <option value="3">👤 User</option>
@@ -45,7 +47,8 @@
 
                 </select>
 
-                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy" [(ngModel)]="statusFilter" (change)="onStatusChange()">
+                <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy"
+                    [(ngModel)]="statusFilter" (change)="onStatusChange()">
                     <option value="">🔘 All Status</option>
                     <option value="true">🟢 Active</option>
                     <option value="false">🔴 Inactive</option>
@@ -57,46 +60,60 @@
                 </button>
             </div>
 
-            <table [hover]="true" cTable class="responsive-table">
-                <thead>
-                    <th>
+            <div *ngIf="isLoading" class="d-flex justify-content-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
 
-                    </th>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Phone No.</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Active</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <ng-container *ngFor="let user of users; let i = index">
+            <div *ngIf="!isLoading" class="table-responsive">
+
+
+                <table [hover]="true" cTable class="responsive-table">
+                    <thead>
+                        <th>
+
+                        </th>
                         <tr>
-                            <td>{{ i + 1 }}</td>
-                            <td>{{ user.firstName }}</td>
-                            <td>{{ user.lastName }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.phoneNumber }}</td>
-                            <td>{{ user.type }}</td>
-                            <td data-label="Active">
-                                <c-form-check [switch]="true">
-                                    <input cFormCheckInput checked type="checkbox" />
-                                </c-form-check>
-                            </td>
-                            <td data-label="">
-                                <button class="btn btn-sm btn-outline-primary" [cModalToggle]="'editUserModal'"
-                                    (click)="openEditUserModal(user)">
-                                    <i class="fas fa-pen"></i>
-                                </button>
-                            </td>
+                            <th scope="col">#</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone No.</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Active</th>
+                            <th scope="col">Actions</th>
                         </tr>
-                    </ng-container>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let user of users; let i = index">
+                            <tr>
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ user.firstName }}</td>
+                                <td>{{ user.lastName }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.phoneNumber }}</td>
+                                <td>{{ user.type }}</td>
+                                <td data-label="Active">
+                                    <c-form-check [switch]="true">
+                                        <input cFormCheckInput type="checkbox" [checked]="user.isActive"
+                                            (change)="onToggleUserStatus(user)" />
+                                    </c-form-check>
+                                </td>
+
+
+                                <td data-label="">
+                                    <button class="btn btn-sm btn-outline-primary" [cModalToggle]="'editUserModal'"
+                                        (click)="openEditUserModal(user)">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+
         </c-card-body>
     </c-card>
 </c-col>

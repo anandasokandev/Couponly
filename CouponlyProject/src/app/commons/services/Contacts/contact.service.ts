@@ -14,9 +14,16 @@ export class ContactService {
 
   constructor(private http: HttpClient) { }
 
+
+
   //Fetching contacts 
-  FetchContacts(): Observable <any[]>{
-    return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.contact.AllContacts}`)
+  FetchContacts(pageNumber: number, pagesize: number): Observable <any[]>{
+
+    const params = new HttpParams()
+      .set('PageNumber', pageNumber.toString())
+      .set('PageSize', pagesize.toString());
+
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.contact.AllContacts}`, { params });
 
   }
   
@@ -61,6 +68,19 @@ ExportContactsToCsv(name?: string, email?: string, phonenumber?: string) {
   return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.contact.ExportCSV}`, {
     params,
     responseType: 'blob' // Important for downloading CSV
+  });
+}
+
+ExportContactsToVCard(name?: string, email?: string, phonenumber?: string) {
+  const params: any = {};
+
+  if (name) params.name = name;
+  if (email) params.email = email;
+  if (phonenumber) params.phonenumber = phonenumber;
+
+  return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.contact.ExportVcard}`, {
+    params,
+    responseType: 'blob' // Important for downloading .vcf
   });
 }
 

@@ -1,0 +1,53 @@
+<div class="d-flex justify-content-center align-items-center flex-column text-center animated-modal" style="min-height: 100%; padding: 20px;">
+
+  <h5 class="mb-4 fw-bold text-primary">
+    <i class="fas fa-file-import me-2"></i>Import Contacts
+  </h5>
+
+  <!-- CSV Import Section -->
+  <div class="mb-4 w-100" style="max-width: 400px;">
+    <label class="form-label fw-semibold text-dark">📄 Import CSV File</label>
+    <input
+      type="file"
+      accept=".csv"
+      (change)="handleCSVUpload($event)"
+      class="form-control form-control-sm"
+    />
+    <button
+      class="btn mt-3 px-4 py-2 text-white w-100"
+      style="background-color: #103C6A"
+      (click)="importCSV()"
+    >
+      <i class="fas fa-file-csv me-2"></i>Import CSV
+    </button>
+  </div>
+
+  <!-- vCard Import Section -->
+  <div class="mb-4 w-100" style="max-width: 400px;">
+    <label class="form-label fw-semibold text-dark">📇 Import vCard File</label>
+    <input
+      type="file"
+      accept=".vcf"
+      (change)="handleVCardUpload($event)"
+      class="form-control form-control-sm"
+    />
+    <button
+      class="btn mt-3 px-4 py-2 text-dark w-100"
+      style="background-color:#4D8FCC"
+      (click)="importVCard()"
+    >
+      <i class="fas fa-id-card me-2"></i>Import vCard
+    </button>
+  </div>
+
+  <!-- Close Button -->
+  <div class="text-center">
+    <button
+      class="btn btn-outline-secondary px-4 py-2"
+      (click)="close()"
+    >
+      <i class="fas fa-times me-2"></i>Close
+    </button>
+  </div>
+
+</div>

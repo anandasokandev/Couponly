@@ -12,8 +12,14 @@ export class RedeemsHistoryServiceService {
 
   
 
-  getAllRedeems(districtid: number, locationid: number, fromdate: string, todate: string) {
-    let params = new HttpParams().set('districtid', districtid).set('locationid', locationid);
+  getAllRedeems(currentPage: number, itemsPerPage: number, districtid: number, locationid: number, fromdate: string, todate: string) {
+
+    let params = new HttpParams()
+      .set('PageNumber', currentPage)
+      .set('PageSize', itemsPerPage)
+      .set('districtid', districtid)
+      .set('locationid', locationid);
+
     console.log(fromdate, todate)
     if(fromdate !== '')
       params = params.append('fromdate', fromdate);
@@ -23,7 +29,7 @@ export class RedeemsHistoryServiceService {
     .pipe(
       map((response: any) => {
         if (response && response.statusCode == 200) {
-          return response.data as RedeemHistory[];
+          return response.data.items as RedeemHistory[];
         }
         return [];
       })

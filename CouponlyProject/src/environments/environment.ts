@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://api.couponly.store/api',
+  apiBaseUrl: 'https://localhost:7224/api',
   imageUploadUrl: 'https://images.couponly.store/api/upload',
   imageKey: '5dtg419dtny9y84nu67ry7',
   endpoints: {
@@ -19,7 +19,10 @@ export const environment = {
       login: 'user/login',
       fetchusers: 'User/AllUsers',
       filterusers: 'User/FilterUser',
-      addusers:'User/AddUser'
+      addusers:'User/AddUser',
+      disableusers:'User/DisableUser',
+      updateusers:'User/Update'
+      
 
     },
     location: {
@@ -44,10 +47,12 @@ export const environment = {
       AllFilters: 'Contact/AllFilters',
       AddContact : 'Contact/AddContact',
       EditContact : 'Contact/updatebyid',
-      ExportCSV: 'Contact/ExportContactsToCsv'
+      ExportCSV: 'Contact/ExportContactsToCsv',
+      ExportVcard:'Contact/ExportContactsToVCard'
     },
     login:{
-      signup:'/Login'
+      signup:'/Login',
+      forgotPassword:'/login/forgot-password'
     }
   }
 };

@@ -48,6 +48,7 @@ export class EditContactModalComponent {
   }
 
 ngOnChanges(changes: SimpleChanges): void {
+  console.log(this.contactToEdit)
   if (changes['contactToEdit'] && this.contactToEdit) {
     this.editContactForm.patchValue({
       Name: this.contactToEdit.name,
@@ -67,6 +68,8 @@ closeModal(): void {
   }
 
 createContacts() {
+  
+    console.log(this.contactToEdit?.id)
   if (this.editContactForm.invalid) {
     this.editContactForm.markAllAsTouched();
     this.toast.show({ type: 'error', message: 'Please correct the errors before submitting.' });

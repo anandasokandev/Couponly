@@ -1,18 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
-  ButtonCloseDirective,
+
   CardBodyComponent,
   CardComponent,
   CardHeaderComponent,
   ColComponent,
   FormCheckComponent,
   FormCheckInputDirective,
-  ModalBodyComponent,
   ModalComponent,
-  ModalFooterComponent,
-  ModalHeaderComponent,
-  ModalTitleDirective,
   ModalToggleDirective,
   TableDirective
 } from '@coreui/angular';
@@ -20,6 +16,7 @@ import { AddUserModalComponent } from '../../pages/add-user-modal/add-user-modal
 import { FormsModule } from '@angular/forms';
 import { EditUserModalComponent } from '../../pages/edit-user-modal/edit-user-modal.component';
 import { UserService } from '../../../../commons/services/Users/user.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-manage-users',
@@ -55,34 +52,52 @@ export class ManageUsersComponent {
   searchText: string = '';
   statusFilter: string = ''; // '' = All, 'true' = Active, 'false' = Inactive
 
-  constructor(private api: UserService) { }
-  ngOnInit() {
+  isLoading: boolean = false;
 
+  constructor(
+    private api: UserService,
+    private toastService: ToastService
+  ) { }
+
+  ngOnInit() {
+     this.isLoading = true;
     this.api.FetchUsers().subscribe({
       next: (response: any) => {
-        // console.log('Filtered response:', response.data);
+        //  console.log('Filtered response:', response.data);
         this.users = response.data;
+        // console.log('Fetched users:', this.users);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.isLoading = false;
       }
     })
   }
 
- 
+
 
 
   FilterUser() {
+    this.isLoading = true;
     this.api.searchUsers(this.userType, this.isActive, this.searchType, this.searchText).subscribe({
       next: (response: any) => {
         // console.log('Filtered response:', response.data);
         this.users = response.data;
-      }
+        this.isLoading = false;
+      },
+      error: (err) => {
+      this.isLoading = false;
+    }
+
     });
   }
 
 
+
   onStatusChange() {
-  this.isActive = this.statusFilter === '' ? null : this.statusFilter === 'true';
-  this.FilterUser();
-}
+    this.isActive = this.statusFilter === '' ? null : this.statusFilter === 'true';
+    this.FilterUser();
+  }
 
   reset() {
     this.userType = 0;
@@ -96,5 +111,25 @@ export class ManageUsersComponent {
   openEditUserModal(user: any) {
     this.selectedUser = { ...user };
   }
+
+
+  onToggleUserStatus(user: any): void {
+    // console.log('Toggling user status:', user); // Confirm user.id is valid
+
+    this.api.disableuser(user.id).subscribe({
+      next: (res) => {
+        // console.log('Success:', res);
+        user.isActive = !user.isActive; // Optimistically update UI
+        this.toastService.show({ type: 'success', message: res.statusMessage });
+      },
+      error: (err) => {
+        // console.error('Error toggling user status:', err);
+        this.toastService.show({ type: 'error', message: 'Failed to toggle user status' });
+      }
+    });
+  }
+
+
+
 
 }

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { LoginService } from './../../../commons/services/Authentication/login.service';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    RouterModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -78,7 +78,7 @@ export class LoginComponent {
       },
       error: (err) => {
         console.error(err);
-        this.errorMessage = 'An error occurred while logging in';
+        this.errorMessage = 'Invalid Username or Password';
       }
     });
   }

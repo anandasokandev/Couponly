@@ -1,0 +1,42 @@
+<div class="text-center p-4" style="background-color: #f8f9fa; border-radius: 8px;">
+  <h5 class="mb-3" style="color: #343a40;">📤 Choose Export Format</h5>
+  <p class="mb-4" style="font-size: 15px; color: #6c757d;">
+    Select how you'd like to export your contact list. You can download it as a CSV file or a vCard.
+  </p>
+
+  <div class="d-flex justify-content-center gap-3 flex-wrap">
+    <button
+      cButton
+      class="px-4 py-2 fw-semibold"
+      style="
+        background-color: #103C6A;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        min-width: 140px;
+        transition: background-color 0.3s ease;
+      "
+      (click)="onExportCSV()"
+    >
+      <i class="fas fa-file-csv me-2"></i> Export CSV
+    </button>
+
+    <button
+      cButton
+      class="px-4 py-2 fw-semibold"
+      style="
+        background-color: #4D8FCC;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        min-width: 140px;
+        transition: background-color 0.3s ease;
+      "
+      (click)="onExportVCard()"
+      onmouseover="this.style.backgroundColor='#9acde2'"
+      onmouseout="this.style.backgroundColor='hsl(195, 96%, 38%)'"
+    >
+      <i class="fas fa-id-card me-2"></i> Export vCard
+    </button>
+  </div>
+</div>
