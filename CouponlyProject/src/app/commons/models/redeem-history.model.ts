@@ -4,6 +4,7 @@ export interface RedeemHistory {
     redeemCouponName: string;
     user: string;
     store: string;
+    location: string;
     date: string; // ISO date string
     // Add any other fields that are relevant to the redeem history
 }

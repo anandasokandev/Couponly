@@ -10,6 +10,23 @@
 
 
 
+<c-modal
+  #exportContactModal
+  [scrollable]="true"
+  alignment="center"
+  id="exportContactModal"
+>
+  <app-export-contact-modal
+    (exportCSV)="exportAsCSV()"
+    (exportVCard)="exportAsVCard()"
+     (closeModal)="exportContactModal.visible = false" 
+  ></app-export-contact-modal>
+</c-modal>
+
+
+
+
+
 
 
 <!-- 🧾 Contact List Section -->
@@ -25,9 +42,16 @@
         <button class="btn btn-success btn-sm px-3 py-1 text-nowrap text-white">
           <i class="fas fa-file-import me-1 text-white"></i> Import
         </button>
-        <button class="btn btn-secondary btn-sm px-3 py-1 text-nowrap">
-          <i class="fas fa-file-export me-1"  (click)="emailCsv()"></i> Export
-        </button>
+
+
+     <button
+  class="btn btn-secondary btn-sm px-3 py-1 text-nowrap"
+  [cModalToggle]="exportContactModal.id"
+>
+  <i class="fas fa-file-export me-1"></i> Export
+</button>
+
+
       </div>
     </c-card-header>
 
@@ -96,7 +120,7 @@
             
 
          <tr *ngFor="let contact of contacts; let i = index">
-              <td>{{ i + 1 }}</td>
+              <td>{{ (currentPage * itemsPerPage) + (i + 1) }}</td>
               <td>{{ contact.name }}</td>
               <td>{{ contact.contact }}</td>
               <td>{{ contact.mail }}</td>
@@ -115,6 +139,15 @@
           </tbody>
         </table>
       </div>
+      <!-- Pagination Component -->
+      <app-pagination
+        *ngIf="!isLoading"
+        [totalItems]="totalItems"
+        [itemsPerPage]="itemsPerPage" 
+        [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)"
+        (itemsPerPageChange)="itemsPerPage = $event; onPageChange(1)">
+      </app-pagination>
     </c-card-body>
   </c-card>
 </c-col>

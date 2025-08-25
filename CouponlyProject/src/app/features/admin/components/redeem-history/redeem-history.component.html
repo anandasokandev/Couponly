@@ -81,6 +81,10 @@
                             Store
                             <svg [cIcon]="icons.cilSortAlphaUp"></svg>
                         </th>
+                        <th scope="col" data-label="Latitude">
+                            Location
+                            <svg [cIcon]="icons.cilSortAlphaUp"></svg>
+                        </th>
                         <th scope="col" data-label="Longitude">
                             Redeem Date
                             <svg [cIcon]="icons.cilSortAlphaUp"></svg>
@@ -107,31 +111,39 @@
                         <th data-label="Store Filter">
                             <input type="text" placeholder="Filter Stores" [(ngModel)]="filterStores" class="form-control form-control-sm" />
                         </th>
+                        <th data-label="Location Filter">
+                            <input type="text" placeholder="Filter Locations" [(ngModel)]="filterLocations" class="form-control form-control-sm" />
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    
-                    <ng-container *ngIf="!isLoading">
-                        <ng-container *ngFor="let red of redeems | filterstore: filterStores | filteruser: filterUsers | filtercouponname: filterCouponName | filtercouponcode: filterCouponCode; let i = index">
-                            <tr>
-                                <td data-label="#">{{ i+1 }}</td>
-                                <td data-label="District Name">
-                                    {{ red.redeemCouponCode }}
-                                </td>
-                                <td data-label="Location Name">{{ red.redeemCouponName }}</td>
-                                <td data-label="Pincode">{{ red.user }}</td>
-                                <td data-label="Latitude">{{ red.store }}</td>
-                                <td data-label="">{{ red.date }}</td>
-                            </tr>
-                        </ng-container>
-                    </ng-container>
+                    <tr *ngFor="let red of getRedeemsFiltered() | filterstore: filterStores | filteruser: filterUsers | filtercouponname: filterCouponName | filtercouponcode: filterCouponCode; let i = index">
+                        <td data-label="#">{{ (currentPage * itemsPerPage) + (i + 1) }}</td>
+                        <td data-label="District Name">
+                            {{ red.redeemCouponCode }}
+                        </td>
+                        <td data-label="Location Name">{{ red.redeemCouponName }}</td>
+                        <td data-label="Pincode">{{ red.user }}</td>
+                        <td data-label="Latitude">{{ red.store }}</td>
+                        <td data-label="Longitude">{{ red.location }}</td>
+                        <td data-label="">{{ red.date | date: 'short' }}</td>
+                    </tr>
                     
                 </tbody>
             </table>
             <div *ngIf="isLoading" class="d-flex justify-content-center m-2">
                 <c-spinner color="info" class="me-2" />Loading...
             </div>
+            <div class="d-flex justify-content-center m-2" *ngIf="!isLoading && getRedeemsFiltered().length === 0">No data found!</div>
+            <app-pagination 
+                *ngIf="!isLoading"
+                [totalItems]="getRedeemsFiltered().length" 
+                [itemsPerPage]="itemsPerPage" 
+                [currentPage]="currentPage"
+                (pageChange)="onPageChange($event)">
+            </app-pagination>
+            
         </c-card-body>
     </c-card>
 </c-col>
