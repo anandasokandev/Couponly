@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://localhost:7224/api',
+  apiBaseUrl: 'https://api.couponly.store/api',
   imageUploadUrl: 'https://images.couponly.store/api/upload',
   imageKey: '5dtg419dtny9y84nu67ry7',
   endpoints: {
@@ -39,7 +39,8 @@ export const environment = {
       filterstore: 'Store/FilterStore',
       fetchstore:'Store/id',
       upload:'ImageUpload',
-      addStore:'Store/AddStore'
+      addStore:'Store/AddStore',
+      updateStore:'Store/'
     },
     contact: {
       AllContacts: 'Contact/AllContacts',
