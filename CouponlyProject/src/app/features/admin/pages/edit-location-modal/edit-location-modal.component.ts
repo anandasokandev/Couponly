@@ -34,9 +34,6 @@ export class EditLocationModalComponent {
   districts: District[] = [];
 
   @ViewChild('closeButton') closeButton!: ElementRef;
-  
-  // Create a working copy of the location to avoid direct mutation
-  editLocation: Location | null = null;
 
   constructor(private locationApi: LocationService, private toastService: ToastService) {
   }
@@ -45,12 +42,12 @@ export class EditLocationModalComponent {
     this.fetchDistrict();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['location'] && this.location) {
-      // Create a deep copy to avoid mutating the original location
-      this.editLocation = { ...this.location };
-    }
-  }
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (changes['location'] && this.location) {
+  //     // Create a deep copy to avoid mutating the original location
+  //     this.editLocation = { ...this.location };
+  //   }
+  // }
   
   fetchDistrict(): void {
     this.locationApi.fetchDistrict()
@@ -61,8 +58,8 @@ export class EditLocationModalComponent {
   }
 
   onSave(): void {
-    if (this.editLocation) {
-      this.locationApi.editLocation(this.editLocation)
+    if (this.location) {
+      this.locationApi.editLocation(this.location)
         .subscribe({
           next: ({isSuccess, statusMessage}) => {
             if(isSuccess) {
