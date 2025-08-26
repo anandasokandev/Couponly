@@ -29,7 +29,7 @@
                 </div>
             </div> -->
             <form [formGroup]="filterForm">
-                <div class="d-md-flex justify-content-start">
+                <div class="d-flex flex-wrap justify-content-start py-3">
                     <div class="d-flex gap-4 align-items-center m-2">
                         <!-- <strong class="w-md-50">District: </strong> -->
                         <select class="form-select form-select-sm"  formControlName="district">
@@ -51,11 +51,11 @@
                         <label for="fromDate" class="input-label">From:</label>
                         <input type="date" id="fromDate" class="form-control form-control-sm" formControlName="from" />
                     </div>
-                    <div class="input-container d-flex gap-1 align-items-center m-2">
+                    <div class="input-container d-flex gap-1 align-items-center m-1">
                         <label for="toDateDate" class="input-label">To:</label>
                         <input type="date" id="toDate" class="form-control form-control-sm" formControlName="to" />
                     </div>
-                    <button class="btn btn-sm btn-danger text-white m-3" title="Reset" (click)="resetFilter()">
+                    <button class="btn btn-sm btn-danger text-white m-2" title="Reset" (click)="resetFilter()">
                         <i class="fas fa-arrows-rotate"></i>
                     </button>
                 </div>

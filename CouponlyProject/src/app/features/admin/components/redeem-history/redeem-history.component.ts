@@ -57,6 +57,7 @@ export class RedeemHistoryComponent {
   fromDate: string = '';
   toDate: string = '';
   isLoading: boolean = false;
+  isPageChange: boolean = false;
   itemsPerPage: number = 10;
   currentPage: number = 1;
 
@@ -184,6 +185,8 @@ export class RedeemHistoryComponent {
 
   getRedeems() {
     this.isLoading = true;
+    if (!this.isPageChange)
+      this.currentPage = 1;
     this.redeems = [];
     this.redeemHistoryService.getAllRedeems(
       this.currentPage,
@@ -195,11 +198,13 @@ export class RedeemHistoryComponent {
     )?.subscribe((data: RedeemHistory[]) => {
       this.redeems = data;
       this.isLoading = false;
+      this.isPageChange = false;
     });
   }
 
   onPageChange(page: number) {
     this.currentPage = page;
+    this.isPageChange = true;
     this.getRedeems();
   }
 
