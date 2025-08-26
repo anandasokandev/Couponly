@@ -63,4 +63,12 @@ export class RedeemsHistoryServiceService {
     const headers = new HttpHeaders().set('userid', id);
     return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.redeem.ExportEmail}`, { headers, params });
   }
+
+  getDistricts(): Observable<any> {
+    return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.location.fetchDistrict}`);
+  }
+
+  getLocations(districtId: number): Observable<any> {
+    return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.location.fetchDistrict}/${districtId}/locations`);
+  }
 }

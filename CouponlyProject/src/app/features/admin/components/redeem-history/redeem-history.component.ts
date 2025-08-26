@@ -52,35 +52,19 @@ export class RedeemHistoryComponent {
   filterLocations: string = ''
   filterCouponName: string = ''
   filterCouponCode: string = ''
-  distirctId: number = 0;
+  districtId: number = 0;
   locationId: number = 0;
   fromDate: string = '';
   toDate: string = '';
   isLoading: boolean = false;
-  // selectedDistirctId: string = ''
+  itemsPerPage: number = 10;
+  currentPage: number = 1;
+
+  redeems: RedeemHistory[] = [];
+  districts: District[] = [];
+  locations: Location[] = [];
 
   private toast = inject(ToastService);
-
-  redeems: RedeemHistory[] = []
-
-  districts: District[] = [
-    { id:1, districtName: 'Thrissur' },
-    { id:7, districtName: 'Ernakulam' },
-    { id:3, districtName: 'Kottayam' },
-    { id:4, districtName: 'Thiruvanandhapuram' },
-    { id:5, districtName: 'Idukki' }
-  ]
-
-  locations = [
-    { id: 1, districtId: 4, locationName: 'Kazhakuttam', pincode: '265947', latitude: '8.5673° N', longitude: '76.8741° E' },
-    { id: 2, districtId: 1, locationName: 'Thriprayar', pincode: '263515', latitude: '10.4136° N', longitude: '76.1131° E' },
-    { id: 3, districtId: 3, locationName: 'Pala', pincode: '465978', latitude: '9.7084° N', longitude: '76.6849° E' },
-    { id: 4, districtId: 1, locationName: 'Kunnamkulam', pincode: '659545', latitude: '10.6484° N', longitude: '76.0706° E' },
-    { id: 5, districtId: 7, locationName: 'Thripunithura', pincode: '656268', latitude: '9.9439° N', longitude: '76.3494° E' },
-    { id: 3, districtId: 7, locationName: 'Moovattupuzha', pincode: '636261', latitude: '10.017° N', longitude: '76.344° E' },
-    { id: 7, districtId: 5, locationName: 'Vazhithala', pincode: '646853', latitude: '9.8833° N', longitude: '76.6417° E' },
-
-  ]
 
   filterForm: FormGroup;
 
@@ -95,8 +79,13 @@ export class RedeemHistoryComponent {
 
   ngOnInit() {
     this.getRedeems();
+    this.redeemHistoryService.getDistricts().subscribe((data: any) => {
+      if(data && data.statusCode == 200) {
+        this.districts = data.data as District[];
+      }
+    });
     this.filterForm.get('district')?.valueChanges.subscribe(value => {
-      this.distirctId = value;
+      this.districtId = value;
       this.filterForm.get('location')?.setValue('0');
       this.getLocations();
       this.getRedeems();
@@ -117,11 +106,18 @@ export class RedeemHistoryComponent {
   }
   
   getLocations() {
-    if(this.distirctId == 0) {
-      return this.locations
+    if(this.districtId == 0) {
+      this.locations = [];
     }
     else {
-      return this.locations.filter(item => item.districtId == this.distirctId)
+      this.redeemHistoryService.getLocations(this.districtId).subscribe((data: any) => {
+        if(data && data.statusCode == 200) {
+          const locations = data.data as Location[];
+          this.locations = locations;
+        } else {
+          this.locations = [];
+        }
+      });
     }
   }
 
@@ -138,7 +134,7 @@ export class RedeemHistoryComponent {
   }
 
   resetFilter() {
-    this.distirctId = 0;
+    this.districtId = 0;
     this.locationId = 0;
     this.filterForm.get('to')?.setValue('');
     this.filterForm.get('from')?.setValue('');
@@ -147,7 +143,7 @@ export class RedeemHistoryComponent {
 
   downloadExcel() {
     this.redeemHistoryService.exportRedeemsToExcel(
-      this.distirctId,
+      this.districtId,
       this.locationId,
       this.fromDate,
       this.toDate
@@ -167,7 +163,7 @@ export class RedeemHistoryComponent {
 
   emailExcel() {
     this.redeemHistoryService.ExportToExcelAndMail(
-      this.distirctId,
+      this.districtId,
       this.locationId,
       this.fromDate,
       this.toDate
@@ -188,10 +184,11 @@ export class RedeemHistoryComponent {
 
   getRedeems() {
     this.isLoading = true;
+    this.redeems = [];
     this.redeemHistoryService.getAllRedeems(
       this.currentPage,
       this.itemsPerPage,
-      this.distirctId,
+      this.districtId,
       this.locationId,
       this.fromDate,
       this.toDate
@@ -200,8 +197,6 @@ export class RedeemHistoryComponent {
       this.isLoading = false;
     });
   }
-  itemsPerPage: number = 10;
-  currentPage: number = 1;
 
   onPageChange(page: number) {
     this.currentPage = page;
