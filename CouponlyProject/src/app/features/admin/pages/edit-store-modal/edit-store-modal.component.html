@@ -1,7 +1,7 @@
 <c-modal #editStoreModal [scrollable]="true" alignment="center" id="editStoreModal">
     <c-modal-header>
         <h5 cModalTitle>Edit Store</h5>
-        <button [cModalToggle]="editStoreModal.id" cButtonClose></button>
+        <button #closeButton cModalToggle cButtonClose></button>
     </c-modal-header>
     <c-modal-body>
         <form cForm [formGroup]="editStoreForm">
@@ -17,8 +17,8 @@
             </div>
             <div class="mb-3">
                 <label cLabel for="editLogoInput">Logo</label>
-                <div><img src="assets/images/angular.jpg" alt="CoreUI for Angular"></div>
-                <input cFormControl id="editLogoInput" sizing="sm" type="file" formControlName="storeLogo" />
+                <div><img src="{{logo}}" alt="CoreUI for Angular"></div>
+                <input cFormControl id="editLogoInput" sizing="sm" type="file" formControlName="storeLogo" (change)="onFileSelected($event)" />
                 <div *ngIf="editStoreForm.get('storeLogo')?.touched && editStoreForm.get('storeLogo')?.invalid">
                     <span class="text-danger" *ngIf="editStoreForm.get('storeLogo')?.errors?.['required']">
                         *store logo is required.
@@ -30,8 +30,7 @@
                 <select class="form-select form-select-sm" name="location" id="editCategorySelect"
                     formControlName="storeCategory">
                     <option value="">Select Category</option>
-                    <option>Lifestyle</option>
-                    <option>Fashion</option>
+                     <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
                 </select>
                 <div *ngIf="editStoreForm.get('storeCategory')?.touched && editStoreForm.get('storeCategory')?.invalid">
                     <span class="text-danger" *ngIf="editStoreForm.get('storeCategory')?.errors?.['required']">
@@ -42,10 +41,9 @@
             <div class="mb-3">
                 <label cLabel for="districtSelect">District</label>
                 <select class="form-select form-select-sm" name="district" id="districtSelect"
-                    formControlName="district">
+                    formControlName="district" (change)="selectLocationByDistrict()">
                     <option value="">Select District</option>
-                    <option>Idukki</option>
-                    <option>Ernakulam</option>
+                     <option *ngFor="let district of districts" value="{{district.id}}">{{district.districtName}}</option>
                 </select>
                 <div *ngIf="editStoreForm.get('district')?.touched && editStoreForm.get('district')?.invalid">
                     <span class="text-danger" *ngIf="editStoreForm.get('district')?.errors?.['required']">
@@ -57,8 +55,7 @@
                 <label cLabel for="editLocationSelect">Location</label>
                 <select class="form-select form-select-sm" name="location" id="editLocationSelect" formControlName="storeLocation">
                     <option value="">Select Location</option>
-                    <option>Kadavanthra</option>
-                    <option>Vytila</option>
+                    <option *ngFor="let location of locations" value="{{location.id}}">{{location.locationName}}</option>
                 </select>
                 <div *ngIf="editStoreForm.get('storeLocation')?.touched && editStoreForm.get('storeLocation')?.invalid">
                     <span class="text-danger" *ngIf="editStoreForm.get('storeLocation')?.errors?.['required']">
@@ -106,8 +103,8 @@
                 <select class="form-select form-select-sm" name="location" id="editTypeSelect"
                     formControlName="storeType">
                     <option value="">Select Type</option>
-                    <option>Offline</option>
-                    <option>Online</option>
+                    <option value=2>Offline</option>
+                    <option value=1>Online</option>
                 </select>
                 <div *ngIf="editStoreForm.get('storeType')?.touched && editStoreForm.get('storeType')?.invalid">
                     <span class="text-danger" *ngIf="editStoreForm.get('storeType')?.errors?.['required']">

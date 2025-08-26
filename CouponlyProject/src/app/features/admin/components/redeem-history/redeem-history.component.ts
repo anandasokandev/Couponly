@@ -16,6 +16,7 @@ import { from } from 'rxjs';
 import { DownloadRedeemsModelComponent } from '../../pages/download-redeems-model/download-redeems-model.component';
 import { RedeemsHistoryServiceService } from '../../../../commons/services/Coupon/redeems-history-service.service';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
+import { PaginationComponent } from '../../pages/pagination/pagination.component';
 
 @Component({
   selector: 'app-redeem-history',
@@ -37,7 +38,7 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
     ModalToggleDirective,
     ModalComponent,
     SpinnerComponent,
-
+    PaginationComponent,
   ],
   templateUrl: './redeem-history.component.html',
   styleUrl: './redeem-history.component.scss'
@@ -188,6 +189,8 @@ export class RedeemHistoryComponent {
   getRedeems() {
     this.isLoading = true;
     this.redeemHistoryService.getAllRedeems(
+      this.currentPage,
+      this.itemsPerPage,
       this.distirctId,
       this.locationId,
       this.fromDate,
@@ -196,6 +199,13 @@ export class RedeemHistoryComponent {
       this.redeems = data;
       this.isLoading = false;
     });
+  }
+  itemsPerPage: number = 10;
+  currentPage: number = 1;
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.getRedeems();
   }
 
 }

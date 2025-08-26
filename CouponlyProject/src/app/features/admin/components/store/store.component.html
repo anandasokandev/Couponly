@@ -2,7 +2,7 @@
   <app-add-store-modal></app-add-store-modal>
 </c-modal>
 
-<c-modal #editStoreModal [scrollable]="true" alignment="center" id="editStoreModal">
+<c-modal #editStoreModal [scrollable]="true" alignment="center" id="editStoreModal" (storeUpdated)="refreshStore()">
   <app-edit-store-modal [storeToEdit]="selectedStore"></app-edit-store-modal>
 </c-modal>
 <c-col xs="12">

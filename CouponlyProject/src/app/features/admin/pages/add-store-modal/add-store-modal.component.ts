@@ -65,7 +65,6 @@ private initiateForm(){
     district:['',Validators.required],
     storeContact:['',[Validators.required,Validators.pattern(/^\d{10}$/)]],
     storeEmail:['',[Validators.required,Validators.email]],
-    storePassword:['',[Validators.required,Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])(?!.*\s).{8,}$/)]],
     storeType:['',Validators.required]
   });
 }
@@ -137,7 +136,6 @@ private buildStorePayload(url: string): any {
     CategoryId: form.storeCategory,
     ApprovedBy: 5,
     Type: form.storeType,
-    Password: form.storePassword
   };
 }
 

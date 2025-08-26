@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { ContactService } from '../../../../commons/services/Contacts/contact.service';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 import { ExportContactModalComponent } from '../../pages/export-contact-modal/export-contact-modal.component';
+import { PaginationComponent } from '../../pages/pagination/pagination.component';
+import { ImportContactModalComponent } from '../../pages/import-contact-modal/import-contact-modal.component';
 
 
 
@@ -24,7 +26,10 @@ import { ExportContactModalComponent } from '../../pages/export-contact-modal/ex
     EditContactModalComponent,
     AddContactModalComponent,
     ExportContactModalComponent,
-    FormsModule],
+    ImportContactModalComponent,
+    FormsModule,
+    PaginationComponent
+  ],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })
@@ -35,19 +40,25 @@ export class ContactComponent {
   email:string='';
   phonenumber:string='';
 
+  isFiltered: boolean = false;
+  
+
  isLoading: boolean = false;
 
  selectedContact: any = null;
 
-
-
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalItems: number = 0;
+  
 
   constructor(private api:ContactService,private toast:ToastService){}
   ngOnInit() {
     this.isLoading = true;
-    this.api.FetchContacts().subscribe({
+    this.api.FetchContacts(this.currentPage, this.itemsPerPage).subscribe({
       next: (response: any) => {
-        this.contacts = response.data;
+        this.contacts = response.data.items;
+        this.totalItems = response.data.totalCount;
         this.isLoading = false;
         console.log(response)
       },
@@ -90,10 +101,16 @@ emailCsv() {
 
 
 FilterContact() {
+   this.isFiltered = true;
   this.isLoading = true;
-  this.api.searchContacts(this.name, this.email, this.phonenumber).subscribe({
+
+  this.api.searchContacts(this.currentPage, this.itemsPerPage, this.name, this.email, this.phonenumber).subscribe({
     next: (response: any) => {
-      this.contacts = response.data;
+      this.contacts = response.data.items; // assuming this is an array
+
+      this.totalItems = response.data.totalCount;
+
+
       this.isLoading = false;
     },
     error: (err) => {
@@ -105,15 +122,19 @@ FilterContact() {
 
 
 
+
+
 ResetFilters() {
   this.name = '';
   this.email = '';
   this.phonenumber = '';
   this.isLoading = true;
+  this.isFiltered = false;
 
-  this.api.FetchContacts().subscribe({
+  this.api.FetchContacts(this.currentPage, this.itemsPerPage).subscribe({
     next: (response: any) => {
-      this.contacts = response.data;
+      this.contacts = response.data.items;
+      this.totalItems = response.data.totalCount;
       this.isLoading = false;
     },
     error: (err) => {
@@ -125,10 +146,12 @@ ResetFilters() {
 
 
 
+
 ContactList() {
-  this.api.FetchContacts().subscribe({
+  this.api.FetchContacts(this.currentPage, this.itemsPerPage).subscribe({
     next: (response: any) => {
-      this.contacts = response.data;
+      this.contacts = response.data.items;
+        this.totalItems = response.data.totalCount;
       // this.toast.show({ type: 'info', message: 'Contact list updated.' });
     },
     error: (err) => {
@@ -138,9 +161,11 @@ ContactList() {
 }
 
 refreshContactList() {
- this.api.FetchContacts().subscribe({
+  this.isFiltered = false;
+ this.api.FetchContacts(this.currentPage, this.itemsPerPage).subscribe({
     next: (response: any) => {
-      this.contacts = response.data;
+      this.contacts = response.data.items;
+        this.totalItems = response.data.totalCount;
       // this.toast.show({ type: 'info', message: 'Contact list updated.' });
     },
     error: (err) => {
@@ -178,6 +203,16 @@ exportAsVCard() {
 }
 
 
+
+  //pagination
+onPageChange(page: number) {
+
+  
+  this.currentPage = page;
+  this.isFiltered ? this.FilterContact() : this.ResetFilters();
+
+ 
+}
 
 
 }

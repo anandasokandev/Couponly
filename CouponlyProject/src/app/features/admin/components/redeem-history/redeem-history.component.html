@@ -118,22 +118,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
-                    <ng-container *ngIf="!isLoading">
-                        <ng-container *ngFor="let red of getRedeemsFiltered() | filterstore: filterStores | filteruser: filterUsers | filtercouponname: filterCouponName | filtercouponcode: filterCouponCode; let i = index">
-                            <tr>
-                                <td data-label="#">{{ i+1 }}</td>
-                                <td data-label="District Name">
-                                    {{ red.redeemCouponCode }}
-                                </td>
-                                <td data-label="Location Name">{{ red.redeemCouponName }}</td>
-                                <td data-label="Pincode">{{ red.user }}</td>
-                                <td data-label="Latitude">{{ red.store }}</td>
-                                <td data-label="Longitude">{{ red.location }}</td>
-                                <td data-label="">{{ red.date | date: 'short' }}</td>
-                            </tr>
-                        </ng-container>
-                    </ng-container>
+                    <tr *ngFor="let red of getRedeemsFiltered() | filterstore: filterStores | filteruser: filterUsers | filtercouponname: filterCouponName | filtercouponcode: filterCouponCode; let i = index">
+                        <td data-label="#">{{ (currentPage * itemsPerPage) + (i + 1) }}</td>
+                        <td data-label="District Name">
+                            {{ red.redeemCouponCode }}
+                        </td>
+                        <td data-label="Location Name">{{ red.redeemCouponName }}</td>
+                        <td data-label="Pincode">{{ red.user }}</td>
+                        <td data-label="Latitude">{{ red.store }}</td>
+                        <td data-label="Longitude">{{ red.location }}</td>
+                        <td data-label="">{{ red.date | date: 'short' }}</td>
+                    </tr>
                     
                 </tbody>
             </table>
@@ -141,6 +136,14 @@
                 <c-spinner color="info" class="me-2" />Loading...
             </div>
             <div class="d-flex justify-content-center m-2" *ngIf="!isLoading && getRedeemsFiltered().length === 0">No data found!</div>
+            <app-pagination 
+                *ngIf="!isLoading"
+                [totalItems]="getRedeemsFiltered().length" 
+                [itemsPerPage]="itemsPerPage" 
+                [currentPage]="currentPage"
+                (pageChange)="onPageChange($event)">
+            </app-pagination>
+            
         </c-card-body>
     </c-card>
 </c-col>

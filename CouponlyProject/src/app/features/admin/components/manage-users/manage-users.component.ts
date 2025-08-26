@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { EditUserModalComponent } from '../../pages/edit-user-modal/edit-user-modal.component';
 import { UserService } from '../../../../commons/services/Users/user.service';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
+import { PaginationComponent } from '../../pages/pagination/pagination.component';
 
 @Component({
   selector: 'app-manage-users',
@@ -33,7 +34,8 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
     ModalComponent,
     AddUserModalComponent,
     FormsModule,
-    EditUserModalComponent
+    EditUserModalComponent,
+    PaginationComponent
   ],
   templateUrl: './manage-users.component.html',
   styleUrl: './manage-users.component.scss'
@@ -46,7 +48,6 @@ export class ManageUsersComponent {
   users: any[] = [];
 
   userType: number = 0;
-
   isActive: boolean | null = null;
   searchType: number = 5;
   searchText: string = '';
@@ -54,18 +55,24 @@ export class ManageUsersComponent {
 
   isLoading: boolean = false;
 
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalItems: number = 0;
+
   constructor(
     private api: UserService,
     private toastService: ToastService
   ) { }
 
   ngOnInit() {
-     this.isLoading = true;
-    this.api.FetchUsers().subscribe({
+    this.isLoading = true;
+    this.api.FetchUsers(this.currentPage, this.itemsPerPage).subscribe({
       next: (response: any) => {
-        //  console.log('Filtered response:', response.data);
-        this.users = response.data;
-        // console.log('Fetched users:', this.users);
+        // console.log('Filtered response:', response.data);
+        this.users = response.data.items;
+        this.totalItems = response.data.totalCount;
+        // this.users = response.data;
+        console.log('Fetched users:', this.users);
         this.isLoading = false;
       },
       error: (err) => {
@@ -75,22 +82,29 @@ export class ManageUsersComponent {
   }
 
 
-
-
   FilterUser() {
     this.isLoading = true;
-    this.api.searchUsers(this.userType, this.isActive, this.searchType, this.searchText).subscribe({
+
+    this.api.searchUsers(
+      this.userType,
+      this.isActive,
+      this.searchType,
+      this.searchText,
+      this.currentPage,
+      this.itemsPerPage
+    ).subscribe({
       next: (response: any) => {
-        // console.log('Filtered response:', response.data);
-        this.users = response.data;
+        this.users = response.data.items;
+        this.totalItems = response.data.totalCount;
         this.isLoading = false;
       },
       error: (err) => {
-      this.isLoading = false;
-    }
-
+        this.isLoading = false;
+      }
     });
   }
+
+
 
 
 
@@ -129,7 +143,12 @@ export class ManageUsersComponent {
     });
   }
 
+  //pagination
 
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.FilterUser();
+  }
 
 
 }
