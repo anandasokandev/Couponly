@@ -1,0 +1,87 @@
+<div class="container-fluid mt-4">
+  <div class="row">
+    <!-- Coupon Details -->
+    <div class="col-md-4">
+      <div class="card shadow-sm p-3 rounded-3">
+        <h5 class="mb-3">Coupon Details</h5>
+
+        <div class="mb-3">
+          <label class="form-label">Coupon Title</label>
+          <input type="text" class="form-control" [(ngModel)]="coupon.title" placeholder="50% OFF on Shoes" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" rows="2" [(ngModel)]="coupon.description"
+            placeholder="Valid on all footwear above ₹1000"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Coupon Code</label>
+          <input type="text" class="form-control" [(ngModel)]="coupon.code" placeholder="e.g. SAVE50" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Discount (%)</label>
+          <input type="number" class="form-control" [(ngModel)]="coupon.discount" placeholder="50" />
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Valid From</label>
+            <input type="date" class="form-control" [(ngModel)]="coupon.validFrom" />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Valid Until</label>
+            <input type="date" class="form-control" [(ngModel)]="coupon.validUntil" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload/AI Tabs -->
+    <div class="col-md-8">
+      <div class="card shadow-sm p-3 rounded-3">
+        <h5 class="mb-3">Upload or Generate Coupon</h5>
+        <ul class="nav nav-tabs mb-3">
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab==='upload'" (click)="activeTab='upload'">Upload Coupon Image</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab==='ai'" (click)="activeTab='ai'">AI Coupon</a>
+          </li>
+        </ul>
+
+        <div *ngIf="activeTab==='upload'">
+            <div class="upload-box border border-2 border-dashed rounded p-4 mb-2">
+                <p class="text-muted mb-2">Drag & Drop Image Here</p>
+                <label class="btn btn-outline-secondary">
+                    Choose File <input type="file" hidden (change)="onFileSelected($event)" />
+                </label>
+            </div>
+        
+            <!-- Show uploaded file name -->
+            <div *ngIf="previewImage" class="mb-2 text-start small text-muted">
+                {{ previewImage }}
+            </div>
+        
+            <!-- Coupon Preview -->
+            <div *ngIf="previewImage" class="coupon-preview mb-3">
+                <img [src]="previewImage" alt="Coupon Preview" class="img-fluid rounded shadow-sm" />
+            </div>
+        </div>
+
+        <div *ngIf="activeTab==='ai'" class="text-center p-3">
+          <button class="btn btn-outline-primary" (click)="generateAICoupon()">✨ Generate with AI</button>
+          <div *ngIf="aiImage" class="border p-3 mt-3">
+            <img [src]="aiImage" alt="AI Coupon" class="img-fluid rounded" style="max-height: 250px;" />
+          </div>
+        </div>
+
+        <div class="text-end mt-3">
+          <button class="btn btn-primary px-4" (click)="saveCoupon()">Save Coupon</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

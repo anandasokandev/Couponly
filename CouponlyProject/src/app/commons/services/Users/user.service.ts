@@ -11,10 +11,7 @@ import { AddUserDTO } from '../../models/adduser.module';
 export class UserService {
   constructor(private http: HttpClient) { }
 
-  //Fetching Users 
-  // FetchUsers(): Observable<any[]> {
-  //   return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.user.fetchusers}`)
-  // }
+
 
   FetchUsers(pageNumber: number, pagesize: number): Observable<any[]> {
 
@@ -25,18 +22,6 @@ export class UserService {
     return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.user.fetchusers}`, { params })
   }
 
-
-  // searchUsers(userType: number, isActive: boolean | null, searchType: number, searchText: string): Observable<any> {
-  //   let params = new HttpParams()
-  //     .set('userType', userType)
-  //     .set('searchType', searchType)
-  //     .set('searchText', searchText);
-
-  //   if (isActive !== null) {
-  //     params = params.set('isActive', isActive);
-  //   }
-  //   return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.user.filterusers}`, { params });
-  // }
   searchUsers(
     userType: number,
     isActive: boolean | null,
@@ -72,14 +57,12 @@ export class UserService {
     );
   }
 
-
-
-  updateUser(id: number, userData: any): Observable<any> {
-    return this.http.post(
-      `${environment.apiBaseUrl}/${environment.endpoints.user.updateusers}?id=${id}`,
+updateUser(userData: any): Observable<any> {
+  return this.http.post(
+      `${environment.apiBaseUrl}/${environment.endpoints.user.updateusers}`,
       userData
     );
-  }
+}
 
 
 

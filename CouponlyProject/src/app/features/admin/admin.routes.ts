@@ -45,6 +45,13 @@ export const routes: Routes = [
         }
       },
       {
+        path: 'generatecoupon',
+        loadComponent: () => import('./components/generate-coupon/generate-coupon.component').then(m => m.GenerateCouponComponent ),
+        data: {
+          title: 'GenerateCoupon'
+        }
+      },
+      {
         path: 'manageusers',
         loadComponent: () => import('./components/manage-users/manage-users.component').then(m => m.ManageUsersComponent ),
         data: {
