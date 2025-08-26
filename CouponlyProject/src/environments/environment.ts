@@ -40,7 +40,8 @@ export const environment = {
       filterstore: 'Store/FilterStore',
       fetchstore:'Store/id',
       upload:'ImageUpload',
-      addStore:'Store/AddStore'
+      addStore:'Store/AddStore',
+      updateStore:'Store/'
     },
     contact: {
       AllContacts: 'Contact/AllContacts',
@@ -48,7 +49,9 @@ export const environment = {
       AddContact : 'Contact/AddContact',
       EditContact : 'Contact/updatebyid',
       ExportCSV: 'Contact/ExportContactsToCsv',
-      ExportVcard:'Contact/ExportContactsToVCard'
+      ExportVcard:'Contact/ExportContactsToVCard',
+      importcsv:'Contact/ImportContactsFromCsv',
+      importvcard :'Contact/ImportContactsFromVCard'
     },
     login:{
       signup:'/Login',
