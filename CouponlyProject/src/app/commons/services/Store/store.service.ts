@@ -55,4 +55,9 @@ export class StoreService {
 FetchStore(id: number):Observable<any>{
   return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchstore}${id}`)
 }
+
+UpdateStore(id: number, data: any): Observable<any> {
+  const url = `${environment.apiBaseUrl}/${environment.endpoints.store.updateStore}${id}`;
+  return this.http.post(url, data);
+}
 }

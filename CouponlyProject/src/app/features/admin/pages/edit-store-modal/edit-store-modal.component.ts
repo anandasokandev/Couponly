@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
@@ -8,7 +8,7 @@ import { LocationService } from '../../../../commons/services/Admin/location.ser
 
 @Component({
   selector: 'app-edit-store-modal',
-  imports: [ ModalComponent,
+  imports: [ModalComponent,
     ModalToggleDirective,
     ModalHeaderComponent,
     ModalTitleDirective,
@@ -25,28 +25,33 @@ import { LocationService } from '../../../../commons/services/Admin/location.ser
   styleUrl: './edit-store-modal.component.scss'
 })
 export class EditStoreModalComponent {
- @Input() storeToEdit: any;
+  @Input() storeToEdit: any;
+  @ViewChild('closeButton') closeButton!: ElementRef;
+  @Output() storeUpdated = new EventEmitter<void>();
   editStoreForm: FormGroup;
-constructor(private fb: FormBuilder,private api:StoreService, private locationapi:LocationService) {
-  this.editStoreForm=this.fb.group({
-    storeName:['',Validators.required],
-    storeLogo:['',Validators.required],
-    storeCategory:['',Validators.required],
-    storeLocation:['',Validators.required],
-    storeAddress:['',Validators.required],
-    district:['',Validators.required],
-    storeContact:['',[Validators.required,Validators.pattern(/^\d{10}$/)]],
-    storeEmail:['',[Validators.required,Validators.email]],
-    storeType:['',Validators.required]
-  });
-}
+  logo: string = '';
+  districtId: any;
+  selectedFile: File | null = null;
+  constructor(private fb: FormBuilder, private api: StoreService, private locationapi: LocationService) {
+    this.editStoreForm = this.fb.group({
+      storeName: ['', Validators.required],
+      storeLogo: [''],
+      storeCategory: ['', Validators.required],
+      storeLocation: ['', Validators.required],
+      storeAddress: ['', Validators.required],
+      district: ['', Validators.required],
+      storeContact: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      storeEmail: ['', [Validators.required, Validators.email]],
+      storeType: ['', Validators.required]
+    });
+  }
 
-private toast = inject(ToastService);
-categories:any[]=[];
-districts:any[]=[];
-locations:any[]=[];
-ngOnInit(){
-   //fetching Categories
+  private toast = inject(ToastService);
+  categories: any[] = [];
+  districts: any[] = [];
+  locations: any[] = [];
+  ngOnInit() {
+    //fetching Categories
     this.api.FetchCategories().subscribe({
       next: (response: any) => {
         this.categories = response.data;
@@ -58,49 +63,110 @@ ngOnInit(){
         this.districts = response.data;
       }
     })
-    //Bind Data
-    this.bindOldData
-}
 
-bindOldData(){
-const store=this.storeToEdit;
-console.log(store)
-this.editStoreForm.patchValue({
-  storeName:store.store,
-  storeCategory:store.category,
-  storeLocation: store.location,
-  storeAddress:store.storeAddress,
-  district: store.districtId,
-  storeContact: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-  storeEmail: ['', [Validators.required, Validators.email]],
-  storeType: ['', Validators.required]
-})
-}
+  }
 
- selectLocationByDistrict() {
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.storeToEdit) {
+      this.bindOldData();
+    }
+  }
+  bindOldData() {
+    const store = this.storeToEdit;
+    this.logo = store.logo
+    this.editStoreForm.value.district = store.districtId
+    this.selectLocationByDistrict()
+    this.editStoreForm.patchValue({
+      storeName: store.name,
+      storeCategory: store.categoryId,
+      district: store.districtId,
+      storeLocation: store.locationId,
+      storeAddress: store.address,
+      storeContact: store.contact,
+      storeEmail: store.email,
+      storeType: store.typeId
+    })
+  }
+
+  selectLocationByDistrict() {
     const districtId = this.editStoreForm.value.district;
-    if (districtId != "") {
+    if (districtId) {
       this.locationapi.filterLocation(districtId, '', '').subscribe({
         next: (response: any) => {
           this.locations = response.data;
-        }})
+        }
+      })
     }
-    else 
+    else
       this.locations = [];
   }
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+  editStore(): void {
+    if (!this.editStoreForm.valid) {
+      this.editStoreForm.markAllAsTouched();
+      return;
+    }
 
-editStore() {
-  if (this.editStoreForm.valid) {
-    this.toast.show({ type: 'success', message: 'Store updated successfully!' });
-  } else {
-    this.editStoreForm.markAllAsTouched();
-    console.log('Invalid', this.editStoreForm.value);
+    if (this.selectedFile) {
+      this.uploadAndSubmit();
+    } else {
+      const payload = this.buildStorePayload(this.logo);
+      this.submitStoreUpdate(payload);
+    }
   }
-}
-allowOnlyNumbers(event: KeyboardEvent) {
-  const charCode = event.charCode;
-  if (charCode < 48 || charCode > 57) {
-    event.preventDefault();
+
+  private uploadAndSubmit(): void {
+    this.api.UploadImage(this.selectedFile!).subscribe({
+      next: res => {
+        if (res.status) {
+          const payload = this.buildStorePayload(res.url);
+          this.submitStoreUpdate(payload);
+        } else {
+          this.toast.show({ type: 'error', message: 'Image upload failed' });
+        }
+      },
+      error: () => this.toast.show({ type: 'error', message: 'Image upload failed' })
+    });
   }
-}
+
+  private buildStorePayload(logoUrl: string): any {
+    const form = this.editStoreForm.value;
+    return {
+      StoreName: form.storeName,
+      Address: form.storeAddress,
+      Logo: logoUrl,
+      Contact: form.storeContact,
+      Email: form.storeEmail,
+      LocationId: form.storeLocation,
+      CategoryId: form.storeCategory,
+      Type: form.storeType
+    };
+  }
+
+  private submitStoreUpdate(payload: any): void {
+    console.log("PAYLOADDD",payload)
+    this.api.UpdateStore(this.storeToEdit.id, payload).subscribe({
+      next: () => {
+        this.toast.show({ type: 'success', message: 'Store updated successfully!' });
+        this.editStoreForm.reset();
+        this.logo="";
+        this.storeUpdated.emit();
+        this.closeModal();
+        this.selectedFile = null;
+      },
+      error: () => this.toast.show({ type: 'error', message: 'Store update failed' })
+    });
+  }
+  allowOnlyNumbers(event: KeyboardEvent) {
+    const charCode = event.charCode;
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
+  }
+  closeModal(): void {
+    // You can also call this method from anywhere
+    this.closeButton.nativeElement.click();
+  }
 }

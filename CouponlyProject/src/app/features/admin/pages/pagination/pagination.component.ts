@@ -14,7 +14,7 @@ export class PaginationComponent implements OnChanges {
   @Input() totalItems: number = 0;
   @Input() itemsPerPage: number = 5;
   @Input() currentPage: number = 1;
-  @Input() maxVisiblePages: number = 7; // Max visible page buttons besides first/last
+  @Input() maxVisiblePages: number = 2; // Max visible page buttons besides first/last
   @Input() pageSizeOptions: number[] = [5, 10, 20, 50, 100];
 
   @Output() pageChange = new EventEmitter<number>();
@@ -33,17 +33,17 @@ export class PaginationComponent implements OnChanges {
    * Generates the array of pages to be displayed, including ellipses.
    */
   private getPages(): any[] {
-    if (this.totalPages <= this.maxVisiblePages + 2) {
-      // If total pages are few, show all of them
-      for (let i = 1; i <= this.totalPages; i++) {
-        this.pages.push(i);
-      }
-      return this.pages;
-    }
+    // if (this.totalPages < this.maxVisiblePages + 2) {
+    //   // If total pages are few, show all of them
+    //   for (let i = 1; i <= this.totalPages; i++) {
+    //     this.pages.push(i);
+    //   }
+    //   return this.pages;
+    // }
 
     const pagesToShow: (number | string)[] = [1];
-    const startPage = Math.max(2, this.currentPage - 1);
-    const endPage = Math.min(this.totalPages - 1, this.currentPage + 1);
+    const startPage = Math.max(2, this.currentPage - 2);
+    const endPage = Math.min(this.totalPages - 1, this.currentPage + 2);
 
     if (startPage > 2) {
       pagesToShow.push('...');
@@ -65,7 +65,7 @@ export class PaginationComponent implements OnChanges {
    * Select a new page.
    */
   selectPage(page: number | string): void {
-    if(typeof page === "number") {
+    if(typeof page === "number" && page != this.currentPage) {
     if (page >= 1 && page <= this.totalPages && page !== this.currentPage) {
       this.currentPage = page;
       this.pageChange.emit(this.currentPage);

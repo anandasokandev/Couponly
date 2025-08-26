@@ -66,4 +66,12 @@ export class StoreComponent {
     }
   })
 }
+
+refreshStore() {
+    this.api.FetchStores().subscribe({
+        next:(response: any) =>{
+          this.stores=response.data;
+        }
+      })
+}
 }
