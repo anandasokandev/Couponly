@@ -1,0 +1,51 @@
+<c-card class="mb-4">
+  <c-card-body>
+
+    <div *ngIf="isLoading" class="text-center p-5">
+      <c-spinner color="primary"></c-spinner>
+      <p class="mt-2">Loading settings...</p>
+    </div>
+
+    <form *ngIf="!isLoading" #costForm="ngForm" (ngSubmit)="updateCosts()">
+
+      <c-alert color="success" *ngIf="showSuccessMessage" dismissible (visibleChange)="showSuccessMessage = $event">
+        <strong>Success!</strong> Costs have been updated.
+      </c-alert>
+
+      <div *ngFor="let service of serviceCosts" class="mb-4">
+        <label [for]="service.id" class="form-label">{{ service.name }}</label>
+        <c-input-group>
+          <span cInputGroupText>
+            <i class="fa-solid fa-indian-rupee-sign"></i>
+          </span>
+          <input
+            cFormControl
+            type="number"
+            step="0.01"
+            id="platformFee"
+            name="platformFee"
+            [(ngModel)]="platformFee"
+            required
+            aria-label="Platform usage fee"
+          />
+          <span cInputGroupText>per promotion</span>
+        </c-input-group>
+      </div>
+
+    </form>
+  </c-card-body>
+
+  <c-card-footer *ngIf="!isLoading">
+    <button
+      cButton
+      color="primary"
+      (click)="updateCosts()"
+      [disabled]="isSaving"
+      class="float-end btn-sm"
+    >
+      <c-spinner *ngIf="isSaving" size="sm" aria-hidden="true"></c-spinner>
+      <span *ngIf="!isSaving">Save Changes</span>
+      <span *ngIf="isSaving" class="ms-1">Saving...</span>
+    </button>
+  </c-card-footer>
+</c-card>

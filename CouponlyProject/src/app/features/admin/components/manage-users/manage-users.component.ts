@@ -51,7 +51,7 @@ export class ManageUsersComponent {
   isActive: boolean | null = null;
   searchType: number = 5;
   searchText: string = '';
-  statusFilter: string = ''; // '' = All, 'true' = Active, 'false' = Inactive
+  statusFilter: string = ''; 
 
   isLoading: boolean = false;
 
@@ -72,7 +72,7 @@ export class ManageUsersComponent {
         this.users = response.data.items;
         this.totalItems = response.data.totalCount;
         // this.users = response.data;
-        console.log('Fetched users:', this.users);
+        // console.log('Fetched users:', this.users);
         this.isLoading = false;
       },
       error: (err) => {
@@ -122,18 +122,22 @@ export class ManageUsersComponent {
     this.FilterUser();
   }
 
-  openEditUserModal(user: any) {
-    this.selectedUser = { ...user };
-  }
+  
+openEditUserModal(user: any) {
+  this.selectedUser = {
+    ...user,
+    type: user.typeId 
+  };
+}
 
 
   onToggleUserStatus(user: any): void {
-    // console.log('Toggling user status:', user); // Confirm user.id is valid
+    // console.log('Toggling user status:', user); 
 
     this.api.disableuser(user.id).subscribe({
       next: (res) => {
         // console.log('Success:', res);
-        user.isActive = !user.isActive; // Optimistically update UI
+        user.isActive = !user.isActive; 
         this.toastService.show({ type: 'success', message: res.statusMessage });
       },
       error: (err) => {

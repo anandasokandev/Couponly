@@ -2,34 +2,74 @@
   <h5 cModalTitle>Edit Location</h5>
   <button #closeButton cModalToggle cButtonClose></button>
 </c-modal-header>
+
 <c-modal-body>
   <form cForm *ngIf="location">
+    <!-- District -->
     <div class="mb-3">
       <label cLabel for="districtSelect">District</label>
-      <select class="form-control" [(ngModel)]="location.districtId" name="district" id="districtSelect">
+      <select
+        class="form-control"
+        [(ngModel)]="location.districtId"
+        name="district"
+        id="districtSelect"
+      >
         <option *ngFor="let district of districts" [value]="district.id">
           {{ district.districtName }}
         </option>
       </select>
     </div>
+
+    <!-- Location Name -->
     <div class="mb-3">
       <label cLabel for="locationName">Location</label>
-      <input cFormControl id="locationName" [value]="location.locationName" type="text" />
+      <input
+        cFormControl
+        id="locationName"
+        [(ngModel)]="location.locationName"
+        name="locationName"
+        type="text"
+      />
     </div>
+
+    <!-- Pincode -->
     <div class="mb-3">
       <label cLabel for="pincode">Pincode</label>
-      <input cFormControl id="pincode" [value]="location.pincode" type="text" />
+      <input
+        cFormControl
+        id="pincode"
+        [(ngModel)]="location.pincode"
+        name="pincode"
+        type="text"
+      />
     </div>
+
+    <!-- Latitude -->
     <div class="mb-3">
       <label cLabel for="latitude">Latitude</label>
-      <input cFormControl id="latitude" [value]="location.latitude" type="text" />
+      <input
+        cFormControl
+        id="latitude"
+        [(ngModel)]="location.latitude"
+        name="latitude"
+        type="text"
+      />
     </div>
+
+    <!-- Longitude -->
     <div class="mb-3">
       <label cLabel for="longitude">Longitude</label>
-      <input cFormControl id="longitude" [value]="location.longitude" type="text" />
+      <input
+        cFormControl
+        id="longitude"
+        [(ngModel)]="location.longitude"
+        name="longitude"
+        type="text"
+      />
     </div>
   </form>
 </c-modal-body>
+
 <c-modal-footer>
   <button cModalToggle cButton color="secondary">Cancel</button>
   <button cButton color="primary" (click)="onSave()">Save</button>
