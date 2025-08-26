@@ -46,9 +46,14 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-people' }
   },
   {
-    name: 'GenerateCoupon',
+    name: 'Generate Coupon',
     url: '/admin/generatecoupon',
-    iconComponent: { name: 'cil-people' }
+    iconComponent: { name: 'cil-credit-card' }
+  },
+  {
+    name: 'Promotions',
+    url: '/admin/promotion-settings',
+    iconComponent: { name: 'cil-star' }
   },
   {
     title: true,

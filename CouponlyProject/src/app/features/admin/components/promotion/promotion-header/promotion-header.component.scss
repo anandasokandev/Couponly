@@ -1,0 +1,22 @@
+:host ::ng-deep {
+  // Target the navigation links
+  .c-nav-tabs .c-nav-link {
+    // Default background for inactive tabs
+    background-color: #f0f2f5;
+    color: #4f5d73;
+    border-color: #d8dbe0;
+  }
+
+  // Target the ACTIVE link
+  .c-nav-tabs .c-nav-link.active {
+    // Background for the selected/active tab
+    background-color: #321fdb;
+    color: #fff;
+    border-color: #321fdb;
+  }
+
+  // Target the hover state for INACTIVE links
+  .c-nav-tabs .c-nav-link:not(.active):hover {
+    background-color: #e4e7ea;
+  }
+}
