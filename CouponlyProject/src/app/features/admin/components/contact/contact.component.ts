@@ -98,6 +98,11 @@ emailCsv() {
   };
 }
 
+Filtering() {
+  this.currentPage = 1;
+  this.FilterContact();
+}
+
 
 
 FilterContact() {
