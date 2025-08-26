@@ -15,4 +15,11 @@ export class ForgotPasswordService {
       payload
     );
   }
+  
+verifyToken(payload: { token: string }): Observable<any> {
+  return this.http.post<any>(
+    `${environment.apiBaseUrl}${environment.endpoints.login.verifyToken}`,
+    payload
+  );
+}
 }

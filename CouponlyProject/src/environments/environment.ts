@@ -50,8 +50,9 @@ export const environment = {
       ExportVcard:'Contact/ExportContactsToVCard'
     },
     login:{
-      signup:'/Login',
-      forgotPassword:'/login/forgot-password'
+     signup: '/Login',
+    forgotPassword: '/Login/forgot-password',
+    verifyToken: '/Login/verify-token'
     }
   }
 };

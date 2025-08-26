@@ -1,27 +1,52 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ForgotPasswordService } from '../../../commons/services/Authentication/forgot-password.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-resetpassword',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [FormsModule,CommonModule],
   templateUrl: './resetpassword.component.html',
-  styleUrl: './resetpassword.component.scss'
+  styleUrls: ['./resetpassword.component.scss']
 })
-export class ResetpasswordComponent {
-currentPassword = '';
-  newPassword = '';
-  confirmPassword = '';
+export class ResetpasswordComponent implements OnInit {
+  token: string = '';
+  isTokenValid: boolean = false;
 
-  onSubmit() {
-    if (this.newPassword !== this.confirmPassword) {
-      alert('New passwords do not match!');
-      return;
-    }
-    // Call backend API to update password
-    console.log('Reset password:', {
-      current: this.currentPassword,
-      new: this.newPassword
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private forgotPasswordService: ForgotPasswordService
+  ) {}
+
+  ngOnInit(): void {
+    this.route.queryParamMap.subscribe(params => {
+      this.token = params.get('token') || '';
+      if (this.token) {
+        this.verifyToken(this.token);
+      } else {
+
+        this.router.navigate(['/404']);
+      }
     });
-    
+  }
+
+  private verifyToken(token: string): void {
+    this.forgotPasswordService.verifyToken({ token }).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.isTokenValid = true;
+        } else {
+       
+          this.router.navigate(['/404']);
+        }
+      },
+      error: () => {
+        // API error → redirect to 404
+        this.router.navigate(['/404']);
+      }
+    });
   }
 }
