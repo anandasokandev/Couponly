@@ -10,14 +10,13 @@ import {
   AlertModule,
   NavModule,
 } from '@coreui/angular';
-import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { cibWhatsapp, cilEnvelopeClosed, cilCommentSquare, cilDollar, cilRuble } from '@coreui/icons';
 
 export interface ServiceCost {
   id: string;
   name: string;
   cost: number;
   icon: string;
+  isUpdating: boolean;
 }
 
 @Component({
@@ -29,7 +28,6 @@ export interface ServiceCost {
     GridModule,
     FormModule,
     ButtonModule,
-    IconModule,
     SpinnerModule,
     AlertModule,
     NavModule
@@ -45,15 +43,22 @@ export class CostSettingUIComponent {
   // State management for UI feedback
   isLoading: boolean = true;
   isSaving: boolean = false;
+  isFeeUpdating: boolean = false;
+  handlingFee: number = 50;
   showSuccessMessage: boolean = false;
-
-  constructor(public iconSet: IconSetService) {
-    // Make CoreUI icons available to the component
-    iconSet.icons = { cibWhatsapp, cilEnvelopeClosed, cilCommentSquare, cilRuble };
-  }
 
   ngOnInit(): void {
     this.fetchCosts();
+  }
+
+  updateHandlingFee(): void {
+    this.isFeeUpdating = true;
+
+    // Simulate an API call with a timeout
+    setTimeout(() => {
+      this.isFeeUpdating = false;
+      console.log('Handling fee updated:', this.handlingFee);
+    }, 1000);
   }
 
   /**
@@ -64,9 +69,9 @@ export class CostSettingUIComponent {
     // Simulate an API call with a timeout
     setTimeout(() => {
       this.serviceCosts = [
-        { id: 'whatsapp', name: 'WhatsApp Message', cost: 5, icon: 'fa-brands fa-whatsapp' },
-        { id: 'sms', name: 'SMS', cost: 1, icon: 'fa-regular fa-message' },
-        { id: 'email', name: 'Email', cost: 0.5, icon: 'fa-regular fa-envelope' }
+        { id: 'whatsapp', name: 'WhatsApp Message', cost: 5, icon: 'fa-brands fa-whatsapp', isUpdating: false },
+        { id: 'sms', name: 'SMS', cost: 1, icon: 'fa-regular fa-message', isUpdating: false },
+        { id: 'email', name: 'Email', cost: 0.5, icon: 'fa-regular fa-envelope', isUpdating: false }
       ];
       this.platformFee = 49.99; // Example platform fee
       this.isLoading = false;
@@ -76,34 +81,15 @@ export class CostSettingUIComponent {
   /**
    * Simulates saving the updated cost data to a backend API.
    */
-  updateCosts(): void {
-    this.isSaving = true;
-    this.showSuccessMessage = false;
 
-    // The data payload to be sent to the API
-    const payload = {
-      services: this.serviceCosts,
-      platformFee: this.platformFee
-    };
-
-    console.log('Saving data...', payload);
-
-    // Simulate an API call with a timeout
-    setTimeout(() => {
-      this.isSaving = false;
-      this.showSuccessMessage = true;
-      // Hide the success message after 3 seconds
-      setTimeout(() => this.showSuccessMessage = false, 3000);
-    }, 1500);
-  }
 
   updateServiceCost(service: ServiceCost): void {
     console.log('Updating service cost...', service);
     
-    this.isSaving = true;
+    service.isUpdating = true;
     // Simulate an API call with a timeout
     setTimeout(() => {
-      this.isSaving = false;
+      service.isUpdating = false;
       console.log('Service cost updated:', service);
     }, 1000);
   }

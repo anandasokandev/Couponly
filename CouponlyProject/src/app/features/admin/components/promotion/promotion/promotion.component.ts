@@ -8,82 +8,107 @@ import {
   ButtonModule,
   SpinnerModule,
   AlertModule,
-  NavModule,
+  ButtonGroupModule,
+  ButtonDirective,
+  AccordionModule,
 } from '@coreui/angular';
-import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { cibWhatsapp, cilEnvelopeClosed, cilCommentSquare, cilDollar, cilRuble } from '@coreui/icons';
+import { IconModule } from '@coreui/icons-angular';
 
-
-export interface ServiceCost {
-  id: string;
-  name: string;
-  cost: number;
-  icon: string;
+// Updated interface to hold all promotion campaign details
+export interface PromotionCampaign {
+  promotionName: string;
+  selectedCategory: string;
+  selectedStore: string;
+  contactCount: number;
+  channels: {
+    whatsapp: boolean;
+    email: boolean;
+    sms: boolean;
+  };
+  couponCode: string;
+  sendType: 'now' | 'schedule';
+  scheduleDate?: string;
 }
 
 @Component({
   selector: 'app-promotion',
-  imports: [CommonModule, FormsModule, CardModule, GridModule, FormModule, ButtonModule, SpinnerModule, AlertModule, NavModule, IconModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    CardModule,
+    GridModule,
+    FormModule,
+    ButtonModule,
+    IconModule,
+    SpinnerModule,
+    AlertModule,
+    ButtonGroupModule,
+    ButtonDirective,
+    AccordionModule
+  ],
   templateUrl: './promotion.component.html',
   styleUrls: ['./promotion.component.scss']
 })
 export class PromotionComponent {
-   // Array to hold costs for different services
-    serviceCosts: ServiceCost[] = [];
-    platformFee: number = 0;
-  
-    // State management for UI feedback
-    isLoading: boolean = true;
-    isSaving: boolean = false;
-    showSuccessMessage: boolean = false;
-  
-    constructor(public iconSet: IconSetService) {
-      // Make CoreUI icons available to the component
-      iconSet.icons = { cibWhatsapp, cilEnvelopeClosed, cilCommentSquare, cilRuble };
+   campaign: PromotionCampaign = {
+    promotionName: 'Monsoon Bonanza',
+    selectedCategory: '',
+    selectedStore: '',
+    contactCount: 1000,
+    channels: {
+      whatsapp: true,
+      email: true,
+      sms: false
+    },
+    couponCode: 'MONSOON25',
+    sendType: 'now',
+    scheduleDate: ''
+  };
+
+  // Mock data for dropdowns
+  categories: string[] = ['Electronics', 'Fashion', 'Groceries', 'Home Appliances'];
+  stores: { [key: string]: string[] } = {
+    'Electronics': ['Chalai Electronics', 'Pattom Digital'],
+    'Fashion': ['MG Road Styles', 'Lulu Fashion'],
+    'Groceries': ['Kazhakootam Grocers', 'Daily Needs Mart'],
+    'Home Appliances': ['Appliance World', 'Home Hub']
+  };
+  availableStores: string[] = [];
+  coupons: string[] = ['MONSOON25', 'FLAT500', 'BOGOJULY'];
+
+  isSaving: boolean = false;
+  showSuccessMessage: boolean = false;
+
+  constructor() { }
+
+  ngOnInit(): void {
+    this.onCategoryChange(); // Initialize stores based on default category
+  }
+
+  onCategoryChange(): void {
+    if (this.campaign.selectedCategory) {
+      this.availableStores = this.stores[this.campaign.selectedCategory] || [];
+      this.campaign.selectedStore = ''; // Reset store selection
+    } else {
+      this.availableStores = [];
     }
-  
-    ngOnInit(): void {
-      this.fetchCosts();
+  }
+
+  saveCampaign(): void {
+    this.isSaving = true;
+    this.showSuccessMessage = false;
+
+    // Clear schedule date if sending now
+    if (this.campaign.sendType === 'now') {
+      this.campaign.scheduleDate = '';
     }
-  
-    /**
-     * Simulates fetching cost data from a backend API.
-     */
-    fetchCosts(): void {
-      this.isLoading = true;
-      // Simulate an API call with a timeout
-      setTimeout(() => {
-        this.serviceCosts = [
-          { id: 'whatsapp', name: 'WhatsApp Message', cost: 0.015, icon: 'fa-brands fa-whatsapp' },
-          { id: 'sms', name: 'SMS', cost: 0.008, icon: 'fa-regular fa-message' },
-          { id: 'email', name: 'Email', cost: 0.001, icon: 'fa-regular fa-envelope' }
-        ];
-        this.platformFee = 49.99; // Example platform fee
-        this.isLoading = false;
-      }, 1000);
-    }
-  
-    /**
-     * Simulates saving the updated cost data to a backend API.
-     */
-    updateCosts(): void {
-      this.isSaving = true;
-      this.showSuccessMessage = false;
-  
-      // The data payload to be sent to the API
-      const payload = {
-        services: this.serviceCosts,
-        platformFee: this.platformFee
-      };
-  
-      console.log('Saving data...', payload);
-  
-      // Simulate an API call with a timeout
-      setTimeout(() => {
-        this.isSaving = false;
-        this.showSuccessMessage = true;
-        // Hide the success message after 3 seconds
-        setTimeout(() => this.showSuccessMessage = false, 3000);
-      }, 1500);
-    }
+
+    console.log('Saving Campaign:', this.campaign);
+    
+    setTimeout(() => {
+      this.isSaving = false;
+      this.showSuccessMessage = true;
+      setTimeout(() => this.showSuccessMessage = false, 4000);
+    }, 1500);
+  }
 }

@@ -4,11 +4,11 @@
 
 <c-col xs="12">
     <c-card class="mb-4">
-        <c-card-header class="d-md-flex justify-content-md-between align-items-center">
+        <c-card-header class="d-flex align-items-center">
             <strong class="w-100 fs-5">Redeem History</strong>
             <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
                 
-                <div class="">
+                <div class="float-end">
                     <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap d-flex align-items-center" data-bs-toggle="tooltip" title="Download History"  [cModalToggle]="DownloadRedeemsModal.id">
                         <!-- <svg cIcon name="cib-cloud-download" size="md"></svg> -->
                         <svg [cIcon]="icons.cilCloudDownload"></svg> &nbsp; Download
