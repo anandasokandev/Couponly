@@ -51,13 +51,14 @@ export class ManageUsersComponent {
   isActive: boolean | null = null;
   searchType: number = 5;
   searchText: string = '';
-  statusFilter: string = ''; // '' = All, 'true' = Active, 'false' = Inactive
+  statusFilter: string = '';
 
   isLoading: boolean = false;
 
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalItems: number = 0;
+  isPageChange: boolean = false;
 
   constructor(
     private api: UserService,
@@ -72,7 +73,7 @@ export class ManageUsersComponent {
         this.users = response.data.items;
         this.totalItems = response.data.totalCount;
         // this.users = response.data;
-        console.log('Fetched users:', this.users);
+        // console.log('Fetched users:', this.users);
         this.isLoading = false;
       },
       error: (err) => {
@@ -84,28 +85,29 @@ export class ManageUsersComponent {
 
   FilterUser() {
     this.isLoading = true;
-
+    if (!this.isPageChange)
+      this.currentPage = 1;
     this.api.searchUsers(
+
       this.userType,
       this.isActive,
       this.searchType,
       this.searchText,
       this.currentPage,
-      this.itemsPerPage
+      this.itemsPerPage,
+      this.currentPage
     ).subscribe({
       next: (response: any) => {
         this.users = response.data.items;
         this.totalItems = response.data.totalCount;
         this.isLoading = false;
+        this.isPageChange = false;
       },
       error: (err) => {
         this.isLoading = false;
       }
     });
   }
-
-
-
 
 
   onStatusChange() {
@@ -122,18 +124,22 @@ export class ManageUsersComponent {
     this.FilterUser();
   }
 
+
   openEditUserModal(user: any) {
-    this.selectedUser = { ...user };
+    this.selectedUser = {
+      ...user,
+      type: user.typeId
+    };
   }
 
 
   onToggleUserStatus(user: any): void {
-    // console.log('Toggling user status:', user); // Confirm user.id is valid
+    // console.log('Toggling user status:', user); 
 
     this.api.disableuser(user.id).subscribe({
       next: (res) => {
         // console.log('Success:', res);
-        user.isActive = !user.isActive; // Optimistically update UI
+        user.isActive = !user.isActive;
         this.toastService.show({ type: 'success', message: res.statusMessage });
       },
       error: (err) => {
@@ -147,6 +153,7 @@ export class ManageUsersComponent {
 
   onPageChange(page: number) {
     this.currentPage = page;
+    this.isPageChange = true;
     this.FilterUser();
   }
 

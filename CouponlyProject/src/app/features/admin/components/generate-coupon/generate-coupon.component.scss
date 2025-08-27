@@ -1,0 +1,29 @@
+.card {
+  border-radius: 16px;
+  background-color: #fff;
+}
+
+textarea {
+  resize: none;
+}
+
+.nav-tabs .nav-link {
+  cursor: pointer;
+}
+
+.upload-box {
+  cursor: pointer;
+  background-color: #fafafa;
+  transition: 0.3s;
+}
+
+.upload-box:hover {
+  background-color: #f0f0f0;
+}
+
+.coupon-preview img {
+  max-height: 180px;
+  object-fit: cover;
+  width: 100%;
+}
+

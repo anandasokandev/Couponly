@@ -1,29 +1,72 @@
-<c-modal #DownloadRedeemsModal
-         [scrollable]="true"
-         alignment="center"
-         id="DownloadRedeemsModal">
 
+
+<c-modal
+  #DownloadRedeemsModal
+  [scrollable]="true"
+  alignment="center"
+  id="DownloadRedeemsModal"
+>
   <c-modal-header>
-    <h5 cModalTitle>Download Redeems History</h5>
-    <button [cModalToggle]="DownloadRedeemsModal.id" class="btn btn-sm" cButtonClose></button>
+    <h5 cModalTitle>🚀 Get Your Redeems History Report</h5>
+    <!-- <button
+      [cModalToggle]="DownloadRedeemsModal.id"
+      class="btn-close"
+      cButtonClose
+    ></button> -->
   </c-modal-header>
 
-  <c-modal-body>
-    <div class="d-flex justify-content-around px-3 py-3 gap-4">
-      <button cButton color="primary" class="d-flex align-items-center btn btn-sm gap-2" (click)="downloadRedeemsHistory()" [cModalToggle]="DownloadRedeemsModal.id">
-        <svg [cIcon]="icons.cilCloudDownload"></svg>
-          Download Here
-      </button>
-      <button cButton color="success" class="d-flex align-items-center btn btn-sm gap-2" (click)="sendRedeemsHistoryEmail()" [cModalToggle]="DownloadRedeemsModal.id">
-        <svg [cIcon]="icons.cilEnvelopeOpen"></svg>
-        Send via Email
-      </button>
+  <c-modal-body class="p-4">
+    <p class="text-center text-muted mb-4">
+      Your report is ready! Choose your preferred method below to receive it.
+    </p>
+
+    <div class="d-grid gap-4 d-md-flex">
+      <div
+        class="option-card text-center p-4 border rounded flex-fill"
+      >
+        <svg
+          [cIcon]="icons.cilCloudDownload"
+          size="xxl"
+          class="text-primary mb-3"
+        ></svg>
+        <h6 class="fw-semibold">Instant Download</h6>
+        <p class="small text-muted mb-3">
+          An Excel (.xlsx) file will be downloaded immediately to your device.
+        </p>
+        <button
+          cButton
+          color="primary"
+          class="w-100 btn btn-sm"
+          (click)="downloadRedeemsHistory()"
+          [cModalToggle]="DownloadRedeemsModal.id"
+        >
+          Download Now
+        </button>
+      </div>
+
+      <div
+        class="option-card text-center p-4 border rounded flex-fill"
+      >
+        <svg
+          [cIcon]="icons.cilEnvelopeOpen"
+          size="xxl"
+          class="text-success mb-3"
+        ></svg>
+        <h6 class="fw-semibold">Send to My Inbox</h6>
+        <p class="small text-muted mb-3">
+          We'll send a copy of the report to your registered email address.
+        </p>
+        <button
+          cButton
+          color="success"
+          class="w-100 btn btn-sm"
+          (click)="sendRedeemsHistoryEmail()"
+          [cModalToggle]="DownloadRedeemsModal.id"
+        >
+          Email Me
+        </button>
+      </div>
     </div>
   </c-modal-body>
 
-  <c-modal-footer>
-    <button [cModalToggle]="DownloadRedeemsModal.id" class=" btn btn-sm" cButton color="secondary">
-      Close
-    </button>
-  </c-modal-footer>
 </c-modal>
