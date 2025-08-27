@@ -28,7 +28,8 @@ export class UserService {
     searchType: number,
     searchText: string,
     pageNumber: number,
-    pageSize: number
+    pageSize: number,
+    currentPage: number
   ): Observable<any> {
     let params = new HttpParams()
       .set('userType', userType)

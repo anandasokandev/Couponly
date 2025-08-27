@@ -51,13 +51,14 @@ export class ManageUsersComponent {
   isActive: boolean | null = null;
   searchType: number = 5;
   searchText: string = '';
-  statusFilter: string = ''; 
+  statusFilter: string = '';
 
   isLoading: boolean = false;
 
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalItems: number = 0;
+  isPageChange: boolean = false;
 
   constructor(
     private api: UserService,
@@ -84,28 +85,29 @@ export class ManageUsersComponent {
 
   FilterUser() {
     this.isLoading = true;
-
+    if (!this.isPageChange)
+      this.currentPage = 1;
     this.api.searchUsers(
+
       this.userType,
       this.isActive,
       this.searchType,
       this.searchText,
       this.currentPage,
-      this.itemsPerPage
+      this.itemsPerPage,
+      this.currentPage
     ).subscribe({
       next: (response: any) => {
         this.users = response.data.items;
         this.totalItems = response.data.totalCount;
         this.isLoading = false;
+        this.isPageChange = false;
       },
       error: (err) => {
         this.isLoading = false;
       }
     });
   }
-
-
-
 
 
   onStatusChange() {
@@ -122,13 +124,13 @@ export class ManageUsersComponent {
     this.FilterUser();
   }
 
-  
-openEditUserModal(user: any) {
-  this.selectedUser = {
-    ...user,
-    type: user.typeId 
-  };
-}
+
+  openEditUserModal(user: any) {
+    this.selectedUser = {
+      ...user,
+      type: user.typeId
+    };
+  }
 
 
   onToggleUserStatus(user: any): void {
@@ -137,7 +139,7 @@ openEditUserModal(user: any) {
     this.api.disableuser(user.id).subscribe({
       next: (res) => {
         // console.log('Success:', res);
-        user.isActive = !user.isActive; 
+        user.isActive = !user.isActive;
         this.toastService.show({ type: 'success', message: res.statusMessage });
       },
       error: (err) => {
@@ -151,6 +153,7 @@ openEditUserModal(user: any) {
 
   onPageChange(page: number) {
     this.currentPage = page;
+    this.isPageChange = true;
     this.FilterUser();
   }
 

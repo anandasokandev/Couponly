@@ -55,6 +55,11 @@ export const navItems: INavData[] = [
     url: '/admin/promotion',
     iconComponent: { name: 'cil-star' }
   },
+    {
+    name: 'StoreDashboard',
+    url: '/admin/store-dashboard',
+    iconComponent: { name: 'cil-notes' }
+  },
   {
     title: true,
     name: 'Settings'
