@@ -73,7 +73,7 @@ export const routes: Routes = [
         }
       },
       {
-        path: 'promotion', // Route for service costs
+        path: 'promotion',
         loadComponent: () => import('./components/promotion/promotion.component').then(m => m.PromotionComponent),
         data: {
           title: 'Promotion'
