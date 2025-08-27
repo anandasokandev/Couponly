@@ -52,7 +52,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Promotions',
-    url: '/admin/promotion-settings',
+    url: '/admin/promotion',
     iconComponent: { name: 'cil-star' }
   },
   {
@@ -68,6 +68,11 @@ export const navItems: INavData[] = [
     name: 'Users',
     url: '/admin/manageusers',
     iconComponent: { name: 'cil-user' }
+  },
+  {
+    name: 'Service Charges',
+    url: '/admin/cost-settings',
+    iconComponent: { name: 'cil-dollar' }
   },
   {
     name: 'Components',

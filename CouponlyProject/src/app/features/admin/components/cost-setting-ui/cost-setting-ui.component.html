@@ -1,0 +1,53 @@
+<c-row>
+  <c-col lg="4" class="mb-4" *ngFor="let setting of costSettings; let i = index">
+    <c-card class="h-100">
+      <c-card-header>
+        <strong><i [class]="setting.icon" class="me-2"></i>{{ setting.name }}</strong>
+      </c-card-header>
+      <c-card-body>
+        <div class="mb-3">
+          <label class="form-label">Charge per Message</label>
+          <c-input-group>
+              <span cInputGroupText><i class="fa-solid fa-indian-rupee-sign"></i></span>
+
+              <input cFormControl type="number" [name]="'charge' + i" [(ngModel)]="setting.charge" [disabled]="updatingCharge === setting.id" required />
+
+              <button cButton  (click)="updateCharge(setting)" [disabled]="updatingCharge === setting.id" class="btn-sm">
+                <c-spinner *ngIf="updatingCharge === setting.id" size="sm" aria-hidden="true"></c-spinner>
+                <span *ngIf="updatingCharge !== setting.id">Update</span>
+                <span *ngIf="updatingCharge === setting.id" class="ms-1">Updating..</span>
+              </button>
+            </c-input-group>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Profit Margin</label>
+          <c-input-group>
+              <span cInputGroupText><i class="fa-solid fa-indian-rupee-sign"></i></span>
+              <input cFormControl type="number" [name]="'profit' + i" [(ngModel)]="setting.profitMargin" [disabled]="updatingProfit === setting.id" required />
+              <button cButton  (click)="updateProfit(setting)" [disabled]="updatingProfit === setting.id" class="btn-sm">
+                <c-spinner *ngIf="updatingProfit === setting.id" size="sm" aria-hidden="true"></c-spinner>
+                <span *ngIf="updatingProfit !== setting.id">Update</span>
+                <span *ngIf="updatingProfit === setting.id" class="ms-1">Updating..</span>
+              </button>
+          </c-input-group>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Total Charge per Message (₹)</label>
+          <input cFormControl readonly disabled type="number" [name]="'total' + i" [value]="setting.charge + setting.profitMargin" class="form-control-plaintext ps-3" />
+        </div>
+        <div>
+          <label class="form-label">Handling Charge / 100 Msgs (₹)</label>
+          <c-input-group>
+              <span cInputGroupText><i class="fa-solid fa-indian-rupee-sign"></i></span>
+              <input cFormControl type="number" [name]="'handling' + i" [(ngModel)]="setting.handlingCharge" [disabled]="updatingHandling === setting.id" required />
+              <button cButton  (click)="updateHandling(setting)" [disabled]="updatingHandling === setting.id" class="btn-sm">
+                <c-spinner *ngIf="updatingHandling === setting.id" size="sm" aria-hidden="true"></c-spinner>
+                <span *ngIf="updatingHandling !== setting.id">Update</span>
+                <span *ngIf="updatingHandling === setting.id" class="ms-1">Updating..</span>
+              </button>
+          </c-input-group>
+        </div>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
