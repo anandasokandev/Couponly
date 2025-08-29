@@ -43,51 +43,23 @@ export class CostSettingUIComponent {
 
   // State management for UI feedback
   isLoading: boolean = true;
-  updatingCharge: string = '';
-  updatingProfit: string = '';
-  updatingHandling: string = '';
+  updatingService: string = '';
   showSuccessMessage: boolean = false;
 
   ngOnInit(): void {
     this.fetchCosts();
   }
 
-  updateCharge(setting: CostSetting): void {
-    this.updatingCharge = setting.id;
+  updateService(setting: CostSetting): void {
+    this.updatingService = setting.id;
 
     // Simulate an API call with a timeout
     setTimeout(() => {
       this.costSettings = this.costSettings.map(s =>
-        s.id === setting.id ? { ...s, charge: setting.charge } : s
+        s.id === setting.id ? { ...s, charge: setting.charge, profitMargin: setting.profitMargin, handlingCharge: setting.handlingCharge } : s
       );
-      this.updatingCharge = '';
-      console.log('Charge updated:', setting.charge);
-    }, 1000);
-  }
-
-  updateProfit(setting: CostSetting): void {
-    this.updatingProfit = setting.id;
-
-    // Simulate an API call with a timeout
-    setTimeout(() => {
-      this.costSettings = this.costSettings.map(s =>
-        s.id === setting.id ? { ...s, profitMargin: setting.profitMargin } : s
-      );
-      this.updatingProfit = '';
-      console.log('Profit margin updated:', setting.profitMargin);
-    }, 1000);
-  }
-
-  updateHandling(setting: CostSetting): void {
-    this.updatingHandling = setting.id;
-
-    // Simulate an API call with a timeout
-    setTimeout(() => {
-      this.costSettings = this.costSettings.map(s =>
-        s.id === setting.id ? { ...s, handlingCharge: setting.handlingCharge } : s
-      );
-      this.updatingHandling = '';
-      console.log('Handling charge updated:', setting.handlingCharge);
+      this.updatingService = '';
+      console.log('Service updated:', setting);
     }, 1000);
   }
 
@@ -103,9 +75,9 @@ export class CostSettingUIComponent {
                         id: 'whatsapp',
                         name: 'WhatsApp Costs',
                         icon: 'fa-brands fa-whatsapp text-success',
-                        charge: 5,
-                        profitMargin: 2,
-                        handlingCharge: 5
+                        charge: 0.75,
+                        profitMargin: 0.25,
+                        handlingCharge: 20
                       },
                       {
                         id: 'email',
@@ -113,18 +85,17 @@ export class CostSettingUIComponent {
                         icon: 'fa-solid fa-envelope text-primary',
                         charge: 0.5,
                         profitMargin: 0.1,
-                        handlingCharge: 1
+                        handlingCharge: 5
                       },
                       {
                         id: 'sms',
                         name: 'SMS Costs',
                         icon: 'fa-solid fa-comment-sms text-success',
-                        charge: 1,
-                        profitMargin: 0.5,
-                        handlingCharge: 2
-                      }                 
+                        charge: 0.6,
+                        profitMargin: 0.15,
+                        handlingCharge: 10
+                      }
       ];
-      this.platformFee = 49.99; // Example platform fee
       this.isLoading = false;
     }, 1000);
   }
