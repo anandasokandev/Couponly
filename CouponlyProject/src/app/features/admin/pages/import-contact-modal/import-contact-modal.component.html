@@ -8,6 +8,7 @@
   <div class="mb-4 w-100" style="max-width: 400px;">
     <label class="form-label fw-semibold text-dark">📄 Import CSV File</label>
     <input
+      *ngIf="showCsvInput"
       type="file"
       accept=".csv"
       (change)="handleCSVUpload($event)"
@@ -15,26 +16,34 @@
     />
     <button
       class="btn mt-3 px-4 py-2 text-white w-100"
-      style="background-color: #103C6A"
+      style="background-color:  #4D8FCC"
       (click)="importCSV()"
     >
       <i class="fas fa-file-csv me-2"></i>Import CSV
     </button>
   </div>
 
+
+
+
+
+
+
+
   <!-- vCard Import Section -->
   <div class="mb-4 w-100" style="max-width: 400px;">
     <label class="form-label fw-semibold text-dark">📇 Import vCard File</label>
     <input
+     *ngIf="showvcardInput"
       type="file"
       accept=".vcf"
       (change)="handleVCardUpload($event)"
       class="form-control form-control-sm"
     />
     <button
-      class="btn mt-3 px-4 py-2 text-dark w-100"
-      style="background-color:#4D8FCC"
-      (click)="importVCard()"
+      class="btn mt-3 px-4 py-2 text-white w-100"
+      style="background-color:#103C6A "
+      (click)="importVcard()"
     >
       <i class="fas fa-id-card me-2"></i>Import vCard
     </button>

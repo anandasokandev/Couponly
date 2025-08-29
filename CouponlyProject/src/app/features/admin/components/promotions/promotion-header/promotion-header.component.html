@@ -1,0 +1,22 @@
+<c-card class="mb-4">
+  <c-card-header>
+    <c-nav orientation="vertical" variant="tabs" class="px-2">
+      <c-nav-item>
+        <a cNavLink routerLink="promotion" routerLinkActive="active">
+          <i class="fa-solid fa-tags me-2"></i>
+          Promotion UI
+        </a>
+      </c-nav-item>
+      <c-nav-item>
+        <a cNavLink routerLink="cost-settings" routerLinkActive="active">
+          <i class="fa-solid fa-sliders me-2"></i>
+          Cost Settings
+        </a>
+      </c-nav-item>
+    </c-nav>
+  </c-card-header>
+
+  <c-card-body>
+    <router-outlet></router-outlet>
+  </c-card-body>
+</c-card>

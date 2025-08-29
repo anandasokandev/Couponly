@@ -1,10 +1,12 @@
 import { Component,Output,EventEmitter } from '@angular/core';
 import { ContactService } from '../../../../commons/services/Contacts/contact.service';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-import-contact-modal',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './import-contact-modal.component.html',
   styleUrl: './import-contact-modal.component.scss'
 })
@@ -12,6 +14,12 @@ export class ImportContactModalComponent {
 
   @Output() contactsImported = new EventEmitter<void>();
 @Output() closeModal = new EventEmitter<void>();
+
+showCsvInput = true;
+
+showvcardInput= true;
+
+
 
 
 csvFile: File | null = null;
@@ -24,6 +32,10 @@ vcardFile: File | null = null;
     const file = input.files?.[0];
     if (file && file.name.endsWith('.csv')) {
       this.csvFile = file;
+
+    
+
+
     } else {
       console.warn('Invalid file type for CSV');
     }
@@ -51,21 +63,17 @@ vcardFile: File | null = null;
 
   this.contactService.ImportContactsFromCsv(this.csvFile).subscribe({
     next: (response: any) => {
-      // Optional: Check for duplicates or other metadata in response
-      if (response?.duplicates?.length > 0) {
-        this.toast.show({
-          type: 'info',
-          message: `${response.duplicates.length} contacts already exist and were skipped.`
-        });
-      }
+      
 
-      this.toast.show({ type: 'success', message: 'CSV imported successfully.' });
+      this.toast.show({ type: 'success', message: response.data });
       this.contactsImported.emit();
       this.csvFile = null;
+      this.close();
+      this.refreshclose();
     },
     error: (error: any) => {
       console.error('CSV import failed:', error);
-      this.toast.show({ type: 'error', message: 'Failed to import CSV. Please try again.' });
+      this.toast.show({ type: 'error', message: error.errors });
     }
   });
 }
@@ -74,7 +82,7 @@ vcardFile: File | null = null;
 
 
   // 🚀 Import vCard File
-importVCard() {
+importVcard() {
   if (!this.vcardFile) {
     this.toast.show({ type: 'warning', message: 'Please select a vCard file before importing.' });
     return;
@@ -82,22 +90,18 @@ importVCard() {
 
   console.log('Importing vCard...');
 
+  // Use the new service method for vCard import
   this.contactService.ImportContactsFromVCard(this.vcardFile).subscribe({
     next: (response: any) => {
-      if (response?.duplicates?.length > 0) {
-        this.toast.show({
-          type: 'info',
-          message: `${response.duplicates.length} contacts already exist and were skipped.`
-        });
-      }
-
-      this.toast.show({ type: 'success', message: 'vCard imported successfully.' });
+      this.toast.show({ type: 'success', message: response.data });
       this.contactsImported.emit();
       this.vcardFile = null;
+      this.close();
+      this.refreshclosesvcard();
     },
-    error: (err: any) => {
-      console.error('vCard import failed:', err);
-      this.toast.show({ type: 'error', message: 'Failed to import vCard. Please try again.' });
+    error: (error: any) => {
+      console.error('vCard import failed:', error);
+      this.toast.show({ type: 'error', message: error.errors });
     }
   });
 }
@@ -105,8 +109,33 @@ importVCard() {
   // ❌ Close Modal
   close() {
     this.closeModal.emit();
+    
+  }
+
+
+  
+
+  refreshclose()
+  {
+    this.csvFile = null;
+
+  // Force re-render of input
+  this.showCsvInput = false;
+  setTimeout(() => {
+    this.showCsvInput = true;
+  }, 0);
+  }
+
+
+  refreshclosesvcard()
+  {
+    this.csvFile = null;
+
+  // Force re-render of input
+  this.showvcardInput = false;
+  setTimeout(() => {
+    this.showvcardInput = true;
+  }, 0);
   }
 }
-
-
 

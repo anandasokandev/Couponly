@@ -4,11 +4,11 @@
 
 <c-col xs="12">
     <c-card class="mb-4">
-        <c-card-header class="d-md-flex justify-content-md-between align-items-center">
+        <c-card-header class="d-flex align-items-center">
             <strong class="w-100 fs-5">Redeem History</strong>
             <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
                 
-                <div class="">
+                <div class="float-end">
                     <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap d-flex align-items-center" data-bs-toggle="tooltip" title="Download History"  [cModalToggle]="DownloadRedeemsModal.id">
                         <!-- <svg cIcon name="cib-cloud-download" size="md"></svg> -->
                         <svg [cIcon]="icons.cilCloudDownload"></svg> &nbsp; Download
@@ -29,21 +29,21 @@
                 </div>
             </div> -->
             <form [formGroup]="filterForm">
-                <div class="d-md-flex justify-content-start">
+                <div class="d-flex flex-wrap justify-content-start py-3">
                     <div class="d-flex gap-4 align-items-center m-2">
                         <!-- <strong class="w-md-50">District: </strong> -->
                         <select class="form-select form-select-sm"  formControlName="district">
-                            <option value=0>All Distircts</option>
-                            <option *ngFor="let district of districts" [value]="district.id">{{ district.districtName }}</option>
+                            <option value=0 [selected]="districtId === 0">All Distircts</option>
+                            <option *ngFor="let district of districts" [value]="district.id" [selected]="districtId === district.id">{{ district.districtName }}</option>
                         </select>
                     </div>
                     <div class="d-flex gap-4 align-items-center m-2">
                         <!-- <strong class="w-md-50">Location: </strong> -->
                         <!-- <select class="form-control w-100" [(ngModel)]="selectedDistirctId"> -->
                         <select class="form-select form-select-sm" formControlName="location">
-                            <option value=0>All Locations</option>                        
+                            <option value=0 [selected]="locationId === 0">All Locations</option>
                             <!-- <option *ngFor="let location of getLocations(selectedDistirctId)">{{ location.locationName }}</option> -->
-                            <option *ngFor="let location of getLocations()" [value]="location.id">{{ location.locationName }}</option>
+                            <option *ngFor="let location of locations" [value]="location.id" [selected]="locationId === location.id">{{ location.locationName }}</option>
 
                         </select>
                     </div>
@@ -51,11 +51,11 @@
                         <label for="fromDate" class="input-label">From:</label>
                         <input type="date" id="fromDate" class="form-control form-control-sm" formControlName="from" />
                     </div>
-                    <div class="input-container d-flex gap-1 align-items-center m-2">
+                    <div class="input-container d-flex gap-1 align-items-center m-1">
                         <label for="toDateDate" class="input-label">To:</label>
                         <input type="date" id="toDate" class="form-control form-control-sm" formControlName="to" />
                     </div>
-                    <button class="btn btn-sm btn-danger text-white m-3" title="Reset" (click)="resetFilter()">
+                    <button class="btn btn-sm btn-danger text-white m-2" title="Reset" (click)="resetFilter()">
                         <i class="fas fa-arrows-rotate"></i>
                     </button>
                 </div>
@@ -112,14 +112,14 @@
                             <input type="text" placeholder="Filter Stores" [(ngModel)]="filterStores" class="form-control form-control-sm" />
                         </th>
                         <th data-label="Location Filter">
-                            <input type="text" placeholder="Filter Locations" [(ngModel)]="filterLocations" class="form-control form-control-sm" />
+                            <input type="text" placeholder="Filter Locations" [(ngModel)]="filterLocations" class="form-control form-control-sm" [disabled]="locationId != 0" />
                         </th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let red of getRedeemsFiltered() | filterstore: filterStores | filteruser: filterUsers | filtercouponname: filterCouponName | filtercouponcode: filterCouponCode; let i = index">
-                        <td data-label="#">{{ (currentPage * itemsPerPage) + (i + 1) }}</td>
+                        <td data-label="#">{{ (currentPage - 1) * itemsPerPage + (i + 1) }}</td>
                         <td data-label="District Name">
                             {{ red.redeemCouponCode }}
                         </td>

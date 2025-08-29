@@ -1,0 +1,99 @@
+<c-card>
+  <c-card-header>
+    <strong>Create Promotion Campaign</strong>
+  </c-card-header>
+  <c-card-body>
+    <p class="text-body-secondary small">
+      Define the audience, channels, and schedule for your promotion.
+    </p>
+
+    <form #campaignForm="ngForm" (ngSubmit)="saveCampaign()">
+      <c-alert color="success" *ngIf="showSuccessMessage" dismissible>
+        <strong>Success!</strong> The promotion campaign has been saved.
+      </c-alert>
+
+      <h6 class="py-3">1. Campaign Details</h6>
+      <hr class="mt-2">
+      <c-row class="mb-3 py-3">
+        <c-col sm="6">
+          <label cLabel for="campaignName">Campaign Name</label>
+          <input cFormControl class="form-control-sm" id="campaignName" name="campaignName" [(ngModel)]="campaign.promotionName" required>
+        </c-col>
+        <c-col sm="6">
+          <label cLabel for="couponCode">Coupon Code</label>
+          <select cSelect class="form-select-sm" id="couponCode" name="couponCode" [(ngModel)]="campaign.couponCode" required>
+            <option *ngFor="let coupon of coupons" [value]="coupon">{{ coupon }}</option>
+          </select>
+        </c-col>
+      </c-row>
+
+      <h6 class="mt-4 py-3">2. Audience Targeting</h6>
+      <hr>
+      <c-row class="mb-3 py-3">
+        <c-col sm="4">
+          <label cLabel for="category">Select Category</label>
+          <select cSelect class="form-select-sm" id="category" name="category" [(ngModel)]="campaign.selectedCategory" (change)="onCategoryChange()" required>
+            <option value="">-- Choose Category --</option>
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+          </select>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="store">Select Store</label>
+          <select cSelect class="form-select-sm" id="store" name="store" [(ngModel)]="campaign.selectedStore" [disabled]="!campaign.selectedCategory" required>
+            <option value="">-- Choose Store --</option>
+            <option *ngFor="let store of availableStores" [value]="store">{{ store }}</option>
+          </select>
+        </c-col>
+        <c-col sm="4">
+          <label cLabel for="contactCount">No. of Contacts to Send</label>
+          <input cFormControl class="form-control-sm" id="contactCount" name="contactCount" type="number" [(ngModel)]="campaign.contactCount" required>
+        </c-col>
+      </c-row>
+
+      <h6 class="mt-4 py-3">3. Communication Channels</h6>
+      <hr class="mt-2">
+      <div class="mb-3 py-3">
+        <c-form-check id="whatsappCheck" inline>
+          <input cFormCheckInput type="checkbox" name="whatsapp" [(ngModel)]="campaign.channels.whatsapp">
+          <label cFormCheckLabel><i class="fa-brands fa-whatsapp me-1"></i> WhatsApp</label>
+        </c-form-check>
+        <c-form-check id="emailCheck" inline>
+          <input cFormCheckInput type="checkbox" name="email" [(ngModel)]="campaign.channels.email">
+          <label cFormCheckLabel><i class="fa-solid fa-envelope me-1"></i> Email</label>
+        </c-form-check>
+        <c-form-check id="smsCheck" inline>
+          <input cFormCheckInput type="checkbox" name="sms" [(ngModel)]="campaign.channels.sms">
+          <label cFormCheckLabel><i class="fa-solid fa-comment-sms me-1"></i> SMS</label>
+        </c-form-check>
+      </div>
+
+      <h6 class="mt-4 py-3">4. Schedule & Send</h6>
+      <hr class="mt-2">
+      <c-row>
+        <c-col sm="3">
+      <c-button-group class="mb-3 py-3">
+        <button cButton class="btn-sm" color="light" [active]="campaign.sendType === 'now'" (click)="campaign.sendType = 'now'">
+          Send Directly
+        </button>
+        <button cButton class="btn-sm" color="light" [active]="campaign.sendType === 'schedule'" (click)="campaign.sendType = 'schedule'">
+          Schedule for Later
+        </button>
+      </c-button-group>
+      </c-col>
+      <c-col sm="9">
+      <div *ngIf="campaign.sendType === 'schedule'" class="mb-3">
+        <label cLabel for="scheduleDate" class="text-muted">Scheduling Date & Time</label>
+        <input cFormControl class="form-control-sm" id="scheduleDate" name="scheduleDate" type="datetime-local" [(ngModel)]="campaign.scheduleDate" />
+      </div>
+      </c-col>
+    </c-row>
+    </form>
+  </c-card-body>
+  <c-card-footer>
+    <button cButton class="btn-sm float-end" color="primary" (click)="saveCampaign()" [disabled]="isSaving || !campaignForm.valid">
+      <c-spinner *ngIf="isSaving" size="sm" aria-hidden="true"></c-spinner>
+      <span *ngIf="!isSaving">Save Campaign</span>
+      <span *ngIf="isSaving" class="ms-1">Saving...</span>
+    </button>
+  </c-card-footer>
+</c-card>
