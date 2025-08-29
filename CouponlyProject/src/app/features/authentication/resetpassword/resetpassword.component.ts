@@ -7,13 +7,19 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-resetpassword',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './resetpassword.component.html',
   styleUrls: ['./resetpassword.component.scss']
 })
 export class ResetpasswordComponent implements OnInit {
   token: string = '';
   isTokenValid: boolean = false;
+
+  newPassword: string = '';
+  confirmPassword: string = '';
+  errorMessage: string = '';
+  successMessage: string = '';
+  email: string = ''; 
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +33,6 @@ export class ResetpasswordComponent implements OnInit {
       if (this.token) {
         this.verifyToken(this.token);
       } else {
-
         this.router.navigate(['/404']);
       }
     });
@@ -38,15 +43,47 @@ export class ResetpasswordComponent implements OnInit {
       next: (res) => {
         if (res.isSuccess) {
           this.isTokenValid = true;
+          this.email = res.data.email; 
         } else {
-       
           this.router.navigate(['/404']);
         }
       },
-      error: () => {
-        // API error → redirect to 404
-        this.router.navigate(['/404']);
-      }
+      error: () => this.router.navigate(['/404'])
     });
   }
+
+onSubmit() {
+  this.errorMessage = '';
+  this.successMessage = '';
+
+  if (this.newPassword !== this.confirmPassword) {
+    this.errorMessage = "Passwords do not match!";
+    return;
+  }
+
+  this.forgotPasswordService.updatePassword(this.email, {
+    newPassword: this.newPassword,
+    confirmPassword: this.confirmPassword
+  }).subscribe({
+    next: (res) => {
+      if (res && res.isSuccess) {
+        this.successMessage = "Password updated successfully!";
+        this.errorMessage = "";
+
+        setTimeout(() => {
+          this.router.navigateByUrl('/login'); 
+        }, 2000);
+
+      } else {
+        this.errorMessage = res?.message || "Password update failed.";
+        this.successMessage = "";
+      }
+    },
+    error: (err) => {
+      this.errorMessage = err?.error?.message || "An error occurred while updating password.";
+      this.successMessage = "";
+    }
+  });
+}
+
 }

@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://api.couponly.store/api',
+apiBaseUrl: 'https://localhost:7224/api',
+
   imageUploadUrl: 'https://images.couponly.store/api/upload',
   imageKey: '5dtg419dtny9y84nu67ry7',
   endpoints: {
@@ -56,7 +57,8 @@ export const environment = {
     login:{
      signup: '/Login',
     forgotPassword: '/Login/forgot-password',
-    verifyToken: '/Login/verify-token'
+    verifyToken: '/Login/verify-token',
+    updatePassword:'/Login/updatepassword'
     }
   }
 };
