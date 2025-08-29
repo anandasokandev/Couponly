@@ -67,14 +67,15 @@ onSubmit() {
   }).subscribe({
     next: (res) => {
       if (res && res.isSuccess) {
-        this.successMessage = "Password updated successfully!";
-        this.errorMessage = "";
+  this.successMessage = "Password updated successfully!";
+  this.errorMessage = "";
 
-        setTimeout(() => {
-          this.router.navigateByUrl('/login'); 
-        }, 2000);
 
-      } else {
+  setTimeout(() => {
+    this.router.navigateByUrl('/login'); 
+  }, 2000);
+}
+else {
         this.errorMessage = res?.message || "Password update failed.";
         this.successMessage = "";
       }
