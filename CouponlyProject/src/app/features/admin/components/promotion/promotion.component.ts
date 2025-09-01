@@ -11,8 +11,11 @@ import {
   ButtonGroupModule,
   ButtonDirective,
   AccordionModule,
+  ModalComponent,
+  ModalToggleDirective,
 } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
+import { FindStoreModelComponent } from '../../pages/Promotion/find-store-model/find-store-model.component';
 
 // Updated interface to hold all promotion campaign details
 export interface PromotionCampaign {
@@ -44,7 +47,10 @@ export interface PromotionCampaign {
     AlertModule,
     ButtonGroupModule,
     ButtonDirective,
-    AccordionModule
+    AccordionModule,
+    FindStoreModelComponent,
+    ModalComponent,
+    ModalToggleDirective
   ],
   templateUrl: './promotion.component.html',
   styleUrls: ['./promotion.component.scss']

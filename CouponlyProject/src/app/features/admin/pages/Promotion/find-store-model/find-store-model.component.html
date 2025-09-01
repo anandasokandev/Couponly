@@ -1,0 +1,133 @@
+
+
+<c-modal
+  #FindStoreModal
+  [scrollable]="true"
+  alignment="center"
+  id="FindStoreModal"
+  class="wide-modal"
+>
+    <c-modal-header>
+        <h5 cModalTitle>Find and Add Store Contacts</h5>
+        <button
+            [cModalToggle]="FindStoreModal.id"
+            class="btn-close"
+            cButtonClose
+            >
+        </button>
+    </c-modal-header>
+
+    <c-modal-body class="p-4">
+        <h6 class="mb-1">Choose Store</h6>
+        <form [formGroup]="filterForm">
+            <!-- <div class="d-flex gap-3 py-3">
+                <select class="form-select form-select-sm" formControlName="district">
+                    <option value=0 [selected]="districtId === 0">All Distircts</option>
+                    <option *ngFor="let district of districts" [value]="district.id" [selected]="districtId === district.id">{{ district.districtName }}</option>
+                </select>
+                <select class="form-select form-select-sm" formControlName="location">
+                    <option value=0 [selected]="locationId === 0">All Locations</option>
+                    <option *ngFor="let location of locations" [value]="location.id" [selected]="locationId === location.id">{{ location.locationName }}</option>
+
+                </select>
+                <select class="form-select form-select-sm" formControlName="category">
+                    <option value=0 [selected]="categoryId === 0">All Categories</option>
+                    <option *ngFor="let category of categories" [value]="category.id" [selected]="categoryId === category.id">{{ category.name }}</option>
+                </select>
+            </div> -->
+            <div class="d-flex gap-4">
+                <c-input-group>
+                    <span cInputGroupText>
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input cFormControl class="form-control-sm" type="text" formControlName="storeName" placeholder="Search by name...">
+                </c-input-group>
+                <button cButton color="secondary" class="btn btn-sm d-flex align-items-center" (click)="searchStores()">Search <i class="fas fa-search ms-2"></i></button>
+            </div>
+        </form>
+
+    <hr>
+
+    <h5>Search Results</h5>
+
+    
+    <div *ngIf="isLoading" class="d-flex justify-content-center my-5">
+        <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+
+    <table [hover]="true" cTable class="responsive-table" *ngIf="searchResults && searchResults.length > 0 && !isLoading">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Logo</th>
+            <th>Store Name</th>
+            <th>available Contacts</th>
+            <th>Contacts from Public Repo.</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let store of searchResults; let i = index" class="align-middle">
+            <td>{{ currentPage * itemsPerPage - itemsPerPage + i + 1 }}</td>
+            <td><img [src]="store.storeLogo" class="img"></td>
+            <td>{{store.store}}</td>
+            <td></td>
+            <td></td>
+            <td>
+            <button cButton class="btn-sm" (click)="selectStore(store)" [disabled]="store === selectedStore">
+                <i class="fas fa-check"></i>
+            </button>
+            </td>
+        </tr>
+        <tr *ngIf="searchResults.length === 0">
+            <td colspan="4">No stores found. Please adjust your filters.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <app-pagination
+        [currentPage]="currentPage"
+        [itemsPerPage]="itemsPerPage"
+        [totalItems]="totalItems"
+        (pageChange)="onPageChange($event)"
+    ></app-pagination>
+
+    <div *ngIf="!isLoading && !searchResults.length">
+        <div *ngIf="selectedStore" class="selection-area">
+            <h5>Selection & Action</h5>
+            <p>You have selected: <strong>{{ selectedStore.name }}</strong> ({{ selectedStore.totalContacts - selectedStore.contactsAlreadyAdded }} contacts available)</p>
+
+            <label for="contactsNeeded">Number of contacts to add:</label>
+            <input
+            type="number"
+            id="contactsNeeded"
+            [(ngModel)]="contactsNeeded"
+            [max]="selectedStore.totalContacts - selectedStore.contactsAlreadyAdded"
+            min="1"
+            >
+            <span>/ {{ selectedStore.totalContacts - selectedStore.contactsAlreadyAdded }}</span>
+        </div>
+        <p *ngIf="!selectedStore">No results found. Please adjust your filters.</p>
+    </div>
+
+    
+    </c-modal-body>
+
+    <c-modal-footer>
+    <button cButton class="btn-sm" color="secondary" (click)="closeModal()">Cancel</button>
+    <button
+        cButton
+        type="button"
+        class="btn-sm"
+        color="primary"
+        (click)="addContacts()"
+        [disabled]="!selectedStore || !contactsNeeded || contactsNeeded <= 0"
+    >
+        Select Store
+    </button>
+    </c-modal-footer>
+
+</c-modal>
