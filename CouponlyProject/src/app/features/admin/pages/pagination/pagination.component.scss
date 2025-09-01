@@ -10,10 +10,18 @@
   justify-content: center;
   margin: 20px 0;
   align-items: center; /* Better vertical alignment */
+  width: 100%;
+}
+
+
+.pagination-info {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
 }
 
 .pagination button {
-  border: 1px solid #34515e;
   background-color: white;
   color: #34515e;
   font-size: .8rem;

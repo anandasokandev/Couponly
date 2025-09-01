@@ -7,7 +7,7 @@ import { RedeemsHistoryServiceService } from '../../../../../commons/services/Co
 import { District } from '../../../../../commons/models/district.model';
 import { Location } from '../../../../../commons/models/location.model';
 import { Category } from '../../../../../commons/models/category.model';
-import { PromotionService } from 'src/app/commons/services/Coupon/promotion.service';
+import { PromotionService } from '../../../../../commons/services/Coupon/promotion.service';
 import { PaginationComponent } from '../../pagination/pagination.component';
 
 // Define an interface for the store data structure for type safety

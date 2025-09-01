@@ -42,7 +42,8 @@
                     </span>
                     <input cFormControl class="form-control-sm" type="text" formControlName="storeName" placeholder="Search by name...">
                 </c-input-group>
-                <button cButton color="secondary" class="btn btn-sm d-flex align-items-center" (click)="searchStores()">Search <i class="fas fa-search ms-2"></i></button>
+                <button cButton color="secondary" class="btn btn-sm d-flex align-items-center" (click)="searchStores()" [disabled]="!searchtext || isLoading">
+                    Search <i class="fas fa-search ms-2"></i></button>
             </div>
         </form>
 
