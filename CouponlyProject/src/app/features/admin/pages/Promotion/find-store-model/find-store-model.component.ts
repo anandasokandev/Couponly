@@ -52,7 +52,8 @@ export class FindStoreModelComponent {
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalItems: number = 0;
-  isLoading: boolean = false;
+  isStoreLoading: boolean = false;
+  isCouponLoading: boolean = false;
   isPageChange: boolean = false;
   searchtext: string = '';
 
@@ -66,6 +67,9 @@ export class FindStoreModelComponent {
   districtId: number = 0;
   locationId: number = 0;
   categoryId: number = 0;
+  couponBox: boolean = false;
+  couponDetails: any | null = null;
+  couponText: string = '';
 
   filterForm: FormGroup;
 
@@ -128,7 +132,7 @@ export class FindStoreModelComponent {
    * Fetches stores from a service based on the current filter values.
    */
   searchStores(): void {
-    this.isLoading = true;
+    this.isStoreLoading = true;
     if(!this.isPageChange) {
       this.currentPage = 1; // Reset to first page on new search
     }
@@ -136,12 +140,26 @@ export class FindStoreModelComponent {
       next: (response: any) => {
         this.searchResults = response.data.items;
         this.totalItems = response.data.totalCount;
-        this.isLoading = false;
+        this.isStoreLoading = false;
         this.isPageChange = false;
         console.log(response)
       }
     })
     this.selectedStore = null; // Reset selection on new search
+  }
+
+  searchCoupon(): void {
+    // this.isCouponLoading = true;
+
+    // this.promotionService.searchCoupons(this.couponText).subscribe({
+    //   next: (response: any) => {
+    //     this.couponDetails = response.data;
+    //     this.isCouponLoading = false;
+    //   },
+    //   error: () => {
+    //     this.isCouponLoading = false;
+    //   }
+    // });
   }
 
   /**
@@ -150,6 +168,8 @@ export class FindStoreModelComponent {
    */
   selectStore(store: Store): void {
     this.selectedStore = store;
+    this.couponDetails = null; // Reset coupon details when a new store is selected
+    this.couponBox = true; // Show coupon box when a new store is selected
     this.contactsNeeded = null; // Reset contacts needed when a new store is selected
     this.searchResults = [];
   }

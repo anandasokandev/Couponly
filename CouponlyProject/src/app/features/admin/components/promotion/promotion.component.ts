@@ -60,7 +60,7 @@ export class PromotionComponent {
     promotionName: 'Monsoon Bonanza',
     selectedCategory: '',
     selectedStore: '',
-    contactCount: 1000,
+    contactCount: 0,
     channels: {
       whatsapp: true,
       email: true,

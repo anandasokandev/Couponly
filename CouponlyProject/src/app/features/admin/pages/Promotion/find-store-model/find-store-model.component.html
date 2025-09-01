@@ -42,60 +42,111 @@
                     </span>
                     <input cFormControl class="form-control-sm" type="text" formControlName="storeName" placeholder="Search by name...">
                 </c-input-group>
-                <button cButton color="secondary" class="btn btn-sm d-flex align-items-center" (click)="searchStores()" [disabled]="!searchtext || isLoading">
+                <button cButton color="secondary" class="btn btn-sm d-flex align-items-center" (click)="searchStores()" [disabled]="!searchtext || isStoreLoading">
                     Search <i class="fas fa-search ms-2"></i></button>
             </div>
         </form>
 
     <hr>
 
-    <h5>Search Results</h5>
+    <h6>Search Results</h6>
 
-    
-    <div *ngIf="isLoading" class="d-flex justify-content-center my-5">
+    <div *ngIf="isStoreLoading" class="d-flex justify-content-center my-5">
         <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Loading...</span>
         </div>
     </div>
 
+    <ng-container *ngIf="searchResults && searchResults.length > 0 && !isStoreLoading">
+        <table [hover]="true" cTable class="responsive-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Logo</th>
+                <th>Store Name</th>
+                <th>available Contacts</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let store of searchResults; let i = index" class="align-middle">
+                <td>{{ currentPage * itemsPerPage - itemsPerPage + i + 1 }}</td>
+                <td><img [src]="store.storeLogo" class="img"></td>
+                <td>{{store.store}}</td>
+                <td></td>
+                <td>
+                <button cButton class="btn-sm" (click)="selectStore(store)" [disabled]="store === selectedStore">
+                    <i class="fas fa-check"></i>
+                </button>
+                </td>
+            </tr>
+            <tr *ngIf="searchResults.length === 0">
+                <td colspan="4">No stores found. Please adjust your filters.</td>
+            </tr>
+            </tbody>
+        </table>
 
-    <table [hover]="true" cTable class="responsive-table" *ngIf="searchResults && searchResults.length > 0 && !isLoading">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Logo</th>
-            <th>Store Name</th>
-            <th>available Contacts</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let store of searchResults; let i = index" class="align-middle">
-            <td>{{ currentPage * itemsPerPage - itemsPerPage + i + 1 }}</td>
-            <td><img [src]="store.storeLogo" class="img"></td>
-            <td>{{store.store}}</td>
-            <td></td>
-            <td>
-            <button cButton class="btn-sm" (click)="selectStore(store)" [disabled]="store === selectedStore">
-                <i class="fas fa-check"></i>
+        <app-pagination 
+            [currentPage]="currentPage"
+            [itemsPerPage]="itemsPerPage"
+            [totalItems]="totalItems"
+            [fromModel]="true"
+            (pageChange)="onPageChange($event)"
+        ></app-pagination>
+    </ng-container>
+
+    <div class="mt-2" *ngIf="couponBox">
+        <table [hover]="true" cTable class="responsive-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Logo</th>
+                    <th>Store Name</th>
+                    <th>available Contacts</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="align-middle">
+                    <td>1</td>
+                    <td><img [src]="selectedStore.storeLogo" class="img"></td>
+                    <td>{{selectedStore.store}}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="mt-3">Choose Coupon details</h6>
+        <div class="d-flex gap-4">
+            <c-input-group>
+                <span cInputGroupText>
+                    <i class="fas fa-search"></i>
+                </span>
+                <input cFormControl class="form-control-sm" type="text" [(ngModel)]="couponText" placeholder="Search by name...">
+            </c-input-group>
+            <button cButton color="secondary" class="btn btn-sm d-flex align-items-center" (click)="searchCoupon()" [disabled]="!couponText || isCouponLoading">
+                Search <i class="fas fa-search ms-2"></i>
             </button>
-            </td>
-        </tr>
-        <tr *ngIf="searchResults.length === 0">
-            <td colspan="4">No stores found. Please adjust your filters.</td>
-        </tr>
-        </tbody>
-    </table>
+            <ng-container *ngIf="couponDetails">
+                <div class="card p-2" style="width: 18rem;">
+                    <img [src]="couponDetails.couponImage" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ couponDetails.couponCode }}</h6>
+                        <p class="card-text">{{ couponDetails.couponName }}</p>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div *ngIf="!couponDetails" class="mt-3">
+            <p>No coupon details found. Please adjust your search.</p>
+        </div>
+        <div *ngIf="isCouponLoading" class="d-flex justify-content-center my-2">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
 
-    <app-pagination *ngIf="searchResults && searchResults.length > 0 && !isLoading"
-        [currentPage]="currentPage"
-        [itemsPerPage]="itemsPerPage"
-        [totalItems]="totalItems"
-        [fromModel]="true"
-        (pageChange)="onPageChange($event)"
-    ></app-pagination>
-
-    <div *ngIf="!isLoading && !searchResults.length">
+    <div *ngIf="!isStoreLoading && !searchResults.length && !couponBox" class="mt-4">
         <div *ngIf="selectedStore" class="selection-area">
             <p>You have selected: <strong>{{ selectedStore.store }}</strong> ({{ selectedStore.totalContacts }} contacts available)</p>
             <p>Contacts available in public repo.: {{ selectedStore.totalContacts }}</p>
