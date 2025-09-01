@@ -17,8 +17,8 @@ export class ResetpasswordComponent implements OnInit {
 
   newPassword: string = '';
   confirmPassword: string = '';
-  errorMessage: string = '';
-  successMessage: string = '';
+  message: string = '';
+  isError: boolean = false;
   email: string = ''; 
 
   constructor(
@@ -53,11 +53,11 @@ export class ResetpasswordComponent implements OnInit {
   }
 
 onSubmit() {
-  this.errorMessage = '';
-  this.successMessage = '';
+  this.message = '';
 
   if (this.newPassword !== this.confirmPassword) {
-    this.errorMessage = "Passwords do not match!";
+    this.message = "Passwords do not match!";
+    this.isError = true;
     return;
   }
 
@@ -67,22 +67,22 @@ onSubmit() {
   }).subscribe({
     next: (res) => {
       if (res && res.isSuccess) {
-  this.successMessage = "Password updated successfully!";
-  this.errorMessage = "";
+  this.message = "Password updated successfully!... Redirecting to Login Page";
+  this.isError = false;
 
 
   setTimeout(() => {
     this.router.navigateByUrl('/login'); 
-  }, 2000);
+  }, 5000);
 }
 else {
-        this.errorMessage = res?.message || "Password update failed.";
-        this.successMessage = "";
+        this.message = res?.message || "Password update failed.";
+        this.isError = true;
       }
     },
     error: (err) => {
-      this.errorMessage = err?.error?.message || "An error occurred while updating password.";
-      this.successMessage = "";
+      this.message = err?.error?.message || "An error occurred while updating password.";
+      this.isError = true;
     }
   });
 }
