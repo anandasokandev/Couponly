@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ForgotPasswordService } from '../../../commons/services/Authentication/forgot-password.service';
+import { SpinnerModule } from '@coreui/angular';
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, SpinnerModule],
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss']
 })
@@ -14,6 +15,7 @@ export class ForgotPasswordComponent {
   forgotForm: FormGroup;
   message: string = '';
   isError: boolean = false;
+  isLoading: boolean = false;
 
   constructor(private fb: FormBuilder, private forgotService: ForgotPasswordService) {
     this.forgotForm = this.fb.group({
@@ -28,10 +30,12 @@ export class ForgotPasswordComponent {
       return;
     }
 
+    this.isLoading = true;
     const payload = this.forgotForm.value;
 
     this.forgotService.forgotPassword(payload).subscribe({
       next: (res: any) => {
+        this.isLoading = false;
         if (res.isSuccess) {
           this.message = res.message || 'Password reset email sent successfully.';
           this.isError = false;
@@ -44,6 +48,7 @@ export class ForgotPasswordComponent {
         console.error(err);
         this.message = 'Something went wrong.';
         this.isError = true;
+        this.isLoading = false;
       }
     });
   }
