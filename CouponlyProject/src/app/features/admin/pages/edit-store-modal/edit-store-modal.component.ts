@@ -5,6 +5,7 @@ import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirect
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 import { StoreService } from '../../../../commons/services/Store/store.service';
 import { LocationService } from '../../../../commons/services/Admin/location.service';
+import { StoreComponent } from '../../components/store/store.component';
 
 @Component({
   selector: 'app-edit-store-modal',
@@ -26,6 +27,7 @@ import { LocationService } from '../../../../commons/services/Admin/location.ser
 })
 export class EditStoreModalComponent {
   @Input() storeToEdit: any;
+   @ViewChild(StoreComponent) store!: StoreComponent;
   @ViewChild('closeButton') closeButton!: ElementRef;
   @Output() storeUpdated = new EventEmitter<void>();
   editStoreForm: FormGroup;
@@ -155,6 +157,7 @@ export class EditStoreModalComponent {
         this.storeUpdated.emit();
         this.closeModal();
         this.selectedFile = null;
+        // this.store.FetchStores();
       },
       error: () => this.toast.show({ type: 'error', message: 'Store update failed' })
     });
