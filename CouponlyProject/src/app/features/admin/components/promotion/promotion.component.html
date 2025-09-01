@@ -1,5 +1,5 @@
 <c-modal #FindStoreModal [scrollable]="true" alignment="center" id="FindStoreModal">
-  <app-find-store-model></app-find-store-model>
+  <app-find-store-model (contactsAdded)="handleContactsAdded($event)"></app-find-store-model>
 </c-modal>
 
 <c-card>
@@ -48,21 +48,26 @@
       </div>
       <hr class="mt-1">
       <c-row class="mb-3 py-3">
-        <c-col sm="3">
+        <c-col sm="2">
           <label cLabel for="category">Category</label>
-          <input cFormControl class="form-control-sm" id="category" name="category" type="text" disabled readonly required>
+          <input cFormControl class="form-control-sm" id="category" name="category" type="text" [value]="campaign.selectedCategory" disabled readonly required>
         </c-col>
         <c-col sm="3">
           <label cLabel for="store">Store</label>
-          <input cFormControl class="form-control-sm" id="store" name="store" type="text" disabled readonly required>
+          <input cFormControl class="form-control-sm" id="store" name="store" type="text" [value]="campaign.selectedStore" disabled readonly required>
         </c-col>
         <c-col sm="3">
-          <label cLabel for="store">Coupon</label>
+          <label cLabel for="store">Coupon Name</label>
           <input cFormControl class="form-control-sm" id="coupon" name="coupon" type="text" disabled readonly required>
         </c-col>
-        <c-col sm="3">
+        <c-col sm="2">
+          <label cLabel for="store">Coupon Code</label>
+          <input cFormControl class="form-control-sm" id="coupon" name="coupon" type="text" disabled readonly required>
+        </c-col>
+        <c-col sm="2">
           <label cLabel for="contactCount">No. of Contacts to Send</label>
-          <input cFormControl class="form-control-sm" id="contactCount" name="contactCount" type="number" [(ngModel)]="campaign.contactCount" readonly disabled required>
+          <input cFormControl class="form-control-sm" id="contactCount" name="contactCount"  type="number" [value]="campaign.contactCount" readonly disabled required>
+          ( 0 from public repo.)
         </c-col>
       </c-row>
 

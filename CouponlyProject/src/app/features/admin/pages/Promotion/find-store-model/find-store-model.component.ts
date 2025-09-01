@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonDirective, FormModule, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, SpinnerModule, TableModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
@@ -50,7 +50,7 @@ interface Store {
 export class FindStoreModelComponent {
   // --- Pagination & Search Controls ---
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 5;
   totalItems: number = 0;
   isLoading: boolean = false;
   isPageChange: boolean = false;
@@ -68,6 +68,9 @@ export class FindStoreModelComponent {
   categoryId: number = 0;
 
   filterForm: FormGroup;
+
+  @Output() contactsAdded = new EventEmitter<{ store: Store; count: number; contactsNeeded: number }>();
+
 
   constructor(private fb: FormBuilder, private promotionService: PromotionService) {
     this.filterForm = this.fb.group({
@@ -146,10 +149,9 @@ export class FindStoreModelComponent {
    * @param store The store object that was clicked in the table.
    */
   selectStore(store: Store): void {
-    if (store.totalContacts > store.contactsAlreadyAdded) {
-      this.selectedStore = store;
-      this.contactsNeeded = 1; // Default to 1 when a new store is selected
-    }
+    this.selectedStore = store;
+    this.contactsNeeded = null; // Reset contacts needed when a new store is selected
+    this.searchResults = [];
   }
 
   /**
@@ -163,22 +165,20 @@ export class FindStoreModelComponent {
 
     const dataToEmit = {
       store: this.selectedStore,
-      count: this.contactsNeeded
+      count: this.contactsNeeded,
+      contactsNeeded: this.contactsNeeded,
     };
 
-    console.log('Adding contacts:', dataToEmit);
-    // Here you would emit this data to the parent component
-    // this.activeModal.close(dataToEmit);
-    alert(`${this.contactsNeeded} contacts from ${this.selectedStore.name} added!`);
+    this.contactsAdded.emit(dataToEmit);
   }
 
   /**
    * Closes the modal without taking action.
    */
-  closeModal(): void {
-    // this.activeModal.dismiss();
-    console.log('Modal closed');
-  }
+  // closeModal(): void {
+  //   this.activeModal.dismiss();
+  //   console.log('Modal closed');
+  // }
 
   onPageChange(page: number): void {
     this.currentPage = page;

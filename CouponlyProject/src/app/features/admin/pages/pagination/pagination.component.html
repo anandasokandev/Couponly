@@ -1,24 +1,24 @@
 <div class="pagination" *ngIf="totalPages > 1">
   <div class="pagination-info">
-  <button (click)="onPrev()" [disabled]="currentPage === 1">
-    &lt; Prev
-  </button>
-
-  <ng-container *ngFor="let page of pages">
-    <button 
-      *ngIf="isNumber(page)"
-      (click)="selectPage(page)"
-      [class.active]="page === currentPage">
-      {{ page }}
+    <button (click)="onPrev()" [disabled]="currentPage === 1">
+      &lt; Prev
     </button>
-    <span *ngIf="!isNumber(page)" class="ellipsis">
-      {{ page }}
-    </span>
-  </ng-container>
 
-  <button (click)="onNext()" [disabled]="currentPage === totalPages">
-    Next &gt;
-  </button>
+    <ng-container *ngFor="let page of pages">
+      <button 
+        *ngIf="isNumber(page)"
+        (click)="selectPage(page)"
+        [class.active]="page === currentPage">
+        {{ page }}
+      </button>
+      <span *ngIf="!isNumber(page)" class="ellipsis">
+        {{ page }}
+      </span>
+    </ng-container>
+
+    <button (click)="onNext()" [disabled]="currentPage === totalPages">
+      Next &gt;
+    </button>
   </div>  
 
   <div class="page-size-selector d-flex float-end" *ngIf="!fromModel">

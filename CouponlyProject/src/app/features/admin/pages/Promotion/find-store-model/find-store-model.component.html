@@ -66,7 +66,6 @@
             <th>Logo</th>
             <th>Store Name</th>
             <th>available Contacts</th>
-            <th>Contacts from Public Repo.</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -75,7 +74,6 @@
             <td>{{ currentPage * itemsPerPage - itemsPerPage + i + 1 }}</td>
             <td><img [src]="store.storeLogo" class="img"></td>
             <td>{{store.store}}</td>
-            <td></td>
             <td></td>
             <td>
             <button cButton class="btn-sm" (click)="selectStore(store)" [disabled]="store === selectedStore">
@@ -89,27 +87,32 @@
         </tbody>
     </table>
 
-    <app-pagination
+    <app-pagination *ngIf="searchResults && searchResults.length > 0 && !isLoading"
         [currentPage]="currentPage"
         [itemsPerPage]="itemsPerPage"
         [totalItems]="totalItems"
+        [fromModel]="true"
         (pageChange)="onPageChange($event)"
     ></app-pagination>
 
     <div *ngIf="!isLoading && !searchResults.length">
         <div *ngIf="selectedStore" class="selection-area">
-            <h5>Selection & Action</h5>
-            <p>You have selected: <strong>{{ selectedStore.name }}</strong> ({{ selectedStore.totalContacts - selectedStore.contactsAlreadyAdded }} contacts available)</p>
-
-            <label for="contactsNeeded">Number of contacts to add:</label>
-            <input
-            type="number"
-            id="contactsNeeded"
-            [(ngModel)]="contactsNeeded"
-            [max]="selectedStore.totalContacts - selectedStore.contactsAlreadyAdded"
-            min="1"
-            >
-            <span>/ {{ selectedStore.totalContacts - selectedStore.contactsAlreadyAdded }}</span>
+            <p>You have selected: <strong>{{ selectedStore.store }}</strong> ({{ selectedStore.totalContacts }} contacts available)</p>
+            <p>Contacts available in public repo.: {{ selectedStore.totalContacts }}</p>
+            <div class="d-flex gap-3">
+                <label for="contactsNeeded">No.of contacts for promotion:</label>
+                <input
+                    type="number"
+                    cFormControl
+                    class="form-control-sm"
+                    id="contactsNeeded"
+                    [(ngModel)]="contactsNeeded"
+                    [max]="selectedStore.totalContacts - selectedStore.contactsAlreadyAdded"
+                    min="1"
+                    style="width: 100px; text-align: right;"
+                    >
+                <span>/ {{ selectedStore.totalContacts }}</span>
+            </div>
         </div>
         <p *ngIf="!selectedStore">No results found. Please adjust your filters.</p>
     </div>
@@ -118,7 +121,7 @@
     </c-modal-body>
 
     <c-modal-footer>
-    <button cButton class="btn-sm" color="secondary" (click)="closeModal()">Cancel</button>
+    <button cButton class="btn-sm" color="secondary" [cModalToggle]="FindStoreModal.id">Cancel</button>
     <button
         cButton
         type="button"
@@ -126,6 +129,7 @@
         color="primary"
         (click)="addContacts()"
         [disabled]="!selectedStore || !contactsNeeded || contactsNeeded <= 0"
+        [cModalToggle]="FindStoreModal.id"
     >
         Select Store
     </button>
