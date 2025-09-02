@@ -44,10 +44,11 @@ export class StoreComponent {
   constructor(private api: StoreService) { }
   ngOnInit() {
 
-    this.FetchStores
+    this.FetchStores();
   }
 
   FetchStores(){
+    this.isLoading = true;
     this.api.FetchStores(this.currentPage, this.itemsPerPage).subscribe({
       next: (response: any) => {
         this.stores = response.data.items;

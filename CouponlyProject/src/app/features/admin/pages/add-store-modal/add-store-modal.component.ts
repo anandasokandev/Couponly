@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { LocationService } from '../../../../commons/services/Admin/location.service';
 import { StoreService } from '../../../../commons/services/Store/store.service';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
@@ -25,9 +25,12 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
   templateUrl: './add-store-modal.component.html',
   styleUrl: './add-store-modal.component.scss'
 })
+
+
 export class AddStoreModalComponent {
   
    @ViewChild('closeButton') closeButton!: ElementRef;
+   @Output() storeAdded = new EventEmitter<void>();
   addStoreForm!: FormGroup;
   categories:any[]=[];
   districts:any[]=[];
@@ -64,7 +67,7 @@ private initiateForm(){
     storeAddress:['',Validators.required],
     district:['',Validators.required],
     storeContact:['',[Validators.required,Validators.pattern(/^\d{10}$/)]],
-    storeEmail:['',[Validators.required,Validators.email]],
+    storeEmail:['',[Validators.required,strictEmailValidator]],
     storeType:['',Validators.required]
   });
 }
@@ -105,6 +108,7 @@ createStore() {
             next: () => {
               this.toast.show({ type: 'success', message: 'Store created successfully!' });
               this.addStoreForm.reset();
+              this.storeAdded.emit();
               this.closeModal();
               this.selectedFile = null;
             },
@@ -134,7 +138,7 @@ private buildStorePayload(url: string): any {
     Email: form.storeEmail,
     LocationId: form.storeLocation,
     CategoryId: form.storeCategory,
-    ApprovedBy: 5,
+    ApprovedBy: sessionStorage.getItem('userId'),
     Type: form.storeType,
   };
 }
@@ -149,3 +153,14 @@ closeModal(): void {
   }
 
 }
+
+  export function strictEmailValidator(control: AbstractControl): ValidationErrors | null {
+  const email = control.value;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  if (!emailRegex.test(email)) {
+    return { strictEmail: true };
+  }
+  return null;
+}
+

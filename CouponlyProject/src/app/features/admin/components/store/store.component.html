@@ -1,10 +1,10 @@
 <c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
   id="verticallyCenteredScrollableModal">
-  <app-add-store-modal></app-add-store-modal>
+  <app-add-store-modal  (storeAdded)="FilterStore()"></app-add-store-modal>
 </c-modal>
 
 <c-modal #editStoreModal [scrollable]="true" alignment="center" id="editStoreModal" (storeUpdated)="refreshStore()">
-  <app-edit-store-modal [storeToEdit]="selectedStore"></app-edit-store-modal>
+  <app-edit-store-modal [storeToEdit]="selectedStore" (storeUpdated)="FilterStore()"></app-edit-store-modal>
 </c-modal>
 <c-col xs="12">
   <c-card class="mb-4">
