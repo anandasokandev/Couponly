@@ -94,7 +94,8 @@
             <input cFormControl id="emailInput" sizing="sm" type="email" formControlName="storeEmail" />
             <div *ngIf="addStoreForm.get('storeEmail')?.touched && addStoreForm.get('storeEmail')?.invalid">
               <span class="text-danger" *ngIf="addStoreForm.get('storeEmail')?.errors?.['required']"> *email is required. </span>
-              <span class="text-danger" *ngIf="addStoreForm.get('storeEmail')?.errors?.['email']"> *invalid email. </span>
+              <span class="text-danger" *ngIf="addStoreForm.get('storeEmail')?.errors?.['strictEmail'] && addStoreForm.get('storeEmail')?.touched">
+              Please enter a valid email address with a domain</span>
             </div>
           </div>
         </div>

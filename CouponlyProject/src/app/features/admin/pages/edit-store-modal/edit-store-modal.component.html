@@ -93,8 +93,8 @@
                     <span class="text-danger" *ngIf="editStoreForm.get('storeEmail')?.errors?.['required']">
                         *email is required.
                     </span>
-                    <span class="text-danger" *ngIf="editStoreForm.get('storeEmail')?.errors?.['email']">
-                        *invalid email.
+                    <span class="text-danger" *ngIf="editStoreForm.get('storeEmail')?.errors?.['strictEmail'] && editStoreForm.get('storeEmail')?.touched">
+                        *Please enter a valid email address with a domain
                     </span>
                 </div>
             </div>
