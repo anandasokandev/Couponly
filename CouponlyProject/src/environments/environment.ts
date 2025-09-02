@@ -24,7 +24,6 @@ export const environment = {
       disableusers:'User/DisableUser',
       updateusers:'User/Update'
       
-
     },
     location: {
       fetchDistrict: 'District',
@@ -59,6 +58,9 @@ export const environment = {
     forgotPassword: '/Login/forgot-password',
     verifyToken: '/Login/verify-token',
     updatePassword:'/Login/updatepassword'
+    },
+    coupon: {
+      GetCouponType : 'CouponType', 
     }
   }
 };

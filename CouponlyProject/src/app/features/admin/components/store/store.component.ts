@@ -42,26 +42,22 @@ export class StoreComponent {
   searchtype: number = 0;
   searchtext: string = '';
   constructor(private api: StoreService) { }
-  ngOnInit() {
 
-    this.FetchStores
+  ngOnInit() {
+    this.FetchStores();
   }
 
-  FetchStores(){
+  FetchStores() {
+    this.isLoading = true;
     this.api.FetchStores(this.currentPage, this.itemsPerPage).subscribe({
       next: (response: any) => {
         this.stores = response.data.items;
         this.totalItems = response.data.totalCount;
         this.isLoading = false;
-      }
-    })
+      }})
   }
-  // filtering() {
-  //   this.currentPage = 1;
-  //   this.FilterStore();
-  // }
+
   FilterStore() {
-    // this.isFiltered=true;
     if (!this.isPageChange)
       this.currentPage = 1;
     this.api.searchStores(this.currentPage, this.itemsPerPage, this.type, this.searchtype, this.searchtext).subscribe({
@@ -79,24 +75,22 @@ export class StoreComponent {
     this.type = 0;
     this.searchtype = 0;
     this.searchtext = '';
-    // this.isFiltered=false
     this.FilterStore();
   }
+
   openEditModal(id: number) {
     this.api.FetchStore(id).subscribe({
       next: (response: any) => {
         this.selectedStore = response.data;
         console.log(this.selectedStore)
-      }
-    })
+      }})
   }
 
   refreshStore() {
     this.api.FetchStores(this.currentPage, this.itemsPerPage).subscribe({
       next: (response: any) => {
         this.stores = response.data;
-      }
-    })
+      }})
   }
 
   onPageChange(page: number) {

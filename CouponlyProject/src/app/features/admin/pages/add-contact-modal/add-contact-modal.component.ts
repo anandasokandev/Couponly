@@ -42,12 +42,19 @@ export class AddContactModalComponent {
     });
   }
 
+   isValidEmail(email: string): boolean {
+    const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    return emailPattern.test(email);
+  }
+
   createContact() {
   if (this.contactForm.invalid) {
     this.contactForm.markAllAsTouched();
     this.toast.show({ type: 'error', message: 'Please correct the errors before submitting.' });
     return;
   }
+
+
 
   const contactData = this.contactForm.value;
 
