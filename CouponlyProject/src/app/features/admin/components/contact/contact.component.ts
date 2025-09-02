@@ -103,6 +103,12 @@ Filtering() {
   this.FilterContact();
 }
 
+// isValidEmail(email: string): boolean {
+//   const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+//   return emailPattern.test(email);
+// }
+
+
 
 
 FilterContact() {
@@ -117,6 +123,12 @@ FilterContact() {
 
 
       this.isLoading = false;
+
+
+      // Show toast if no results found
+      if (this.contacts.length === 0) {
+        this.toast.show({ type: 'info', message: 'No contacts found matching your search.' });
+      }
     },
     error: (err) => {
       console.error('Search error:', err);

@@ -3,22 +3,18 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonDirective, FormModule, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, SpinnerModule, TableModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
-import { RedeemsHistoryServiceService } from '../../../../../commons/services/Coupon/redeems-history-service.service';
 import { District } from '../../../../../commons/models/district.model';
 import { Location } from '../../../../../commons/models/location.model';
 import { Category } from '../../../../../commons/models/category.model';
 import { PromotionService } from '../../../../../commons/services/Coupon/promotion.service';
 import { PaginationComponent } from '../../pagination/pagination.component';
 
-// Define an interface for the store data structure for type safety
-interface Store {
+export interface Coupon {
   id: number;
-  name: string;
-  category: string;
-  district: string;
-  place: string;
-  totalContacts: number;
-  contactsAlreadyAdded: number; // Represents contacts already added in the current context
+  couponCode: string;
+  couponName: string;
+  couponImage: string;
+  // Add other relevant properties here
 }
 
 @Component({
@@ -68,12 +64,14 @@ export class FindStoreModelComponent {
   locationId: number = 0;
   categoryId: number = 0;
   couponBox: boolean = false;
+  storeBox: boolean = false;
   couponDetails: any | null = null;
   couponText: string = '';
+  selectedCoupon: Coupon | null = null;
 
   filterForm: FormGroup;
 
-  @Output() contactsAdded = new EventEmitter<{ store: Store; count: number; contactsNeeded: number }>();
+  @Output() contactsAdded = new EventEmitter<{ store: any; count: number; contactsNeeded: number; coupon: any }>();
 
 
   constructor(private fb: FormBuilder, private promotionService: PromotionService) {
@@ -90,23 +88,23 @@ export class FindStoreModelComponent {
     this.searchResults = [];
     // Optionally, you can load initial data or all stores here
     // this.searchStores();
-    this.promotionService.getDistricts().subscribe((data: any) => {
-      if(data && data.statusCode == 200) {
-        this.districts = data.data as District[];
-      }
-    });
-    this.getLocations();
-    this.promotionService.getCategories().subscribe({
-      next: (response: any) => {
-        this.categories = response.data;
-        console.log(response)
-      }
-    })
-    this.filterForm.get('district')?.valueChanges.subscribe(value => {
-      this.districtId = value;
-      this.filterForm.get('location')?.setValue('0');
-      this.getLocations();
-    });
+    // this.promotionService.getDistricts().subscribe((data: any) => {
+    //   if(data && data.statusCode == 200) {
+    //     this.districts = data.data as District[];
+    //   }
+    // });
+    // this.getLocations();
+    // this.promotionService.getCategories().subscribe({
+    //   next: (response: any) => {
+    //     this.categories = response.data;
+    //     console.log(response)
+    //   }
+    // })
+    // this.filterForm.get('district')?.valueChanges.subscribe(value => {
+    //   this.districtId = value;
+    //   this.filterForm.get('location')?.setValue('0');
+    //   this.getLocations();
+    // });
     this.filterForm.get('storeName')?.valueChanges.subscribe(value => {
       this.searchtext = value;
     });
@@ -132,6 +130,9 @@ export class FindStoreModelComponent {
    * Fetches stores from a service based on the current filter values.
    */
   searchStores(): void {
+    this.couponBox = false;
+    this.couponDetails = null;
+    this.storeBox = true;
     this.isStoreLoading = true;
     if(!this.isPageChange) {
       this.currentPage = 1; // Reset to first page on new search
@@ -149,7 +150,7 @@ export class FindStoreModelComponent {
   }
 
   searchCoupon(): void {
-    // this.isCouponLoading = true;
+    this.isCouponLoading = true;
 
     // this.promotionService.searchCoupons(this.couponText).subscribe({
     //   next: (response: any) => {
@@ -160,26 +161,40 @@ export class FindStoreModelComponent {
     //     this.isCouponLoading = false;
     //   }
     // });
+
+    //temporary placeholder for coupon search
+    setTimeout(() => {
+      this.couponDetails = [{
+        id: 1,
+        couponCode: 'SAVE20',
+        couponName: '20% Off Summer Sale',
+        couponImage: 'https://tse2.mm.bing.net/th/id/OIP.XAQ6mOO-gPKohh53kkKw3wHaEv?rs=1&pid=ImgDetMain&o=7&rm=3'
+      }];
+      this.isCouponLoading = false;
+    }, 2000);
   }
 
-  /**
-   * Sets the clicked store as the selected store.
-   * @param store The store object that was clicked in the table.
-   */
-  selectStore(store: Store): void {
+  selectStore(store: any): void {
     this.selectedStore = store;
     this.couponDetails = null; // Reset coupon details when a new store is selected
     this.couponBox = true; // Show coupon box when a new store is selected
+    this.storeBox = false;
     this.contactsNeeded = null; // Reset contacts needed when a new store is selected
     this.searchResults = [];
+  }
+
+  selectCoupon(coupon: Coupon) {
+    this.selectedCoupon = coupon;
+    this.couponDetails = null;
+    this.couponBox = false;
   }
 
   /**
    * Final action. Emits the data and closes the modal.
    */
   addContacts(): void {
-    if (!this.selectedStore || !this.contactsNeeded || this.contactsNeeded <= 0) {
-      alert('Please select a store and enter a valid number of contacts.');
+    if (!this.selectedStore || !this.contactsNeeded || this.contactsNeeded <= 0 || !this.selectedCoupon) {
+      alert('Please select a store, a coupon, and enter a valid number of contacts.');
       return;
     }
 
@@ -187,6 +202,7 @@ export class FindStoreModelComponent {
       store: this.selectedStore,
       count: this.contactsNeeded,
       contactsNeeded: this.contactsNeeded,
+      coupon: this.selectedCoupon
     };
 
     this.contactsAdded.emit(dataToEmit);

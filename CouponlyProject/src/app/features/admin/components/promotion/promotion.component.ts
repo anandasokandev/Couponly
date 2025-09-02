@@ -16,6 +16,7 @@ import {
 } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { FindStoreModelComponent } from '../../pages/Promotion/find-store-model/find-store-model.component';
+import { PromotionCalculatorModelComponent } from '../../pages/Promotion/promotion-calculator-model/promotion-calculator-model.component';
 
 // Updated interface to hold all promotion campaign details
 export interface PromotionCampaign {
@@ -29,6 +30,7 @@ export interface PromotionCampaign {
     sms: boolean;
   };
   couponCode: string;
+  couponName?: string;
   sendType: 'now' | 'schedule';
   scheduleDate?: string;
 }
@@ -49,6 +51,7 @@ export interface PromotionCampaign {
     ButtonDirective,
     AccordionModule,
     FindStoreModelComponent,
+    PromotionCalculatorModelComponent,
     ModalComponent,
     ModalToggleDirective
   ],
@@ -66,19 +69,12 @@ export class PromotionComponent {
       email: true,
       sms: false
     },
-    couponCode: 'MONSOON25',
+    couponCode: '',
+    couponName: '',
     sendType: 'now',
     scheduleDate: ''
   };
 
-  // Mock data for dropdowns
-  categories: string[] = ['Electronics', 'Fashion', 'Groceries', 'Home Appliances'];
-  stores: { [key: string]: string[] } = {
-    'Electronics': ['Chalai Electronics', 'Pattom Digital'],
-    'Fashion': ['MG Road Styles', 'Lulu Fashion'],
-    'Groceries': ['Kazhakootam Grocers', 'Daily Needs Mart'],
-    'Home Appliances': ['Appliance World', 'Home Hub']
-  };
   availableStores: string[] = [];
   coupons: string[] = ['MONSOON25', 'FLAT500', 'BOGOJULY'];
 
@@ -88,17 +84,9 @@ export class PromotionComponent {
   constructor() { }
 
   ngOnInit(): void {
-    this.onCategoryChange(); // Initialize stores based on default category
+  
   }
 
-  onCategoryChange(): void {
-    if (this.campaign.selectedCategory) {
-      this.availableStores = this.stores[this.campaign.selectedCategory] || [];
-      this.campaign.selectedStore = ''; // Reset store selection
-    } else {
-      this.availableStores = [];
-    }
-  }
 
   saveCampaign(): void {
     this.isSaving = true;
@@ -111,18 +99,22 @@ export class PromotionComponent {
 
     console.log('Saving Campaign:', this.campaign);
     
-    setTimeout(() => {
-      this.isSaving = false;
-      this.showSuccessMessage = true;
-      setTimeout(() => this.showSuccessMessage = false, 4000);
-    }, 1500);
+    this.isSaving = false;
+    // setTimeout(() => {
+    //   // this.showSuccessMessage = true;
+    //   // setTimeout(() => this.showSuccessMessage = false, 4000);
+    // }, 1500);
+
+    
   }
 
-  handleContactsAdded(event: { store: any; count: number; contactsNeeded: number }) {
+  handleContactsAdded(event: { store: any; count: number; contactsNeeded: number; coupon: any }): void {
     console.log('Contacts added:', event);
     // Update the campaign details based on the event data
     this.campaign.selectedCategory = event.store.category;
     this.campaign.selectedStore = event.store.store;
     this.campaign.contactCount = event.contactsNeeded;
+    this.campaign.couponCode = event.coupon.couponCode;
+    this.campaign.couponName = event.coupon.couponName;
   }
 }

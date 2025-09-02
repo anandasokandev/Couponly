@@ -1,1 +1,33 @@
-<p>promotion-calculator-model works!</p>
+<c-modal
+  #PromotionCalculatorModal
+  [scrollable]="true"
+  alignment="center"
+  id="PromotionCalculatorModal"
+>
+    <c-modal-header>
+      <h5 class="modal-title">Promotion Calculator</h5>
+      <button type="button" class="btn-close btn-sm" aria-label="Close" [cModalToggle]="PromotionCalculatorModal.id"></button>
+    </c-modal-header>
+    <c-modal-body>
+      <!-- Modal body content goes here -->
+      <div *ngIf="campaign">
+        <p><strong>Promotion Name:</strong> {{ campaign.promotionName }}</p>
+        <p><strong>Selected Category:</strong> {{ campaign.selectedCategory }}</p>
+        <p><strong>Selected Store:</strong> {{ campaign.selectedStore }}</p>
+        <p><strong>Contact Count:</strong> {{ campaign.contactCount }}</p>
+        <p><strong>Channels:</strong></p>
+        <ul>
+          <li *ngIf="campaign.channels.whatsapp">WhatsApp</li>
+          <li *ngIf="campaign.channels.email">Email</li>
+          <li *ngIf="campaign.channels.sms">SMS</li>
+        </ul>
+        <p><strong>Coupon Code:</strong> {{ campaign.couponCode }}</p>
+        <p><strong>Send Type:</strong> {{ campaign.sendType }}</p>
+        <p *ngIf="campaign.sendType === 'schedule'"><strong>Schedule Date:</strong> {{ campaign.scheduleDate }}</p>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button cButton color="secondary" class="btn-sm" [cModalToggle]="PromotionCalculatorModal.id">Close</button>
+      <button cButton color="primary" class="btn-sm" [cModalToggle]="PromotionCalculatorModal.id">Save changes</button>
+    </c-modal-footer>
+</c-modal>
