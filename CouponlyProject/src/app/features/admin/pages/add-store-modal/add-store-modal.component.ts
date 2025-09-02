@@ -148,7 +148,6 @@ resetForm() {
 }
 
 closeModal(): void {
-    // You can also call this method from anywhere
     this.closeButton.nativeElement.click();
   }
 

@@ -1,15 +1,19 @@
+<!-- Add Store Modal-->
 <c-modal #verticallyCenteredScrollableModal [scrollable]="true" alignment="center"
   id="verticallyCenteredScrollableModal">
   <app-add-store-modal  (storeAdded)="FilterStore()"></app-add-store-modal>
 </c-modal>
 
+<!-- Edit Store Modal-->
 <c-modal #editStoreModal [scrollable]="true" alignment="center" id="editStoreModal" (storeUpdated)="refreshStore()">
   <app-edit-store-modal [storeToEdit]="selectedStore" (storeUpdated)="FilterStore()"></app-edit-store-modal>
 </c-modal>
+
 <c-col xs="12">
   <c-card class="mb-4">
     <c-card-header class="d-flex justify-content-between align-items-center">
       <strong class="fs-5">Stores</strong>
+
       <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
         <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap"
           [cModalToggle]="verticallyCenteredScrollableModal.id">
@@ -17,7 +21,9 @@
         </button>
       </div>
     </c-card-header>
+
     <c-card-body>
+      <!--Filters-->
       <div class="d-flex flex-wrap gap-2 mb-3 justify-content-start align-items-center">
         <select class="form-select form-select-sm" style="max-width: 160px;" name="storeType" [(ngModel)]="type"
           (change)="FilterStore()">
@@ -48,12 +54,8 @@
           <i class="fas fa-arrows-rotate"></i>
         </button>
       </div>
-      <div *ngIf="isLoading" class="d-flex justify-content-center my-5">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
 
+      <!--Table-->
       <div *ngIf="!isLoading" class="table-responsive">
         <table [hover]="true" cTable class="responsive-table">
           <thead>
@@ -93,6 +95,15 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Loader -->
+      <div *ngIf="isLoading" class="d-flex justify-content-center my-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center m-2" *ngIf="!isLoading && stores.length === 0">No data found!</div>
+      <!--Pagination-->
       <app-pagination *ngIf="!isLoading" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
         [currentPage]="currentPage" (pageChange)="onPageChange($event)"
         (itemsPerPageChange)="itemsPerPage = $event; onPageChange(1)">
