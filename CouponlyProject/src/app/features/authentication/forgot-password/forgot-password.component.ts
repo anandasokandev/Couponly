@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } 
 import { CommonModule } from '@angular/common';
 import { ForgotPasswordService } from '../../../commons/services/Authentication/forgot-password.service';
 import { SpinnerModule } from '@coreui/angular';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, SpinnerModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, SpinnerModule,RouterModule],
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss']
 })

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonDirective, FormModule, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, SpinnerModule, TableModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
@@ -50,9 +50,10 @@ interface Store {
 export class FindStoreModelComponent {
   // --- Pagination & Search Controls ---
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 5;
   totalItems: number = 0;
-  isLoading: boolean = false;
+  isStoreLoading: boolean = false;
+  isCouponLoading: boolean = false;
   isPageChange: boolean = false;
   searchtext: string = '';
 
@@ -66,8 +67,14 @@ export class FindStoreModelComponent {
   districtId: number = 0;
   locationId: number = 0;
   categoryId: number = 0;
+  couponBox: boolean = false;
+  couponDetails: any | null = null;
+  couponText: string = '';
 
   filterForm: FormGroup;
+
+  @Output() contactsAdded = new EventEmitter<{ store: Store; count: number; contactsNeeded: number }>();
+
 
   constructor(private fb: FormBuilder, private promotionService: PromotionService) {
     this.filterForm = this.fb.group({
@@ -125,7 +132,7 @@ export class FindStoreModelComponent {
    * Fetches stores from a service based on the current filter values.
    */
   searchStores(): void {
-    this.isLoading = true;
+    this.isStoreLoading = true;
     if(!this.isPageChange) {
       this.currentPage = 1; // Reset to first page on new search
     }
@@ -133,7 +140,7 @@ export class FindStoreModelComponent {
       next: (response: any) => {
         this.searchResults = response.data.items;
         this.totalItems = response.data.totalCount;
-        this.isLoading = false;
+        this.isStoreLoading = false;
         this.isPageChange = false;
         console.log(response)
       }
@@ -141,15 +148,30 @@ export class FindStoreModelComponent {
     this.selectedStore = null; // Reset selection on new search
   }
 
+  searchCoupon(): void {
+    // this.isCouponLoading = true;
+
+    // this.promotionService.searchCoupons(this.couponText).subscribe({
+    //   next: (response: any) => {
+    //     this.couponDetails = response.data;
+    //     this.isCouponLoading = false;
+    //   },
+    //   error: () => {
+    //     this.isCouponLoading = false;
+    //   }
+    // });
+  }
+
   /**
    * Sets the clicked store as the selected store.
    * @param store The store object that was clicked in the table.
    */
   selectStore(store: Store): void {
-    if (store.totalContacts > store.contactsAlreadyAdded) {
-      this.selectedStore = store;
-      this.contactsNeeded = 1; // Default to 1 when a new store is selected
-    }
+    this.selectedStore = store;
+    this.couponDetails = null; // Reset coupon details when a new store is selected
+    this.couponBox = true; // Show coupon box when a new store is selected
+    this.contactsNeeded = null; // Reset contacts needed when a new store is selected
+    this.searchResults = [];
   }
 
   /**
@@ -163,22 +185,20 @@ export class FindStoreModelComponent {
 
     const dataToEmit = {
       store: this.selectedStore,
-      count: this.contactsNeeded
+      count: this.contactsNeeded,
+      contactsNeeded: this.contactsNeeded,
     };
 
-    console.log('Adding contacts:', dataToEmit);
-    // Here you would emit this data to the parent component
-    // this.activeModal.close(dataToEmit);
-    alert(`${this.contactsNeeded} contacts from ${this.selectedStore.name} added!`);
+    this.contactsAdded.emit(dataToEmit);
   }
 
   /**
    * Closes the modal without taking action.
    */
-  closeModal(): void {
-    // this.activeModal.dismiss();
-    console.log('Modal closed');
-  }
+  // closeModal(): void {
+  //   this.activeModal.dismiss();
+  //   console.log('Modal closed');
+  // }
 
   onPageChange(page: number): void {
     this.currentPage = page;

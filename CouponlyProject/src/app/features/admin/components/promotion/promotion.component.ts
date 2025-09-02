@@ -60,7 +60,7 @@ export class PromotionComponent {
     promotionName: 'Monsoon Bonanza',
     selectedCategory: '',
     selectedStore: '',
-    contactCount: 1000,
+    contactCount: 0,
     channels: {
       whatsapp: true,
       email: true,
@@ -116,5 +116,13 @@ export class PromotionComponent {
       this.showSuccessMessage = true;
       setTimeout(() => this.showSuccessMessage = false, 4000);
     }, 1500);
+  }
+
+  handleContactsAdded(event: { store: any; count: number; contactsNeeded: number }) {
+    console.log('Contacts added:', event);
+    // Update the campaign details based on the event data
+    this.campaign.selectedCategory = event.store.category;
+    this.campaign.selectedStore = event.store.store;
+    this.campaign.contactCount = event.contactsNeeded;
   }
 }
