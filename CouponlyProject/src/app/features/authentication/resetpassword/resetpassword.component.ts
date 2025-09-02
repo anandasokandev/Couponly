@@ -3,18 +3,19 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ForgotPasswordService } from '../../../commons/services/Authentication/forgot-password.service';
 import { CommonModule } from '@angular/common';
+import { SpinnerModule } from '@coreui/angular';
 
 @Component({
   selector: 'app-resetpassword',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,SpinnerModule],
   templateUrl: './resetpassword.component.html',
   styleUrls: ['./resetpassword.component.scss']
 })
 export class ResetpasswordComponent implements OnInit {
   token: string = '';
   isTokenValid: boolean = false;
-
+    isLoading: boolean = false;
   newPassword: string = '';
   confirmPassword: string = '';
   message: string = '';
@@ -60,12 +61,14 @@ onSubmit() {
     this.isError = true;
     return;
   }
+  this.isLoading = true;
 
   this.forgotPasswordService.updatePassword(this.email, {
     newPassword: this.newPassword,
     confirmPassword: this.confirmPassword
   }).subscribe({
     next: (res) => {
+       this.isLoading = false;
       if (res && res.isSuccess) {
   this.message = "Password updated successfully!... Redirecting to Login Page";
   this.isError = false;
@@ -81,6 +84,7 @@ else {
       }
     },
     error: (err) => {
+      this.isLoading = false;
       this.message = err?.error?.message || "An error occurred while updating password.";
       this.isError = true;
     }

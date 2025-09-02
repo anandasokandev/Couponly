@@ -60,7 +60,7 @@
               </button>
 
             </div>
-             <div *ngIf="errorMessage" class="text-danger text-center mb-3">
+             <div *ngIf="errorMessage && !isLoading" class="text-danger text-center mb-3" >
                 {{ errorMessage }}
               </div>
 
