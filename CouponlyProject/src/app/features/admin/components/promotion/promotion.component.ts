@@ -11,8 +11,11 @@ import {
   ButtonGroupModule,
   ButtonDirective,
   AccordionModule,
+  ModalComponent,
+  ModalToggleDirective,
 } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
+import { FindStoreModelComponent } from '../../pages/Promotion/find-store-model/find-store-model.component';
 
 // Updated interface to hold all promotion campaign details
 export interface PromotionCampaign {
@@ -44,7 +47,10 @@ export interface PromotionCampaign {
     AlertModule,
     ButtonGroupModule,
     ButtonDirective,
-    AccordionModule
+    AccordionModule,
+    FindStoreModelComponent,
+    ModalComponent,
+    ModalToggleDirective
   ],
   templateUrl: './promotion.component.html',
   styleUrls: ['./promotion.component.scss']
@@ -54,7 +60,7 @@ export class PromotionComponent {
     promotionName: 'Monsoon Bonanza',
     selectedCategory: '',
     selectedStore: '',
-    contactCount: 1000,
+    contactCount: 0,
     channels: {
       whatsapp: true,
       email: true,
@@ -110,5 +116,13 @@ export class PromotionComponent {
       this.showSuccessMessage = true;
       setTimeout(() => this.showSuccessMessage = false, 4000);
     }, 1500);
+  }
+
+  handleContactsAdded(event: { store: any; count: number; contactsNeeded: number }) {
+    console.log('Contacts added:', event);
+    // Update the campaign details based on the event data
+    this.campaign.selectedCategory = event.store.category;
+    this.campaign.selectedStore = event.store.store;
+    this.campaign.contactCount = event.contactsNeeded;
   }
 }

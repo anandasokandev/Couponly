@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ButtonCloseDirective, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, SpinnerModule } from '@coreui/angular';
+import { ButtonDirective, ModalBodyComponent, ModalComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, SpinnerModule } from '@coreui/angular';
 import { RedeemHistoryComponent } from '../../components/redeem-history/redeem-history.component';
 
 import { IconModule } from '@coreui/icons-angular';
 import { cilCloudDownload, cilEnvelopeOpen } from '@coreui/icons';
-import { RedeemsHistoryServiceService } from '../../../../commons/services/Coupon/redeems-history-service.service';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 @Component({

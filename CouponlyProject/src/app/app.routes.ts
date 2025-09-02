@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  {
+    {
     path: '',
-    redirectTo: 'admin',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
+
   {
     path: '',
     loadComponent: () => import('./layout').then(m => m.DefaultLayoutComponent),

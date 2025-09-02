@@ -3,11 +3,11 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CardModule, NavModule } from '@coreui/angular';
 
 @Component({
-  selector: 'app-promotion-header',
+  selector: 'app-header',
   imports: [RouterOutlet, RouterLink, RouterLinkActive, CardModule, NavModule],
-  templateUrl: './promotion-header.component.html',
-  styleUrls: ['./promotion-header.component.scss']
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss'
 })
-export class PromotionHeaderComponent {
+export class HeaderComponent {
 
 }

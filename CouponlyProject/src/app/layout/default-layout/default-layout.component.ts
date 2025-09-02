@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NgScrollbar } from 'ngx-scrollbar';
 
 import { IconDirective } from '@coreui/icons-angular';
@@ -54,10 +54,19 @@ function isOverflown(element: HTMLElement) {
 export class DefaultLayoutComponent {
   public navItems = [...navItems];
 
-  constructor(public toast: ToastService) {}
+  loadPage: boolean = false;
+
+  constructor(public toast: ToastService, private router: Router) {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      this.loadPage = false;
+      this.router.navigate(['/login']);
+    }
+    else
+      this.loadPage = true;
+  }
 
   onRemove(id: number) {
     this.toast.remove(id);
   }
-
 }

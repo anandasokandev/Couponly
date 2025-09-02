@@ -1,0 +1,103 @@
+<c-modal #FindStoreModal [scrollable]="true" alignment="center" id="FindStoreModal">
+  <app-find-store-model (contactsAdded)="handleContactsAdded($event)"></app-find-store-model>
+</c-modal>
+
+<c-card>
+  <c-card-header>
+    <strong>Create Promotion Campaign</strong>
+  </c-card-header>
+  <c-card-body>
+    <p class="text-body-secondary small">
+      Define the audience, channels, and schedule for your promotion.
+    </p>
+
+    <form #campaignForm="ngForm" (ngSubmit)="saveCampaign()">
+      <c-alert color="success" *ngIf="showSuccessMessage" dismissible>
+        <strong>Success!</strong> The promotion campaign has been saved.
+      </c-alert>
+
+      <h6 class="py-1 mb-1">1. Campaign Details & Communication Channels</h6>
+      <hr class="mt-1 mb-1">
+      <c-row class="mt-3 gap-3">
+        <c-col sm="6">
+          <label cLabel for="campaignName">Campaign Name</label>
+          <input cFormControl class="form-control-sm" id="campaignName" name="campaignName" [(ngModel)]="campaign.promotionName" required>
+        </c-col>
+        <c-col sm="5">
+          <label cLabel for="channels" class="me-3">Channels</label>
+          <div class="mb-3 py-1">
+            <c-form-check id="whatsappCheck" inline>
+              <input cFormCheckInput type="checkbox" name="whatsapp" [(ngModel)]="campaign.channels.whatsapp">
+              <label cFormCheckLabel><i class="fa-brands fa-whatsapp me-1"></i> WhatsApp</label>
+            </c-form-check>
+            <c-form-check id="emailCheck" inline>
+              <input cFormCheckInput type="checkbox" name="email" [(ngModel)]="campaign.channels.email">
+              <label cFormCheckLabel><i class="fa-solid fa-envelope me-1"></i> Email</label>
+            </c-form-check>
+            <c-form-check id="smsCheck" inline>
+              <input cFormCheckInput type="checkbox" name="sms" [(ngModel)]="campaign.channels.sms">
+              <label cFormCheckLabel><i class="fa-solid fa-comment-sms me-1"></i> SMS</label>
+            </c-form-check>
+          </div>
+        </c-col>
+      </c-row>
+
+      <div class="d-flex justify-content-between mt-4">
+        <h6>2. Audience Targeting</h6>
+        <button cButton class="btn-sm float-end" color="secondary" [cModalToggle]="FindStoreModal.id">Find Store <i class="fas fa-search ms-1"></i></button>
+      </div>
+      <hr class="mt-1">
+      <c-row class="mb-3 py-3">
+        <c-col sm="2">
+          <label cLabel for="category">Category</label>
+          <input cFormControl class="form-control-sm" id="category" name="category" type="text" [value]="campaign.selectedCategory" disabled readonly required>
+        </c-col>
+        <c-col sm="3">
+          <label cLabel for="store">Store</label>
+          <input cFormControl class="form-control-sm" id="store" name="store" type="text" [value]="campaign.selectedStore" disabled readonly required>
+        </c-col>
+        <c-col sm="3">
+          <label cLabel for="store">Coupon Name</label>
+          <input cFormControl class="form-control-sm" id="coupon" name="coupon" type="text" disabled readonly required>
+        </c-col>
+        <c-col sm="2">
+          <label cLabel for="store">Coupon Code</label>
+          <input cFormControl class="form-control-sm" id="coupon" name="coupon" type="text" disabled readonly required>
+        </c-col>
+        <c-col sm="2">
+          <label cLabel for="contactCount">No. of Contacts to Send</label>
+          <input cFormControl class="form-control-sm" id="contactCount" name="contactCount"  type="number" [value]="campaign.contactCount" readonly disabled required>
+          ( 0 from public repo.)
+        </c-col>
+      </c-row>
+
+      <h6 class="mt-4 py-3">3. Schedule & Send</h6>
+      <hr class="mt-2">
+      <c-row>
+        <c-col sm="3">
+      <c-button-group class="mb-3 py-3">
+        <button cButton class="btn-sm" color="light" [active]="campaign.sendType === 'now'" (click)="campaign.sendType = 'now'">
+          Send Directly
+        </button>
+        <button cButton class="btn-sm" color="light" [active]="campaign.sendType === 'schedule'" (click)="campaign.sendType = 'schedule'">
+          Schedule for Later
+        </button>
+      </c-button-group>
+      </c-col>
+      <c-col sm="9">
+      <div *ngIf="campaign.sendType === 'schedule'" class="mb-3">
+        <label cLabel for="scheduleDate" class="text-muted">Scheduling Date & Time</label>
+        <input cFormControl class="form-control-sm" id="scheduleDate" name="scheduleDate" type="datetime-local" [(ngModel)]="campaign.scheduleDate" />
+      </div>
+      </c-col>
+    </c-row>
+    </form>
+  </c-card-body>
+  <c-card-footer>
+    <button cButton class="btn-sm float-end" color="primary" (click)="saveCampaign()" [disabled]="isSaving || !campaignForm.valid">
+      <c-spinner *ngIf="isSaving" size="sm" aria-hidden="true"></c-spinner>
+      <span *ngIf="!isSaving">Save Campaign</span>
+      <span *ngIf="isSaving" class="ms-1">Saving...</span>
+    </button>
+  </c-card-footer>
+</c-card>

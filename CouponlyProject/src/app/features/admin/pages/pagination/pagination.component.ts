@@ -14,6 +14,7 @@ export class PaginationComponent implements OnChanges {
   @Input() totalItems: number = 0;
   @Input() itemsPerPage: number = 5;
   @Input() currentPage: number = 1;
+  @Input() fromModel: boolean = false;
   @Input() maxVisiblePages: number = 2; // Max visible page buttons besides first/last
   @Input() pageSizeOptions: number[] = [5, 10, 20, 50, 100];
 

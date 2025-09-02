@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PromotionHeaderComponent } from './promotion-header.component';
+import { DesignedCouponsComponent } from './designed-coupons.component';
 
-describe('PromotionHeaderComponent', () => {
-  let component: PromotionHeaderComponent;
-  let fixture: ComponentFixture<PromotionHeaderComponent>;
+describe('DesignedCouponsComponent', () => {
+  let component: DesignedCouponsComponent;
+  let fixture: ComponentFixture<DesignedCouponsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PromotionHeaderComponent]
+      imports: [DesignedCouponsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PromotionHeaderComponent);
+    fixture = TestBed.createComponent(DesignedCouponsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
