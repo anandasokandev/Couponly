@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-apiBaseUrl: 'https://api.couponly.store/api',
+  apiBaseUrl: 'https://api.couponly.store/api',
 
   imageUploadUrl: 'https://images.couponly.store/api/upload',
   imageKey: '5dtg419dtny9y84nu67ry7',
@@ -24,7 +24,6 @@ apiBaseUrl: 'https://api.couponly.store/api',
       disableusers:'User/DisableUser',
       updateusers:'User/Update'
       
-
     },
     location: {
       fetchDistrict: 'District',
@@ -59,6 +58,9 @@ apiBaseUrl: 'https://api.couponly.store/api',
     forgotPassword: '/Login/forgot-password',
     verifyToken: '/Login/verify-token',
     updatePassword:'/Login/updatepassword'
+    },
+    coupon: {
+      GetCouponType : 'CouponType', 
     }
   }
 };
