@@ -54,10 +54,16 @@
           type="email"
           placeholder="name@example.com"
           class="form-control"
+         [ngClass]="{ 'is-invalid': !isValidEmail(contactForm.get('Email')?.value) && contactForm.get('Email')?.value }"
+
         />
         <div *ngIf="contactForm.get('Email')?.touched && contactForm.get('Email')?.invalid" class="text-danger">
           <div *ngIf="contactForm.get('Email')?.errors?.['required']">Email is required.</div>
-          <div *ngIf="contactForm.get('Email')?.errors?.['email']">Please enter a valid email address.</div>
+          <!-- <div *ngIf="contactForm.get('Email')?.errors?.['email']">Please enter a valid email address.</div> -->
+         <div *ngIf="!isValidEmail(contactForm.get('Email')?.value) && contactForm.get('Email')?.value" class="text-danger ">
+  Invalid email format. Must contain '&#64;' and '.'
+</div>
+
         </div>
       </div>
     </form>

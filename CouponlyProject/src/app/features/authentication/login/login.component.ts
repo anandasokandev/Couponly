@@ -3,22 +3,26 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } 
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { LoginService } from './../../../commons/services/Authentication/login.service';
+import { SpinnerModule } from '@coreui/angular';
 
 @Component({
   selector: 'app-login',
+  standalone: true,   
   imports: [
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
-    RouterModule
+    RouterModule,
+    SpinnerModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-
   loginForm: FormGroup;
   errorMessage = '';
+  showPassword = false;  
+  isLoading = false;  
 
   constructor(
     private fb: FormBuilder,
@@ -31,52 +35,47 @@ export class LoginComponent {
     });
   }
 
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
   onSubmit() {
     if (this.loginForm.invalid) {
       this.errorMessage = 'Please enter both username and password';
       return;
     }
 
+    this.isLoading = true;   
     const payload = this.loginForm.value;
 
     this.api.login(payload).subscribe({
       next: (response: any) => {
-        console.log(response)
-       if (response.isSuccess) {
-  console.log('Login successful:', response);
+        this.isLoading = false;  
+        console.log(response);
+        if (response.isSuccess) {
+          sessionStorage.setItem('token', response.data.token);
+          sessionStorage.setItem('role', response.data.role);
+          sessionStorage.setItem('userId', response.data.userId);
 
-                     
-                      sessionStorage.setItem('token', response.data.token);
-                      sessionStorage.setItem('role', response.data.role);
-                      sessionStorage.setItem('userId',response.data.userId);
-                       
+          if (response.data.role === 'Admin') {
+            this.router.navigate(['/admin']);
+          } else if (response.data.role === 'User') {
+            this.router.navigate(['/user']);
+          } else if (response.data.role === 'Store') {
+            this.router.navigate(['/store']);
+          } else {
+            console.log('Unrecognized role:', response.role);
+            this.errorMessage = 'Unrecognized role';
+          }
 
-                    
-
-                      if (response.data.role === 'Admin') {
-                        this.router.navigate(['/admin']);
-                      } 
-                      else if (response.data.role === 'User') {
-                        this.router.navigate(['/user']);
-                      } 
-                      else if (response.data.role === 'Store') {
-                        this.router.navigate(['/store']);
-                      } 
-                      else {
-                        console.log('Unrecognized role:', response.role);
-                        this.errorMessage = 'Unrecognized role';
-                      }
-
-                      this.errorMessage = '';
-                    } else {
-                      console.log(response);
-                      this.errorMessage = response.message || 'Invalid credentials';
-                    }
-
-
-   
+          this.errorMessage = '';
+        } else {
+          console.log(response);
+          this.errorMessage = response.message || 'Invalid credentials';
+        }
       },
       error: (err) => {
+        this.isLoading = false;  
         console.error(err);
         this.errorMessage = 'Invalid Username or Password';
       }

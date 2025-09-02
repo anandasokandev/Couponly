@@ -52,32 +52,22 @@ export class EditUserModalComponent {
 ngOnChanges(changes: SimpleChanges) {
   if (changes['user'] && this.user) {
     this.localUser = { ...this.user };
-
-    const typeMap: Record<string, number> = {
-      Admin: 5,
-      User: 3,
-      Store: 4
-    };
-    if (typeof this.localUser.type === 'string') {
-      this.localUser.type = typeMap[this.localUser.type] || null;
-    }
   }
 }
 
-
-
-  saveChanges() {
+saveChanges() {
   if (this.localUser && this.localUser.id) {
-    this.userService.updateUser(this.localUser.id, this.localUser).subscribe({
+    // console.log('Sending user update:', this.localUser);
+
+    this.userService.updateUser(this.localUser).subscribe({
       next: (response) => {
         if (response.isSuccess) {
           this.toast.show({ type: 'success', message: '✅ User updated successfully!' });
           document.getElementById('verticallyCenteredScrollableModal')?.click();
-          setTimeout(() => window.location.reload(), 500);
+           setTimeout(() => window.location.reload(), 500);
         } else {
           this.toast.show({ type: 'warning', message: response.statusMessage || 'Update completed with warnings.' });
         }
-
         this.save.emit(); 
       },
       error: (err) => {
@@ -90,7 +80,6 @@ ngOnChanges(changes: SimpleChanges) {
     this.toast.show({ type: 'warning', message: '⚠️ Invalid user data. Cannot update.' });
   }
 }
-
 
 }
 

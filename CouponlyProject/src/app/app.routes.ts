@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  {
+    {
     path: '',
-    redirectTo: 'admin',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
+
   {
     path: '',
     loadComponent: () => import('./layout').then(m => m.DefaultLayoutComponent),
@@ -88,7 +89,7 @@ export const routes: Routes = [
       title: 'forgot-password'
     }
   },
-      {
+     {
     path: 'resetpassword',
     loadComponent: () => import('./features/authentication/resetpassword/resetpassword.component').then(m => m.ResetpasswordComponent),
     data: {

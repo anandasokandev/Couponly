@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://localhost:7224/api',
-  // apiBaseUrl: 'https://api.couponly.store/api',
+apiBaseUrl: 'https://api.couponly.store/api',
+
   imageUploadUrl: 'https://images.couponly.store/api/upload',
   imageKey: '5dtg419dtny9y84nu67ry7',
   endpoints: {
@@ -55,11 +55,10 @@ export const environment = {
       importvcard :'Contact/ImportContactsFromVCard'
     },
     login:{
-      signup:'/Login',
-      forgotPassword:'/login/forgot-password'
-    },
-    coupon: {
-      GetCouponType: 'Coupon/CouponTypes'
+     signup: '/Login',
+    forgotPassword: '/Login/forgot-password',
+    verifyToken: '/Login/verify-token',
+    updatePassword:'/Login/updatepassword'
     }
   }
 };

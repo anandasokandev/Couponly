@@ -20,4 +20,6 @@ import {
   templateUrl: './login.component.html',
   imports: [ContainerComponent, RowComponent, ColComponent, CardGroupComponent, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent, InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, NgStyle]
 })
-export class LoginComponent {}
+export class LoginComponent {
+  
+}

@@ -15,12 +15,17 @@ export class StoreService {
     return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchcategories}`)
   }
   //Fetching Stores 
-  FetchStores(): Observable <any[]>{
-    return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchstores}`)
+  FetchStores(pageNumber: number, pagesize: number): Observable <any[]>{
+    const params = new HttpParams()
+      .set('PageNumber', pageNumber.toString())
+      .set('PageSize', pagesize.toString());
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchstores}`,{params})
   }
   //Filtering Stores
-  searchStores(type: number, searchtype: number, searchtext: string): Observable<any> {
+  searchStores(currentPage: number, itemsPerPage :number,type: number, searchtype: number, searchtext: string): Observable<any> {
   const params = new HttpParams()
+    .set('PageNumber', currentPage.toString())
+    .set('PageSize', itemsPerPage.toString())
     .set('type', type)
     .set('searchtype', searchtype)
     .set('searchtext', searchtext);

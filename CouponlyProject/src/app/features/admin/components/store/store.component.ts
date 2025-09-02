@@ -5,6 +5,7 @@ import { AddStoreModalComponent } from '../../pages/add-store-modal/add-store-mo
 import { EditStoreModalComponent } from '../../pages/edit-store-modal/edit-store-modal.component';
 import { StoreService } from '../../../../commons/services/Store/store.service';
 import { CommonModule } from '@angular/common';
+import { PaginationComponent } from '../../pages/pagination/pagination.component';
 
 
 @Component({
@@ -20,7 +21,8 @@ import { CommonModule } from '@angular/common';
     FormsModule,
     AddStoreModalComponent,
     EditStoreModalComponent,
-    CommonModule
+    CommonModule,
+    PaginationComponent
   ],
   templateUrl: './store.component.html',
   styleUrl: './store.component.scss',
@@ -28,50 +30,73 @@ import { CommonModule } from '@angular/common';
 })
 export class StoreComponent {
 
-  stores:any[]=[];
+
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalItems: number = 0;
+  isLoading: boolean = true;
+  isPageChange: boolean = false;
+  stores: any[] = [];
   selectedStore: any = null;
-  type:number=0;
-  searchtype:number=0;
-  searchtext:string='';
-  constructor(private api:StoreService){}
-  ngOnInit(){
+  type: number = 0;
+  searchtype: number = 0;
+  searchtext: string = '';
+  constructor(private api: StoreService) { }
 
-    this.api.FetchStores().subscribe({
-        next:(response: any) =>{
-          this.stores=response.data;
-        }
-      })
-}
+  ngOnInit() {
+    this.FetchStores();
+  }
 
-    FilterStore(){
-    this.api.searchStores(this.type,this.searchtype,this.searchtext).subscribe({
-      next:(response: any) =>{
-        this.stores=response.data;
+  FetchStores() {
+    this.isLoading = true;
+    this.api.FetchStores(this.currentPage, this.itemsPerPage).subscribe({
+      next: (response: any) => {
+        this.stores = response.data.items;
+        this.totalItems = response.data.totalCount;
+        this.isLoading = false;
+      }})
+  }
+
+  FilterStore() {
+    if (!this.isPageChange)
+      this.currentPage = 1;
+    this.api.searchStores(this.currentPage, this.itemsPerPage, this.type, this.searchtype, this.searchtext).subscribe({
+      next: (response: any) => {
+        this.stores = response.data.items;
+        this.totalItems = response.data.totalCount;
+        this.isLoading = false;
+        this.isPageChange = false;
       }
     })
-    }
+  }
 
 
-    reset(){
-      this.type=0;
-      this.searchtype=0;
-      this.searchtext='';
-      this.FilterStore();
-    }
-    openEditModal(id: number) {
-  this.api.FetchStore(id).subscribe({
-    next:(response: any) =>{
-      this.selectedStore=response.data;
-      console.log(this.selectedStore)
-    }
-  })
-}
+  reset() {
+    this.type = 0;
+    this.searchtype = 0;
+    this.searchtext = '';
+    this.FilterStore();
+  }
 
-refreshStore() {
-    this.api.FetchStores().subscribe({
-        next:(response: any) =>{
-          this.stores=response.data;
-        }
-      })
-}
+  openEditModal(id: number) {
+    this.api.FetchStore(id).subscribe({
+      next: (response: any) => {
+        this.selectedStore = response.data;
+        console.log(this.selectedStore)
+      }})
+  }
+
+  refreshStore() {
+    this.api.FetchStores(this.currentPage, this.itemsPerPage).subscribe({
+      next: (response: any) => {
+        this.stores = response.data;
+      }})
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.isPageChange = true;
+    this.FilterStore();
+  }
+
 }

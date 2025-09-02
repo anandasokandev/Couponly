@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, inject, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 import { StoreService } from '../../../../commons/services/Store/store.service';
 import { LocationService } from '../../../../commons/services/Admin/location.service';
+import { StoreComponent } from '../../components/store/store.component';
 
 @Component({
   selector: 'app-edit-store-modal',
@@ -26,6 +27,7 @@ import { LocationService } from '../../../../commons/services/Admin/location.ser
 })
 export class EditStoreModalComponent {
   @Input() storeToEdit: any;
+   @ViewChild(StoreComponent) child!: StoreComponent;
   @ViewChild('closeButton') closeButton!: ElementRef;
   @Output() storeUpdated = new EventEmitter<void>();
   editStoreForm: FormGroup;
@@ -41,7 +43,7 @@ export class EditStoreModalComponent {
       storeAddress: ['', Validators.required],
       district: ['', Validators.required],
       storeContact: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-      storeEmail: ['', [Validators.required, Validators.email]],
+      storeEmail: ['', [Validators.required, Validators.email,strictEmailValidator]],
       storeType: ['', Validators.required]
     });
   }
@@ -169,4 +171,14 @@ export class EditStoreModalComponent {
     // You can also call this method from anywhere
     this.closeButton.nativeElement.click();
   }
+}
+
+export function strictEmailValidator(control: AbstractControl): ValidationErrors | null {
+  const email = control.value;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  if (!emailRegex.test(email)) {
+    return { strictEmail: true };
+  }
+  return null;
 }
