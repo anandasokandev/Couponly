@@ -58,6 +58,12 @@ ngOnChanges(changes: SimpleChanges): void {
   }
 }
 
+ isValidEmail(email: string): boolean {
+    const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    return emailPattern.test(email);
+  }
+
+
 
 @ViewChild('closeButton') closeButton!: ElementRef;
 
