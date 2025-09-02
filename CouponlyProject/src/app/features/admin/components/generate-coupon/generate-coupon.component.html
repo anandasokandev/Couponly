@@ -22,10 +22,26 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label">Discount (%)</label>
-          <input type="number" class="form-control" [(ngModel)]="coupon.discount" placeholder="50" />
+          <label class="form-label">Select Coupon Type</label>
+          <select class="form-select" id="couponType" name="couponType" [(ngModel)]="coupon.couponType">
+            <option value="null" selected disabled>-- Select --</option>
+            <option *ngFor="let type of couponTypeList" [ngValue]="type">{{ type.name }}</option>
+          </select>
         </div>
 
+        <div class="mb-3" *ngIf="coupon.couponType?.name == 'Discount Coupons'">
+          <label class="form-label">Discount (%)</label>
+          <input type="number" class="form-control" [(ngModel)]="coupon.discount" placeholder="40" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Minimum Amount</label>
+          <input type="number" class="form-control" [(ngModel)]="coupon.minimumAmount" placeholder="500" />
+        </div>
+
+        <!-- <div class="mb-3">
+          <label class="form-label"></label>
+        </div> -->
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label">Valid From</label>
@@ -36,6 +52,21 @@
             <input type="date" class="form-control" [(ngModel)]="coupon.validUntil" />
           </div>
         </div>
+
+        <div class="mb-3">
+          <label for="userLimit" class="form-label">User Limit ( Default Unlimited )</label>
+          <select class="form-select" id="userLimit" name="userLimit" [(ngModel)]="isUserLimit">
+            <option value="" selected disabled>-- Select --</option>
+            <option value="true">Limited</option>
+            <option value="false">Unlimited</option>
+          </select>
+        </div>
+
+        <div class="mb-3" *ngIf="isUserLimit">
+          <label class="form-label">UserLimit Number</label>
+          <input type="number" class="form-control" [(ngModel)]="coupon.userLimit" placeholder="3" />
+        </div>
+
       </div>
     </div>
 
@@ -45,7 +76,8 @@
         <h5 class="mb-3">Upload or Generate Coupon</h5>
         <ul class="nav nav-tabs mb-3">
           <li class="nav-item">
-            <a class="nav-link" [class.active]="activeTab==='upload'" (click)="activeTab='upload'">Upload Coupon Image</a>
+            <a class="nav-link" [class.active]="activeTab==='upload'" (click)="activeTab='upload'">Upload Coupon
+              Image</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" [class.active]="activeTab==='ai'" (click)="activeTab='ai'">AI Coupon</a>
@@ -53,22 +85,24 @@
         </ul>
 
         <div *ngIf="activeTab==='upload'">
-            <div class="upload-box border border-2 border-dashed rounded p-4 mb-2">
-                <p class="text-muted mb-2">Drag & Drop Image Here</p>
-                <label class="btn btn-outline-secondary">
-                    Choose File <input type="file" hidden (change)="onFileSelected($event)" />
-                </label>
-            </div>
-        
-            <!-- Show uploaded file name -->
-            <div *ngIf="previewImage" class="mb-2 text-start small text-muted">
+          <div class="upload-box border border-2 border-dashed rounded p-4 mb-2">
+            <p class="text-muted mb-2">Drag & Drop Image Here</p>
+            <label class="btn btn-outline-secondary">
+              Choose File <input type="file" hidden (change)="onFileSelected($event)" />
+            </label>
+          </div>
+
+          <!-- Show uploaded file name -->
+          <!-- <div *ngIf="" class="mb-2 text-start small text-muted">
                 {{ previewImage }}
             </div>
-        
-            <!-- Coupon Preview -->
-            <div *ngIf="previewImage" class="coupon-preview mb-3">
-                <img [src]="previewImage" alt="Coupon Preview" class="img-fluid rounded shadow-sm" />
-            </div>
+         -->
+          <!-- Coupon Preview -->
+          <div *ngIf="previewImage" class="coupon-preview mb-3">
+            <img [src]="previewImage" alt="Coupon Preview" class="img-fluid rounded shadow-sm"
+              style="width: 100%; height: auto; object-fit: contain;" />
+          </div>
+
         </div>
 
         <div *ngIf="activeTab==='ai'" class="text-center p-3">
