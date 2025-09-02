@@ -89,7 +89,7 @@ export const routes: Routes = [
       title: 'forgot-password'
     }
   },
-      {
+     {
     path: 'resetpassword',
     loadComponent: () => import('./features/authentication/resetpassword/resetpassword.component').then(m => m.ResetpasswordComponent),
     data: {
