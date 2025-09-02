@@ -98,35 +98,71 @@ onFileSelected(event: any) {
 }
 
 createStore() {
-  if (this.addStoreForm.valid) {
-    if (this.selectedFile) {
-      this.api.UploadImage(this.selectedFile).subscribe({
-        next: res => {
-          if(res.status){
-            const payload = this.buildStorePayload(res.url);
-          this.api.AddStore(payload).subscribe({
-            next: () => {
-              this.toast.show({ type: 'success', message: 'Store created successfully!' });
-              this.addStoreForm.reset();
-              this.storeAdded.emit();
-              this.closeModal();
-              this.selectedFile = null;
-            },
-            error:() => this.toast.show({ type: 'error', message: 'Store created failed' })
-          });
-          }
-        },
-        error: err => console.error('Image upload failed', err)
-      });
-      
-    } else {
-      console.warn('No image selected');
-    }
-  } else {
+  if (!this.addStoreForm.valid) {
     this.addStoreForm.markAllAsTouched();
     console.log('Invalid form', this.addStoreForm.value);
+    return;
   }
+
+  const form = this.addStoreForm.value;
+  const email = form.storeEmail;
+  const contact = form.storeContact;
+
+  // Step 1: Check if store already exists
+  this.api.CheckStoreExistence(email, contact).subscribe({
+    next: res => {
+      if (res.emailExists && res.contactExists) {
+        this.toast.show({ type: 'error', message: 'A store with this email and phone number already exists.' });
+        return;
+      } else if (res.emailExists) {
+        this.toast.show({ type: 'error', message: 'A store with this email already exists.' });
+        return;
+      } else if (res.contactExists) {
+        this.toast.show({ type: 'error', message: 'A store with this phone number already exists.' });
+        return;
+      }
+
+      // Step 2: Proceed with image upload
+      if (!this.selectedFile) {
+        this.toast.show({ type: 'error', message: 'Please select a store logo/image.' });
+        return;
+      }
+
+      this.api.UploadImage(this.selectedFile).subscribe({
+        next: res => {
+          if (res.status && res.url) {
+            const payload = this.buildStorePayload(res.url);
+
+            // Step 3: Add store
+            this.api.AddStore(payload).subscribe({
+              next: () => {
+                this.toast.show({ type: 'success', message: 'Store created successfully!' });
+                this.addStoreForm.reset();
+                this.storeAdded.emit();
+                this.closeModal();
+                this.selectedFile = null;
+              },
+              error: () => {
+                this.toast.show({ type: 'error', message: 'Store creation failed.' });
+              }
+            });
+          } else {
+            this.toast.show({ type: 'error', message: 'Image upload failed.' });
+          }
+        },
+        error: err => {
+          console.error('Image upload error:', err);
+          this.toast.show({ type: 'error', message: 'Image upload failed.' });
+        }
+      });
+    },
+    error: err => {
+      console.error('Existence check failed:', err);
+      this.toast.show({ type: 'error', message: 'Failed to validate store details.' });
+    }
+  });
 }
+
 
 private buildStorePayload(url: string): any {
   const form = this.addStoreForm.value;
