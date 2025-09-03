@@ -6,6 +6,7 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
 import { StoreService } from '../../../../commons/services/Store/store.service';
 import { LocationService } from '../../../../commons/services/Admin/location.service';
 import { StoreComponent } from '../../components/store/store.component';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-edit-store-modal',
@@ -105,19 +106,49 @@ export class EditStoreModalComponent {
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
   }
-  editStore(): void {
-    if (!this.editStoreForm.valid) {
-      this.editStoreForm.markAllAsTouched();
-      return;
-    }
 
-    if (this.selectedFile) {
-      this.uploadAndSubmit();
-    } else {
-      const payload = this.buildStorePayload(this.logo);
-      this.submitStoreUpdate(payload);
-    }
+  editStore(): void {
+  if (!this.editStoreForm.valid) {
+    this.editStoreForm.markAllAsTouched();
+    return;
   }
+
+  const email = this.editStoreForm.value.storeEmail;
+  const contact = this.editStoreForm.value.storeContact;
+  const id = this.storeToEdit.id;
+
+  forkJoin({
+    emailRes: this.api.CheckEmailExits(email, id),
+    contactRes: this.api.CheckContactExits(contact, id)
+  }).subscribe({
+    next: ({ emailRes, contactRes }) => {
+      const emailExists = emailRes.exists;
+      const contactExists = contactRes.exists;
+
+      if (!emailExists && !contactExists) {
+        if (this.selectedFile) {
+          this.uploadAndSubmit();
+        } else {
+          const payload = this.buildStorePayload(this.logo);
+          this.submitStoreUpdate(payload);
+        }
+      } else {
+        if (emailExists && contactExists) {
+          this.toast.show({ type: 'error', message: 'Email and contact number already exist' });
+        } else if (emailExists) {
+          this.toast.show({ type: 'error', message: 'Email already exists' });
+        } else if (contactExists) {
+          this.toast.show({ type: 'error', message: 'Contact number already exists' });
+        }
+      }
+    },
+    error: (err) => {
+      console.error('Validation error:', err);
+      this.toast.show({ type: 'error', message: 'Validation failed. Please try again.' });
+    }
+  });
+}
+
 
   private uploadAndSubmit(): void {
     this.api.UploadImage(this.selectedFile!).subscribe({
@@ -148,7 +179,6 @@ export class EditStoreModalComponent {
   }
 
   private submitStoreUpdate(payload: any): void {
-    console.log("PAYLOADDD",payload)
     this.api.UpdateStore(this.storeToEdit.id, payload).subscribe({
       next: () => {
         this.toast.show({ type: 'success', message: 'Store updated successfully!' });

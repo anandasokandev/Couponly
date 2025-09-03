@@ -42,7 +42,9 @@ export const environment = {
       upload:'ImageUpload',
       addStore:'Store/AddStore',
       updateStore:'Store/',
-      storeExists:'Store/check-store-existence'
+      storeExists:'Store/check-store-existence',
+      emailExists:'Store/check-email-existence',
+      contactExists:'Store/check-contact-existence'
     },
     contact: {
       AllContacts: 'Contact/AllContacts',
