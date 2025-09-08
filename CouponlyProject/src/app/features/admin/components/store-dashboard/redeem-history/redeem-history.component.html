@@ -20,13 +20,16 @@
                 <div class="d-flex flex-wrap justify-content-start py-3">
                     <!-- Coupon Filter Dropdown -->
                     <div class="d-flex gap-4 align-items-center m-2">
-                        <select class="form-select form-select-sm">
-                            <option value="">Select Coupon</option>
-                            <option value="coupon1">Coupon 1</option>
-                            <option value="coupon2">Coupon 2</option>
-                            <option value="coupon3">Coupon 3</option>
-                            <!-- Add more options dynamically later -->
+
+                        <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy">
+                            <option value="5">All</option>
+                            <option value="1">Coupon Code</option>
+                            <option value="2">Coupon Name</option>
+                            <option value="3">Coupon Type</option>
+                            <option value="3">User</option>
                         </select>
+                        <input type="text" class="form-control form-control-sm" style="max-width: 280px"
+                            placeholder="🔍 Search By..." aria-label="Search by " />
                     </div>
 
                     <!-- Date Range Filters -->
@@ -53,23 +56,23 @@
                         <th>#</th>
                         <th>
                             Coupon Code
-                            <svg [cIcon]="icons.cilSortAlphaUp"></svg>
+                            <!-- <svg [cIcon]="icons.cilSortAlphaUp"></svg> -->
                         </th>
                         <th>
                             Coupon Name
-                            <svg [cIcon]="icons.cilSortAlphaUp"></svg>
+                          
                         </th>
                         <th>
                             User
-                            <svg [cIcon]="icons.cilSortAlphaUp"></svg>
+                            <!-- <svg [cIcon]="icons.cilSortAlphaUp"></svg> -->
                         </th>
                         <th>
                             Redeem Date
-                            <svg [cIcon]="icons.cilSortAlphaUp"></svg>
+                            <!-- <svg [cIcon]="icons.cilSortAlphaUp"></svg> -->
                         </th>
                     </tr>
 
-                    <tr>
+                    <!-- <tr>
                         <th></th>
                         <th>
                             <div class="d-flex align-items-center">
@@ -88,7 +91,7 @@
                                 class="form-control form-control-sm" />
                         </th>
                         <th></th>
-                    </tr>
+                    </tr> -->
                 </thead>
                 <tbody>
                     <!-- Sample Row -->
