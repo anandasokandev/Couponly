@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormModule } from '@coreui/angular';
+import { CouponService } from 'src/app/commons/services/Coupon/coupon.service';
+import { ToastService } from 'src/app/commons/services/Toaster/toast.service';
+import { Coupon, CouponType } from 'src/app/commons/models/coupon.model' 
 
 @Component({
   selector: 'app-generate-coupon',
@@ -15,19 +18,44 @@ import { FormModule } from '@coreui/angular';
   templateUrl: './generate-coupon.component.html',
   styleUrls: ['./generate-coupon.component.scss']  // ✅ plural
 })
-export class GenerateCouponComponent {
+export class GenerateCouponComponent implements OnInit {
   activeTab: string = 'upload';
   previewImage: string | ArrayBuffer | null = null;
   aiImage: string | null = null;
+  couponTypeList: CouponType [] = [];
+  isUserLimit: boolean = false;
 
-  coupon = {
+  coupon: Coupon = {
     title: '',
     description: '',
     code: '',
-    discount: null as number | null,
+    couponType: null,
+    discount: null,
+    minimumAmount: null,
+    userLimit: 1,
     validFrom: '',
     validUntil: ''
   };
+
+  constructor(private couponApi: CouponService, private toastService: ToastService) {}
+
+  ngOnInit(): void {
+    this.couponApi.getCouponType().subscribe({
+      next: (data) => {
+        if(data.isSuccess){
+          console.log(data);
+          this.couponTypeList = data.data;
+        }
+      },
+      error: (err) => {
+        this.toastService.show({ type: 'error', message: `Failed to load coupon types` });
+      }
+    });
+  }
+
+  ngOnChange(): void {
+    console.log(this.coupon.couponType);
+  }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];

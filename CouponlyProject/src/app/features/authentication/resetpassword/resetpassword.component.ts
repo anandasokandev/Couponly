@@ -3,22 +3,23 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ForgotPasswordService } from '../../../commons/services/Authentication/forgot-password.service';
 import { CommonModule } from '@angular/common';
+import { SpinnerModule } from '@coreui/angular';
 
 @Component({
   selector: 'app-resetpassword',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,SpinnerModule],
   templateUrl: './resetpassword.component.html',
   styleUrls: ['./resetpassword.component.scss']
 })
 export class ResetpasswordComponent implements OnInit {
   token: string = '';
   isTokenValid: boolean = false;
-
+    isLoading: boolean = false;
   newPassword: string = '';
   confirmPassword: string = '';
-  errorMessage: string = '';
-  successMessage: string = '';
+  message: string = '';
+  isError: boolean = false;
   email: string = ''; 
 
   constructor(
@@ -53,36 +54,39 @@ export class ResetpasswordComponent implements OnInit {
   }
 
 onSubmit() {
-  this.errorMessage = '';
-  this.successMessage = '';
+  this.message = '';
 
   if (this.newPassword !== this.confirmPassword) {
-    this.errorMessage = "Passwords do not match!";
+    this.message = "Passwords do not match!";
+    this.isError = true;
     return;
   }
+  this.isLoading = true;
 
   this.forgotPasswordService.updatePassword(this.email, {
     newPassword: this.newPassword,
     confirmPassword: this.confirmPassword
   }).subscribe({
     next: (res) => {
+       this.isLoading = false;
       if (res && res.isSuccess) {
-  this.successMessage = "Password updated successfully!";
-  this.errorMessage = "";
+  this.message = "Password updated successfully!... Redirecting to Login Page";
+  this.isError = false;
 
 
   setTimeout(() => {
     this.router.navigateByUrl('/login'); 
-  }, 2000);
+  }, 5000);
 }
 else {
-        this.errorMessage = res?.message || "Password update failed.";
-        this.successMessage = "";
+        this.message = res?.message || "Password update failed.";
+        this.isError = true;
       }
     },
     error: (err) => {
-      this.errorMessage = err?.error?.message || "An error occurred while updating password.";
-      this.successMessage = "";
+      this.isLoading = false;
+      this.message = err?.error?.message || "An error occurred while updating password.";
+      this.isError = true;
     }
   });
 }

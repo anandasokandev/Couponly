@@ -65,4 +65,20 @@ UpdateStore(id: number, data: any): Observable<any> {
   const url = `${environment.apiBaseUrl}/${environment.endpoints.store.updateStore}${id}`;
   return this.http.post(url, data);
 }
+
+CheckStoreExistence(email: string, contact: string): Observable<any> {
+  const url = `${environment.apiBaseUrl}/${environment.endpoints.store.storeExists}?email=${email}&contact=${contact}`;
+  return this.http.get(url);
+}
+
+CheckEmailExits(email: string, id: number): Observable<any>{
+  const url=`${environment.apiBaseUrl}/${environment.endpoints.store.emailExists}?email=${email}&id=${id}`;
+  return this.http.get(url)
+}
+
+CheckContactExits(contact: string, id: number): Observable<any>{
+  const url=`${environment.apiBaseUrl}/${environment.endpoints.store.contactExists}?number=${contact}&id=${id}`;
+  return this.http.get(url)
+}
+
 }

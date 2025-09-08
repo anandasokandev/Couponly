@@ -24,30 +24,43 @@
                 </div>
               </div>
 
-              <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <div class="input-group">
-                  <span class="input-group-text bg-white text-muted">
-                    <i class="bi bi-lock-fill"></i>
-                  </span>
-                  <input type="password" id="password" class="form-control"
-                         placeholder="Enter your password"
-                         formControlName="password"
-                         autocomplete="current-password" required>
-                </div>
-              </div>
+          <div class="mb-3 position-relative">
+  <label for="password" class="form-label">Password</label>
+  <input [type]="showPassword ? 'text' : 'password'"
+         id="password"
+         class="form-control pe-5"
+         placeholder="Enter your password"
+         formControlName="password"
+         autocomplete="current-password"
+         required>
 
+          <i class="bi"
+            [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"
+            class="position-absolute top-50 end-0 translate-middle-y me-3 text-muted"
+            style="cursor: pointer;"
+            (click)="togglePassword()"></i>
+        </div>
+
+
+<!-- 
               <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="rememberMe">
                 <label class="form-check-label" for="rememberMe">Remember me</label>
-              </div>
+              </div> -->
 
-              <div class="text-center mb-3">
-                <button type="submit" class="btn btn-primary btn-login">
-                  Login
-                </button>
-              </div>
-              <div *ngIf="errorMessage" class="text-danger text-center mb-3">
+                <div class="text-center mb-3">
+            <button 
+                type="submit" 
+                class="btn btn-primary btn-login d-flex align-items-center justify-content-center" 
+                [disabled]="isLoading">
+
+                <c-spinner *ngIf="isLoading" class="me-2" size="sm"></c-spinner>
+                <span *ngIf="isLoading">Loading...</span>
+                <span *ngIf="!isLoading">Login</span>
+              </button>
+
+            </div>
+             <div *ngIf="errorMessage && !isLoading" class="text-danger text-center mb-3" >
                 {{ errorMessage }}
               </div>
 
