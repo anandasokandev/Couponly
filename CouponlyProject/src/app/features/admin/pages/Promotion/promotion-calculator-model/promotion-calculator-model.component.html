@@ -3,31 +3,81 @@
   [scrollable]="true"
   alignment="center"
   id="PromotionCalculatorModal"
+  class="wide-modal"
 >
-    <c-modal-header>
-      <h5 class="modal-title">Promotion Calculator</h5>
-      <button type="button" class="btn-close btn-sm" aria-label="Close" [cModalToggle]="PromotionCalculatorModal.id"></button>
-    </c-modal-header>
-    <c-modal-body>
-      <!-- Modal body content goes here -->
-      <div *ngIf="campaign">
-        <p><strong>Promotion Name:</strong> {{ campaign.promotionName }}</p>
-        <p><strong>Selected Category:</strong> {{ campaign.selectedCategory }}</p>
-        <p><strong>Selected Store:</strong> {{ campaign.selectedStore }}</p>
-        <p><strong>Contact Count:</strong> {{ campaign.contactCount }}</p>
-        <p><strong>Channels:</strong></p>
-        <ul>
-          <li *ngIf="campaign.channels.whatsapp">WhatsApp</li>
-          <li *ngIf="campaign.channels.email">Email</li>
-          <li *ngIf="campaign.channels.sms">SMS</li>
-        </ul>
-        <p><strong>Coupon Code:</strong> {{ campaign.couponCode }}</p>
-        <p><strong>Send Type:</strong> {{ campaign.sendType }}</p>
-        <p *ngIf="campaign.sendType === 'schedule'"><strong>Schedule Date:</strong> {{ campaign.scheduleDate }}</p>
+  <c-modal-header>
+    <div class="modal-header-content">
+      <h5 class="modal-title">Promotion Summary</h5>
+      <p class="modal-subtitle">Summary of your promotion campaign</p>
+    </div>
+    <button type="button" class="btn-close btn-sm" aria-label="Close" [cModalToggle]="PromotionCalculatorModal.id"></button>
+  </c-modal-header>
+
+  <c-modal-body>
+    <div *ngIf="campaign" class="promotion-summary">
+
+      <div class="section-card">
+        <h6>Summary</h6>
+        <p>{{ campaign.summary }}</p>
       </div>
-    </c-modal-body>
-    <c-modal-footer>
-      <button cButton color="secondary" class="btn-sm" [cModalToggle]="PromotionCalculatorModal.id">Close</button>
-      <button cButton color="primary" class="btn-sm" [cModalToggle]="PromotionCalculatorModal.id">Save changes</button>
-    </c-modal-footer>
+
+      <div class="section-group">
+        <div class="section-card">
+          <h6>Promotion Details</h6>
+          <div class="details-grid">
+            <div class="detail-item">
+              <span class="detail-label">Name:</span>
+              <span class="detail-value">{{ campaign.promotionName }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Store:</span>
+              <span class="detail-value">{{ campaign.selectedStore }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Contact Count:</span>
+              <span class="detail-value">{{ campaign.contactCount }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Coupon Code:</span>
+              <span class="detail-value">{{ campaign.couponCode }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card" style="width: 100%;">
+          <h6>Channels & Sending</h6>
+          <div class="details-grid">
+            <div class="detail-item">
+              <span class="detail-label">Channels:</span>
+              <div class="channel-badges">
+                <span *ngIf="campaign.channels.whatsapp" class="badge badge-whatsapp">
+                  <i class="bi bi-whatsapp"></i> WhatsApp
+                </span>
+                <span *ngIf="campaign.channels.email" class="badge badge-email">
+                  <i class="bi bi-envelope"></i> Email
+                </span>
+                <span *ngIf="campaign.channels.sms" class="badge badge-sms">
+                  <i class="bi bi-chat-dots"></i> SMS
+                </span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Send Type:</span>
+              <span class="detail-value">{{ campaign.sendType }}</span>
+            </div>
+            <div *ngIf="campaign.sendType === 'schedule'" class="detail-item">
+              <span class="detail-label">Schedule Date:</span>
+              <span class="detail-value">{{ campaign.scheduleDate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </c-modal-body>
+  
+  <c-modal-footer>
+    <button cButton color="secondary" class="btn-sm" [cModalToggle]="PromotionCalculatorModal.id">Close</button>
+    <button cButton color="primary" class="btn-sm" [cModalToggle]="PromotionCalculatorModal.id">Confirm & Save</button>
+  </c-modal-footer>
 </c-modal>
