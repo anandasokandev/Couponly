@@ -1,4 +1,21 @@
 
+<c-card class="mb-3" *ngIf="shouldShowStoreCard()">
+  <c-card-body class="d-flex align-items-center px-4 py-3">
+    <div class="d-flex align-items-center">
+      <img src="assets/images/nyka.webp" alt="Store Logo" class="rounded me-3" width="60" height="60">
+      <div>
+        <h5 class="mb-1">Nykka</h5>
+        <p class="mb-0 text-muted">
+          <strong>Code:</strong> S250811208<br>
+          <strong>Contact:</strong> <i class="fa-solid fa-phone me-1"></i>9745224452<br>
+          <strong>Email:</strong> <i class="fa-solid fa-envelope me-1"></i> bnyka&#64;example.com
+        </p>
+      </div>
+    </div>
+  </c-card-body>
+</c-card>
+
+
 <c-card class="mb-4">
     <c-card-header>
         <c-nav orientation="vertical" variant="tabs" class="px-2">
