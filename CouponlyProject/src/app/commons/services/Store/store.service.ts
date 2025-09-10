@@ -80,5 +80,10 @@ CheckContactExits(contact: string, id: number): Observable<any>{
   const url=`${environment.apiBaseUrl}/${environment.endpoints.store.contactExists}?number=${contact}&id=${id}`;
   return this.http.get(url)
 }
-
+updateStorePassword(email: string, payload: { newPassword: string; confirmPassword: string }): Observable<any> {
+  return this.http.post<any>(
+    `${environment.apiBaseUrl}${environment.endpoints.store.updateStorePassword}/${email}`,
+    payload
+  );
+}
 }

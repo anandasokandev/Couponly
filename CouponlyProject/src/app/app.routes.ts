@@ -62,6 +62,13 @@ export const routes: Routes = [
     ]
   },
   {
+        path: 'payment',
+        loadComponent: () => import('./features/admin/pages/payment/payment.component').then(m => m.PaymentComponent),
+        data: {
+          title: 'Payment'
+        }
+      },
+  {
     path: '404',
     loadComponent: () => import('./views/pages/page404/page404.component').then(m => m.Page404Component),
     data: {

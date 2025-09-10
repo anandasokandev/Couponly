@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ForgotPasswordService } from '../../../commons/services/Authentication/forgot-password.service';
 import { CommonModule } from '@angular/common';
 import { SpinnerModule } from '@coreui/angular';
+import { StoreService } from '../../../commons/services/Store/store.service';
 
 @Component({
   selector: 'app-resetpassword',
@@ -21,11 +22,13 @@ export class ResetpasswordComponent implements OnInit {
   message: string = '';
   isError: boolean = false;
   email: string = ''; 
+  role: String='';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private forgotPasswordService: ForgotPasswordService
+    private forgotPasswordService: ForgotPasswordService,
+    private storeApi: StoreService
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +48,7 @@ export class ResetpasswordComponent implements OnInit {
         if (res.isSuccess) {
           this.isTokenValid = true;
           this.email = res.data.email; 
+          this.role =res.data.role;
         } else {
           this.router.navigate(['/404']);
         }
@@ -63,6 +67,7 @@ onSubmit() {
   }
   this.isLoading = true;
 
+  if(this.role=='User'){
   this.forgotPasswordService.updatePassword(this.email, {
     newPassword: this.newPassword,
     confirmPassword: this.confirmPassword
@@ -89,6 +94,10 @@ else {
       this.isError = true;
     }
   });
+}
+else if(this.role=='Store'){
+
+}
 }
 
 }
