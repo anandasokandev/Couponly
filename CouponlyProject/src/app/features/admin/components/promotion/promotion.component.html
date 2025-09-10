@@ -23,11 +23,11 @@
       <h6 class="py-1 mb-1">1. Campaign Details</h6>
       <hr class="mt-1 mb-3">
       <c-row class="mt-3 mb-4">
-        <c-col sm="3">
+        <c-col sm="6">
           <label cLabel for="campaignName" class="text-muted">Campaign Name</label>
           <input cFormControl class="form-control-sm" id="campaignName" name="campaignName" [(ngModel)]="campaign.promotionName" required>
         </c-col>
-        <c-col sm="4">
+        <c-col sm="6">
           <label cLabel for="channels" class="text-muted">Communication Channels</label>
           <div class="mb-3 py-1">
             <c-form-check id="whatsappCheck" inline>
@@ -44,8 +44,8 @@
             </c-form-check>
           </div>
         </c-col>
-        <c-col sm="3">
-          <label cLabel for="campaignName" class="text-muted">Schedule & Send</label>
+        <c-col sm="6" class="d-flex flex-column mt-3">
+          <label cLabel class="text-muted">Schedule & Send</label>
           <c-button-group>
             <button cButton class="btn-sm" color="light" [active]="campaign.sendType === 'now'" (click)="campaign.sendType = 'now'">
               Send Directly
@@ -55,7 +55,7 @@
             </button>
           </c-button-group>
         </c-col>
-        <c-col sm="2" *ngIf="campaign.sendType === 'schedule'">
+        <c-col sm="6" *ngIf="campaign.sendType === 'schedule'" class="mt-3">
           <label cLabel for="scheduleDate" class="text-muted">Scheduling Date & Time</label>
           <input cFormControl class="form-control-sm" id="scheduleDate" name="scheduleDate" type="datetime-local" [(ngModel)]="campaign.scheduleDate" />
         </c-col>

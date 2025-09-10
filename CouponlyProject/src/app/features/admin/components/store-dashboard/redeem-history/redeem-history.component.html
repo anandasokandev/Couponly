@@ -1,1 +1,117 @@
-<p>redeem-history works!</p>
+<!-- <c-modal #DownloadRedeemsModal [scrollable]="true" alignment="center" id="DownloadRedeemsModal">
+  <app-download-redeems-model></app-download-redeems-model>
+</c-modal> -->
+
+<c-col xs="12">
+    <c-card class="mb-4">
+        <c-card-header class="d-flex align-items-center">
+            <strong class="w-100 fs-5">Redeem History</strong>
+            <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
+                <div class="float-end">
+                    <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap d-flex align-items-center">
+                        <svg [cIcon]="icons.cilCloudDownload"></svg> &nbsp; Download
+                    </button>
+                </div>
+            </div>
+        </c-card-header>
+
+        <c-card-body>
+            <form>
+                <div class="d-flex flex-wrap justify-content-start py-3">
+                    <!-- Coupon Filter Dropdown -->
+                    <div class="d-flex gap-4 align-items-center m-2">
+
+                        <select class="form-select form-select-sm" style="max-width: 180px;" name="searchBy">
+                            <option value="5">All</option>
+                            <option value="1">Coupon Code</option>
+                            <option value="2">Coupon Name</option>
+                            <option value="3">Coupon Type</option>
+                            <option value="3">User</option>
+                        </select>
+                        <input type="text" class="form-control form-control-sm" style="max-width: 280px"
+                            placeholder="🔍 Search By..." aria-label="Search by " />
+                    </div>
+
+                    <!-- Date Range Filters -->
+                    <div class="input-container d-flex gap-1 align-items-center m-2">
+                        <label for="fromDate" class="input-label">From:</label>
+                        <input type="date" id="fromDate" class="form-control form-control-sm" />
+                    </div>
+                    <div class="input-container d-flex gap-1 align-items-center m-1">
+                        <label for="toDate" class="input-label">To:</label>
+                        <input type="date" id="toDate" class="form-control form-control-sm" />
+                    </div>
+
+                    <!-- Reset Button -->
+                    <button class="btn btn-sm btn-danger text-white m-2" title="Reset">
+                        <i class="fas fa-arrows-rotate"></i>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Table Structure -->
+            <table cTable class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>
+                            Coupon Code
+                            <!-- <svg [cIcon]="icons.cilSortAlphaUp"></svg> -->
+                        </th>
+                        <th>
+                            Coupon Name
+                          
+                        </th>
+                        <th>
+                            User
+                            <!-- <svg [cIcon]="icons.cilSortAlphaUp"></svg> -->
+                        </th>
+                        <th>
+                            Redeem Date
+                            <!-- <svg [cIcon]="icons.cilSortAlphaUp"></svg> -->
+                        </th>
+                    </tr>
+
+                    <!-- <tr>
+                        <th></th>
+                        <th>
+                            <div class="d-flex align-items-center">
+                                <input type="text" placeholder="Filter Coupon Code" 
+                                    class="form-control form-control-sm" />
+                            </div>
+                        </th>
+                        <th>
+                            <div class="d-flex align-items-center">
+                                <input type="text" placeholder="Filter Coupon Name" 
+                                    class="form-control form-control-sm" />
+                            </div>
+                        </th>
+                        <th>
+                            <input type="text" placeholder="Filter User" 
+                                class="form-control form-control-sm" />
+                        </th>
+                        <th></th>
+                    </tr> -->
+                </thead>
+                <tbody>
+                    <!-- Sample Row -->
+                    <tr>
+                        <td>1</td>
+                        <td>ABC123</td>
+                        <td>New Year Offer</td>
+                        <td>John Doe</td>
+                        <td>2025-08-30</td>
+                    </tr>
+                    <!-- Add more rows dynamically -->
+                </tbody>
+            </table>
+
+            <!-- Loading and Empty States -->
+            <!-- <div class="d-flex justify-content-center m-2">Loading...</div>
+      <div class="d-flex justify-content-center m-2">No data found!</div> -->
+
+            <!-- Pagination Placeholder -->
+            <app-pagination></app-pagination>
+        </c-card-body>
+    </c-card>
+</c-col>
