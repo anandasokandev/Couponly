@@ -1,0 +1,132 @@
+/* Overall Modal Improvements */
+#PromotionCalculatorModal .modal-header {
+  border-bottom: none;
+  padding-bottom: 0;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+#PromotionCalculatorModal .modal-header-content {
+  padding: 1rem 1rem 0 1rem;
+}
+
+#PromotionCalculatorModal .modal-title {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+#PromotionCalculatorModal .modal-subtitle {
+  font-size: 0.875rem;
+  color: #777;
+  margin-top: 0.25rem;
+}
+
+#PromotionCalculatorModal .btn-close {
+  margin: 1rem 1rem 0 0;
+}
+
+#PromotionCalculatorModal .modal-body {
+  padding: 1.5rem;
+}
+
+#PromotionCalculatorModal .modal-footer {
+  border-top: 1px solid #e9ecef;
+  padding: 1rem 1.5rem;
+}
+
+/* New Content Sections */
+.promotion-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.section-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid #e9ecef;
+}
+
+.section-card h6 {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+/* Detail Grid Layout */
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.detail-label {
+  font-size: 13px;
+  color: #999;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.detail-value {
+  font-size: 14px;
+  font-weight: 400;
+  color: #333;
+}
+
+/* Channel Badges */
+.channel-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badge i {
+  font-size: 0.9rem;
+}
+
+.badge-whatsapp {
+  background-color: #25d366;
+  color: white;
+}
+
+.badge-email {
+  background-color: #ea4335;
+  color: white;
+}
+
+.badge-sms {
+  background-color: #4285f4;
+  color: white;
+}
+
+.section-group {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+}
+
+::ng-deep .wide-modal .modal-dialog {
+  max-width: 700px;
+}

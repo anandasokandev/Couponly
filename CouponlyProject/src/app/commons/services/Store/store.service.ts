@@ -71,4 +71,19 @@ CheckStoreExistence(email: string, contact: string): Observable<any> {
   return this.http.get(url);
 }
 
+CheckEmailExits(email: string, id: number): Observable<any>{
+  const url=`${environment.apiBaseUrl}/${environment.endpoints.store.emailExists}?email=${email}&id=${id}`;
+  return this.http.get(url)
+}
+
+CheckContactExits(contact: string, id: number): Observable<any>{
+  const url=`${environment.apiBaseUrl}/${environment.endpoints.store.contactExists}?number=${contact}&id=${id}`;
+  return this.http.get(url)
+}
+updateStorePassword(email: string, payload: { newPassword: string; confirmPassword: string }): Observable<any> {
+  return this.http.post<any>(
+    `${environment.apiBaseUrl}${environment.endpoints.store.updateStorePassword}/${email}`,
+    payload
+  );
+}
 }
