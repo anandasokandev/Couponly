@@ -5,6 +5,7 @@ import { FormModule } from '@coreui/angular';
 import { CouponService } from 'src/app/commons/services/Coupon/coupon.service';
 import { ToastService } from 'src/app/commons/services/Toaster/toast.service';
 import { Coupon, CouponType } from 'src/app/commons/models/coupon.model' 
+import { ImageUploadService } from 'src/app/commons/services/ImageUpload/image-upload.service';
 
 @Component({
   selector: 'app-generate-coupon',
@@ -20,10 +21,15 @@ import { Coupon, CouponType } from 'src/app/commons/models/coupon.model'
 })
 export class GenerateCouponComponent implements OnInit {
   activeTab: string = 'upload';
-  previewImage: string | ArrayBuffer | null = null;
+
+  selectedFile: File | null = null;
+  imagePreviewUrl: string | null = null;
+
   aiImage: string | null = null;
   couponTypeList: CouponType [] = [];
   isUserLimit: boolean = false;
+  storeId: number = 14;
+  userId = sessionStorage.getItem('userId');
 
   coupon: Coupon = {
     title: '',
@@ -32,14 +38,19 @@ export class GenerateCouponComponent implements OnInit {
     couponType: null,
     discount: null,
     minimumAmount: null,
-    userLimit: 1,
+    userLimit: false,
+    userLimitCount: 1,
     validFrom: '',
     validUntil: ''
   };
 
-  constructor(private couponApi: CouponService, private toastService: ToastService) {}
+  constructor(private couponApi: CouponService, private toastService: ToastService, private imageUpload: ImageUploadService) {}
 
   ngOnInit(): void {
+
+    console.log(this.userId);
+    console.log(this.isUserLimit);
+    
     this.couponApi.getCouponType().subscribe({
       next: (data) => {
         if(data.isSuccess){
@@ -57,11 +68,23 @@ export class GenerateCouponComponent implements OnInit {
     console.log(this.coupon.couponType);
   }
 
+  onUserLimitChange(value: boolean | null): void {
+    console.log(value);
+    if (value === false) {
+    this.coupon.userLimitCount = 0;
+  }
+  }
+
   onFileSelected(event: any) {
-    const file = event.target.files[0];
+    const file: File = event.target.files[0];
     if (file) {
+      this.selectedFile = file;
+      console.log(this.selectedFile);
+      
       const reader = new FileReader();
-      reader.onload = e => this.previewImage = e.target?.result ?? null;
+      reader.onload = () => {
+        this.imagePreviewUrl = reader.result as string;
+      };
       reader.readAsDataURL(file);
     }
   }
@@ -71,7 +94,46 @@ export class GenerateCouponComponent implements OnInit {
   }
 
   saveCoupon() {
-    console.log('Saving Coupon:', this.coupon);
-    alert('Coupon Saved Successfully!');
+    console.log(this.coupon);
+    var payload = this.buildPayload('jakkdlsbkd');
+    console.log(payload);
+    
+    this.imageUpload.UploadImage(this.selectedFile!).subscribe({
+      next: res => {
+          if (res.status && res.url) {
+            const payload = this.buildPayload(res.url);
+            this.couponApi.GenerateCoupon(payload).subscribe({
+              next: res =>{
+                this.toastService.show({ type: 'success', message: 'Coupon Generated Successfully' });
+                console.log('Coupon Generated Successfully');
+              },
+              error: err => {
+                this.toastService.show({ type: 'error', message: 'Coupon generation failed' });
+              } 
+            })
+          }
+        },
+        error: err => {
+          this.toastService.show({ type: 'error', message: 'Failed to upload coupon image' });
+        }
+    })
   }
+
+  
+private buildPayload(url: string): any {
+  return {
+    name : this.coupon.title,
+      couponCode : this.coupon.code,
+      description : this.coupon.description,
+      typeId : this.coupon.couponType?.id,
+      userLimit: this.coupon.userLimit,
+      userLimitCount : this.coupon.userLimitCount,
+      startingDate: this.coupon.validFrom,
+      endingDate: this.coupon.validUntil,
+      minAmount: this.coupon.minimumAmount,
+      storeId: this.storeId,
+      createdBy: this.userId,
+      couponImage: url
+  };
+}
 }

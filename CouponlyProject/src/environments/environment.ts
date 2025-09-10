@@ -61,7 +61,8 @@ export const environment = {
     updatePassword:'/Login/updatepassword'
     },
     coupon: {
-      GetCouponType : 'CouponType', 
+      GetCouponType : 'Coupon/CouponTypes', 
+      GenerateCoupon: 'Coupon'
     }
   }
 };
