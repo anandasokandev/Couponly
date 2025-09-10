@@ -10,7 +10,8 @@ export interface Coupon {
   couponType: CouponType | null;
   discount: number | null;
   minimumAmount: number | null;
-  userLimit: number;
+  userLimit: boolean;
+  userLimitCount: number,
   validFrom: string;
   validUntil: string;
 }

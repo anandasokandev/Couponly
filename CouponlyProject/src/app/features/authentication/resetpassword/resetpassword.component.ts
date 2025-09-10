@@ -47,8 +47,9 @@ export class ResetpasswordComponent implements OnInit {
       next: (res) => {
         if (res.isSuccess) {
           this.isTokenValid = true;
-          this.email = res.data.email; 
-          this.role =res.data.role;
+          this.email = res.data.email.email; 
+          this.role =res.data.email.role;
+          console.log(res)
         } else {
           this.router.navigate(['/404']);
         }
@@ -96,7 +97,33 @@ else {
   });
 }
 else if(this.role=='Store'){
+ this.storeApi.updateStorePassword(this.email, {
+    newPassword: this.newPassword,
+    confirmPassword: this.confirmPassword
+  }).subscribe({
+    next: (res) => {
+       this.isLoading = false;
+      if (res && res.isSuccess) {
+  this.message = "Password updated successfully!... Redirecting to Login Page";
+  this.isError = false;
 
+
+  setTimeout(() => {
+    this.router.navigateByUrl('/login'); 
+  }, 5000);
+}
+else {
+        this.isLoading = false;
+        this.message = res?.message || "Password update failed.";
+        this.isError = true;
+      }
+    },
+    error: (err) => {
+      this.isLoading = false;
+      this.message = err?.error?.message || "An error occurred while updating password.";
+      this.isError = true;
+    }
+  });
 }
 }
 
