@@ -82,7 +82,7 @@ CheckContactExits(contact: string, id: number): Observable<any>{
 }
 updateStorePassword(email: string, payload: { newPassword: string; confirmPassword: string }): Observable<any> {
   return this.http.post<any>(
-    `${environment.apiBaseUrl}${environment.endpoints.store.updateStorePassword}/${email}`,
+    `${environment.apiBaseUrl}/${environment.endpoints.store.updateStorePassword}/?email=${email}`,
     payload
   );
 }
