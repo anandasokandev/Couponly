@@ -27,7 +27,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Coupons',
-    // url: '/admin/store',
+    url: '/admin/couponlist',
     iconComponent: { name: 'cil-tags' }
   },
   {
