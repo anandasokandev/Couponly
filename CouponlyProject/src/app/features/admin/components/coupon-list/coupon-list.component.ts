@@ -1,18 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PaginationComponent } from '../../pages/pagination/pagination.component'; // ✅ import pagination
-import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, ModalComponent, ModalToggleDirective } from '@coreui/angular';
+import { PaginationComponent } from '../../pages/pagination/pagination.component';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent } from '@coreui/angular';
+import { CouponService } from '../../../../commons/services/Coupon/coupon.service';
+import { StoreService } from '../../../../commons/services/Store/store.service'; 
 
 @Component({
   selector: 'app-couponlist',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginationComponent,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    PaginationComponent,
     CardComponent,
     CardHeaderComponent,
     CardBodyComponent,
     ColComponent
-    
   ],
   templateUrl: './coupon-list.component.html',
   styleUrls: ['./coupon-list.component.scss']
@@ -22,87 +27,93 @@ export class CouponlistComponent implements OnInit {
   itemsPerPage = 10;
   totalItems = 0;
 
-  coupons: any[] = [];          
-  filteredCoupons: any[] = [];  
+  coupons: any[] = [];
   isLoading = false;
 
   couponCode = '';
-  store = '';
-  category = '';
+  selectedStore?: number;
+  selectedCategory?: number;
 
-  constructor() {}
+  stores: any[] = [];
+  categories: any[] = [];
+
+  constructor(
+    private couponService: CouponService,
+    private storeService: StoreService 
+  ) {}
 
   ngOnInit(): void {
+    this.loadStoresAndCategories();
+    this.loadCoupons();
+  }
+
+
+loadStoresAndCategories() {
+this.storeService.FetchStores(0,0).subscribe({
+    next: (res) => this.stores = res || [],
+    error: () => this.stores = []
+  });
+
+  this.storeService.FetchCategories().subscribe({
+    next: (res) => this.categories = res || [], 
+    error: () => this.categories = []
+  });
+}
+
+
+
+loadCoupons() {
+  this.isLoading = true;
+  this.couponService.getAllCoupons().subscribe({
+    next: (res: any) => {
+      this.coupons = res.data || [];   // ✅ extract array from response
+      this.isLoading = false;
+    },
+    error: (err) => {
+      console.error(err);
+      this.isLoading = false;
+    }
+  });
+}
+
+
+
+
+
+filterCoupons() {
+  this.isLoading = true;
+  this.couponService.getCouponsByFilter({
+    couponCode: this.couponCode,
+    storeId: this.selectedStore,
+    categoryId: this.selectedCategory
+  }).subscribe({
+    next: (res: any) => {
+      this.coupons = res.data || [];
+      this.isLoading = false;
+    },
+    error: (err) => {
+      console.error(err);
+      this.isLoading = false;
+    }
+  });
+}
+
+
+  resetFilters() {
+    this.couponCode = '';
+    this.selectedStore = undefined;
+    this.selectedCategory = undefined;
+    this.currentPage = 1;
+    this.loadCoupons();
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
     this.loadCoupons();
   }
 
   onItemsPerPageChange(items: number) {
     this.itemsPerPage = items;
-    this.onPageChange(1);
-  }
-
-  loadCoupons() {
-    this.isLoading = true;
-
-    setTimeout(() => {
-      this.coupons = [
-        {
-          couponCode: 'SAVE10',
-          name: 'Discount 10%',
-          storeName: 'Store A',
-          categoryName: 'Food',
-          description: '10% off on all items',
-          minAmount: 500,
-          userLimitCount: 2,
-          startingDate: new Date(),
-          endingDate: new Date(),
-          couponImage: ''
-        },
-        {
-          couponCode: 'WELCOME50',
-          name: 'Flat 50 Off',
-          storeName: 'Store B',
-          categoryName: 'Clothing',
-          description: '₹50 off for new users',
-          minAmount: 200,
-          userLimitCount: 1,
-          startingDate: new Date(),
-          endingDate: new Date(),
-          couponImage: ''
-        }
-      ];
-
-      this.filteredCoupons = [...this.coupons];
-      this.totalItems = this.filteredCoupons.length;
-      this.isLoading = false;
-    }, 500);
-  }
-
-  filterCoupons() {
-    this.filteredCoupons = this.coupons.filter(coupon =>
-      coupon.couponCode.toLowerCase().includes(this.couponCode.toLowerCase()) &&
-      coupon.storeName.toLowerCase().includes(this.store.toLowerCase()) &&
-      coupon.categoryName.toLowerCase().includes(this.category.toLowerCase())
-    );
-    this.totalItems = this.filteredCoupons.length;
-    this.onPageChange(1);
-  }
-
-  resetFilters() {
-    this.couponCode = '';
-    this.store = '';
-    this.category = '';
-    this.filteredCoupons = [...this.coupons];
-    this.totalItems = this.filteredCoupons.length;
-    this.onPageChange(1);
-  }
-
-  onPageChange(page: number) {
-    this.currentPage = page;
-  }
-
-  get pagedCoupons(): any[] {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredCoupons.slice(startIndex, startIndex + this.itemsPerPage);
+    this.loadCoupons();
   }
 }
