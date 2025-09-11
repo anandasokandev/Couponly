@@ -1,19 +1,18 @@
+
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent,  ModalComponent, ModalToggleDirective,  TableDirective } from '@coreui/angular';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, TableDirective } from '@coreui/angular';
 import {  IconModule } from '@coreui/icons-angular';
 import {  cibSoundcloud, cilCloudDownload, cilSortAlphaDown, cilSortAlphaUp } from '@coreui/icons';
 import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RedeemHistory } from '../../../../../commons/models/redeem-history.model';
-import { DownloadRedeemsModelComponent } from '../../../pages/download-redeems-model/download-redeems-model.component';
-import { RedeemsHistoryServiceService } from '../../../../../commons/services/Coupon/redeems-history-service.service';
 import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
 import { PaginationComponent } from '../../../pages/pagination/pagination.component';
-
+import { StoreDashboardService } from '../../../../../commons/services/StoreDashboard/store-dashboard.service';
 
 @Component({
   selector: 'app-redeem-history',
-  imports: [
+   imports: [
     CommonModule,
     ColComponent, 
     CardComponent, 
@@ -21,97 +20,78 @@ import { PaginationComponent } from '../../../pages/pagination/pagination.compon
     CardBodyComponent, 
     TableDirective,
     IconModule,
-    // DownloadRedeemsModelComponent,
     FormsModule,
     ReactiveFormsModule,
-    // ModalToggleDirective,
-    // ModalComponent,
     PaginationComponent,
   ],
   templateUrl: './redeem-history.component.html',
-  styleUrl: './redeem-history.component.scss'
+  styleUrls: ['./redeem-history.component.scss']
 })
 export class RedeemHistoryComponent {
-  icons = { cilSortAlphaUp, cibSoundcloud, cilCloudDownload, cilSortAlphaDown };
+    icons = { cilSortAlphaUp, cibSoundcloud, cilCloudDownload, cilSortAlphaDown };
+
+redeems: RedeemHistory[] = [];
 
   // Filters
-  filterCouponCode: string = '';
+  searchType: number = 4;
+  searchText: string = '';
   fromDate: string = '';
   toDate: string = '';
 
   // Pagination
-  itemsPerPage: number = 10;
   currentPage: number = 1;
-  isLoading: boolean = false;
+  itemsPerPage: number = 10;
+  totalItems: number = 0;
   isPageChange: boolean = false;
 
-  // Data
-  redeems: RedeemHistory[] = [];
-  couponCodes: string[] = [];
+  // Loading
+  isLoading: boolean = false;
 
-  private toast = inject(ToastService);
-
-  constructor(private redeemHistoryService: RedeemsHistoryServiceService) {}
+  constructor(
+    private api: StoreDashboardService,
+    private toast: ToastService
+  ) {}
 
   ngOnInit() {
-    this.getRedeems();
-    this.getCouponCodes();
+    this.fetchRedeems();
   }
 
-  getRedeems() {
+  fetchRedeems() {
     this.isLoading = true;
     if (!this.isPageChange) this.currentPage = 1;
 
-    this.redeemHistoryService.getAllRedeems(
+    this.api.getRedeemHistory(
       this.currentPage,
       this.itemsPerPage,
-      0, // districtId removed
-      0, // locationId removed
+      this.searchType,
+      this.searchText,
       this.fromDate,
       this.toDate
-    )?.subscribe((data: RedeemHistory[]) => {
-      this.redeems = data;
-      this.isLoading = false;
-      this.isPageChange = false;
+    ).subscribe({
+      next: (response: any) => {
+        this.redeems = response.data.items;
+        this.totalItems = response.data.totalCount;
+        this.isLoading = false;
+        this.isPageChange = false;
+      },
+      error: () => {
+        this.toast.show({ type: 'error', message: 'Failed to fetch redeem history.' });
+        this.isLoading = false;
+      }
     });
   }
 
-  getCouponCodes() {
-    // You can replace this with a real API call if needed
-    this.couponCodes = ['Coupon 1', 'Coupon 2', 'Coupon 3'];
-  }
-
-  getRedeemsFiltered(): RedeemHistory[] {
-    return this.redeems.filter(redeem =>
-      this.filterCouponCode === '' ||
-      redeem.redeemCouponCode.toLowerCase().includes(this.filterCouponCode.toLowerCase())
-    );
-  }
-
-  resetFilter() {
-    this.filterCouponCode = '';
+  resetFilters() {
+    this.searchType = 4;
+    this.searchText = '';
     this.fromDate = '';
     this.toDate = '';
-    this.getRedeems();
+    this.fetchRedeems();
   }
 
   onPageChange(page: number) {
     this.currentPage = page;
     this.isPageChange = true;
-    this.getRedeems();
-  }
-
-  downloadExcel() {
-    this.redeemHistoryService.exportRedeemsToExcel(0, 0, this.fromDate, this.toDate)?.subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Redeems History.xlsx';
-      a.click();
-      window.URL.revokeObjectURL(url);
-      this.toast.show({ type: 'success', message: 'Redeem history downloaded successfully!' });
-    }, error => {
-      this.toast.show({ type: 'error', message: 'Failed to download redeem history.' });
-    });
+    this.fetchRedeems();
   }
 }
