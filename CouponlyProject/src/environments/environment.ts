@@ -45,7 +45,8 @@ export const environment = {
       updateStore:'Store/',
       storeExists:'Store/check-store-existence',
       emailExists:'Store/check-email-existence',
-      contactExists:'Store/check-contact-existence'
+      contactExists:'Store/check-contact-existence',
+      updateStorePassword:'Store/update-password'
     },
     contact: {
       AllContacts: 'Contact/AllContacts',
@@ -64,7 +65,10 @@ export const environment = {
     updatePassword:'/Login/updatepassword'
     },
     coupon: {
-      GetCouponType : 'CouponType', 
+      GetCouponType : 'Coupon/CouponTypes', 
+      GenerateCoupon: 'Coupon',
+      GetAllCoupons: 'Coupon',
+      FilterCoupons:'Coupon/filter'
     },
     storedashboard: {
       storeinfo: 'StoreDashboardStore/StoreInfo',

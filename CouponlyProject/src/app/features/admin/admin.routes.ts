@@ -28,6 +28,14 @@ export const routes: Routes = [
         }
 
       },
+      {
+          path: 'couponlist',
+          loadComponent: () => import('./components/coupon-list/coupon-list.component')  .then(m => m.CouponlistComponent),
+          data: {
+            title: 'Coupon List'
+          }
+        },
+
 
       {
         path: 'contact',
@@ -111,6 +119,7 @@ export const routes: Routes = [
           }
         ]
       },
+      
     ]
   }
 ];
