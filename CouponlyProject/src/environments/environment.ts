@@ -70,6 +70,15 @@ export const environment = {
       GetAllCoupons: 'Coupon',
       FilterCoupons:'Coupon/filter'
     },
+    promotion: {
+      service: {
+        AllServices: 'ServiceHandler/AllServices',
+        UpdateService: 'ServiceHandler/UpdateService',
+      },
+      coupon: {
+        CouponSearch: 'Coupon/filter'
+      }
+    },
     storedashboard: {
       storeinfo: 'StoreDashboardStore/StoreInfo',
       redeemhistory: 'StoreDashboardRedeem/FilterStoreRedeems',
