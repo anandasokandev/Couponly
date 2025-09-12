@@ -16,13 +16,10 @@
   <c-modal-body>
     <div *ngIf="campaign" class="promotion-summary">
 
-      <div class="section-card">
-        <h6>Summary</h6>
-        <p>{{ campaign.summary }}</p>
-      </div>
+      
 
       <div class="section-group">
-        <div class="section-card">
+        <div class="section-card" style="width: 50%;">
           <h6>Promotion Details</h6>
           <div class="details-grid">
             <div class="detail-item">
@@ -44,31 +41,51 @@
           </div>
         </div>
 
-        <div class="section-card" style="width: 100%;">
-          <h6>Channels & Sending</h6>
-          <div class="details-grid">
-            <div class="detail-item">
-              <span class="detail-label">Channels:</span>
-              <div class="channel-badges">
-                <span *ngIf="campaign.channels.whatsapp" class="badge badge-whatsapp">
-                  <i class="bi bi-whatsapp"></i> WhatsApp
-                </span>
-                <span *ngIf="campaign.channels.email" class="badge badge-email">
-                  <i class="bi bi-envelope"></i> Email
-                </span>
-                <span *ngIf="campaign.channels.sms" class="badge badge-sms">
-                  <i class="bi bi-chat-dots"></i> SMS
-                </span>
-              </div>
+        <div class="section-card" style="width: 50%;">
+          <h6>Checkout</h6>
+          <div class="detail-item mb-3" *ngIf="campaign.channels.whatsapp">
+            <span class="detail-label">WhatsApp:</span>
+            <span class="detail-value">{{ campaign.costs.whatsapp | currency:'INR' }}</span>
+          </div>
+          <div class="detail-item mb-3" *ngIf="campaign.channels.email">
+            <span class="detail-label">Email:</span>
+            <span class="detail-value">{{ campaign.costs.email | currency:'INR' }}</span>
+          </div>
+          <div class="detail-item mb-3" *ngIf="campaign.channels.sms">
+            <span class="detail-label">SMS:</span>
+            <span class="detail-value">{{ campaign.costs.sms | currency:'INR' }}</span>
+          </div>
+          <div class="detail-item mb-3">
+            <span class="detail-label">Total Amount:</span>
+            <span class="detail-value"><strong>{{ campaign.costs.whatsapp + campaign.costs.email + campaign.costs.sms | currency:'INR' }}/-</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-card" style="width: 100%;">
+        <h6>Channels & Sending</h6>
+        <div class="details-grid d-flex flex-column gap-3">
+          <div class="detail-item">
+            <span class="detail-label">Channels:</span>
+            <div class="channel-badges">
+              <span *ngIf="campaign.channels.whatsapp" class="badge badge-whatsapp">
+                <i class="bi bi-whatsapp"></i> WhatsApp
+              </span>
+              <span *ngIf="campaign.channels.email" class="badge badge-email">
+                <i class="bi bi-envelope"></i> Email
+              </span>
+              <span *ngIf="campaign.channels.sms" class="badge badge-sms">
+                <i class="bi bi-chat-dots"></i> SMS
+              </span>
             </div>
-            <div class="detail-item">
-              <span class="detail-label">Send Type:</span>
-              <span class="detail-value">{{ campaign.sendType }}</span>
-            </div>
-            <div *ngIf="campaign.sendType === 'schedule'" class="detail-item">
-              <span class="detail-label">Schedule Date:</span>
-              <span class="detail-value">{{ campaign.scheduleDate }}</span>
-            </div>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Send Type:</span>
+            <span class="detail-value">{{ campaign.sendType }}</span>
+          </div>
+          <div *ngIf="campaign.sendType === 'schedule'" class="detail-item">
+            <span class="detail-label">Schedule Date:</span>
+            <span class="detail-value">{{ campaign.scheduleDate | date:'short' }}</span>
           </div>
         </div>
       </div>
