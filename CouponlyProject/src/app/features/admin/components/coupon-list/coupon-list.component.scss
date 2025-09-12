@@ -29,7 +29,7 @@
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 6px;  /* balanced spacing */
+  gap: 6px;  
   flex: 1;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .coupon-desc {
-  font-size: 0.95rem;       /* medium readability */
+  font-size: 0.95rem;       
   color: #555;
   font-style: italic;
   line-height: 1.4;
@@ -48,15 +48,15 @@
 }
 
 .coupon-card:nth-child(1) .coupon-title {
-  color: #e74c3c; // red
+  color: #e74c3c; 
 }
 
 .coupon-card:nth-child(2) .coupon-title {
-  color: #27ae60; // green
+  color: #27ae60; 
 }
 
 .coupon-card:nth-child(3) .coupon-title {
-  color: #2980b9; // blue
+  color: #2980b9; 
 }
 
 .coupon-card:nth-child(4) .coupon-title {
@@ -71,9 +71,7 @@
   color: #16a085; 
 }
 
-/* Repeat or cycle as needed */
 
-/* Coupon Code Box */
 .coupon-code-box {
   display: inline-block;
   background-color: #f0f0f0;

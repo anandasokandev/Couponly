@@ -34,10 +34,10 @@ export class CouponlistComponent implements OnInit {
   couponCode = '';
   storeNameSearch = '';
   selectedStore?: number;
-  selectedType?: number; // ✅ Added for Type filter
+  selectedType?: number; 
 
   stores: any[] = [];
-  types: any[] = []; // ✅ Type list
+  types: any[] = []; 
 
   constructor(
     private couponService: CouponService,
@@ -56,7 +56,7 @@ export class CouponlistComponent implements OnInit {
     });
 
     this.couponService.getCouponType().subscribe({
-      next: (res) => (this.types = res.data || []), // ✅ load Type list
+      next: (res) => (this.types = res.data || []), 
       error: () => (this.types = [])
     });
   }
@@ -83,7 +83,7 @@ export class CouponlistComponent implements OnInit {
         couponCode: this.couponCode,
         storeName: this.storeNameSearch,
         storeId: this.selectedStore,
-        typeId: this.selectedType // ✅ Pass typeId to filter
+        typeId: this.selectedType 
       })
       .subscribe({
         next: (res: any) => {
@@ -102,7 +102,7 @@ export class CouponlistComponent implements OnInit {
     this.couponCode = '';
     this.storeNameSearch = '';
     this.selectedStore = undefined;
-    this.selectedType = undefined; // ✅ reset Type filter
+    this.selectedType = undefined; 
     this.currentPage = 1;
     this.loadCoupons();
   }
