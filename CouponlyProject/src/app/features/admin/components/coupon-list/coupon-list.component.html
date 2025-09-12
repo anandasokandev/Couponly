@@ -6,47 +6,43 @@
     </c-card-header>
 
     <c-card-body>
-                  <!-- 🔍 Search Filters -->
-            <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
-              <!-- Coupon Code (still text search) -->
-             <input type="text"
-                    class="form-control form-control-sm"
-                    style="max-width: 210px"
-                    [(ngModel)]="couponCode"
-                    placeholder="Search by Code"
-                    (input)="filterCoupons()" />
+      <!-- 🔍 Search Filters -->
+      <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
+        <!-- Coupon Code (text search) -->
+        <input type="text"
+               class="form-control form-control-sm"
+               style="max-width: 210px"
+               [(ngModel)]="couponCode"
+               placeholder="Search Coupon Code"
+               (input)="filterCoupons()" />
 
+        <!-- Store Name Search -->
+        <input type="text"
+               class="form-control form-control-sm"
+               style="max-width: 210px"
+               [(ngModel)]="storeNameSearch"
+               placeholder="Search Store Name"
+               (input)="filterCoupons()" />
 
-                          <!-- Store Dropdown -->
-              <!-- <select class="form-select form-select-sm" style="max-width: 210px"
-                      [(ngModel)]="selectedStore" (change)="filterCoupons()">
-                <option value="">-- Select Store --</option>
-                <option *ngFor="let store of stores" [value]="store.id">{{ store.storename }}</option>
-              </select> -->
+       <!-- Type Dropdown (Coupon Type Filter) -->
+<select class="form-select form-select-sm" style="max-width: 210px"
+        [(ngModel)]="selectedType" (change)="filterCoupons()">
+  <option [ngValue]="undefined">-- Select Type --</option> <!-- Default placeholder -->
+  <option *ngFor="let type of types" [ngValue]="type.id">{{ type.name }}</option>
+</select>
 
-              <!-- Category Dropdown -->
-              <!-- <select class="form-select form-select-sm" style="max-width: 210px"
-                      [(ngModel)]="selectedCategory" (change)="filterCoupons()">
-                <option value="">-- Select Category --</option>
-                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
-              </select> -->
-
-
-              <!-- Reset Button -->
-              <button type="button" class="btn btn-danger btn-sm text-white" title="Reset" (click)="resetFilters()">
-                <i class="fas fa-arrows-rotate"></i>
-              </button>
-            </div>
+        <!-- Reset Button -->
+        <button type="button" class="btn btn-danger btn-sm text-white" title="Reset" (click)="resetFilters()">
+          <i class="fas fa-arrows-rotate"></i>
+        </button>
+      </div>
 
       <!-- Loader -->
-<div *ngIf="isLoading">Loading...</div>
+      <div *ngIf="isLoading">Loading...</div>
 
-
-
-<div *ngIf="!isLoading && coupons.length === 0">
-  No coupons found.
-</div>
-
+      <div *ngIf="!isLoading && coupons.length === 0">
+        No coupons found.
+      </div>
 
       <!-- Coupon Table -->
       <div *ngIf="!isLoading" class="table-responsive">
@@ -54,18 +50,17 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-                   <th scope="col">Image</th>
+              <th scope="col">Image</th>
               <th scope="col">Coupon Code</th>
-           
               <th scope="col">Name</th>
               <th scope="col">Store</th>
-              <th scope="col">Category</th>
+              <th scope="col">Type</th> <!-- Added Type column -->
+              <!-- <th scope="col">Category</th> -->
               <th scope="col">Description</th>
               <th scope="col">Min Amount</th>
               <th scope="col">User Limit Count</th> 
               <th scope="col">Start Date</th>
               <th scope="col">End Date</th>
-            
             </tr>
           </thead>
           <tbody>
@@ -77,29 +72,28 @@
               </td>
               <td>{{ coupon.couponCode }}</td>
               <td>{{ coupon.name }}</td>
-               <td>{{ coupon.description }}</td>
               <td>{{ coupon.storeName }}</td>
-              <td>{{ coupon.categoryName }}</td>
+              <td>{{ coupon.typeName }}</td> <!-- Added TypeName display -->
+              <!-- <td>{{ coupon.categoryName }}</td> -->
+              <td>{{ coupon.description }}</td>
               <td>{{ coupon.minAmount | currency:'INR' }}</td>
-              <td>{{ coupon.userLimitCount }}</td> 
+              <td>{{ coupon.userLimitCount > 0 ? coupon.userLimitCount : 'Unlimited' }}</td> 
               <td>{{ coupon.startingDate | date }}</td>
               <td>{{ coupon.endingDate | date }}</td>
-              
             </tr>
           </tbody>
         </table>
       </div>
 
       <!-- Pagination -->
-        <app-pagination
+      <app-pagination
         *ngIf="!isLoading"
         [totalItems]="totalItems"
         [itemsPerPage]="itemsPerPage"
         [currentPage]="currentPage"
         (pageChange)="onPageChange($event)"
         (itemsPerPageChange)="onItemsPerPageChange($event)">
-        </app-pagination>
-
+      </app-pagination>
     </c-card-body>
   </c-card>
 </c-col>
