@@ -47,6 +47,32 @@
   margin-bottom: 4px;
 }
 
+.coupon-card:nth-child(1) .coupon-title {
+  color: #e74c3c; // red
+}
+
+.coupon-card:nth-child(2) .coupon-title {
+  color: #27ae60; // green
+}
+
+.coupon-card:nth-child(3) .coupon-title {
+  color: #2980b9; // blue
+}
+
+.coupon-card:nth-child(4) .coupon-title {
+  color: #8e44ad; 
+}
+
+.coupon-card:nth-child(5) .coupon-title {
+  color: #f39c12; 
+}
+
+.coupon-card:nth-child(6) .coupon-title {
+  color: #16a085; 
+}
+
+/* Repeat or cycle as needed */
+
 /* Coupon Code Box */
 .coupon-code-box {
   display: inline-block;
