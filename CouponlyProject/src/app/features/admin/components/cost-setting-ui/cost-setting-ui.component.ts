@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -10,18 +10,14 @@ import {
   AlertModule,
   NavModule,
 } from '@coreui/angular';
-
-export interface CostSetting {
-  id: 'whatsapp' | 'email' | 'sms';
-  name: string;
-  icon: string;
-  charge: number;
-  profitMargin: number;
-  handlingCharge: number;
-}
+import { CostSettingService } from '../../../../commons/services/Promotion/cost-setting.service';
+import { CostSetting } from '../../../../commons/models/CostSetting.model';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-cost-setting-ui',
+  // imports array should be here for standalone component
+  standalone: true, // Assuming this is a standalone component based on the imports array
   imports: [
     CommonModule,
     FormsModule,
@@ -36,87 +32,76 @@ export interface CostSetting {
   templateUrl: './cost-setting-ui.component.html',
   styleUrls: ['./cost-setting-ui.component.scss']
 })
-export class CostSettingUIComponent {
-  // Array to hold costs for different services
+export class CostSettingUIComponent implements OnInit { // Implemented OnInit
+  // Array to hold the current state of costs
   costSettings: CostSetting[] = [];
-  platformFee: number = 0;
+  // NEW: Array to hold the original state of costs for comparison
+  originalCostSettings: CostSetting[] = [];
 
   // State management for UI feedback
   isLoading: boolean = true;
-  updatingService: string = '';
-  showSuccessMessage: boolean = false;
+  updatingService: number = 0;
+  // This property seems unused, can be removed: updatingServices: number[] = [];
 
   ngOnInit(): void {
     this.fetchCosts();
   }
 
+  constructor(private costSettingService: CostSettingService) { }
+  private toast = inject(ToastService);
+
+  // NEW: Function to check if a specific setting has changed
+  hasChanges(currentSetting: CostSetting): boolean {
+    const originalSetting = this.originalCostSettings.find(s => s.id === currentSetting.id);
+
+    if (!originalSetting) {
+      return false; // Should not happen if data is loaded correctly
+    }
+
+    // Return true if any of the editable fields are different
+    return currentSetting.charge !== originalSetting.charge ||
+           currentSetting.profit !== originalSetting.profit ||
+           currentSetting.handling !== originalSetting.handling;
+  }
+
   updateService(setting: CostSetting): void {
     this.updatingService = setting.id;
-
-    // Simulate an API call with a timeout
-    setTimeout(() => {
-      this.costSettings = this.costSettings.map(s =>
-        s.id === setting.id ? { ...s, charge: setting.charge, profitMargin: setting.profitMargin, handlingCharge: setting.handlingCharge } : s
-      );
-      this.updatingService = '';
-      console.log('Service updated:', setting);
-    }, 1000);
+    this.costSettingService.updateService(setting).subscribe({
+      next: (res) => {
+        this.toast.show({ type: 'success', message: 'Service updated successfully' });
+        // Update the current state
+        this.costSettings = this.costSettings.map(s =>
+          s.id === res.data.id ? { ...s, ...res.data } : s
+        );
+        // NEW: Update the original state to match the newly saved state
+        this.originalCostSettings = this.originalCostSettings.map(s =>
+          s.id === res.data.id ? { ...s, ...res.data } : s
+        );
+      },
+      error: (error) => {
+        console.error('Error updating service:', error.errors);
+        this.toast.show({ type: 'error', message: 'Error updating service: ' + error.errors });
+      },
+      complete: () => {
+        this.updatingService = 0; // Reset spinner state
+      }
+    });
   }
 
-  /**
-   * Simulates fetching cost data from a backend API.
-   */
   fetchCosts(): void {
     this.isLoading = true;
-    // Simulate an API call with a timeout
-    setTimeout(() => {
-      this.costSettings = [
-                          {
-                        id: 'whatsapp',
-                        name: 'WhatsApp Costs',
-                        icon: 'fa-brands fa-whatsapp text-success',
-                        charge: 0.75,
-                        profitMargin: 0.25,
-                        handlingCharge: 20
-                      },
-                      {
-                        id: 'email',
-                        name: 'Email Costs',
-                        icon: 'fa-solid fa-envelope text-primary',
-                        charge: 0.5,
-                        profitMargin: 0.1,
-                        handlingCharge: 5
-                      },
-                      {
-                        id: 'sms',
-                        name: 'SMS Costs',
-                        icon: 'fa-solid fa-comment-sms text-success',
-                        charge: 0.6,
-                        profitMargin: 0.15,
-                        handlingCharge: 10
-                      }
-      ];
-      this.isLoading = false;
-    }, 1000);
-  }
-
-  /**
-   * Simulates saving the updated cost data to a backend API.
-   */
-
-
-  updateServiceCost(service: CostSetting): void {
-    console.log('Updating service cost...', service);
-    
-    // service.isUpdating = true;
-    // Simulate an API call with a timeout
-    setTimeout(() => {
-      // service.isUpdating = false;
-      console.log('Service cost updated:', service);
-    }, 1000);
-  }
-
-  calculateTotal(setting: CostSetting): void {
-    // setting.totalCharge = (setting.charge || 0) + (setting.profitMargin || 0);
+    this.costSettingService.getAllServices().subscribe({
+      next: (res) => {
+        this.costSettings = res.data;
+        // NEW: Create a deep copy of the initial data for change tracking
+        this.originalCostSettings = JSON.parse(JSON.stringify(res.data));
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error fetching cost settings:', error.errors);
+        this.toast.show({ type: 'error', message: 'Error fetching cost settings: ' + error.errors });
+        this.isLoading = false;
+      }
+    });
   }
 }

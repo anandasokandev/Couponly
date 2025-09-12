@@ -16,9 +16,9 @@
     </p>
 
     <form #campaignForm="ngForm" (ngSubmit)="saveCampaign()">
-      <c-alert color="success" *ngIf="showSuccessMessage" dismissible>
+      <!-- <c-alert color="success" *ngIf="showSuccessMessage" dismissible>
         <strong>Success!</strong> The promotion campaign has been saved.
-      </c-alert>
+      </c-alert> -->
 
       <h6 class="py-1 mb-1">1. Campaign Details</h6>
       <hr class="mt-1 mb-3">
@@ -31,15 +31,15 @@
           <label cLabel for="channels" class="text-muted">Communication Channels</label>
           <div class="mb-3 py-1">
             <c-form-check id="whatsappCheck" inline>
-              <input cFormCheckInput type="checkbox" name="whatsapp" [(ngModel)]="campaign.channels.whatsapp">
+              <input cFormCheckInput type="checkbox" name="whatsapp" [(ngModel)]="campaign.channels.whatsapp" (click)="updateChannel('whatsapp')">
               <label cFormCheckLabel><i class="fa-brands fa-whatsapp me-1"></i> WhatsApp</label>
             </c-form-check>
             <c-form-check id="emailCheck" inline>
-              <input cFormCheckInput type="checkbox" name="email" [(ngModel)]="campaign.channels.email">
+              <input cFormCheckInput type="checkbox" name="email" [(ngModel)]="campaign.channels.email" (click)="updateChannel('email')">
               <label cFormCheckLabel><i class="fa-solid fa-envelope me-1"></i> Email</label>
             </c-form-check>
             <c-form-check id="smsCheck" inline>
-              <input cFormCheckInput type="checkbox" name="sms" [(ngModel)]="campaign.channels.sms">
+              <input cFormCheckInput type="checkbox" name="sms" [(ngModel)]="campaign.channels.sms" (click)="updateChannel('sms')">
               <label cFormCheckLabel><i class="fa-solid fa-comment-sms me-1"></i> SMS</label>
             </c-form-check>
           </div>

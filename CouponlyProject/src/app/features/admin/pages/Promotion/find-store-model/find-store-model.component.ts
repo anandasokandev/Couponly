@@ -6,13 +6,13 @@ import { IconModule } from '@coreui/icons-angular';
 import { District } from '../../../../../commons/models/district.model';
 import { Location } from '../../../../../commons/models/location.model';
 import { Category } from '../../../../../commons/models/category.model';
-import { PromotionService } from '../../../../../commons/services/Coupon/promotion.service';
+import { PromotionService } from '../../../../../commons/services/Promotion/promotion.service';
 import { PaginationComponent } from '../../pagination/pagination.component';
 
 export interface Coupon {
   id: number;
   couponCode: string;
-  couponName: string;
+  name: string;
   couponImage: string;
   // Add other relevant properties here
 }
@@ -133,6 +133,7 @@ export class FindStoreModelComponent {
     this.couponBox = false;
     this.couponDetails = null;
     this.storeBox = true;
+    this.couponText = '';
     this.isStoreLoading = true;
     if(!this.isPageChange) {
       this.currentPage = 1; // Reset to first page on new search
@@ -152,26 +153,26 @@ export class FindStoreModelComponent {
   searchCoupon(): void {
     this.isCouponLoading = true;
 
-    // this.promotionService.searchCoupons(this.couponText).subscribe({
-    //   next: (response: any) => {
-    //     this.couponDetails = response.data;
-    //     this.isCouponLoading = false;
-    //   },
-    //   error: () => {
-    //     this.isCouponLoading = false;
-    //   }
-    // });
+    this.promotionService.getCoupons(this.selectedStore.id, this.couponText).subscribe({
+      next: (response: any) => {
+        this.couponDetails = response.data;
+        this.isCouponLoading = false;
+      },
+      error: () => {
+        this.isCouponLoading = false;
+      }
+    });
 
     //temporary placeholder for coupon search
-    setTimeout(() => {
-      this.couponDetails = [{
-        id: 1,
-        couponCode: 'SAVE20',
-        couponName: '20% Off Summer Sale',
-        couponImage: 'https://tse2.mm.bing.net/th/id/OIP.XAQ6mOO-gPKohh53kkKw3wHaEv?rs=1&pid=ImgDetMain&o=7&rm=3'
-      }];
-      this.isCouponLoading = false;
-    }, 2000);
+    // setTimeout(() => {
+    //   this.couponDetails = [{
+    //     id: 1,
+    //     couponCode: 'SAVE20',
+    //     couponName: '20% Off Summer Sale',
+    //     couponImage: 'https://tse2.mm.bing.net/th/id/OIP.XAQ6mOO-gPKohh53kkKw3wHaEv?rs=1&pid=ImgDetMain&o=7&rm=3'
+    //   }];
+    //   this.isCouponLoading = false;
+    // }, 2000);
   }
 
   selectStore(store: any): void {
@@ -181,6 +182,7 @@ export class FindStoreModelComponent {
     this.storeBox = false;
     this.contactsNeeded = null; // Reset contacts needed when a new store is selected
     this.searchResults = [];
+    this.searchCoupon();
   }
 
   selectCoupon(coupon: Coupon) {

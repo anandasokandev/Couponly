@@ -7,7 +7,7 @@ import { SpinnerModule } from '@coreui/angular';
 
 @Component({
   selector: 'app-login',
-  standalone: true,   
+  standalone: true,
   imports: [
     ReactiveFormsModule,
     FormsModule,
@@ -21,8 +21,8 @@ import { SpinnerModule } from '@coreui/angular';
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage = '';
-  showPassword = false;  
-  isLoading = false;  
+  showPassword = false;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -45,24 +45,32 @@ export class LoginComponent {
       return;
     }
 
-    this.isLoading = true;   
+    this.isLoading = true;
     const payload = this.loginForm.value;
+
+
 
     this.api.login(payload).subscribe({
       next: (response: any) => {
-        this.isLoading = false;  
+        this.isLoading = false;
         console.log(response);
         if (response.isSuccess) {
           sessionStorage.setItem('token', response.data.token);
           sessionStorage.setItem('role', response.data.role);
           sessionStorage.setItem('userId', response.data.userId);
-
+          console.log(sessionStorage.getItem('role'))
+          console.log(sessionStorage.getItem('userId'))
+          // localStorage.setItem('token', response.data.token);
+          // localStorage.setItem('role', response.data.role);
+          // localStorage.setItem('userId', response.data.userId);
+          // console.log(localStorage.getItem('role'));
+          // console.log(localStorage.getItem('userId'));
           if (response.data.role === 'Admin') {
             this.router.navigate(['/admin']);
           } else if (response.data.role === 'User') {
             this.router.navigate(['/user']);
           } else if (response.data.role === 'Store') {
-            this.router.navigate(['/store']);
+            this.router.navigate(['/admin/store-dashboard']);
           } else {
             console.log('Unrecognized role:', response.role);
             this.errorMessage = 'Unrecognized role';
@@ -75,7 +83,7 @@ export class LoginComponent {
         }
       },
       error: (err) => {
-        this.isLoading = false;  
+        this.isLoading = false;
         console.error(err);
         this.errorMessage = 'Invalid Username or Password';
       }

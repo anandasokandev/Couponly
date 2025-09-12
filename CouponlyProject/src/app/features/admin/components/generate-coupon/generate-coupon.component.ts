@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormModule } from '@coreui/angular';
+import { ButtonModule, CardComponent, CardHeaderComponent, CardModule, ColComponent, FormModule, GridModule, ModalComponent, ModalModule, ModalToggleDirective, TableDirective, TabsComponent } from '@coreui/angular';
 import { CouponService } from 'src/app/commons/services/Coupon/coupon.service';
 import { ToastService } from 'src/app/commons/services/Toaster/toast.service';
 import { Coupon, CouponType } from 'src/app/commons/models/coupon.model' 
@@ -9,15 +9,18 @@ import { ImageUploadService } from 'src/app/commons/services/ImageUpload/image-u
 
 @Component({
   selector: 'app-generate-coupon',
-  standalone: true,   // mark as standalone component
   imports: [
     CommonModule,
-    FormsModule,        // ✅ required for ngModel
+    FormsModule,
     ReactiveFormsModule,
-    FormModule
+    FormModule,
+    GridModule,
+    CardModule,
+    ModalModule,
+    ButtonModule
   ],
   templateUrl: './generate-coupon.component.html',
-  styleUrls: ['./generate-coupon.component.scss']  // ✅ plural
+  styleUrls: ['./generate-coupon.component.scss']
 })
 export class GenerateCouponComponent implements OnInit {
   activeTab: string = 'upload';
@@ -30,6 +33,9 @@ export class GenerateCouponComponent implements OnInit {
   isUserLimit: boolean = false;
   storeId: number = 14;
   userId = sessionStorage.getItem('userId');
+  prompt: string = ''
+  loading: boolean = false;
+  aiText: string = ''
 
   coupon: Coupon = {
     title: '',
@@ -64,6 +70,10 @@ export class GenerateCouponComponent implements OnInit {
     });
   }
 
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
+  }
+
   ngOnChange(): void {
     console.log(this.coupon.couponType);
   }
@@ -93,19 +103,36 @@ export class GenerateCouponComponent implements OnInit {
     this.aiImage = 'https://via.placeholder.com/400x200.png?text=AI+Generated+Coupon';
   }
 
+  private initialCoupon(): Coupon {
+    return {
+      title: '',
+      description: '',
+      code: '',
+      couponType: null,
+      discount: null,
+      minimumAmount: null,
+      userLimit: false,
+      userLimitCount: 1,
+      validFrom: '',
+      validUntil: ''
+    };
+  }
+
+
   saveCoupon() {
     console.log(this.coupon);
-    var payload = this.buildPayload('jakkdlsbkd');
-    console.log(payload);
+    
     
     this.imageUpload.UploadImage(this.selectedFile!).subscribe({
       next: res => {
           if (res.status && res.url) {
             const payload = this.buildPayload(res.url);
+            console.log(payload);
             this.couponApi.GenerateCoupon(payload).subscribe({
               next: res =>{
                 this.toastService.show({ type: 'success', message: 'Coupon Generated Successfully' });
                 console.log('Coupon Generated Successfully');
+                this.coupon = this.initialCoupon();
               },
               error: err => {
                 this.toastService.show({ type: 'error', message: 'Coupon generation failed' });
@@ -128,6 +155,7 @@ private buildPayload(url: string): any {
       typeId : this.coupon.couponType?.id,
       userLimit: this.coupon.userLimit,
       userLimitCount : this.coupon.userLimitCount,
+      discountPercentage : this.coupon.discount,
       startingDate: this.coupon.validFrom,
       endingDate: this.coupon.validUntil,
       minAmount: this.coupon.minimumAmount,

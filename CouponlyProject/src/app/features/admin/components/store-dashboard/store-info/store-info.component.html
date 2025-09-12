@@ -1,18 +1,18 @@
 <body>
     <div class="profile-container">
 
-      
+
         <div class="header-box">
             <div class="logo-box">
-                <img src="assets/images/nyka.webp" alt="Store Logo">
+                <img [src]="storeData?.logo" alt="Store Logo">
             </div>
             <div class="store-info">
-                <div class="store-name">NYKKA</div>
-                <div class="store-code">Code: ST123</div>
+                <div class="store-name">{{ storeData?.name }}</div>
+                <div class="store-code">Code: {{ storeData?.code }}</div>
             </div>
         </div>
 
-        
+
         <div class="card-grid">
 
             <div class="stacked-column">
@@ -23,58 +23,62 @@
                     <div class="detail-item d-flex align-items-center" style="gap: 57px;">
 
                         <label class="fw-bold">Phone:</label>
-                        <div class="value-box">+91 9876543210</div>
+                        <div class="value-box">+91 {{ storeData?.contact }}</div>
                     </div>
 
                     <div class="detail-item d-flex align-items-center" style="gap: 65px;">
                         <label class="fw-bold">Email:</label>
-                        <div class="value-box">storeexample.com</div>
+                        <div class="value-box">{{ storeData?.email }}</div>
                     </div>
 
                     <div class="detail-item d-flex align-items-center" style="gap: 45px;">
                         <label class="fw-bold ">Address:</label>
-                        <div class="value-box">42 Maple Crescent, Sector 5, Indiranagar, Bengaluru, Karnataka – 560038
+                        <div class="value-box">{{ storeData?.address }}
                         </div>
                     </div>
                 </div>
 
 
-                
+
                 <div class="card-section short-card">
                     <div class="card-title">Category</div>
                     <div class="detail-item d-flex align-items-center" style="gap: 45px;">
                         <label class="fw-bold">Category Name:</label>
-                        <div class="value-box">Retail</div>
+                        <div class="value-box">{{ storeData?.categoryName }}</div>
+                    </div>
+                    <div class="detail-item d-flex align-items-center" style="gap: 84px;">
+                        <label class="fw-bold">Store Type:</label>
+                        <div class="value-box">{{ storeData?.typeName }}</div>
                     </div>
                 </div>
             </div>
 
-           
+
             <div class="card-section location-card">
                 <div class="card-title">Location</div>
 
 
                 <div class="detail-item d-flex align-items-center" style="gap: 55px;">
                     <label class="fw-bold">Name:</label>
-                    <div class="value-box">Thodupuzha</div>
+                    <div class="value-box">{{ storeData?.locationName }}</div>
                 </div>
 
                 <div class="detail-item d-flex align-items-center" style="gap: 45px;">
                     <label class="fw-bold">District:</label>
-                    <div class="value-box">Idukki</div>
+                    <div class="value-box">{{ storeData?.districtName }}</div>
                 </div>
                 <div class="detail-item d-flex align-items-center" style="gap: 40px;">
                     <label class="fw-bold ">Pincode:</label>
-                    <div class="value-box">767188</div>
+                    <div class="value-box">{{ storeData?.pincode }}</div>
                 </div>
                 <div class="detail-item d-flex align-items-center" style="gap: 40px;">
                     <label class="fw-bold ">Latitude:</label>
-                    <div class="value-box">76.7188</div>
+                    <div class="value-box">{{ storeData?.latitude }}</div>
                 </div>
 
                 <div class="detail-item d-flex align-items-center" style="gap: 25px;">
                     <label class="fw-bold ">Longitude:</label>
-                    <div class="value-box">76.7188</div>
+                    <div class="value-box">{{ storeData?.longitude }}</div>
                 </div>
 
             </div>
@@ -83,4 +87,3 @@
     </div>
 
 </body>
-
