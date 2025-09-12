@@ -24,7 +24,7 @@ getRedeemHistory(
   fromDate?: string,
   toDate?: string
 ): Observable<any> {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
   let params = new HttpParams()
@@ -40,29 +40,13 @@ getRedeemHistory(
   return this.http.get(url, { headers, params });
 }
 
-// getAllRedeems(
-//   pageNumber: number,
-//   pageSize: number,
-//   searchType: number = 0,
-//   searchText: string = '',
-//   fromDate?: string,
-//   toDate?: string
-// ): Observable<any> {
-//   const token = localStorage.getItem('token');
-//   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+getStoreOverview(): Observable<any> {
+  const token = sessionStorage.getItem('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  const url = `${environment.apiBaseUrl}/${environment.endpoints.storedashboard.overview}`;
+  return this.http.get(url, { headers });
+}
 
-//   let params = new HttpParams()
-//     .set('pageNumber', pageNumber)
-//     .set('pageSize', pageSize)
-//     .set('searchType', searchType)
-//     .set('searchText', searchText);
-
-//   if (fromDate) params = params.set('fromDate', fromDate);
-//   if (toDate) params = params.set('toDate', toDate);
-
-//   const url = `${environment.apiBaseUrl}/${environment.endpoints.storedashboard.redeemhistory}`;
-//   return this.http.get(url, { headers, params });
-// }
 
 
 }

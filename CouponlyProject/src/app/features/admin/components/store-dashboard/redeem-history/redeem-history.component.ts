@@ -2,9 +2,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, TableDirective } from '@coreui/angular';
-import {  IconModule } from '@coreui/icons-angular';
-import {  cibSoundcloud, cilCloudDownload, cilSortAlphaDown, cilSortAlphaUp } from '@coreui/icons';
-import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IconModule } from '@coreui/icons-angular';
+import { cibSoundcloud, cilCloudDownload, cilSortAlphaDown, cilSortAlphaUp } from '@coreui/icons';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RedeemHistory } from '../../../../../commons/models/redeem-history.model';
 import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
 import { PaginationComponent } from '../../../pages/pagination/pagination.component';
@@ -12,12 +12,12 @@ import { StoreDashboardService } from '../../../../../commons/services/StoreDash
 
 @Component({
   selector: 'app-redeem-history',
-   imports: [
+  imports: [
     CommonModule,
-    ColComponent, 
-    CardComponent, 
-    CardHeaderComponent, 
-    CardBodyComponent, 
+    ColComponent,
+    CardComponent,
+    CardHeaderComponent,
+    CardBodyComponent,
     TableDirective,
     IconModule,
     FormsModule,
@@ -28,9 +28,9 @@ import { StoreDashboardService } from '../../../../../commons/services/StoreDash
   styleUrls: ['./redeem-history.component.scss']
 })
 export class RedeemHistoryComponent {
-    icons = { cilSortAlphaUp, cibSoundcloud, cilCloudDownload, cilSortAlphaDown };
+  icons = { cilSortAlphaUp, cibSoundcloud, cilCloudDownload, cilSortAlphaDown };
 
-redeems: RedeemHistory[] = [];
+  redeems: RedeemHistory[] = [];
 
   // Filters
   searchType: number = 4;
@@ -50,7 +50,7 @@ redeems: RedeemHistory[] = [];
   constructor(
     private api: StoreDashboardService,
     private toast: ToastService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.fetchRedeems();

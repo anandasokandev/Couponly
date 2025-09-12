@@ -8,7 +8,8 @@
       <div class="card shadow-sm p-3 rounded-3 text-center">
         <i class="fa-solid fa-ticket fa-2x text-primary mb-2"></i>
         <h6 class="mb-1">Total Coupons</h6>
-        <h4 class="fw-bold">852</h4>
+        <!-- <h4 class="fw-bold">852</h4> -->
+        <h4 class="fw-bold">{{ overviewData?.totalCoupons ?? 0 }}</h4>
       </div>
     </div>
 
@@ -16,7 +17,8 @@
       <div class="card shadow-sm p-3 rounded-3 text-center">
         <i class="fa-solid fa-clock-rotate-left fa-2x text-success mb-2"></i>
         <h6 class="mb-1">Redeems</h6>
-        <h4 class="fw-bold">852</h4>
+        <!-- <h4 class="fw-bold">852</h4> -->
+         <h4 class="fw-bold">{{ overviewData?.totalRedeems ?? 0 }}</h4>
       </div>
     </div>
 
@@ -25,7 +27,8 @@
       <div class="card shadow-sm p-3 rounded-3 text-center">
         <i class="fa-solid fa-bullhorn fa-2x text-warning mb-2"></i>
         <h6 class="mb-1">Promotions Made</h6>
-        <h4 class="fw-bold">852</h4>
+        <!-- <h4 class="fw-bold">852</h4> -->
+         <h4 class="fw-bold">{{ overviewData?.totalPromotions ?? 0 }}</h4>
       </div>
     </div>
 
@@ -34,6 +37,7 @@
         <i class="fa-solid fa-address-book fa-2x text-danger mb-2"></i>
         <h6 class="mb-1">Contacts Added</h6>
          <h4 class="fw-bold">852</h4>
+         <!-- <h4 class="fw-bold">{{ overviewData?.totalContacts ?? 0 }}</h4> -->
       </div>
     </div>
 

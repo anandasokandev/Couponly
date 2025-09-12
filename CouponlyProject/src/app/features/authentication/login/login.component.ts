@@ -70,7 +70,7 @@ export class LoginComponent {
           } else if (response.data.role === 'User') {
             this.router.navigate(['/user']);
           } else if (response.data.role === 'Store') {
-            this.router.navigate(['/admin']);
+            this.router.navigate(['/admin/store-dashboard']);
           } else {
             console.log('Unrecognized role:', response.role);
             this.errorMessage = 'Unrecognized role';
