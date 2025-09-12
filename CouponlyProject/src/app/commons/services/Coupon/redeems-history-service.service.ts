@@ -20,12 +20,16 @@ export class RedeemsHistoryServiceService {
       .set('districtid', districtid)
       .set('locationid', locationid);
 
+    let headers = new HttpHeaders()
+      .set('loginid', sessionStorage.getItem('userId') || '')
+      .set('role', sessionStorage.getItem('role') || '');
+
     console.log(fromdate, todate)
     if(fromdate !== '')
       params = params.append('fromdate', fromdate);
     if(todate !== '')
       params = params.append('todate', todate);
-    return this.http.get<any>(`${environment.apiBaseUrl}/${environment.endpoints.redeem.getAllRedeems}`, { params })
+    return this.http.get<any>(`${environment.apiBaseUrl}/${environment.endpoints.redeem.getAllRedeems}`, { headers, params })
     .pipe(
       map((response: any) => {
         if (response && response.statusCode == 200) {
@@ -45,9 +49,14 @@ export class RedeemsHistoryServiceService {
     if (fromDate) params.fromdate = fromDate;
     if (toDate) params.todate = toDate;
 
+    let headers = new HttpHeaders()
+      .set('loginid', sessionStorage.getItem('userId') || '')
+      .set('role', sessionStorage.getItem('role') || '');
+
     return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.redeem.ExportExcel}`, {
       params,
-      responseType: 'blob'
+      responseType: 'blob',
+      headers
     });
   }
 
@@ -59,8 +68,10 @@ export class RedeemsHistoryServiceService {
     if (fromDate) params.fromdate = fromDate;
     if (toDate) params.todate = toDate;
 
-    const id = sessionStorage.getItem('userId') || '';
-    const headers = new HttpHeaders().set('userid', id);
+    let headers = new HttpHeaders()
+      .set('loginid', sessionStorage.getItem('userId') || '')
+      .set('role', sessionStorage.getItem('role') || '');
+      
     return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.redeem.ExportEmail}`, { headers, params });
   }
 

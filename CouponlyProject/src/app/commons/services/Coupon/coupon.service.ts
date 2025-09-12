@@ -22,28 +22,31 @@ getAllCoupons() {
 }
 
 getCouponsByFilter(filter: {
-  couponCode?: string;
-  storeId?: number;
-  categoryId?: number;
-}) {
-  let params = new HttpParams();
+    couponCode?: string;
+    storeId?: number;
+    storeName?: string;
+    typeId?: number;
+  }) {
+    let params = new HttpParams();
 
-  if (filter.couponCode) {
-    params = params.set('couponCode', filter.couponCode);
-  }
-  if (filter.storeId) {
-    params = params.set('storeId', filter.storeId.toString());
-  }
-  if (filter.categoryId) {
-    params = params.set('categoryId', filter.categoryId.toString());
-  }
+    if (filter.couponCode) {
+      params = params.set('couponCode', filter.couponCode);
+    }
+    if (filter.storeId) {
+      params = params.set('storeId', filter.storeId.toString());
+    }
+    if (filter.storeName) {
+      params = params.set('storeName', filter.storeName);
+    }
+    if (filter.typeId) {
+      params = params.set('typeId', filter.typeId.toString());
+    }
 
-  return this.http.get<any>(
-    `${environment.apiBaseUrl}/${environment.endpoints.coupon.FilterCoupons}`,
-    { params }
-  );
-}
-
+    return this.http.get<any>(
+      `${environment.apiBaseUrl}/${environment.endpoints.coupon.FilterCoupons}`,
+      { params }
+    );
+  }
 
  
 }
