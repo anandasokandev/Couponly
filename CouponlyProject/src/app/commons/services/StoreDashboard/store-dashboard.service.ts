@@ -24,7 +24,7 @@ getRedeemHistory(
   fromDate?: string,
   toDate?: string
 ): Observable<any> {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
   let params = new HttpParams()

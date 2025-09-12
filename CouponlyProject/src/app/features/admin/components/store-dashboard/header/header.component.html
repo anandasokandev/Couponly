@@ -2,8 +2,12 @@
 <c-card class="mb-3" *ngIf="shouldShowStoreCard() && storeData">
   <c-card-body class="d-flex align-items-center px-4 py-3">
     <div class="d-flex align-items-center">
-      <img [src]="storeData.logo || 'assets/images/default-logo.webp'" alt="Store Logo" class="rounded me-3" width="60" height="60">
+      <!-- <img [src]="storeData.logo || 'assets/images/default-logo.webp'" alt="Store Logo" class="rounded me-3" width="60" height="60"> -->
+      <div class="logo-box">
+                 <img [src]="storeData?.logo" alt="Store Logo" >
+            </div>
       <div>
+        
         <h5 class="mb-1">{{ storeData.name }}</h5>
         <p class="mb-0 text-muted">
           <strong>Code:</strong> {{ storeData.code }}<br>
