@@ -17,6 +17,8 @@ import {
 import { IconModule } from '@coreui/icons-angular';
 import { FindStoreModelComponent } from '../../pages/Promotion/find-store-model/find-store-model.component';
 import { PromotionCalculatorModelComponent } from '../../pages/Promotion/promotion-calculator-model/promotion-calculator-model.component';
+import { CostSettingService } from '../../../../commons/services/Promotion/cost-setting.service';
+import { CostSetting } from '../../../../commons/models/CostSetting.model';
 
 // Updated interface to hold all promotion campaign details
 export interface PromotionCampaign {
@@ -28,6 +30,11 @@ export interface PromotionCampaign {
     whatsapp: boolean;
     email: boolean;
     sms: boolean;
+  };
+  costs: {
+    whatsapp: number;
+    email: number;
+    sms: number;
   };
   couponCode: string;
   couponName?: string;
@@ -60,51 +67,58 @@ export interface PromotionCampaign {
 })
 export class PromotionComponent {
    campaign: PromotionCampaign = {
-    promotionName: 'Monsoon Bonanza',
-    selectedCategory: '',
-    selectedStore: '',
-    contactCount: 0,
-    channels: {
-      whatsapp: true,
-      email: true,
-      sms: false
-    },
-    couponCode: '',
-    couponName: '',
-    sendType: 'now',
-    scheduleDate: ''
-  };
-
-  availableStores: string[] = [];
-  coupons: string[] = ['MONSOON25', 'FLAT500', 'BOGOJULY'];
+     promotionName: 'xcv',
+     selectedCategory: '',
+     selectedStore: '',
+     contactCount: 100,
+     channels: {
+       whatsapp: false,
+       email: false,
+       sms: false
+     },
+     costs: {
+       whatsapp: 0,
+       email: 0,
+       sms: 0
+     },
+     couponCode: '',
+     couponName: '',
+     sendType: 'now',
+     scheduleDate: ''
+   };
+   serviceCosts: CostSetting[] = [];
 
   isSaving: boolean = false;
-  showSuccessMessage: boolean = false;
 
-  constructor() { }
+  constructor(private costService: CostSettingService) { }
 
   ngOnInit(): void {
-  
+    this.costService.getAllServices().subscribe(services => {
+      this.serviceCosts = services.data;
+      console.log('Service Costs:', services.data);
+    });
   }
 
+  updateChannel(channel: keyof PromotionCampaign['channels']): void {
+    this.campaign.channels[channel] = !this.campaign.channels[channel];
+    const service = this.serviceCosts.find(service => service.name.toLowerCase() === channel);
+    if (service) {
+      const charge = service.charge * this.campaign.contactCount;
+      const profit = service.profit * this.campaign.contactCount;
+      const handling = service.handling * (this.campaign.contactCount / 100);
+      this.campaign.costs[channel] = charge + profit + handling;
+    }
+  }
 
   saveCampaign(): void {
     this.isSaving = true;
-    this.showSuccessMessage = false;
 
     // Clear schedule date if sending now
     if (this.campaign.sendType === 'now') {
       this.campaign.scheduleDate = '';
     }
-
     console.log('Saving Campaign:', this.campaign);
-    
     this.isSaving = false;
-    // setTimeout(() => {
-    //   // this.showSuccessMessage = true;
-    //   // setTimeout(() => this.showSuccessMessage = false, 4000);
-    // }, 1500);
-
     
   }
 
@@ -115,6 +129,6 @@ export class PromotionComponent {
     this.campaign.selectedStore = event.store.store;
     this.campaign.contactCount = event.contactsNeeded;
     this.campaign.couponCode = event.coupon.couponCode;
-    this.campaign.couponName = event.coupon.couponName;
+    this.campaign.couponName = event.coupon.name;
   }
 }
