@@ -1,82 +1,111 @@
-<form #couponForm="ngForm">
-  <div class="container-fluid mt-4">
-    <div class="row">
-      <!-- Coupon Details -->
-      <div class="col-md-4 left-column">
-      <div class="card shadow-sm p-3 rounded-3">
-          <h5 class="mb-3">Coupon Details</h5>
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-header class="d-flex justify-content-between align-items-center">
+      <strong class="fs-5">Generate Coupons</strong>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap">
+          View Coupons
+        </button>
+      </div>
+    </c-card-header>
 
-          <!-- Coupon Title -->
-          <div class="mb-3">
-            <label class="form-label">Coupon Title</label>
-            <input type="text" class="form-control" 
-                   [(ngModel)]="coupon.title" name="title" required #title="ngModel" placeholder="50% OFF on Shoes" />
-            <div *ngIf="title.invalid && title.touched" class="text-danger">Coupon Title is required</div>
-          </div>
+    <c-card-body>
+      <h6 class="mb-3">Coupon Details</h6>
 
-          <!-- Description -->
-          <div class="mb-3">
-            <label class="form-label">Description</label>
-            <textarea class="form-control" rows="2" 
-                      [(ngModel)]="coupon.description" name="description" required #description="ngModel" 
-                      placeholder="Valid on all footwear above ₹1000"></textarea>
-            <div *ngIf="description.invalid && description.touched" class="text-danger">Description is required</div>
-          </div>
-
-          <!-- Coupon Code -->
-          <div class="mb-3">
-            <label class="form-label">Coupon Code</label>
-            <input type="text" class="form-control" [(ngModel)]="coupon.code" name="code" required #code="ngModel" 
-                   placeholder="e.g. SAVE50" />
-            <div *ngIf="code.invalid && code.touched" class="text-danger">Coupon Code is required</div>
-          </div>
-
-          <!-- Coupon Type -->
-          <div class="mb-3">
-            <label class="form-label">Select Coupon Type</label>
-            <select class="form-select" [(ngModel)]="coupon.couponType" name="couponType" required #couponType="ngModel">
-              <option value="null" disabled>-- Select --</option>
-              <option *ngFor="let type of couponTypeList" [ngValue]="type">{{ type.name }}</option>
-            </select>
-            <div *ngIf="couponType.invalid && couponType.touched" class="text-danger">Coupon Type is required</div>
-          </div>
-
-          <!-- Discount for Discount Coupons -->
-          <div class="mb-3" *ngIf="coupon.couponType?.name === 'Discount Coupons'">
-            <label class="form-label">Discount (%)</label>
-            <input type="number" class="form-control" [(ngModel)]="coupon.discount" name="discount" 
-                   min="1" max="100" required #discount="ngModel" placeholder="40" />
-            <div *ngIf="discount.invalid && discount.touched" class="text-danger">Discount is required (1-100%)</div>
-          </div>
-
-          <!-- Minimum Amount -->
-          <div class="mb-3">
-            <label class="form-label">Minimum Amount</label>
-            <input type="number" class="form-control" [(ngModel)]="coupon.minimumAmount" name="minimumAmount" 
-                   min="1" required #minimumAmount="ngModel" placeholder="500" />
-            <div *ngIf="minimumAmount.invalid && minimumAmount.touched" class="text-danger">Minimum Amount is required (must be greater than 0)</div>
-          </div>
-
-          <!-- Valid Dates -->
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Valid From</label>
-              <input type="date" class="form-control" [(ngModel)]="coupon.validFrom" name="validFrom" required 
-                     #validFrom="ngModel" />
-              <div *ngIf="validFrom.invalid && validFrom.touched" class="text-danger">Valid From date is required</div>
+      <div class="row justify-content-center">
+        <!-- Form Column (40% width) -->
+        <div class="col-12 col-lg-5">
+          <form #couponForm="ngForm">
+            <!-- Coupon Title -->
+            <div class="mb-3">
+              <label class="form-label text-muted">Coupon Title</label>
+              <input type="text" class="form-control" 
+                     [(ngModel)]="coupon.title" name="title" required maxlength="50" 
+                     #title="ngModel" placeholder="50% OFF on Shoes" />
+              <div *ngIf="title.invalid && title.touched" class="text-danger">
+                Coupon Title is required (max 50 characters)
+              </div>
             </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Valid Until</label>
-              <input type="date" class="form-control" [(ngModel)]="coupon.validUntil" name="validUntil" required 
-                     #validUntil="ngModel" />
-              <div *ngIf="validUntil.invalid && validUntil.touched" class="text-danger">Valid Until date is required</div>
-            </div>
-          </div>
 
-          <!-- User Limit Selection -->
-          <!-- User Limit Toggle -->
-          <div class="mb-3">
-            <label for="userLimit" class="form-label">User Limit (Default: Unlimited)</label>
+            <!-- Description -->
+            <div class="mb-3">
+              <label class="form-label text-muted">Description</label>
+              <textarea class="form-control" rows="2"
+                        [(ngModel)]="coupon.description" name="description" required maxlength="200"
+                        #description="ngModel" placeholder="Enter description"></textarea>
+              <div *ngIf="description.invalid && description.touched" class="text-danger">
+                Description is required (max 200 characters)
+              </div>
+            </div>
+
+            <!-- Coupon Code -->
+            <div class="mb-3">
+              <label class="form-label text-muted">Coupon Code</label>
+              <input type="text" class="form-control"
+                     [(ngModel)]="coupon.code" name="code" required pattern="[A-Z0-9]+" 
+                     #code="ngModel" placeholder="SHOES50" />
+              <div *ngIf="code.invalid && code.touched" class="text-danger">
+                Code is required (uppercase letters & numbers only)
+              </div>
+            </div>
+
+            <!-- Coupon Type -->
+            <div class="mb-3">
+              <label class="form-label text-muted">Coupon Type</label>
+              <select class="form-select" [(ngModel)]="coupon.couponType" name="couponType" required #couponType="ngModel">
+                <option value="null" disabled>Select Coupon Type</option>
+                <option [ngValue]="item" *ngFor="let item of couponTypeList">{{ item.name }}</option>
+              </select>
+              <div *ngIf="couponType.invalid && couponType.touched" class="text-danger">
+                Please select a coupon type
+              </div>
+            </div>
+
+            <!-- Discount Percentage -->
+            <div class="mb-3" *ngIf="coupon.couponType?.name === 'Discount Coupons'">
+              <label class="form-label text-muted">Discount Percentage</label>
+              <input type="number" class="form-control"
+                     [(ngModel)]="coupon.discount" name="discount" required min="0"
+                     #discount="ngModel" placeholder="Enter discount percentage" />
+              <div *ngIf="discount.invalid && discount.touched" class="text-danger">
+                Discount percentage is required and must be ≥ 0
+              </div>
+            </div>
+
+            <!-- Minimum Amount -->
+            <div class="mb-3">
+              <label class="form-label text-muted">Minimum Amount</label>
+              <input type="number" class="form-control"
+                     [(ngModel)]="coupon.minimumAmount" name="minAmount" required min="0"
+                     #minAmount="ngModel" placeholder="Enter minimum order amount" />
+              <div *ngIf="minAmount.invalid && minAmount.touched" class="text-danger">
+                Minimum amount is required and must be ≥ 0
+              </div>
+            </div>
+
+            <!-- Valid From & Valid Until -->
+            <div class="row mb-3">
+              <div class="col">
+                <label class="form-label text-muted">Valid From</label>
+                <input type="date" class="form-control"
+                       [(ngModel)]="coupon.validFrom" name="validFrom" required #validFrom="ngModel" />
+                <div *ngIf="validFrom.invalid && validFrom.touched" class="text-danger">
+                  Valid From date is required
+                </div>
+              </div>
+              <div class="col">
+                <label class="form-label text-muted">Valid Until</label>
+                <input type="date" class="form-control"
+                       [(ngModel)]="coupon.validUntil" name="validUntil" required #validUntil="ngModel" />
+                <div *ngIf="validUntil.invalid && validUntil.touched" class="text-danger">
+                  Valid Until date is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Use Limit -->
+            <div class="mb-3">
+            <label for="userLimit" class="form-label text-muted">User Limit (Default: Unlimited)</label>
             <select class="form-select"
                     [(ngModel)]="coupon.userLimit"
                     (ngModelChange)="onUserLimitChange($event)"
@@ -94,7 +123,7 @@
 
           <!-- User Limit Number -->
           <div class="mb-3" *ngIf="coupon.userLimit">
-            <label class="form-label">User Limit Number</label>
+            <label class="form-label text-muted">User Limit Number</label>
             <input type="number"
                   class="form-control"
                   [(ngModel)]="coupon.userLimitCount"
@@ -109,12 +138,13 @@
           </div>
 
 
-        </div>
-      </div>
 
-      <!-- Upload/AI Tabs -->
-      <div class="col-md-8 right-column">
-        <div class="card shadow-sm p-3 rounded-3">
+          </form>
+        </div>
+
+        <!-- Right Column (60% width with Tabs) -->
+        <div class="col-12 col-lg-7">
+          <div class="card shadow-sm p-3 rounded-3">
           <h5 class="mb-3">Upload or Generate Coupon</h5>
 
           <ul class="nav nav-tabs mb-3">
@@ -137,24 +167,40 @@
 
             <!-- Show uploaded file name -->
             <div *ngIf="imagePreviewUrl" class="coupon-preview mb-3">
-              <img [src]="imagePreviewUrl" alt="Coupon Preview" class="img-fluid rounded shadow-sm" style="width: 100%; height: auto; object-fit: contain;" />
+              <img [src]="imagePreviewUrl" alt="Coupon Preview" class="img-fluid rounded shadow-sm" style="width: 100%; max-height: 300px; object-fit: contain;" />
             </div>
           </div>
 
           <!-- AI Coupon Tab -->
           <div *ngIf="activeTab === 'ai'" class="text-center p-3">
-            <button class="btn btn-outline-primary" (click)="generateAICoupon()">✨ Generate with AI</button>
-            <div *ngIf="aiImage" class="border p-3 mt-3">
-              <img [src]="aiImage" alt="AI Coupon" class="img-fluid rounded" style="max-height: 250px;" />
+            <!-- Prompt Input -->
+            <input type="text" name="prompt" [(ngModel)]="prompt" placeholder="Describe your coupon idea..."
+              class="form-control mb-2" />
+          
+            <!-- Generate Button -->
+            <button class="btn btn-outline-primary" (click)="generateAICoupon()" [disabled]="loading">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+              ✨ Generate with AI
+            </button>
+          
+            <!-- AI Result (Image or Text) -->
+            <div *ngIf="aiImage" class="border p-3 mt-3 rounded">
+              <img [src]="aiImage" alt="AI Coupon" class="img-fluid rounded shadow-sm" style="max-height: 250px;" />
+            </div>
+          
+            <div *ngIf="aiText" class="border p-3 mt-3 text-start rounded">
+              <p>{{ aiText }}</p>
             </div>
           </div>
+
 
           <!-- Save Button -->
           <div class="text-end mt-3">
             <button class="btn btn-primary px-4" (click)="saveCoupon()" [disabled]="!couponForm.valid">Save Coupon</button>
           </div>
         </div>
+        </div>
       </div>
-    </div>
-  </div>
-</form>
+    </c-card-body>
+  </c-card>
+</c-col>
