@@ -5,6 +5,7 @@ import { PaginationComponent } from '../../pages/pagination/pagination.component
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent } from '@coreui/angular';
 import { CouponService } from '../../../../commons/services/Coupon/coupon.service';
 import { StoreService } from '../../../../commons/services/Store/store.service';
+import { StoreWiseCouponComponent } from '../store-wise-coupon/store-wise-coupon.component';
 
 @Component({
   selector: 'app-couponlist',
@@ -17,6 +18,7 @@ import { StoreService } from '../../../../commons/services/Store/store.service';
     CardComponent,
     CardHeaderComponent,
     CardBodyComponent,
+    StoreWiseCouponComponent,
     ColComponent
   ],
   templateUrl: './coupon-list.component.html',
@@ -35,9 +37,23 @@ export class CouponlistComponent implements OnInit {
   storeNameSearch = '';
   selectedStore?: number;
   selectedType?: number; 
+  activeTab: 'coupons' | 'storeWise' = 'coupons';  // default
+
 
   stores: any[] = [];
   types: any[] = []; 
+colors: string[] = [
+  '#e74c3c', // red
+  '#27ae60', // green
+  '#2980b9', // blue
+  '#8e44ad', // purple
+  '#f39c12', // orange
+  '#16a085'  // teal
+];
+
+getColor(index: number): string {
+  return this.colors[index % this.colors.length];
+}
 
   constructor(
     private couponService: CouponService,

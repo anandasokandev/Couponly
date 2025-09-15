@@ -1,0 +1,65 @@
+/* Image styling */
+img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 4px; /* optional: rounded corners */
+}
+
+/* Table wrapper for horizontal scrolling */
+.responsive-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Table styles */
+.responsive-table {
+  width: 100%;
+  min-width: 100%;
+  border-collapse: collapse;
+  overflow-x: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* clean modern font */
+  font-size: 16px; /* increase font size for better readability */
+  color: #333;
+}
+
+/* Header and body cells */
+.responsive-table thead tr th,
+.responsive-table tbody tr td {
+  white-space: nowrap;
+  padding: 10px 12px;
+  border: none !important;
+  vertical-align: middle;
+}
+
+/* Optional: header background and text color */
+.responsive-table thead tr {
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+}
+
+/* Row hover effect */
+.responsive-table tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Responsive behavior for smaller screens */
+@media (max-width: 991.98px) {
+  .responsive-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .responsive-table table,
+  .responsive-table thead,
+  .responsive-table tbody,
+  .responsive-table th,
+  .responsive-table td,
+  .responsive-table tr {
+    display: revert;
+  }
+}

@@ -1,7 +1,7 @@
 .coupon-card {
   width: 280px;
   height: auto;
-  border: 3px solid #ccc; 
+  border: 1px solid #ccc; 
   border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -47,29 +47,34 @@
   margin-bottom: 4px;
 }
 
-.coupon-card:nth-child(1) .coupon-title {
-  color: #e74c3c; 
+button.active {
+  background-color: #007bff;
+  color: white;
+}
+/* Tabs overall layout */
+.nav-tabs {
+  border-bottom: 1px solid #dee2e6;
 }
 
-.coupon-card:nth-child(2) .coupon-title {
-  color: #27ae60; 
+/* Inactive tab */
+.nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  color: #6c757d;
+  background-color: transparent;
+  font-weight: 500;
 }
 
-.coupon-card:nth-child(3) .coupon-title {
-  color: #2980b9; 
+/* Active tab */
+.nav-tabs .nav-link.active {
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-bottom-color: transparent;
+  font-weight: 600;
 }
 
-.coupon-card:nth-child(4) .coupon-title {
-  color: #8e44ad; 
-}
-
-.coupon-card:nth-child(5) .coupon-title {
-  color: #f39c12; 
-}
-
-.coupon-card:nth-child(6) .coupon-title {
-  color: #16a085; 
-}
 
 
 .coupon-code-box {
