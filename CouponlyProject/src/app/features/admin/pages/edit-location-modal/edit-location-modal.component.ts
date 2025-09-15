@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, SimpleChanges, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, NgForm } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 import { LocationService } from '../../../../commons/services/Admin/location.service';
 import { District } from '../../../../commons/models/district.model';
@@ -27,16 +27,17 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
   styleUrl: './edit-location-modal.component.scss'
 })
 export class EditLocationModalComponent {
+
   @Input() location: Location | null = null;
   @Output() locationUpdated = new EventEmitter<Location>();
   @Output() modalClosed = new EventEmitter<void>();
 
   districts: District[] = [];
 
+  @ViewChild('locationForm') locationForm!: NgForm;
   @ViewChild('closeButton') closeButton!: ElementRef;
 
-  constructor(private locationApi: LocationService, private toastService: ToastService) {
-  }
+  constructor(private locationApi: LocationService, private toastService: ToastService) { }
 
   ngOnInit() {
     this.fetchDistrict();
@@ -58,6 +59,12 @@ export class EditLocationModalComponent {
   }
 
   onSave(): void {
+
+    if (this.locationForm.invalid) {
+      this.locationForm.control.markAllAsTouched();
+      return;
+    }
+    
     if (this.location) {
       this.locationApi.editLocation(this.location)
         .subscribe({
@@ -77,12 +84,10 @@ export class EditLocationModalComponent {
     }
   }
 
-
   closeModal(): void {
     this.closeButton.nativeElement.click();
   }
 
-  // Helper method to get district name by ID
   getDistrictName(districtId: number): string {
     const district = this.districts.find(d => d.id === districtId);
     return district ? district.districtName : '';
