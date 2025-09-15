@@ -58,13 +58,13 @@ export class GenerateCouponComponent implements OnInit {
     console.log(this.isUserLimit);
     
     this.couponApi.getCouponType().subscribe({
-      next: (data) => {
+      next: (data: any) => {
         if(data.isSuccess){
           console.log(data);
           this.couponTypeList = data.data;
         }
       },
-      error: (err) => {
+      error: (err: any) => {
         this.toastService.show({ type: 'error', message: `Failed to load coupon types` });
       }
     });
@@ -124,23 +124,23 @@ export class GenerateCouponComponent implements OnInit {
     
     
     this.imageUpload.UploadImage(this.selectedFile!).subscribe({
-      next: res => {
+      next: (res: any) => {
           if (res.status && res.url) {
             const payload = this.buildPayload(res.url);
             console.log(payload);
             this.couponApi.GenerateCoupon(payload).subscribe({
-              next: res =>{
+              next: (res : any )=>{
                 this.toastService.show({ type: 'success', message: 'Coupon Generated Successfully' });
                 console.log('Coupon Generated Successfully');
                 this.coupon = this.initialCoupon();
               },
-              error: err => {
+              error:( err: any) => {
                 this.toastService.show({ type: 'error', message: 'Coupon generation failed' });
               } 
             })
           }
         },
-        error: err => {
+        error:( err: any) => {
           this.toastService.show({ type: 'error', message: 'Failed to upload coupon image' });
         }
     })
