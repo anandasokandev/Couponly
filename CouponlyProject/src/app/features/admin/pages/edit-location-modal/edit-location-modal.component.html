@@ -4,73 +4,119 @@
 </c-modal-header>
 
 <c-modal-body>
-  <form cForm *ngIf="location">
+  <form cForm #locationForm="ngForm" *ngIf="location">
     <!-- District -->
     <div class="mb-3">
-      <label cLabel for="districtSelect">District</label>
+      <label cLabel for="districtSelect">District <span class="req">*</span></label>
       <select
         class="form-control"
         [(ngModel)]="location.districtId"
-        name="district"
+        name="districtId"
         id="districtSelect"
+        required
+        #districtId="ngModel"
       >
+        <option value="">-- Select District --</option>
         <option *ngFor="let district of districts" [value]="district.id">
           {{ district.districtName }}
         </option>
       </select>
+      <div *ngIf="districtId.invalid && districtId.touched" class="text-danger">
+        District is required.
+      </div>
     </div>
 
     <!-- Location Name -->
     <div class="mb-3">
-      <label cLabel for="locationName">Location</label>
+      <label cLabel for="locationName">Location <span class="req">*</span></label>
       <input
         cFormControl
         id="locationName"
         [(ngModel)]="location.locationName"
         name="locationName"
         type="text"
+        required
+        minlength="3"
+        #locationName="ngModel"
       />
+      <div *ngIf="locationName.invalid && locationName.touched" class="text-danger">
+        <span *ngIf="locationName.errors?.['required']">Location name is required.</span>
+        <span *ngIf="locationName.errors?.['minlength']">Minimum 3 characters required.</span>
+      </div>
     </div>
 
     <!-- Pincode -->
     <div class="mb-3">
-      <label cLabel for="pincode">Pincode</label>
+      <label cLabel for="pincode">Pincode <span class="req">*</span></label>
       <input
         cFormControl
         id="pincode"
         [(ngModel)]="location.pincode"
         name="pincode"
         type="text"
+        required
+        pattern="^[0-9]{6}$"
+        #pincode="ngModel"
       />
+      <div *ngIf="pincode.invalid && pincode.touched" class="text-danger">
+        <span *ngIf="pincode.errors?.['required']">Pincode is required.</span>
+        <span *ngIf="pincode.errors?.['pattern']">Pincode must be 6 digits.</span>
+      </div>
     </div>
 
     <!-- Latitude -->
     <div class="mb-3">
-      <label cLabel for="latitude">Latitude</label>
+      <label cLabel for="latitude">Latitude <span class="req">*</span></label>
       <input
         cFormControl
         id="latitude"
         [(ngModel)]="location.latitude"
         name="latitude"
-        type="text"
+        type="number"
+        step="any"
+        required
+        min="-90"
+        max="90"
+        #latitude="ngModel"
       />
+      <div *ngIf="latitude.invalid && latitude.touched" class="text-danger">
+        <span *ngIf="latitude.errors?.['required']">Latitude is required.</span>
+        <span *ngIf="latitude.errors?.['min']">Minimum value is -90.</span>
+        <span *ngIf="latitude.errors?.['max']">Maximum value is 90.</span>
+      </div>
     </div>
 
     <!-- Longitude -->
     <div class="mb-3">
-      <label cLabel for="longitude">Longitude</label>
+      <label cLabel for="longitude">Longitude <span class="req">*</span></label>
       <input
         cFormControl
         id="longitude"
         [(ngModel)]="location.longitude"
         name="longitude"
-        type="text"
+        type="number"
+        step="any"
+        required
+        min="-180"
+        max="180"
+        #longitude="ngModel"
       />
+      <div *ngIf="longitude.invalid && longitude.touched" class="text-danger">
+        <span *ngIf="longitude.errors?.['required']">Longitude is required.</span>
+        <span *ngIf="longitude.errors?.['min']">Minimum value is -180.</span>
+        <span *ngIf="longitude.errors?.['max']">Maximum value is 180.</span>
+      </div>
     </div>
   </form>
 </c-modal-body>
 
 <c-modal-footer>
   <button cModalToggle cButton color="secondary">Cancel</button>
-  <button cButton color="primary" (click)="onSave()">Save</button>
+  <button
+    cButton
+    color="primary"
+    (click)="onSave()"
+  >
+    Save
+  </button>
 </c-modal-footer>
