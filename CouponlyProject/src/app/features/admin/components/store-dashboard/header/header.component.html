@@ -1,14 +1,18 @@
 
-<c-card class="mb-3" *ngIf="shouldShowStoreCard()">
+<c-card class="mb-3" *ngIf="shouldShowStoreCard() && storeData">
   <c-card-body class="d-flex align-items-center px-4 py-3">
     <div class="d-flex align-items-center">
-      <img src="assets/images/nyka.webp" alt="Store Logo" class="rounded me-3" width="60" height="60">
+      <!-- <img [src]="storeData.logo || 'assets/images/default-logo.webp'" alt="Store Logo" class="rounded me-3" width="60" height="60"> -->
+      <div class="logo-box">
+                 <img [src]="storeData?.logo" alt="Store Logo" >
+            </div>
       <div>
-        <h5 class="mb-1">Nykka</h5>
+        
+        <h5 class="mb-1">{{ storeData.name }}</h5>
         <p class="mb-0 text-muted">
-          <strong>Code:</strong> S250811208<br>
-          <strong>Contact:</strong> 9745224452<br>
-          <strong>Email:</strong>  bnyka&#64;example.com
+          <strong>Code:</strong> {{ storeData.code }}<br>
+          <strong>Contact:</strong> {{ storeData.contact }}<br>
+          <strong>Email:</strong> {{ storeData.email }}
         </p>
       </div>
     </div>

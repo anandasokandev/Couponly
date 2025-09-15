@@ -1,0 +1,111 @@
+.coupon-card {
+  width: 280px;
+  height: auto;
+  border: 3px solid #ccc; 
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  padding: 0;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    border-color: #bbb;
+  }
+}
+
+.coupon-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.coupon-content {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;  
+  flex: 1;
+}
+
+.coupon-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #222;
+}
+
+.coupon-desc {
+  font-size: 0.95rem;       
+  color: #555;
+  font-style: italic;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.coupon-card:nth-child(1) .coupon-title {
+  color: #e74c3c; 
+}
+
+.coupon-card:nth-child(2) .coupon-title {
+  color: #27ae60; 
+}
+
+.coupon-card:nth-child(3) .coupon-title {
+  color: #2980b9; 
+}
+
+.coupon-card:nth-child(4) .coupon-title {
+  color: #8e44ad; 
+}
+
+.coupon-card:nth-child(5) .coupon-title {
+  color: #f39c12; 
+}
+
+.coupon-card:nth-child(6) .coupon-title {
+  color: #16a085; 
+}
+
+
+.coupon-code-box {
+  display: inline-block;
+  background-color: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.coupon-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.coupon-details p {
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.2;
+  color: #555;
+}
+
+.coupon-details p.user-limit {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #222;
+}
+
+.coupon-dates {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 6px;
+}
