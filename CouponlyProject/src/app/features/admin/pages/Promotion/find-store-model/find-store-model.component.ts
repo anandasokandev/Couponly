@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Inject, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonDirective, FormModule, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, SpinnerModule, TableModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
@@ -8,6 +8,8 @@ import { Location } from '../../../../../commons/models/location.model';
 import { Category } from '../../../../../commons/models/category.model';
 import { PromotionService } from '../../../../../commons/services/Promotion/promotion.service';
 import { PaginationComponent } from '../../pagination/pagination.component';
+import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
+import { CostSettingService } from '../../../../../commons/services/Promotion/cost-setting.service';
 
 export interface Coupon {
   id: number;
@@ -73,7 +75,7 @@ export class FindStoreModelComponent {
 
   @Output() contactsAdded = new EventEmitter<{ store: any; count: number; contactsNeeded: number; coupon: any }>();
 
-
+  private toastService = inject(ToastService);
   constructor(private fb: FormBuilder, private promotionService: PromotionService) {
     this.filterForm = this.fb.group({
       district: ['0'],
@@ -189,6 +191,7 @@ export class FindStoreModelComponent {
     this.selectedCoupon = coupon;
     this.couponDetails = null;
     this.couponBox = false;
+    // this.costSetting.
   }
 
   /**
@@ -196,7 +199,7 @@ export class FindStoreModelComponent {
    */
   addContacts(): void {
     if (!this.selectedStore || !this.contactsNeeded || this.contactsNeeded <= 0 || !this.selectedCoupon) {
-      alert('Please select a store, a coupon, and enter a valid number of contacts.');
+      this.toastService.show({ message: 'Please select a store, a coupon, and enter a valid number of contacts.', type: 'error' });
       return;
     }
 

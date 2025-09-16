@@ -38,7 +38,7 @@ export interface PromotionCampaign {
   };
   couponCode: string;
   couponName?: string;
-  sendType: 'now' | 'schedule';
+  sendType: 'immediate' | 'schedule';
   scheduleDate?: string;
 }
 
@@ -83,7 +83,7 @@ export class PromotionComponent {
      },
      couponCode: '',
      couponName: '',
-     sendType: 'now',
+     sendType: 'immediate',
      scheduleDate: ''
    };
    serviceCosts: CostSetting[] = [];
@@ -101,7 +101,7 @@ export class PromotionComponent {
 
   updateChannel(channel: keyof PromotionCampaign['channels']): void {
     this.campaign.channels[channel] = !this.campaign.channels[channel];
-    const service = this.serviceCosts.find(service => service.name.toLowerCase() === channel);
+    const service = this.serviceCosts.find(service => service.ServiceName.toLowerCase() === channel);
     if (service) {
       const charge = service.charge * this.campaign.contactCount;
       const profit = service.profit * this.campaign.contactCount;
@@ -113,8 +113,8 @@ export class PromotionComponent {
   saveCampaign(): void {
     this.isSaving = true;
 
-    // Clear schedule date if sending now
-    if (this.campaign.sendType === 'now') {
+    // Clear schedule date if sending immediately
+    if (this.campaign.sendType === 'immediate') {
       this.campaign.scheduleDate = '';
     }
     console.log('Saving Campaign:', this.campaign);
