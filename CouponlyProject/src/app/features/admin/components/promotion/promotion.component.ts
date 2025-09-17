@@ -25,7 +25,9 @@ export interface PromotionCampaign {
   promotionName: string;
   selectedCategory: string;
   selectedStore: string;
+  storeId: number;
   contactCount: number;
+  publicContacts: number;
   channels: {
     whatsapp: boolean;
     email: boolean;
@@ -36,6 +38,7 @@ export interface PromotionCampaign {
     email: number;
     sms: number;
   };
+  couponId: number;
   couponCode: string;
   couponName?: string;
   sendType: 'immediate' | 'schedule';
@@ -69,8 +72,10 @@ export class PromotionComponent {
    campaign: PromotionCampaign = {
      promotionName: 'xcv',
      selectedCategory: '',
+     storeId: 0,
      selectedStore: '',
      contactCount: 100,
+     publicContacts: 0,
      channels: {
        whatsapp: false,
        email: false,
@@ -81,6 +86,7 @@ export class PromotionComponent {
        email: 0,
        sms: 0
      },
+     couponId: 0,
      couponCode: '',
      couponName: '',
      sendType: 'immediate',
@@ -95,13 +101,13 @@ export class PromotionComponent {
   ngOnInit(): void {
     this.costService.getAllServices().subscribe(services => {
       this.serviceCosts = services.data;
-      console.log('Service Costs:', services.data);
+      console.log('Service Costs:', this.serviceCosts);
     });
   }
 
   updateChannel(channel: keyof PromotionCampaign['channels']): void {
     this.campaign.channels[channel] = !this.campaign.channels[channel];
-    const service = this.serviceCosts.find(service => service.ServiceName.toLowerCase() === channel);
+    const service = this.serviceCosts.find(service => service.name.toLowerCase() === channel);
     if (service) {
       const charge = service.charge * this.campaign.contactCount;
       const profit = service.profit * this.campaign.contactCount;
@@ -127,7 +133,9 @@ export class PromotionComponent {
     // Update the campaign details based on the event data
     this.campaign.selectedCategory = event.store.category;
     this.campaign.selectedStore = event.store.store;
+    this.campaign.storeId = event.store.id;
     this.campaign.contactCount = event.contactsNeeded;
+    this.campaign.couponId = event.coupon.id;
     this.campaign.couponCode = event.coupon.couponCode;
     this.campaign.couponName = event.coupon.name;
   }

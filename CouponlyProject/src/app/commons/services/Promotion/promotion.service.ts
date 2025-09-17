@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../../../../environments/environment';
@@ -10,7 +10,11 @@ export class PromotionService {
   
     constructor(private http: HttpClient) { }
 
-    
+    createPromotion(promotionData: any): Observable<any> {
+      const headers = new HttpHeaders({ loginid: sessionStorage.getItem('userId') ?? 0 });
+      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.NewPromotion}`, promotionData, { headers });
+    }
+
     getStores(currentPage: number, itemsPerPage: number, type: string, searchtype: string, searchtext: string) {
       const params = new HttpParams()
         .set('PageNumber', currentPage.toString())

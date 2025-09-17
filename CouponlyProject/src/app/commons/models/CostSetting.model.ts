@@ -1,6 +1,6 @@
 export interface CostSetting {
   id: number;
-  ServiceName: string;
+  name: string;
   icon: string;
   charge: number;
   profit: number;
