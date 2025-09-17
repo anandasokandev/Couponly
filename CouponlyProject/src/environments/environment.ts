@@ -1,10 +1,11 @@
 export const environment = {
   production: true,
-   apiBaseUrl: 'https://api.couponly.store/api',
-  // apiBaseUrl: 'https://localhost:7224/api',
+  //  apiBaseUrl: 'https://api.couponly.store/api',
+  apiBaseUrl: 'https://localhost:7224/api',
 
   imageUploadUrl: 'https://images.couponly.store/api/upload',
   imageKey: '5dtg419dtny9y84nu67ry7',
+  
   endpoints: {
     redeem: {
       downloadexel: 'Redeems/downloadexel',
@@ -17,6 +18,7 @@ export const environment = {
       ExportExcel: 'Redeems/ExportRedeemsToExcel',
       ExportEmail: 'Redeems/ExportToExcelAndMail'
     },
+
     user: {
       login: 'user/login',
       fetchusers: 'User/AllUsers',
@@ -26,6 +28,7 @@ export const environment = {
       updateusers:'User/Update'
       
     },
+
     location: {
       fetchDistrict: 'District',
       addLocation: "Location",
@@ -34,6 +37,7 @@ export const environment = {
       filterLocation: 'Location/filter',
       toggleLocation: 'Location/toggle'
     },
+
      store: {
       fetchdistricts:'District',
       fetchcategories:'Store/Categories',
@@ -48,6 +52,7 @@ export const environment = {
       contactExists:'Store/check-contact-existence',
       updateStorePassword:'Store/update-password'
     },
+
     contact: {
       AllContacts: 'Contact/AllContacts',
       AllFilters: 'Contact/AllFilters',
@@ -58,27 +63,45 @@ export const environment = {
       importcsv:'Contact/ImportContactsFromCsv',
       importvcard :'Contact/ImportContactsFromVCard'
     },
+
     login:{
-     signup: '/Login',
-    forgotPassword: '/Login/forgot-password',
-    verifyToken: '/Login/verify-token',
-    updatePassword:'/Login/updatepassword'
+      signup: '/Login',
+      forgotPassword: '/Login/forgot-password',
+      verifyToken: '/Login/verify-token',
+      updatePassword:'/Login/updatepassword'
     },
+
     coupon: {
       GetCouponType : 'Coupon/CouponTypes', 
       GenerateCoupon: 'Coupon',
       GetAllCoupons: 'Coupon',
       FilterCoupons:'Coupon/filter'
     },
+
     promotion: {
       service: {
         AllServices: 'ServiceHandler/AllServices',
         UpdateService: 'ServiceHandler/UpdateService',
       },
+
       coupon: {
         CouponSearch: 'Coupon/filter'
-      }
+      },
+
+      LoocationContact: {
+        ContactCount: '',
+        SelectedContacts: ''
+      },
+
+      StoreContact: {
+        ContactCount: '',
+        SelectedContacts: ''
+      },
+
+      NewPromotion: 'Promotion/NewPromotion',
+      ValidateToken: 'Promotion/ValidatePaymentToken',
     },
+
     storedashboard: {
       storeinfo: 'StoreDashboardStore/StoreInfo',
       redeemhistory: 'StoreDashboardRedeem/FilterStoreRedeems',
