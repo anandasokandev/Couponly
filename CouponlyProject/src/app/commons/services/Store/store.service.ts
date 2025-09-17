@@ -86,4 +86,9 @@ updateStorePassword(email: string, payload: { newPassword: string; confirmPasswo
     payload
   );
 }
+verifyPaymentToken(token: string):Observable<any>{
+  return this.http.post<any>(
+    `${environment.apiBaseUrl}/${environment.endpoints.store.verifyPaymentToken}`,token
+  );
+}
 }

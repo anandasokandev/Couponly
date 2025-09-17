@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StoreService } from '../../../../commons/services/Store/store.service';
 
 @Component({
   selector: 'app-payment',
@@ -15,8 +16,9 @@ export class PaymentComponent {
   loading = false;
   showResult = false;
   isSuccess = false;
+  token :string='';
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router,private route: ActivatedRoute,private api: StoreService) {
     this.paymentForm = this.fb.group({
       cardholderName: [''],
       cardNumber: [''],
@@ -25,6 +27,29 @@ export class PaymentComponent {
     });
   }
 
+  ngOnInit(){
+       this.route.queryParamMap.subscribe(params => {
+      this.token = params.get('token') || '';
+      if (this.token) {
+        this.verifyToken(this.token);
+      } else {
+        this.router.navigate(['/404']);
+      }
+    });
+  }
+  private verifyToken(token: string): void {
+    this.api.verifyPaymentToken( token ).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          
+          console.log(res)
+        } else {
+          this.router.navigate(['/404']);
+        }
+      },
+      error: () => this.router.navigate(['/404'])
+    });
+  }
   startPayment() {
     this.loading = true;
     this.showResult = false;

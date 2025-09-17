@@ -50,7 +50,8 @@ export const environment = {
       storeExists:'Store/check-store-existence',
       emailExists:'Store/check-email-existence',
       contactExists:'Store/check-contact-existence',
-      updateStorePassword:'Store/update-password'
+      updateStorePassword:'Store/update-password',
+      verifyPaymentToken:'Promotion/ValidatePaymentToken'
     },
 
     contact: {
