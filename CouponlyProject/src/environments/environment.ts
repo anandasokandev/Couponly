@@ -2,8 +2,6 @@ export const environment = {
   production: true,
   //  apiBaseUrl: 'https://api.couponly.store/api',
   apiBaseUrl: 'https://localhost:7224/api',
-  //  apiBaseUrl: 'https://api.couponly.store/api',
-  apiBaseUrl: 'https://localhost:7224/api',
 
   imageUploadUrl: 'https://images.couponly.store/api/upload',
   imageKey: '5dtg419dtny9y84nu67ry7',
@@ -77,11 +75,7 @@ export const environment = {
       signup: '/Login',
       forgotPassword: '/Login/forgot-password',
       verifyToken: '/Login/verify-token',
-      updatePassword:'/Login/updatepassword'
-      signup: '/Login',
-      forgotPassword: '/Login/forgot-password',
-      verifyToken: '/Login/verify-token',
-      updatePassword:'/Login/updatepassword'
+      updatePassword:'/Login/updatepassword',
     },
 
 
@@ -102,9 +96,6 @@ export const environment = {
       coupon: {
         CouponSearch: 'Coupon/filter'
       },
-      NewPromotion: 'Promotion/NewPromotion'
-      },
-
       LoocationContact: {
         ContactCount: '',
         SelectedContacts: ''
@@ -114,10 +105,10 @@ export const environment = {
         ContactCount: '',
         SelectedContacts: ''
       },
-
-      NewPromotion: 'Promotion/NewPromotion',
       ValidateToken: 'Promotion/ValidatePaymentToken',
-    },
+      NewPromotion: 'Promotion/NewPromotion'
+      },
+
 
     storedashboard: {
       storeinfo: 'StoreDashboardStore/StoreInfo',
