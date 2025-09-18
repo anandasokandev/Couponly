@@ -80,9 +80,16 @@ export const routes: Routes = [
           title: 'Cost Settings'
         }
       },
+      // {
+      //   path: 'promotion',
+      //   loadComponent: () => import('./components/promotion/promotion.component').then(m => m.PromotionComponent),
+      //   data: {
+      //     title: 'Promotion'
+      //   }
+      // },
       {
         path: 'promotion',
-        loadComponent: () => import('./components/promotion/promotion.component').then(m => m.PromotionComponent),
+        loadComponent: () => import('./components/view-promotions/view-promotions.component').then(m => m.ViewPromotionsComponent),
         data: {
           title: 'Promotion'
         }
