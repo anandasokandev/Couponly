@@ -36,7 +36,7 @@ export interface Coupon {
     FormsModule,
     ReactiveFormsModule,
     TableModule,
-    PaginationComponent
+    PaginationComponent,
   ],
   templateUrl: './find-store-model.component.html',
   styleUrl: './find-store-model.component.scss'
@@ -58,7 +58,7 @@ export class FindStoreModelComponent {
   // --- Properties for Data ---
   searchResults: any[] = [];
   selectedStore: any | null = null;
-  contactsNeeded: number | null = null;
+  contactsNeeded: number = 0;
   districts: District[] = [];
   locations: Location[] = [];
   categories: Category[] = [];
@@ -70,6 +70,9 @@ export class FindStoreModelComponent {
   couponDetails: any | null = null;
   couponText: string = '';
   selectedCoupon: Coupon | null = null;
+  StoreContactCount: number = 0;
+  PublicContactCount: number = 0;
+  Math = Math;
 
   filterForm: FormGroup;
 
@@ -182,7 +185,7 @@ export class FindStoreModelComponent {
     this.couponDetails = null; // Reset coupon details when a new store is selected
     this.couponBox = true; // Show coupon box when a new store is selected
     this.storeBox = false;
-    this.contactsNeeded = null; // Reset contacts needed when a new store is selected
+    this.contactsNeeded = 0; // Reset contacts needed when a new store is selected
     this.searchResults = [];
     this.searchCoupon();
   }
@@ -191,12 +194,22 @@ export class FindStoreModelComponent {
     this.selectedCoupon = coupon;
     this.couponDetails = null;
     this.couponBox = false;
-    // this.costSetting.
+    this.promotionService.getStoreContactCount(this.selectedStore.id).subscribe({
+      next: (response: any) => {
+        this.StoreContactCount = response.data;
+      }
+    });
+    this.promotionService.getPublicContactCount(this.selectedStore.id).subscribe({
+      next: (response: any) => {
+        this.PublicContactCount = response.data.count;
+      }
+    });
   }
 
-  /**
-   * Final action. Emits the data and closes the modal.
-   */
+  checkContactsNeeded(): void {
+    this.contactsNeeded = Math.min(this.contactsNeeded, this.PublicContactCount);
+  }
+
   addContacts(): void {
     if (!this.selectedStore || !this.contactsNeeded || this.contactsNeeded <= 0 || !this.selectedCoupon) {
       this.toastService.show({ message: 'Please select a store, a coupon, and enter a valid number of contacts.', type: 'error' });

@@ -1,0 +1,83 @@
+<c-modal #CreatePromotionModal [scrollable]="true" alignment="center">
+  </c-modal>
+
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-header class="d-flex align-items-center">
+      <strong class="w-100 fs-5">Promotions</strong>
+      <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
+        <button class="btn btn-primary btn-sm px-3 py-1" [cModalToggle]="CreatePromotionModal.id">
+          + Add New Promotion
+        </button>
+      </div>
+    </c-card-header>
+
+    <c-card-body>
+      <form [formGroup]="filterForm" (ngSubmit)="applyFiltersAndSort()">
+        <div class="d-flex flex-wrap justify-content-start align-items-center py-3">
+          <div class="m-2">
+            <select cSelect class="form-select form-select-sm" formControlName="status">
+              <option value="">All Statuses</option>
+              <option value="Sent">Sent</option>
+              <option value="Scheduled">Scheduled</option>
+              <option value="Draft">Draft</option>
+            </select>
+          </div>
+          <div class="d-flex gap-1 align-items-center m-2">
+            <label for="fromDate" class="text-nowrap">From:</label>
+            <input type="date" id="fromDate" class="form-control form-control-sm" formControlName="fromDate" />
+          </div>
+          <div class="d-flex gap-1 align-items-center m-2">
+            <label for="toDate" class="text-nowrap">To:</label>
+            <input type="date" id="toDate" class="form-control form-control-sm" formControlName="toDate" />
+          </div>
+          <button class="btn btn-sm btn-success text-white m-2" type="submit">Filter</button>
+          <button class="btn btn-sm btn-danger text-white m-2" type="button" (click)="resetFilters()">Reset</button>
+        </div>
+      </form>
+
+      <table [hover]="true" cTable class="responsive-table">
+        <thead>
+          <tr class="text-nowrap">
+            <th (click)="onSort('title')">Title <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
+            <th (click)="onSort('status')">Status <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
+            <th (click)="onSort('sentOn')">Date <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
+            <th (click)="onSort('totalContacts')">Contacts <svg [cIcon]="icons.cilSortNumericDown"></svg></th>
+            <th>Actions</th>
+          </tr>
+          <tr>
+            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by title..." [(ngModel)]="titleFilter" (ngModelChange)="applyFiltersAndSort()" /></th>
+            <th></th> <th></th> <th></th> <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let promo of paginatedPromotions">
+            <td data-label="Title">{{ promo.title }}</td>
+            <td data-label="Status">
+              <span class="status-badge" [ngClass]="'status-' + promo.status.toLowerCase()">
+                {{ promo.status }}
+              </span>
+            </td>
+            <td data-label="Date">{{ promo.sentOn | date: 'short' }}</td>
+            <td data-label="Contacts">{{ promo.totalContacts }}</td>
+            <td data-label="Actions"><button class="btn btn-sm btn-light">View</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="isLoading" class="d-flex justify-content-center m-2">
+        <c-spinner color="info" class="me-2" />Loading...
+      </div>
+      <div class="d-flex justify-content-center m-2" *ngIf="!isLoading && displayedPromotions.length === 0">
+        No promotions found!
+      </div>
+
+      <!-- <app-pagination *ngIf="!isLoading && displayedPromotions.length > 0"
+        [totalItems]="displayedPromotions.length"
+        [itemsPerPage]="itemsPerPage"
+        [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)">
+      </app-pagination> -->
+    </c-card-body>
+  </c-card>
+</c-col>

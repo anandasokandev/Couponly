@@ -16,8 +16,12 @@ export class PromotionService {
     }
 
     getStoreContactCount(storeId: number): Observable<any> {
-      const params = new HttpParams().set('StoreId', storeId.toString());
-      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchstore}`, { params });
+      return this.http.get(`${environment.apiBaseUrl}/Store/${storeId}/count`);
+    }
+
+    getPublicContactCount(storeId: number): Observable<any> {
+      const headers = new HttpHeaders({ storeid: storeId ?? 0 });
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.LocationContact.ContactCount}`, { headers });
     }
 
     getStores(currentPage: number, itemsPerPage: number, type: string, searchtype: string, searchtext: string) {

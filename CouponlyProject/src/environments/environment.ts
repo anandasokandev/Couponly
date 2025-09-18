@@ -6,7 +6,6 @@ export const environment = {
   imageUploadUrl: 'https://images.couponly.store/api/upload',
   imageKey: '5dtg419dtny9y84nu67ry7',
 
-  
   endpoints: {
     redeem: {
       downloadexel: 'Redeems/downloadexel',
@@ -20,7 +19,6 @@ export const environment = {
       ExportEmail: 'Redeems/ExportToExcelAndMail'
     },
 
-
     user: {
       login: 'user/login',
       fetchusers: 'User/AllUsers',
@@ -31,7 +29,6 @@ export const environment = {
       
     },
 
-
     location: {
       fetchDistrict: 'District',
       addLocation: "Location",
@@ -40,7 +37,6 @@ export const environment = {
       filterLocation: 'Location/filter',
       toggleLocation: 'Location/toggle'
     },
-
 
      store: {
       fetchdistricts:'District',
@@ -58,7 +54,6 @@ export const environment = {
       verifyPaymentToken:'Promotion/ValidatePaymentToken'
     },
 
-
     contact: {
       AllContacts: 'Contact/AllContacts',
       AllFilters: 'Contact/AllFilters',
@@ -70,7 +65,6 @@ export const environment = {
       importvcard :'Contact/ImportContactsFromVCard'
     },
 
-
     login:{
       signup: '/Login',
       forgotPassword: '/Login/forgot-password',
@@ -78,14 +72,12 @@ export const environment = {
       updatePassword:'/Login/updatepassword',
     },
 
-
     coupon: {
       GetCouponType : 'Coupon/CouponTypes', 
       GenerateCoupon: 'Coupon',
       GetAllCoupons: 'Coupon',
       FilterCoupons:'Coupon/filter'
     },
-
 
     promotion: {
       service: {
@@ -96,19 +88,20 @@ export const environment = {
       coupon: {
         CouponSearch: 'Coupon/filter'
       },
-      LoocationContact: {
-        ContactCount: '',
+      LocationContact: {
+        ContactCount: 'LocationContact/GetCountByStoreId',
         SelectedContacts: ''
       },
 
       StoreContact: {
-        ContactCount: '',
+        Store: 'Store',
+        Count: 'count',
         SelectedContacts: ''
       },
+
       ValidateToken: 'Promotion/ValidatePaymentToken',
       NewPromotion: 'Promotion/NewPromotion'
-      },
-
+    },
 
     storedashboard: {
       storeinfo: 'StoreDashboardStore/StoreInfo',

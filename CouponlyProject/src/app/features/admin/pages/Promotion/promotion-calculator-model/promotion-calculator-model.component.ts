@@ -39,6 +39,10 @@ export class PromotionCalculatorModelComponent {
     
   }
 
+  isEmpty(campaign: any): boolean {
+    return !campaign || !campaign.promotionName || !campaign.storeId || !campaign.couponId || !campaign.contactCount || campaign.contactCount <= 0 || (!campaign.channels.whatsapp && !campaign.channels.email && !campaign.channels.sms);
+  }
+
   saveChanges() {
     this.isSaving = true;
     const channels: number[] = [];
