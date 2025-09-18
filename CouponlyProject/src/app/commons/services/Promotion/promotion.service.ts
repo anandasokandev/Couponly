@@ -48,4 +48,8 @@ export class PromotionService {
         params: { StoreId: storeId.toString(), CouponCode: couponCode }
       });
     }
+
+    Payment(paymentData:any):Observable<any>{
+      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.service.Payment}`,paymentData)
+    }
 }

@@ -91,6 +91,7 @@ export const environment = {
       service: {
         AllServices: 'ServiceHandler/AllServices',
         UpdateService: 'ServiceHandler/UpdateService',
+        Payment: 'Payment/AddPayment'
       },
 
       coupon: {
