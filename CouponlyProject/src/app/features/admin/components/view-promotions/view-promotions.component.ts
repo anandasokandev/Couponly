@@ -5,6 +5,7 @@ import { PromotionService } from '../../../../commons/services/Promotion/promoti
 import { CommonModule } from '@angular/common';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormModule, ModalComponent, ModalToggleDirective, SpinnerComponent, TableDirective } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-promotions',
@@ -20,8 +21,8 @@ import { IconModule } from '@coreui/icons-angular';
     CardBodyComponent,
     CardHeaderComponent,
     ModalComponent,
-    ModalToggleDirective,
-    ColComponent
+    ColComponent,
+    
   ],
   templateUrl: './view-promotions.component.html',
   styleUrl: './view-promotions.component.scss'
@@ -50,7 +51,7 @@ export class ViewPromotionsComponent {
   currentPage = 1;
   itemsPerPage = 10;
 
-  constructor(private fb: FormBuilder, private promotionService: PromotionService) {
+  constructor(private fb: FormBuilder, private promotionService: PromotionService, private router: Router) {
     this.filterForm = this.fb.group({
       status: [''],
       fromDate: [''],
@@ -123,5 +124,9 @@ export class ViewPromotionsComponent {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedPromotions = this.displayedPromotions.slice(startIndex, endIndex);
+  }
+
+  openNewPromotion(): void {
+    this.router.navigate(['admin/NewPromotion']);
   }
 }
