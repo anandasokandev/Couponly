@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Inject, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonDirective, FormModule, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, SpinnerModule, TableModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
@@ -8,6 +8,8 @@ import { Location } from '../../../../../commons/models/location.model';
 import { Category } from '../../../../../commons/models/category.model';
 import { PromotionService } from '../../../../../commons/services/Promotion/promotion.service';
 import { PaginationComponent } from '../../pagination/pagination.component';
+import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
+import { CostSettingService } from '../../../../../commons/services/Promotion/cost-setting.service';
 
 export interface Coupon {
   id: number;
@@ -34,7 +36,7 @@ export interface Coupon {
     FormsModule,
     ReactiveFormsModule,
     TableModule,
-    PaginationComponent
+    PaginationComponent,
   ],
   templateUrl: './find-store-model.component.html',
   styleUrl: './find-store-model.component.scss'
@@ -56,7 +58,7 @@ export class FindStoreModelComponent {
   // --- Properties for Data ---
   searchResults: any[] = [];
   selectedStore: any | null = null;
-  contactsNeeded: number | null = null;
+  contactsNeeded: number = 0;
   districts: District[] = [];
   locations: Location[] = [];
   categories: Category[] = [];
@@ -68,12 +70,15 @@ export class FindStoreModelComponent {
   couponDetails: any | null = null;
   couponText: string = '';
   selectedCoupon: Coupon | null = null;
+  StoreContactCount: number = 0;
+  PublicContactCount: number = 0;
+  Math = Math;
 
   filterForm: FormGroup;
 
   @Output() contactsAdded = new EventEmitter<{ store: any; count: number; contactsNeeded: number; coupon: any }>();
 
-
+  private toastService = inject(ToastService);
   constructor(private fb: FormBuilder, private promotionService: PromotionService) {
     this.filterForm = this.fb.group({
       district: ['0'],
@@ -180,7 +185,7 @@ export class FindStoreModelComponent {
     this.couponDetails = null; // Reset coupon details when a new store is selected
     this.couponBox = true; // Show coupon box when a new store is selected
     this.storeBox = false;
-    this.contactsNeeded = null; // Reset contacts needed when a new store is selected
+    this.contactsNeeded = 0; // Reset contacts needed when a new store is selected
     this.searchResults = [];
     this.searchCoupon();
   }
@@ -189,14 +194,25 @@ export class FindStoreModelComponent {
     this.selectedCoupon = coupon;
     this.couponDetails = null;
     this.couponBox = false;
+    this.promotionService.getStoreContactCount(this.selectedStore.id).subscribe({
+      next: (response: any) => {
+        this.StoreContactCount = response.data;
+      }
+    });
+    this.promotionService.getPublicContactCount(this.selectedStore.id).subscribe({
+      next: (response: any) => {
+        this.PublicContactCount = response.data.count;
+      }
+    });
   }
 
-  /**
-   * Final action. Emits the data and closes the modal.
-   */
+  checkContactsNeeded(): void {
+    this.contactsNeeded = Math.min(this.contactsNeeded, this.PublicContactCount);
+  }
+
   addContacts(): void {
     if (!this.selectedStore || !this.contactsNeeded || this.contactsNeeded <= 0 || !this.selectedCoupon) {
-      alert('Please select a store, a coupon, and enter a valid number of contacts.');
+      this.toastService.show({ message: 'Please select a store, a coupon, and enter a valid number of contacts.', type: 'error' });
       return;
     }
 

@@ -25,7 +25,9 @@ export interface PromotionCampaign {
   promotionName: string;
   selectedCategory: string;
   selectedStore: string;
+  storeId: number;
   contactCount: number;
+  publicContacts: number;
   channels: {
     whatsapp: boolean;
     email: boolean;
@@ -36,9 +38,10 @@ export interface PromotionCampaign {
     email: number;
     sms: number;
   };
+  couponId: number;
   couponCode: string;
   couponName?: string;
-  sendType: 'now' | 'schedule';
+  sendType: 'immediate' | 'schedule';
   scheduleDate?: string;
 }
 
@@ -69,8 +72,10 @@ export class PromotionComponent {
    campaign: PromotionCampaign = {
      promotionName: 'xcv',
      selectedCategory: '',
+     storeId: 0,
      selectedStore: '',
      contactCount: 100,
+     publicContacts: 0,
      channels: {
        whatsapp: false,
        email: false,
@@ -81,9 +86,10 @@ export class PromotionComponent {
        email: 0,
        sms: 0
      },
+     couponId: 0,
      couponCode: '',
      couponName: '',
-     sendType: 'now',
+     sendType: 'immediate',
      scheduleDate: ''
    };
    serviceCosts: CostSetting[] = [];
@@ -95,7 +101,7 @@ export class PromotionComponent {
   ngOnInit(): void {
     this.costService.getAllServices().subscribe(services => {
       this.serviceCosts = services.data;
-      console.log('Service Costs:', services.data);
+      console.log('Service Costs:', this.serviceCosts);
     });
   }
 
@@ -113,8 +119,8 @@ export class PromotionComponent {
   saveCampaign(): void {
     this.isSaving = true;
 
-    // Clear schedule date if sending now
-    if (this.campaign.sendType === 'now') {
+    // Clear schedule date if sending immediately
+    if (this.campaign.sendType === 'immediate') {
       this.campaign.scheduleDate = '';
     }
     console.log('Saving Campaign:', this.campaign);
@@ -127,7 +133,9 @@ export class PromotionComponent {
     // Update the campaign details based on the event data
     this.campaign.selectedCategory = event.store.category;
     this.campaign.selectedStore = event.store.store;
+    this.campaign.storeId = event.store.id;
     this.campaign.contactCount = event.contactsNeeded;
+    this.campaign.couponId = event.coupon.id;
     this.campaign.couponCode = event.coupon.couponCode;
     this.campaign.couponName = event.coupon.name;
   }
