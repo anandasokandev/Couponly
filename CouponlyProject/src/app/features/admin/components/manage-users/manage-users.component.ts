@@ -69,11 +69,11 @@ export class ManageUsersComponent {
     this.isLoading = true;
     this.api.FetchUsers(this.currentPage, this.itemsPerPage).subscribe({
       next: (response: any) => {
-        // console.log('Filtered response:', response.data);
+         //console.log('Filtered response:', response.data);
         this.users = response.data.items;
         this.totalItems = response.data.totalCount;
         // this.users = response.data;
-        // console.log('Fetched users:', this.users);
+         //console.log('Fetched users:', this.users);
         this.isLoading = false;
       },
       error: (err) => {

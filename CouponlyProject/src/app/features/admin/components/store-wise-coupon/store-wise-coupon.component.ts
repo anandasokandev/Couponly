@@ -1,3 +1,4 @@
+
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -23,118 +24,131 @@ import { StoreService } from '../../../../commons/services/Store/store.service';
   styleUrls: ['./store-wise-coupon.component.scss']
 })
 export class StoreWiseCouponComponent implements OnInit {
-  // Pagination
   currentPage = 1;
   itemsPerPage = 10;
   totalItems = 0;
 
   stores: any[] = [];
-  filteredStores: any[] = [];
   selectedStore: any = null;
 
   isLoading = false;
+  isViewingCoupons = false;
+  isPageChange = false;
 
-  // 🔍 Store search
   storeSearch: string = '';
+  couponCodeSearch = '';
+  selectedTypeId?: number;
+  filteredCoupons: any[] = [];
+  types: any[] = [];
 
   colors: string[] = [
-    '#e74c3c', // red
-    '#27ae60', // green
-    '#2980b9', // blue
-    '#8e44ad', // purple
-    '#f39c12', // orange
-    '#16a085'  // teal
+    '#e74c3c', '#27ae60', '#2980b9', '#8e44ad', '#f39c12', '#16a085'
   ];
 
   constructor(
     private storeService: StoreService,
     private couponService: CouponService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.loadStores();
+    this.loadStoresByName();
+    this.couponService.getCouponType().subscribe({
+      next: (res) => (this.types = res.data || []),
+      error: () => (this.types = [])
+    });
   }
-  
-loadStores() {
-  this.isLoading = true;
-  this.storeService.FetchStores(this.currentPage, this.itemsPerPage).subscribe({
-    next: (res: any) => {
-      const storeList = Array.isArray(res?.data?.items) ? res.data.items : [];
 
-      this.stores = storeList;
-      this.filteredStores = [...storeList];
-      this.totalItems = res.data?.totalCount || storeList.length;
+  loadStoresByName() {
+    if (!this.isPageChange) this.currentPage = 1;
 
-  
-      this.stores.forEach((store) => {
-        this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe({
-          next: (couponRes: any) => {
-            store.totalCoupons = couponRes?.data?.length || 0;
-          },
-          error: () => {
-            store.totalCoupons = 0;
-          }
+    this.isLoading = true;
+    this.storeService.searchStores(this.currentPage, this.itemsPerPage, 0, 1, this.storeSearch).subscribe({
+      next: (res: any) => {
+        const storeList = Array.isArray(res?.data?.items) ? res.data.items : [];
+        this.stores = storeList;
+        this.totalItems = res.data?.totalCount || storeList.length;
+
+        this.stores.forEach((store) => {
+          this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe({
+            next: (couponRes: any) => {
+              store.totalCoupons = couponRes?.data?.length || 0;
+            },
+            error: () => {
+              store.totalCoupons = 0;
+            }
+          });
         });
-      });
 
-      this.isLoading = false;
-    },
-    error: (err) => {
-      console.error('Error loading stores:', err);
-      this.stores = [];
-      this.filteredStores = [];
-      this.isLoading = false;
-    }
-  });
-}
+        this.isLoading = false;
+        this.isPageChange = false;
+      },
+      error: () => {
+        this.stores = [];
+        this.totalItems = 0;
+        this.isLoading = false;
+      }
+    });
+  }
 
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.isPageChange = true;
+    this.loadStoresByName();
+  }
 
-
-
-filterStores() {
-  const term = this.storeSearch.toLowerCase();
-  this.filteredStores = this.stores.filter((store: any) =>
-    store.store?.toLowerCase().includes(term) ||  
-    store.code?.toLowerCase().includes(term) ||    
-    store.category?.toLowerCase().includes(term)  
-  );
-  this.totalItems = this.filteredStores.length;
-}
-
+  onItemsPerPageChange(itemsPerPage: number) {
+    this.itemsPerPage = itemsPerPage;
+    this.currentPage = 1;
+    this.loadStoresByName();
+  }
 
   resetFilters() {
     this.storeSearch = '';
-    this.filteredStores = [...this.stores];
-    this.totalItems = this.filteredStores.length;
     this.selectedStore = null;
+    this.loadStoresByName();
   }
 
- viewCoupons(store: any) {
-  this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe(res => {
-  this.selectedStore = {
-    name: store.store,
-    coupons: res.data || [],
-    couponCount: res.data?.length || 0
+  viewCoupons(store: any) {
+    this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe(res => {
+      const coupons = res.data || [];
+      this.selectedStore = {
+        id: store.id,
+        name: store.store,
+        coupons: coupons,
+        couponCount: coupons.length
+      };
+      this.filteredCoupons = [...coupons];
+      this.isViewingCoupons = true;
+      this.couponCodeSearch = '';
+      this.selectedTypeId = undefined;
+    });
+  }
 
+  filterStoreCoupons() {
+    const code = this.couponCodeSearch.toLowerCase();
+    this.filteredCoupons = this.selectedStore.coupons.filter((coupon: any) =>
+      (!code || coupon.couponCode?.toLowerCase().includes(code)) &&
+      (!this.selectedTypeId || this.getTypeNameById(this.selectedTypeId) === coupon.typeName)
+    );
+  }
 
-    };
-  });
-}
+  getTypeNameById(id: number): string | undefined {
+    const type = this.types.find(t => t.id === id);
+    return type?.name;
+  }
 
+  resetStoreCouponFilters() {
+    this.couponCodeSearch = '';
+    this.selectedTypeId = undefined;
+    this.filteredCoupons = [...this.selectedStore.coupons];
+  }
+
+  goBackToStores() {
+    this.selectedStore = null;
+    this.isViewingCoupons = false;
+  }
 
   getColor(index: number): string {
     return this.colors[index % this.colors.length];
   }
-
-onPageChange(page: number) {
-  this.currentPage = page;
-  this.loadStores();
-}
-
-onItemsPerPageChange(itemsPerPage: number) {
-  this.itemsPerPage = itemsPerPage;
-  this.currentPage = 1;
-  this.loadStores();
-}
-
 }
