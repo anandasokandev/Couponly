@@ -51,7 +51,9 @@ export class StoreComponent {
     this.isLoading = true;
     this.api.FetchStores(this.currentPage, this.itemsPerPage).subscribe({
       next: (response: any) => {
+        
         this.stores = response.data.items;
+        console.log(this.stores);
         this.totalItems = response.data.totalCount;
         this.isLoading = false;
       }})

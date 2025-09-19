@@ -1,104 +1,106 @@
-<!-- Store-Wise Coupon Section -->
 <c-col xs="12">
   <c-card class="mb-4">
     <c-card-header class="d-flex justify-content-between align-items-center">
-      <strong class="fs-5">Store-Wise Coupons</strong>
+      <strong class="fs-5">
+        {{ isViewingCoupons ? 'Coupons for ' + selectedStore?.name : 'Store-Wise Coupons' }}
+      </strong>
     </c-card-header>
+
     <c-card-body>
-      <!-- 🔍 Store Filters -->
-      <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
-        <input
-          type="text"
-          class="form-control form-control-sm"
-          style="max-width: 210px"
-          [(ngModel)]="storeSearch"
-          placeholder="Search Store Name"
-          (input)="filterStores()"
-        />
 
-        <button
-          type="button"
-          class="btn btn-danger btn-sm text-white"
-          title="Reset"
-          (click)="resetFilters()"
-        >
-          <i class="fas fa-arrows-rotate"></i>
+      <!-- 🔁 Store List View -->
+      <div *ngIf="!isViewingCoupons">
+        <!-- 🔍 Store Filters -->
+        <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
+          <!-- <input type="text" class="form-control form-control-sm" style="max-width: 210px" [(ngModel)]="storeSearch"
+            placeholder="Search Store Name" (input)="filterStores()" /> -->
+          <input type="text" class="form-control form-control-sm" style="max-width: 210px" [(ngModel)]="storeSearch"
+            placeholder="Search Store Name" (input)="loadStoresByName()" />
+
+          <button type="button" class="btn btn-danger btn-sm text-white" title="Reset" (click)="resetFilters()">
+            <i class="fas fa-arrows-rotate"></i>
+          </button>
+        </div>
+
+        <!-- Responsive Scrollable Table Wrapper -->
+        <div class="responsive-table-wrapper">
+          <table class="table table-hover borderless-table responsive-table" aria-label="Store Wise Coupons">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Logo</th>
+                <th>Store Name</th>
+                <th>Store Code</th>
+                <th>Contact</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Total Coupons</th>
+                <th>Coupons</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let store of stores; let i = index">
+                <td>{{ ((currentPage - 1) * itemsPerPage) + (i + 1) }}</td>
+                <td><img [src]="store.storeLogo" /></td>
+                <td>{{ store.store }}</td>
+                <td>{{ store.code }}</td>
+                <td>{{ store.contact }}</td>
+                <td>{{ store.category }}</td>
+                <td>{{ store.type }}</td>
+                <td>{{ store.totalCoupons || 0 }}</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary" (click)="viewCoupons(store)">
+                    View Coupons
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- No Stores Found -->
+        <div *ngIf="!isLoading && stores.length === 0" class="text-center">
+          No stores found.
+        </div>
+
+        <!-- Pagination -->
+        <app-pagination *ngIf="!isLoading" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+          [currentPage]="currentPage" (pageChange)="onPageChange($event)"
+          (itemsPerPageChange)="onItemsPerPageChange($event)">
+        </app-pagination>
+      </div>
+
+      <!-- 🎟️ Coupon List View -->
+      <div *ngIf="isViewingCoupons">
+        <button class="btn btn-sm btn-secondary mb-3" (click)="goBackToStores()">
+          ← Back to Stores List
         </button>
-      </div>
 
-      <!-- Responsive Scrollable Table Wrapper -->
-      <div class="responsive-table-wrapper">
-        <table
-          class="table table-hover borderless-table responsive-table"
-          aria-label="Store Wise Coupons"
-        >
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Logo</th>
-              <th>Store Name</th>
-              <th>Store Code</th>
-              <th>Contact</th>
-              <th>Category</th>
-              <th>Type</th>
-              <th>Total Coupons</th>
-              <th> Coupons</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let store of filteredStores; let i = index">
-              <td>{{ ((currentPage - 1) * itemsPerPage) + (i + 1) }}</td>
-              <td>
-                <img [src]="store.storeLogo"/>
-              </td>
-              <td>{{ store.store }}</td>
-              <td>{{ store.code }}</td>  
-              <td>{{ store.contact }}</td>
-              <td>{{ store.category }}</td>
-              <td>{{ store.type }}</td>
-              <td>{{ store.totalCoupons || 0 }}</td>
+        <!-- 🔍 Coupon Filters -->
+        <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
+          <input type="text" class="form-control form-control-sm" style="max-width: 210px"
+            [(ngModel)]="couponCodeSearch" placeholder="Search Coupon Code" (input)="filterStoreCoupons()" />
 
-  <td>
-  <button
-    class="btn btn-sm btn-outline-primary"
-    (click)="viewCoupons(store)"
-  >
-    View Coupons
-  </button>
-</td>
+          <select class="form-select form-select-sm" style="max-width: 210px" [(ngModel)]="selectedTypeId"
+            (change)="filterStoreCoupons()">
+            <option [ngValue]="undefined">-- Select Type --</option>
+            <option *ngFor="let type of types" [ngValue]="type.id">{{ type.name }}</option>
+          </select>
 
-
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- No Stores Found -->
-      <div *ngIf="!isLoading && filteredStores.length === 0" class="text-center">
-        No stores found.
-      </div>
-
-      <!-- Coupons List for Selected Store -->
-      <div *ngIf="selectedStore" class="mt-5">
-        <h5 class="mb-3 text-center">
-          Coupons for <strong>{{ selectedStore.name }}</strong>
-        </h5>
+          <button type="button" class="btn btn-danger btn-sm text-white" title="Reset"
+            (click)="resetStoreCouponFilters()">
+            <i class="fas fa-arrows-rotate"></i>
+          </button>
+        </div>
 
         <div *ngIf="selectedStore.coupons?.length === 0" class="text-center">
           No coupons available for this store.
         </div>
 
-        <div
-          *ngIf="selectedStore.coupons?.length > 0"
-          class="d-flex flex-wrap gap-3 justify-content-start"
-        >
-          <div *ngFor="let coupon of selectedStore.coupons; let i = index" class="coupon-card">
-            <img
-              *ngIf="coupon.couponImage"
-              [src]="coupon.couponImage"
-              alt="Coupon Image"
-              class="coupon-image"
-            />
+
+        <div *ngIf="filteredCoupons.length > 0" class="d-flex flex-wrap gap-3 justify-content-start">
+          <div *ngFor="let coupon of filteredCoupons; let i = index" class="coupon-card">
+            <img *ngIf="coupon.couponImage" [src]="coupon.couponImage" alt="Coupon Image" class="coupon-image" />
 
             <div class="coupon-content">
               <h5 class="coupon-title" [style.color]="getColor(i)">{{ coupon.name }}</h5>
@@ -106,6 +108,7 @@
               <p class="coupon-desc">{{ coupon.description }}</p>
 
               <div class="coupon-details">
+                <p><span class="label">Store:</span> {{ selectedStore.name }}</p>
                 <p><span class="label">Min Amount:</span> {{ coupon.minAmount | currency: 'INR' }}</p>
                 <div class="user-limit-box">
                   User Limit: {{ coupon.userLimit === false ? 'Unlimited' : coupon.userLimitCount }}
@@ -121,16 +124,6 @@
         </div>
       </div>
 
-      <!-- Pagination (optional for stores) -->
-      <app-pagination
-        *ngIf="!isLoading"
-        [totalItems]="totalItems"
-        [itemsPerPage]="itemsPerPage"
-        [currentPage]="currentPage"
-        (pageChange)="onPageChange($event)"
-        (itemsPerPageChange)="onItemsPerPageChange($event)"
-      >
-      </app-pagination>
     </c-card-body>
   </c-card>
 </c-col>
