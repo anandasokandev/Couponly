@@ -6,7 +6,7 @@
   <app-promotion-calculator-model [campaign]="campaign"></app-promotion-calculator-model>
 </c-modal>
 
-<c-card>
+<c-card class="mb-4">
   <c-card-header>
     <strong>Create Promotion Campaign</strong>
   </c-card-header>
@@ -47,7 +47,7 @@
         <c-col sm="6" class="d-flex flex-column mt-3">
           <label cLabel class="text-muted">Schedule & Send</label>
           <c-button-group>
-            <button cButton class="btn-sm" color="light" [active]="campaign.sendType === 'now'" (click)="campaign.sendType = 'now'">
+            <button cButton class="btn-sm" color="light" [active]="campaign.sendType === 'immediate'" (click)="campaign.sendType = 'immediate'">
               Send Directly
             </button>
             <button cButton class="btn-sm" color="light" [active]="campaign.sendType === 'schedule'" (click)="campaign.sendType = 'schedule'">

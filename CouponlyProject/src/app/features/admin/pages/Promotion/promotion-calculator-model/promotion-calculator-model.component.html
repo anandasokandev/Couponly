@@ -95,6 +95,10 @@
   
   <c-modal-footer>
     <button cButton color="secondary" class="btn-sm" [cModalToggle]="PromotionCalculatorModal.id">Close</button>
-    <button cButton color="primary" class="btn-sm" [cModalToggle]="PromotionCalculatorModal.id">Confirm & Save</button>
+    <button cButton color="primary" class="btn-sm" (click)="saveChanges()" [disabled]="isSaving || isEmpty(campaign)" >
+      <c-spinner *ngIf="isSaving" class="me-2" size="sm" />
+      <span *ngIf="!isSaving">Confirm & Save</span>
+      <span *ngIf="isSaving">Saving...</span>
+    </button>
   </c-modal-footer>
 </c-modal>
