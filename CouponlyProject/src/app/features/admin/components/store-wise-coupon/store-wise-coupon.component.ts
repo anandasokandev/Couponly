@@ -64,6 +64,19 @@ loadStores() {
       this.stores = storeList;
       this.filteredStores = [...storeList];
       this.totalItems = res.data?.totalCount || storeList.length;
+
+  
+      this.stores.forEach((store) => {
+        this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe({
+          next: (couponRes: any) => {
+            store.totalCoupons = couponRes?.data?.length || 0;
+          },
+          error: () => {
+            store.totalCoupons = 0;
+          }
+        });
+      });
+
       this.isLoading = false;
     },
     error: (err) => {
@@ -78,13 +91,16 @@ loadStores() {
 
 
 
-  filterStores() {
-    const term = this.storeSearch.toLowerCase();
-    this.filteredStores = this.stores.filter((store: any) =>
-      store.name?.toLowerCase().includes(term)
-    );
-    this.totalItems = this.filteredStores.length;
-  }
+filterStores() {
+  const term = this.storeSearch.toLowerCase();
+  this.filteredStores = this.stores.filter((store: any) =>
+    store.store?.toLowerCase().includes(term) ||  
+    store.code?.toLowerCase().includes(term) ||    
+    store.category?.toLowerCase().includes(term)  
+  );
+  this.totalItems = this.filteredStores.length;
+}
+
 
   resetFilters() {
     this.storeSearch = '';
@@ -93,33 +109,32 @@ loadStores() {
     this.selectedStore = null;
   }
 
-  viewCoupons(store: any) {
-    this.isLoading = true;
-    this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe({
-      next: (res: any) => {
-        this.selectedStore = {
-          ...store,
-          coupons: res.data || []
-        };
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error loading coupons:', err);
-        this.isLoading = false;
-      }
-    });
-  }
+ viewCoupons(store: any) {
+  this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe(res => {
+  this.selectedStore = {
+    name: store.store,
+    coupons: res.data || [],
+    couponCount: res.data?.length || 0
+
+
+    };
+  });
+}
+
 
   getColor(index: number): string {
     return this.colors[index % this.colors.length];
   }
 
-  onPageChange(page: number) {
-    this.currentPage = page;
-  }
+onPageChange(page: number) {
+  this.currentPage = page;
+  this.loadStores();
+}
 
-  onItemsPerPageChange(items: number) {
-    this.itemsPerPage = items;
-    this.currentPage = 1;
-  }
+onItemsPerPageChange(itemsPerPage: number) {
+  this.itemsPerPage = itemsPerPage;
+  this.currentPage = 1;
+  this.loadStores();
+}
+
 }

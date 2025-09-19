@@ -4,7 +4,6 @@
     <c-card-header class="d-flex justify-content-between align-items-center">
       <strong class="fs-5">Store-Wise Coupons</strong>
     </c-card-header>
-
     <c-card-body>
       <!-- 🔍 Store Filters -->
       <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
@@ -39,36 +38,36 @@
               <th>Logo</th>
               <th>Store Name</th>
               <th>Store Code</th>
-          
               <th>Contact</th>
-      
               <th>Category</th>
               <th>Type</th>
-              <th>Edit</th>
+              <th>Total Coupons</th>
+              <th> Coupons</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let store of filteredStores; let i = index">
               <td>{{ ((currentPage - 1) * itemsPerPage) + (i + 1) }}</td>
               <td>
-                <img [src]="store.storeLogo" alt="{{store.store}} logo" />
+                <img [src]="store.storeLogo"/>
               </td>
               <td>{{ store.store }}</td>
-              <td>{{ store.code }}</td>
-          
+              <td>{{ store.code }}</td>  
               <td>{{ store.contact }}</td>
-             
               <td>{{ store.category }}</td>
               <td>{{ store.type }}</td>
-              <td>
-                <button
-                  class="btn btn-sm btn-outline-secondary"
-                  title="View Coupons"
-                  (click)="viewCoupons(store)"
-                >
-                  <i class="fas fa-tags"></i>
-                </button>
-              </td>
+              <td>{{ store.totalCoupons || 0 }}</td>
+
+  <td>
+  <button
+    class="btn btn-sm btn-outline-primary"
+    (click)="viewCoupons(store)"
+  >
+    View Coupons
+  </button>
+</td>
+
+
             </tr>
           </tbody>
         </table>
