@@ -22,7 +22,7 @@ export class StoreInfoComponent implements OnInit {
   ngOnInit(): void {
     const token = localStorage.getItem('token');
     // console.log('Token in header:', token); // ✅ Confirm token is available
-    console.log('Token from localStorage:', token);
+    // console.log('Token from localStorage:', token);
     this.storeDashboardService.getStoreInfo().subscribe({
       next: (res) => {
         // console.log('Store Info API response:', res); // ✅ Log full response

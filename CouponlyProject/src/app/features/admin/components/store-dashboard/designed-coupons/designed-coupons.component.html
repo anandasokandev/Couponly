@@ -1,1 +1,63 @@
-<p>designed-coupons works!</p>
+<c-col xs="12">
+    <c-card class="mb-4">
+        <c-card-header>
+            <strong class="fs-5">Coupon List</strong>
+        </c-card-header>
+
+        <c-card-body>
+            <form>
+                <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
+                    <input type="text" class="form-control form-control-sm" style="max-width: 210px"
+                        placeholder="Search Coupon Code" [(ngModel)]="couponCode" name="couponCode"
+                        (input)="fetchCoupons()" />
+
+                    <select class="form-select form-select-sm" style="max-width: 210px" [(ngModel)]="typeId"
+                        name="typeId" (change)="fetchCoupons()">
+                        <option [ngValue]="undefined">-- Select Type --</option>
+                        <option *ngFor="let type of couponTypes" [value]="type.id">{{ type.name }}</option>
+                    </select>
+
+                    <button type="button" class="btn btn-danger btn-sm text-white" title="Reset"
+                        (click)="resetFilters()">
+                        <i class="fas fa-arrows-rotate"></i>
+                    </button>
+                </div>
+            </form>
+
+            <!--  Loader -->
+            <div *ngIf="isLoading" class="d-flex justify-content-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <!--  Coupon List -->
+            <div *ngIf="!isLoading && coupons.length > 0" class="d-flex flex-wrap gap-3 justify-content-start">
+                <div class="coupon-card" *ngFor="let coupon of coupons; let i = index">
+                    <img [src]="coupon.couponImage" alt="Coupon Image" class="coupon-image" />
+                    <div class="coupon-content">
+                        <h5 class="coupon-title" [style.color]="getColor(i)">{{ coupon.name }}</h5>
+                        <div class="coupon-code-box text-center">{{ coupon.couponCode }}</div>
+                        <p class="coupon-desc">{{ coupon.description }}</p>
+                        <div class="coupon-details">
+                            <p><span class="label">Store:</span> {{ coupon.storeName }}</p>
+                            <p><span class="label">Min Amount:</span> ₹{{ coupon.minAmount }}</p>
+                            <div class="user-limit-box">
+                                User Limit: {{ coupon.userLimit ? coupon.userLimitCount : 'Unlimited' }}
+                            </div>
+                        </div>
+                        <div class="coupon-dates">
+                            <p>Start: {{ coupon.startingDate | date: 'yyyy-MM-dd' }}</p>
+                            <p>End: {{ coupon.endingDate | date: 'yyyy-MM-dd' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--  No Data -->
+            <div *ngIf="!isLoading && coupons.length === 0" class="text-center text-muted py-4">
+                <i class="fas fa-info-circle me-2"></i> No coupons found.
+            </div>
+        </c-card-body>
+    </c-card>
+</c-col>
