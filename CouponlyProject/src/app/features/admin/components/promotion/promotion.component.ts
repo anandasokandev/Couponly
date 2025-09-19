@@ -70,11 +70,11 @@ export interface PromotionCampaign {
 })
 export class PromotionComponent {
    campaign: PromotionCampaign = {
-     promotionName: 'xcv',
+     promotionName: '',
      selectedCategory: '',
      storeId: 0,
      selectedStore: '',
-     contactCount: 100,
+     contactCount: 0,
      publicContacts: 0,
      channels: {
        whatsapp: false,

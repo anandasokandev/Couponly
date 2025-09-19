@@ -6,7 +6,7 @@
     <c-card-header class="d-flex align-items-center">
       <strong class="w-100 fs-5">Promotions</strong>
       <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
-        <button class="btn btn-primary btn-sm px-3 py-1" [cModalToggle]="CreatePromotionModal.id">
+        <button class="btn btn-primary btn-sm px-3 py-1" (click)="openNewPromotion()">
           + Add New Promotion
         </button>
       </div>
