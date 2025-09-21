@@ -19,6 +19,8 @@ import { FindStoreModelComponent } from '../../pages/Promotion/find-store-model/
 import { PromotionCalculatorModelComponent } from '../../pages/Promotion/promotion-calculator-model/promotion-calculator-model.component';
 import { CostSettingService } from '../../../../commons/services/Promotion/cost-setting.service';
 import { CostSetting } from '../../../../commons/models/CostSetting.model';
+import { cilArrowThickFromLeft, cilArrowThickFromRight, cilPenNib, cilPlus, cilSortAlphaUp, cilSortNumericDown } from '@coreui/icons';
+import { Router } from '@angular/router';
 
 // Updated interface to hold all promotion campaign details
 export interface PromotionCampaign {
@@ -95,14 +97,19 @@ export class PromotionComponent {
    serviceCosts: CostSetting[] = [];
 
   isSaving: boolean = false;
+  icons = { cilSortAlphaUp, cilSortNumericDown, cilPlus, cilPenNib, cilArrowThickFromRight };
 
-  constructor(private costService: CostSettingService) { }
+  constructor(private costService: CostSettingService, private router: Router) { }
 
   ngOnInit(): void {
     this.costService.getAllServices().subscribe(services => {
       this.serviceCosts = services.data;
       console.log('Service Costs:', this.serviceCosts);
     });
+  }
+
+  viewPromotion(): void {
+    this.router.navigate(['/admin/promotion']);
   }
 
   updateChannel(channel: keyof PromotionCampaign['channels']): void {

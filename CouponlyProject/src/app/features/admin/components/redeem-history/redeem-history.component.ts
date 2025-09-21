@@ -60,6 +60,7 @@ export class RedeemHistoryComponent {
   isPageChange: boolean = false;
   itemsPerPage: number = 10;
   currentPage: number = 1;
+  totalItems: number = 0;
 
   redeems: RedeemHistory[] = [];
   districts: District[] = [];

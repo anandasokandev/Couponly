@@ -101,7 +101,10 @@ export const environment = {
       },
 
       ValidateToken: 'Promotion/ValidatePaymentToken',
-      NewPromotion: 'Promotion/NewPromotion'
+      NewPromotion: 'Promotion/NewPromotion',
+      FetchPromotions: 'Promotion/GetPromotions',
+      FetchPromotionsByStoreId: 'Promotion/GetPromotionsByStoreId',
+      FetchPromotionById: 'Promotion/GetPromotionById',
     },
 
     storedashboard: {
