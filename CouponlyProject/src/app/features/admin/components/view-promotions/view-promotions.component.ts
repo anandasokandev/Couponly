@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { cilSortAlphaUp, cilSortNumericDown } from '@coreui/icons';
+import { cilEyedropper, cilOpentype, cilPenNib, cilPlus, cilSearch, cilSortAlphaUp, cilSortNumericDown } from '@coreui/icons';
 import { PromotionService } from '../../../../commons/services/Promotion/promotion.service';
 import { CommonModule } from '@angular/common';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormModule, ModalComponent, ModalToggleDirective, SpinnerComponent, TableDirective } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
+import { Router } from '@angular/router';
+import { PaginationComponent } from '../../pages/pagination/pagination.component';
 
 @Component({
   selector: 'app-view-promotions',
@@ -20,15 +22,16 @@ import { IconModule } from '@coreui/icons-angular';
     CardBodyComponent,
     CardHeaderComponent,
     ModalComponent,
-    ModalToggleDirective,
-    ColComponent
+    ColComponent,
+    PaginationComponent
+    
   ],
   templateUrl: './view-promotions.component.html',
   styleUrl: './view-promotions.component.scss'
 })
 export class ViewPromotionsComponent {
   // --- Icon registration ---
-  icons = { cilSortAlphaUp, cilSortNumericDown };
+  icons = { cilSortAlphaUp, cilSortNumericDown, cilPlus, cilPenNib, cilOpentype, cilSearch };
 
   // --- Data Storage ---
   allPromotions: any[] = []; // Stores the original list from the API
@@ -36,7 +39,7 @@ export class ViewPromotionsComponent {
   paginatedPromotions: any[] = []; // Stores the final list for the current page
 
   // --- State Management ---
-  isLoading = true;
+  isLoading = false;
 
   // --- Filtering ---
   filterForm: FormGroup;
@@ -48,9 +51,9 @@ export class ViewPromotionsComponent {
 
   // --- Pagination ---
   currentPage = 1;
-  itemsPerPage = 10;
+  itemsPerPage = 5;
 
-  constructor(private fb: FormBuilder, private promotionService: PromotionService) {
+  constructor(private fb: FormBuilder, private promotionService: PromotionService, private router: Router) {
     this.filterForm = this.fb.group({
       status: [''],
       fromDate: [''],
@@ -59,11 +62,12 @@ export class ViewPromotionsComponent {
   }
 
   ngOnInit(): void {
-    // this.promotionService.getPromotions().subscribe(data => {
-    //   this.allPromotions = data;
-    //   this.applyFiltersAndSort(); // Apply initial filters
-    //   this.isLoading = false;
-    // });
+    this.isLoading = true;
+    this.promotionService.getPromotions(this.currentPage, this.itemsPerPage).subscribe(res => {
+      this.allPromotions = res.data.items || [];
+      this.applyFiltersAndSort(); // Apply initial filters
+      this.isLoading = false;
+    });
   }
 
   /**
@@ -124,4 +128,9 @@ export class ViewPromotionsComponent {
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedPromotions = this.displayedPromotions.slice(startIndex, endIndex);
   }
+
+  openNewPromotion(): void {
+    this.router.navigate(['admin/NewPromotion']);
+  }
+
 }

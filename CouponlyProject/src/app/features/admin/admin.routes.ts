@@ -95,6 +95,13 @@ export const routes: Routes = [
         }
       },
       {
+        path: 'NewPromotion', // Example child path
+        loadComponent: () => import('./components/promotion/promotion.component').then(m => m.PromotionComponent),
+        data: {
+          title: 'New Promotion'
+        }
+      },
+      {
         path: 'store-dashboard',
         // This is the parent component that will contain the navigation header
         loadComponent: () => import('./components/store-dashboard/header/header.component').then(m => m.HeaderComponent),
