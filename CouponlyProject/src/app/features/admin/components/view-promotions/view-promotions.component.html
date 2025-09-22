@@ -98,10 +98,11 @@
       </div>
 
       <app-pagination *ngIf="!isLoading && displayedPromotions.length > 0"
-        [totalItems]="displayedPromotions.length"
+        [totalItems]="totalItems"
         [itemsPerPage]="itemsPerPage"
         [currentPage]="currentPage"
-        (pageChange)="onPageChange($event)">
+        (pageChange)="onPageChange($event)"
+        (itemsPerPageChange)="itemsPerPage = $event; onPageChange(1)">
       </app-pagination>
     </c-card-body>
   </c-card>

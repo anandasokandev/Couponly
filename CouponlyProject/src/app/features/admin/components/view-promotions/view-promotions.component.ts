@@ -51,7 +51,8 @@ export class ViewPromotionsComponent {
 
   // --- Pagination ---
   currentPage = 1;
-  itemsPerPage = 5;
+  itemsPerPage = 10;
+  totalItems = 0;
 
   constructor(private fb: FormBuilder, private promotionService: PromotionService, private router: Router) {
     this.filterForm = this.fb.group({
@@ -65,8 +66,10 @@ export class ViewPromotionsComponent {
     this.isLoading = true;
     this.promotionService.getPromotions(this.currentPage, this.itemsPerPage).subscribe(res => {
       this.allPromotions = res.data.items || [];
+      this.totalItems = res.data.totalCount || 0;
       this.applyFiltersAndSort(); // Apply initial filters
       this.isLoading = false;
+      console.log(res.data);
     });
   }
 

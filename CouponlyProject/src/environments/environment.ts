@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  //apiBaseUrl: 'https://api.couponly.store/api',
+  // apiBaseUrl: 'https://api.couponly.store/api',
   apiBaseUrl: 'https://localhost:7224/api',
 
   imageUploadUrl: 'https://images.couponly.store/api/upload',
