@@ -111,23 +111,27 @@ Filtering() {
 
 
 
+firstSearchDone = false; // class-level property
+
 FilterContact() {
-   this.isFiltered = true;
+  this.isFiltered = true;
   this.isLoading = true;
 
   this.api.searchContacts(this.currentPage, this.itemsPerPage, this.name, this.email, this.phonenumber).subscribe({
     next: (response: any) => {
-      this.contacts = response.data.items; // assuming this is an array
-
+      this.contacts = response.data.items;
       this.totalItems = response.data.totalCount;
-
-
       this.isLoading = false;
 
+      // Reset flag if results are found
+      if (this.contacts.length > 0) {
+        this.firstSearchDone = false;
+      }
 
-      // Show toast if no results found
-      if (this.contacts.length === 0) {
+      // Show toast only on first empty result
+      if (!this.firstSearchDone && this.contacts.length === 0) {
         this.toast.show({ type: 'info', message: 'No contacts found matching your search.' });
+        this.firstSearchDone = true;
       }
     },
     error: (err) => {
@@ -136,6 +140,7 @@ FilterContact() {
     }
   });
 }
+
 
 
 
