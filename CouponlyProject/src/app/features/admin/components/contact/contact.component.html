@@ -122,10 +122,6 @@
   </div>
 </div>
 
-<div *ngIf="!isLoading && contacts.length === 0" class="text-center text-muted my-4">
-  <i class="fas fa-user-slash fa-2x mb-2"></i>
-  <div>No contacts found.</div>
-</div>
 
 
 <div *ngIf="!isLoading" class="table-responsive">
@@ -143,6 +139,13 @@
           </thead>
           <tbody>
             
+
+ <tr *ngIf="contacts.length === 0">
+              <td colspan="5" class="text-center text-muted py-4">
+                <i class="fas fa-user-slash fa-2x mb-2"></i>
+                <div>No contacts found.</div>
+              </td>
+            </tr>
 
          <tr *ngFor="let contact of contacts; let i = index">
               <td>{{ ((currentPage - 1) * itemsPerPage) + (i + 1) }}</td>
