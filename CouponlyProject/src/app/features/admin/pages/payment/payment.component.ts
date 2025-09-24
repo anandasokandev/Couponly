@@ -22,6 +22,7 @@ export class PaymentComponent {
   promotionId: number = 0;
   totalAmount: number = 0;
   isPaid=false;
+  isTokenInvalid=false;
 
   constructor(
     private fb: FormBuilder,
@@ -97,8 +98,8 @@ export class PaymentComponent {
             this.isPaid = res.data.isPaymentSuccess
           }
         } else {
-          console.log("NO")
-          // this.router.navigate(['/404']);
+          console.log('INVALID')
+          this.isTokenInvalid=true;
         }
       }
     });
@@ -132,7 +133,11 @@ export class PaymentComponent {
 };
 this.paymentapi.Payment(payload).subscribe({
   next: (res: boolean) => {
-    console.log(res)
+
+    const paymentWebhookdata= {
+      PromotionId: this.promotionId,
+      PaymentStatus: res ? 1 : 2
+    }
     if (res === true) {
       this.handleResult(true); 
     } else {
