@@ -106,8 +106,7 @@ export const environment = {
       FetchPromotions: 'Promotion/GetPromotions',
       FetchPromotionsByStoreId: 'Promotion/GetPromotionsByStoreId',
       FetchPromotionById: 'Promotion/GetPromotionById',
-
-      paymentWebhook: 'Promotion/PaymentWebhook'
+      paymentWebhook: 'Promotion/PaymentWebhook',
     },
 
     storedashboard: {
