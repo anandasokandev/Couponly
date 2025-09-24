@@ -5,7 +5,7 @@ import { PromotionService } from '../../../../commons/services/Promotion/promoti
 import { CommonModule } from '@angular/common';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormModule, ModalComponent, ModalToggleDirective, SpinnerComponent, TableDirective } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { PaginationComponent } from '../../pages/pagination/pagination.component';
 
 @Component({
@@ -23,8 +23,8 @@ import { PaginationComponent } from '../../pages/pagination/pagination.component
     CardHeaderComponent,
     ModalComponent,
     ColComponent,
-    PaginationComponent
-    
+    PaginationComponent,
+    RouterModule
   ],
   templateUrl: './view-promotions.component.html',
   styleUrl: './view-promotions.component.scss'

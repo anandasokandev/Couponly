@@ -1,0 +1,42 @@
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-header class="d-flex justify-content-between align-items-center">
+      <strong class="fs-5">Promotion Details</strong>
+      <button cButton color="primary" size="sm" (click)="goBack()">
+        &larr; Back to List
+      </button>
+    </c-card-header>
+    <c-card-body *ngIf="promotion; else loading">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <h5>{{ promotion.title }}</h5>
+          <hr>
+          <p>
+            <strong>Date:</strong>
+            {{ promotion.date | date: 'fullDate' }} at {{ promotion.date | date: 'shortTime' }}
+          </p>
+          <p><strong>Store:</strong> {{ promotion.store }}</p>
+          <p><strong class="me-2">Coupon Code:</strong> <span class="badge bg-success-light text-dark">{{ promotion.couponCode }}</span></p>
+        </div>
+        <div class="col-md-6">
+          <h5>Status & Contacts</h5>
+          <hr>
+          <p>
+            <strong class="me-2">Status:</strong>
+            <span class="status-badge" [ngClass]="'status-' + promotion.status.toLowerCase()">
+              {{ promotion.status }}
+            </span>
+          </p>
+          <p><strong>Total Contacts Targeted:</strong> {{ promotion.totalContacts }}</p>
+        </div>
+      </div>
+    </c-card-body>
+
+    <ng-template #loading>
+       <div class="d-flex justify-content-center p-5">
+         <c-spinner color="primary"></c-spinner>
+       </div>
+    </ng-template>
+
+  </c-card>
+</c-col>

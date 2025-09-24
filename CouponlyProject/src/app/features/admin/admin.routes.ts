@@ -92,6 +92,13 @@ export const routes: Routes = [
         loadComponent: () => import('./components/view-promotions/view-promotions.component').then(m => m.ViewPromotionsComponent),
         data: {
           title: 'Promotion'
+        },
+      },
+      {
+        path: 'promotion/details/:id',
+        loadComponent: () => import('./components/view-promotion-details/view-promotion-details.component').then(m => m.ViewPromotionDetailsComponent),
+        data: {
+          title: 'Promotion Details'
         }
       },
       {
