@@ -1,6 +1,7 @@
 
-<div *ngIf="!isPaid; else paymentDone">
+
   <div class="payment-wrapper">
+     <div class="blur-overlay" *ngIf="isPaid || isTokenInvalid"></div>
     <div class="payment-card">
       <h2>Complete Your Payment</h2>
       <form [formGroup]="paymentForm">
@@ -64,14 +65,16 @@
       <button [ngClass]="{ fail: !isSuccess }" (click)="navigate()">Continue</button>
     </div>
   </div>
+
+
+<!-- Show Paid Message -->
+<div class="center-message" *ngIf="isPaid">
+  <h2>✅ Payment Already Completed</h2>
+  <p>Your transaction has already been processed.</p>
 </div>
 
-<!-- payment is already done -->
-<ng-template #paymentDone>
-  <div class="payment-wrapper">
-    <div class="payment-card">
-      <h2>Payment Already Completed</h2>
-      <p>Your transaction has already been processed. No further action is required.</p>
-    </div>
-  </div>
-</ng-template>
+<!-- Show Token Invalid Message -->
+<div class="center-message" *ngIf="isTokenInvalid">
+  <h2>❌ Invalid Token</h2>
+  <p>The payment link is invalid or expired.</p>
+</div>
