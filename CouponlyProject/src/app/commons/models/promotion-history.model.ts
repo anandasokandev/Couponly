@@ -2,6 +2,7 @@ export interface PromotionHistory {
     id: number;
     campaignName: string;
     couponName: string;
+    couponCode : string;
     contacts: number;
     amount: number;
     store: string;

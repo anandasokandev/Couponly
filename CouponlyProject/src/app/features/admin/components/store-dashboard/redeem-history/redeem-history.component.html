@@ -1,6 +1,4 @@
-<!-- <c-modal #DownloadRedeemsModal [scrollable]="true" alignment="center" id="DownloadRedeemsModal">
-  <app-download-redeems-model></app-download-redeems-model>
-</c-modal> -->
+
 
 <c-col xs="12">
     <c-card class="mb-4">
@@ -8,9 +6,11 @@
             <strong class="w-100 fs-5">Redeem History</strong>
             <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
                 <div class="float-end">
-                    <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap d-flex align-items-center">
+                    <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap d-flex align-items-center"
+                        (click)="downloadExcel()">
                         <svg [cIcon]="icons.cilCloudDownload"></svg> &nbsp; Download
                     </button>
+
                 </div>
             </div>
         </c-card-header>

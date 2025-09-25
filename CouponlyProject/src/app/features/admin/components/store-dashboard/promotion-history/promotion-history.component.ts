@@ -44,7 +44,7 @@ export class PromotionHistoryComponent {
   promotions: PromotionHistory[] = [];
 
   // Filters
-  searchType: number = 5;
+  searchType: number = 6;
   searchText: string = '';
   fromDate: string = '';
   toDate: string = '';
@@ -91,7 +91,7 @@ export class PromotionHistoryComponent {
   }
 
   resetFilters() {
-    this.searchType = 5;
+    this.searchType = 6;
     this.searchText = '';
     this.fromDate = '';
     this.toDate = '';
@@ -103,4 +103,26 @@ export class PromotionHistoryComponent {
     this.isPageChange = true;
     this.fetchPromotions();
   }
+
+  downloadsExcel() {
+  this.api.exportStorePromotionsToExcel(
+    this.searchType,
+    this.searchText,
+    this.fromDate,
+    this.toDate
+  ).subscribe({
+    next: (blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Store_Promotion_History.xlsx';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    },
+    error: () => {
+      this.toast.show({ type: 'error', message: 'Failed to download Excel file.' });
+    }
+  });
+}
+
 }

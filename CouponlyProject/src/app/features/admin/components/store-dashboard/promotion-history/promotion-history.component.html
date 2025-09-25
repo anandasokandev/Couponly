@@ -4,9 +4,10 @@
       <strong class="w-100 fs-5">Promotions History</strong>
       <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
         <div class="float-end">
-          <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap d-flex align-items-center">
-            <svg [cIcon]="icons.cilCloudDownload"></svg> &nbsp; Download
-          </button>
+          <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap d-flex align-items-center"
+                        (click)="downloadsExcel()">
+                        <svg [cIcon]="icons.cilCloudDownload"></svg> &nbsp; Download
+                    </button>
         </div>
       </div>
     </c-card-header>
@@ -17,9 +18,10 @@
           <div class="d-flex gap-4 align-items-center m-2">
             <select class="form-select form-select-sm" style="max-width: 180px;" [(ngModel)]="searchType"
               (change)="fetchPromotions()" name="searchType">
-              <option value="5">All</option>
+              <option value="6">All</option>
               <option value="1">Campaign Title</option>
               <option value="2">Coupon Name</option>
+              <option value="5">Coupon Code</option>
               <option value="3">Recipients Sent</option>
               <option value="4">Amount</option>
             </select>
@@ -59,6 +61,7 @@
               <th>#</th>
               <th>Campaign Title</th>
               <th>Coupon Name</th>
+              <th>Coupon Code</th>
                <th>Recipients Sent</th>
               <th>Amount</th>
               <th>Sent Date</th>
@@ -71,6 +74,7 @@
                 <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
                 <td>{{ promo.campaignName }}</td>
                 <td>{{ promo.couponName }}</td>
+                <td>{{ promo.couponCode }}</td>
                 <td>{{ promo.contacts }}</td>
                 <td>{{ promo.amount }}</td>
                 <td>{{ promo.date | date: 'yyyy-MM-dd' }}</td>

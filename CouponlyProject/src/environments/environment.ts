@@ -115,7 +115,9 @@ export const environment = {
       overview: 'StoreDashboardOverview/Overview',
       coupontype: 'StoreDashBoardCoupons/CouponTypes',
       coupons: 'StoreDashBoardCoupons/StoreCoupons',
-      promotions:'StoreDashboardRedeem/FilterStorePromotions'
+      promotions:'StoreDashboardRedeem/FilterStorePromotions',
+      excelpromo:'StoreDashboardRedeem/ExportStorePromotionsToExcel',
+      excelredeem:'StoreDashboardRedeem/ExportStoreRedeemsToExcel'
     }
   }
 };
