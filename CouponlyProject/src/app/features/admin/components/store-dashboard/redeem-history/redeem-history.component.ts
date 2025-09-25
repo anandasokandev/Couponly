@@ -94,4 +94,27 @@ export class RedeemHistoryComponent {
     this.isPageChange = true;
     this.fetchRedeems();
   }
+
+  downloadExcel() {
+  this.api.exportStoreRedeemsToExcel(
+    this.searchType,
+    this.searchText,
+    this.fromDate,
+    this.toDate
+  ).subscribe({
+    next: (blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Store_Redeem_History.xlsx';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    },
+    error: () => {
+      this.toast.show({ type: 'error', message: 'Failed to download Excel file.' });
+    }
+  });
+}
+
+
 }
