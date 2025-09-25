@@ -8,26 +8,50 @@
     </c-card-header>
     <c-card-body *ngIf="promotion; else loading">
       <div class="row g-3">
+        <strong class="fs-5">{{ promotion.title }}</strong>
+        <hr>
         <div class="col-md-6">
-          <h5>{{ promotion.title }}</h5>
+          <span class="fs-5">Promotion Details</span>
           <hr>
           <p>
-            <strong>Date:</strong>
+            <strong>Created on:</strong>
             {{ promotion.date | date: 'fullDate' }} at {{ promotion.date | date: 'shortTime' }}
           </p>
-          <p><strong>Store:</strong> {{ promotion.store }}</p>
+          <p><strong>Sending:</strong> {{ promotion.sentType }}</p>
+          <p *ngIf="promotion.sentType === 'Scheduled'"><strong>Scheduled On:</strong> {{ promotion.scheduled | date: 'short' }}</p>
           <p><strong class="me-2">Coupon Code:</strong> <span class="badge bg-success-light text-dark">{{ promotion.couponCode }}</span></p>
+
+          <span class="fs-5">Store Details</span>
+          <hr>
+          <p><strong>Store:</strong> {{ promotion.store.storeName }}</p>
+          <p><strong>Category:</strong> {{ promotion.store.category }}</p>
+          <p><strong>Location:</strong> {{ promotion.store.location }}</p>
+          <p><strong>Contact:</strong> {{ promotion.store.contact }}</p>
+          <p><strong>Email:</strong> {{ promotion.store.email }}</p>
         </div>
         <div class="col-md-6">
           <h5>Status & Contacts</h5>
           <hr>
           <p>
-            <strong class="me-2">Status:</strong>
+            <strong class="me-2">Promotion Status:</strong>
             <span class="status-badge" [ngClass]="'status-' + promotion.status.toLowerCase()">
               {{ promotion.status }}
             </span>
           </p>
+          <p>
+            <strong class="me-2">Payment Status:</strong>
+            <span class="status-badge status-paid" *ngIf="promotion.paymentStatus">
+              Paid
+            </span>
+            <span class="status-badge status-pending" *ngIf="!promotion.paymentStatus && promotion.date > today">
+              Pending
+            </span>
+            <span class="status-badge status-failed" *ngIf="!promotion.paymentStatus && promotion.date <= today">
+              Failed
+            </span>
+          </p>
           <p><strong>Total Contacts Targeted:</strong> {{ promotion.totalContacts }}</p>
+          <p><strong>Contacts from Public repo.:</strong> {{ promotion.publicContacts }}</p>
         </div>
       </div>
     </c-card-body>

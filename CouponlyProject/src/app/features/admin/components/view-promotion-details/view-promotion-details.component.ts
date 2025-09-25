@@ -20,6 +20,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ViewPromotionDetailsComponent {
   promotion: any;
+  today: Date = new Date();
   constructor(private promotionService: PromotionService, private route: ActivatedRoute, private location: Location) {}
 
   ngOnInit() {
@@ -28,6 +29,9 @@ export class ViewPromotionDetailsComponent {
       const id = parseInt(promotionId, 10);
       this.promotionService.getPromotionById(id).subscribe(promotion => {
         this.promotion = promotion.data;
+        this.promotion.date = new Date(this.promotion.date);
+        console.log(this.promotion);
+        console.log(this.today);
       });
     }
   }
