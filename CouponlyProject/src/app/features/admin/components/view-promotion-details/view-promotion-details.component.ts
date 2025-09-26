@@ -1,7 +1,7 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonDirective, CardComponent, CardModule, ColComponent, FormModule, SpinnerComponent } from '@coreui/angular';
+import { BadgeComponent, ButtonDirective, CardComponent, CardModule, CardTitleDirective, ColComponent, FormModule, SpinnerComponent } from '@coreui/angular';
 import { PromotionService } from '../../../../commons/services/Promotion/promotion.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -13,7 +13,8 @@ import { ActivatedRoute } from '@angular/router';
     CardModule,
     CardComponent,
     ColComponent,
-    ButtonDirective
+    ButtonDirective,
+    BadgeComponent 
   ],
   templateUrl: './view-promotion-details.component.html',
   styleUrl: './view-promotion-details.component.scss'
@@ -38,5 +39,29 @@ export class ViewPromotionDetailsComponent {
 
   goBack() {
     this.location.back();
+  }
+
+  getPaymentStatusInfo(): { text: string; color: string } {
+    if (this.promotion.paymentStatus) {
+      return { text: 'Paid', color: 'success' };
+    }
+    if (!this.promotion.paymentStatus && new Date(this.promotion.date) > this.today) {
+      return { text: 'Pending', color: 'warning' };
+    }
+    if (!this.promotion.paymentStatus && new Date(this.promotion.date) <= this.today) {
+      return { text: 'Failed', color: 'danger' };
+    }
+    return { text: 'Unknown', color: 'secondary' }; // Fallback
+  }
+
+  getPromotionStatusInfo(): { text: string; color: string } {
+    const status = this.promotion.status;
+    let color = 'secondary';
+    if (status === 'Sent' || status === 'Completed') color = 'success';
+    if (status === 'Scheduled' || status === 'Processing') color = 'info';
+    if (status === 'Created') color = 'primary';
+    if (status === 'Failed' || status === 'Cancelled') color = 'danger';
+    
+    return { text: status, color: color };
   }
 }
