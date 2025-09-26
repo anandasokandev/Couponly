@@ -5,7 +5,7 @@ import { PromotionService } from '../../../../commons/services/Promotion/promoti
 import { CommonModule } from '@angular/common';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormModule, ModalComponent, ModalToggleDirective, SpinnerComponent, TableDirective } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { PaginationComponent } from '../../pages/pagination/pagination.component';
 
 @Component({
@@ -23,8 +23,8 @@ import { PaginationComponent } from '../../pages/pagination/pagination.component
     CardHeaderComponent,
     ModalComponent,
     ColComponent,
-    PaginationComponent
-    
+    PaginationComponent,
+    RouterModule
   ],
   templateUrl: './view-promotions.component.html',
   styleUrl: './view-promotions.component.scss'
@@ -51,7 +51,8 @@ export class ViewPromotionsComponent {
 
   // --- Pagination ---
   currentPage = 1;
-  itemsPerPage = 5;
+  itemsPerPage = 10;
+  totalItems = 0;
 
   constructor(private fb: FormBuilder, private promotionService: PromotionService, private router: Router) {
     this.filterForm = this.fb.group({
@@ -65,8 +66,10 @@ export class ViewPromotionsComponent {
     this.isLoading = true;
     this.promotionService.getPromotions(this.currentPage, this.itemsPerPage).subscribe(res => {
       this.allPromotions = res.data.items || [];
+      this.totalItems = res.data.totalCount || 0;
       this.applyFiltersAndSort(); // Apply initial filters
       this.isLoading = false;
+      console.log(res.data);
     });
   }
 

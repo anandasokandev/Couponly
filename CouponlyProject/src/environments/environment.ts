@@ -89,6 +89,7 @@ export const environment = {
       coupon: {
         CouponSearch: 'Coupon/filter'
       },
+
       LocationContact: {
         ContactCount: 'LocationContact/GetCountByStoreId',
         SelectedContacts: ''
@@ -105,6 +106,7 @@ export const environment = {
       FetchPromotions: 'Promotion/GetPromotions',
       FetchPromotionsByStoreId: 'Promotion/GetPromotionsByStoreId',
       FetchPromotionById: 'Promotion/GetPromotionById',
+      paymentWebhook: 'Promotion/PaymentWebhook',
     },
 
     storedashboard: {
@@ -113,7 +115,9 @@ export const environment = {
       overview: 'StoreDashboardOverview/Overview',
       coupontype: 'StoreDashBoardCoupons/CouponTypes',
       coupons: 'StoreDashBoardCoupons/StoreCoupons',
-      promotions:'StoreDashboardRedeem/FilterStorePromotions'
+      promotions:'StoreDashboardRedeem/FilterStorePromotions',
+      excelpromo:'StoreDashboardRedeem/ExportStorePromotionsToExcel',
+      excelredeem:'StoreDashboardRedeem/ExportStoreRedeemsToExcel'
     }
   }
 };

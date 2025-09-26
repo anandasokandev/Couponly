@@ -44,6 +44,7 @@
       <table [hover]="true" cTable class="responsive-table">
         <thead>
           <tr class="text-nowrap">
+            <th>#</th>
             <th (click)="onSort('title')">Title <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
             <th (click)="onSort('sentOn')">Date <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
             <th (click)="onSort('store')">Store Name <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
@@ -55,6 +56,7 @@
             <th>Actions</th>
           </tr>
           <tr>
+            <th></th>
             <th><input type="text" class="form-control form-control-sm" placeholder="Filter by title..." [(ngModel)]="titleFilter" (ngModelChange)="applyFiltersAndSort()" /></th>
             <th></th> 
             <th><input type="text" class="form-control form-control-sm" placeholder="Filter by title..." [(ngModel)]="titleFilter" (ngModelChange)="applyFiltersAndSort()" /></th> 
@@ -65,7 +67,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let promo of paginatedPromotions">
+          <tr *ngFor="let promo of paginatedPromotions; let i = index">
+            <td >{{ ((currentPage - 1) * itemsPerPage) + (i + 1) }}</td>
             <td data-label="Title">{{ promo.title }}</td>
             <td data-label="Date">{{ promo.date | date: 'short' }}</td>
             <td data-label="Store Name">{{ promo.store }}</td>
@@ -79,13 +82,13 @@
               </span>
             </td>
             <td data-label="Actions" class="text-nowrap gap-2 d-flex">
-              <button class="btn btn-sm btn-outline-primary">
+              <button class="btn btn-sm btn-outline-primary" [routerLink]="['/admin/promotion/details', promo.id]">
                 <i class="fa fa-eye" aria-hidden="true"></i>
               </button>
-              <button class="btn btn-sm btn-outline-primary">
+              <!-- <button class="btn btn-sm btn-outline-primary">
                 <i class="fa fa-key" aria-hidden="true"></i>
-              </button>
-          </td>
+              </button> -->
+            </td> 
           </tr>
         </tbody>
       </table>
@@ -98,10 +101,11 @@
       </div>
 
       <app-pagination *ngIf="!isLoading && displayedPromotions.length > 0"
-        [totalItems]="displayedPromotions.length"
+        [totalItems]="totalItems"
         [itemsPerPage]="itemsPerPage"
         [currentPage]="currentPage"
-        (pageChange)="onPageChange($event)">
+        (pageChange)="onPageChange($event)"
+        (itemsPerPageChange)="itemsPerPage = $event; onPageChange(1)">
       </app-pagination>
     </c-card-body>
   </c-card>

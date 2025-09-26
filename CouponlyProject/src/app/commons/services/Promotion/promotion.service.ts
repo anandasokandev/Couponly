@@ -77,4 +77,8 @@ export class PromotionService {
     Payment(paymentData:any):Observable<any>{
       return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.service.Payment}`,paymentData)
     }
+
+    PaymentWebhook(PaymentWebhook: any): Observable<any>{
+      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.paymentWebhook}`,PaymentWebhook)
+    }
 }

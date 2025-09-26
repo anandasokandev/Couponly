@@ -95,6 +95,50 @@ export class StoreDashboardService {
     return this.http.get(url, { headers, params });
   }
 
+  exportStoreRedeemsToExcel(
+  searchType: number = 4,
+  searchText: string = '',
+  fromDate?: string,
+  toDate?: string
+): Observable<Blob> {
+  const token = sessionStorage.getItem('token');
+  const headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${token}`)
+    .set('Accept', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+  let params = new HttpParams()
+    .set('searchType', searchType)
+    .set('searchText', searchText);
+
+  if (fromDate) params = params.set('fromDate', fromDate);
+  if (toDate) params = params.set('toDate', toDate);
+
+  const url = `${environment.apiBaseUrl}/${environment.endpoints.storedashboard.excelredeem}`;
+  return this.http.get(url, { headers, params, responseType: 'blob' });
+}
+
+exportStorePromotionsToExcel(
+  searchType: number = 6,
+  searchText: string = '',
+  fromDate?: string,
+  toDate?: string
+): Observable<Blob> {
+  const token = sessionStorage.getItem('token');
+  const headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${token}`)
+    .set('Accept', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+  let params = new HttpParams()
+    .set('searchType', searchType)
+    .set('searchText', searchText);
+
+  if (fromDate) params = params.set('fromDate', fromDate);
+  if (toDate) params = params.set('toDate', toDate);
+
+  const url = `${environment.apiBaseUrl}/${environment.endpoints.storedashboard.excelpromo}`;
+  return this.http.get(url, { headers, params, responseType: 'blob' });
+}
+
 
 
 }
