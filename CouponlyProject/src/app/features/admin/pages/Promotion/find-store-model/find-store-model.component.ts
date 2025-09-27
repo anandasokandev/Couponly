@@ -76,7 +76,7 @@ export class FindStoreModelComponent {
 
   filterForm: FormGroup;
 
-  @Output() contactsAdded = new EventEmitter<{ store: any; count: number; contactsNeeded: number; coupon: any }>();
+  @Output() contactsAdded = new EventEmitter<{ store: any; count: number; contactsNeeded: number; publicContacts: number; coupon: any }>();
 
   private toastService = inject(ToastService);
   constructor(private fb: FormBuilder, private promotionService: PromotionService) {
@@ -207,7 +207,7 @@ export class FindStoreModelComponent {
   }
 
   checkContactsNeeded(): void {
-    this.contactsNeeded = Math.min(this.contactsNeeded, this.PublicContactCount);
+    this.contactsNeeded = Math.min(this.contactsNeeded, (this.PublicContactCount + this.StoreContactCount));
   }
 
   addContacts(): void {
@@ -220,6 +220,7 @@ export class FindStoreModelComponent {
       store: this.selectedStore,
       count: this.contactsNeeded,
       contactsNeeded: this.contactsNeeded,
+      publicContacts: this.contactsNeeded - this.StoreContactCount > 0 ? this.contactsNeeded - this.StoreContactCount : 0,
       coupon: this.selectedCoupon
     };
 

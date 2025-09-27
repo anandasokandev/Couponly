@@ -135,13 +135,14 @@ export class PromotionComponent {
     
   }
 
-  handleContactsAdded(event: { store: any; count: number; contactsNeeded: number; coupon: any }): void {
+  handleContactsAdded(event: { store: any; count: number; contactsNeeded: number; publicContacts: number; coupon: any }): void {
     console.log('Contacts added:', event);
     // Update the campaign details based on the event data
     this.campaign.selectedCategory = event.store.category;
     this.campaign.selectedStore = event.store.store;
     this.campaign.storeId = event.store.id;
     this.campaign.contactCount = event.contactsNeeded;
+    this.campaign.publicContacts = event.publicContacts;
     this.campaign.couponId = event.coupon.id;
     this.campaign.couponCode = event.coupon.couponCode;
     this.campaign.couponName = event.coupon.name;

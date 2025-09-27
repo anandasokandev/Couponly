@@ -21,7 +21,10 @@
         </div>
         <div class="mb-3">
           <label class="form-label">Total Charge per Message</label>
-          <input cFormControl readonly disabled type="number" [name]="'total' + i" [value]="setting.charge + setting.profit" class="form-control-plaintext ps-3 form-control-sm" />
+          <c-input-group>
+            <span cInputGroupText><i class="fa-solid fa-indian-rupee-sign"></i></span>
+            <input cFormControl readonly disabled type="number" [name]="'total' + i" [value]="setting.charge + setting.profit" class="form-control-plaintext ps-3 form-control-sm" />
+          </c-input-group>
         </div>
         <div>
           <label class="form-label">Handling Charge per 100 Msgs</label>

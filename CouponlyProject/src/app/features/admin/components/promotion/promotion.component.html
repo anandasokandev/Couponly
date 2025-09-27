@@ -93,7 +93,7 @@
         <c-col sm="2">
           <label cLabel for="contactCount">No. of Contacts to Send</label>
           <input cFormControl class="form-control-sm" id="contactCount" name="contactCount"  type="number" [value]="campaign.contactCount" readonly disabled required>
-          ( 0 from public repo.)
+          ( {{campaign.publicContacts}} from public repo.)
         </c-col>
       </c-row>
     </form>

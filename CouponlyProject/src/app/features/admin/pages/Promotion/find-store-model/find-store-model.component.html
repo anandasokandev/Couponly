@@ -166,7 +166,7 @@
                     style="width: 100px; text-align: right;"
                     (change)="checkContactsNeeded()"
                     >
-                <span>/ {{ PublicContactCount }}</span>
+                <span>/ {{ PublicContactCount + StoreContactCount }}</span>
             </div>
         </div>
         <p *ngIf="!selectedStore">No results found. Please adjust your filters.</p>
@@ -183,7 +183,7 @@
         class="btn-sm"
         color="primary"
         (click)="addContacts()"
-        [disabled]="!selectedStore || !selectedCoupon || contactsNeeded <= 0 || contactsNeeded > PublicContactCount"
+        [disabled]="!selectedStore || !selectedCoupon || contactsNeeded <= 0 || contactsNeeded > (PublicContactCount + StoreContactCount)"
         [cModalToggle]="FindStoreModal.id"
     >
         Select Store

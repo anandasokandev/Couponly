@@ -30,9 +30,7 @@ export class ViewPromotionDetailsComponent {
       const id = parseInt(promotionId, 10);
       this.promotionService.getPromotionById(id).subscribe(promotion => {
         this.promotion = promotion.data;
-        this.promotion.date = new Date(this.promotion.date);
         console.log(this.promotion);
-        console.log(this.today);
       });
     }
   }
@@ -58,10 +56,23 @@ export class ViewPromotionDetailsComponent {
     const status = this.promotion.status;
     let color = 'secondary';
     if (status === 'Sent' || status === 'Completed') color = 'success';
-    if (status === 'Scheduled' || status === 'Processing') color = 'info';
-    if (status === 'Created') color = 'primary';
-    if (status === 'Failed' || status === 'Cancelled') color = 'danger';
+    if (status === 'Scheduled' || status === 'Pending') color = 'info';
+    if (status === 'Created' || status=== 'TokenRecreated') color = 'primary';
+    if (status === 'Failed' || status === 'PaymentFailed' || status === 'Cancelled') color = 'danger';
     
     return { text: status, color: color };
+  }
+
+  channelColor(channel: string): string {
+    switch (channel) {
+      case 'Email':
+        return 'info';
+      case 'SMS':
+        return 'danger';
+      case 'WhatsApp':
+        return 'success';
+      default:
+        return 'secondary';
+    }
   }
 }
