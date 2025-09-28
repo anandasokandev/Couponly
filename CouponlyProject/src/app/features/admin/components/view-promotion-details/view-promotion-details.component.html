@@ -17,7 +17,7 @@
           color="success"
           class="ms-3"
           style="color: blanchedalmond;"
-          *ngIf="getPaymentStatusInfo().text === 'Failed' && promotion.status == 'Created'"
+          *ngIf="PaymentStatusInfo.text === 'Failed' && promotion.status == 'Created'"
         >
           <i class="fa fa-key" aria-hidden="true"></i>
           Resend Payment URL
@@ -84,16 +84,16 @@
               class="list-group-item d-flex justify-content-between align-items-center"
             >
               Promotion Status
-              <c-badge [color]="getPromotionStatusInfo().color">
-                {{ getPromotionStatusInfo().text }}
+              <c-badge [color]="PromotionStatusInfo.color">
+                {{ PromotionStatusInfo.text }}
               </c-badge>
             </li>
             <li
               class="list-group-item d-flex justify-content-between align-items-center"
             >
               Payment Status
-              <c-badge [color]="getPaymentStatusInfo().color">
-                {{ getPaymentStatusInfo().text }}
+              <c-badge [color]="PaymentStatusInfo.color">
+                {{ PaymentStatusInfo.text }}
               </c-badge>
             </li>
             <li

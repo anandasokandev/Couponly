@@ -38,7 +38,7 @@
           <label cLabel for="channels" class="text-muted">Communication Channels</label>
           <div class="mb-3 py-1">
             <c-form-check id="whatsappCheck" inline>
-              <input cFormCheckInput type="checkbox" name="whatsapp" [(ngModel)]="campaign.channels.whatsapp" (click)="updateChannel('whatsapp')">
+              <input cFormCheckInput type="checkbox" name="whatsapp" [(ngModel)]="campaign.channels.whatsapp" (click)="updateChannel('whatsapp')" readonly>
               <label cFormCheckLabel><i class="fa-brands fa-whatsapp me-1"></i> WhatsApp</label>
             </c-form-check>
             <c-form-check id="emailCheck" inline>

@@ -2,10 +2,10 @@ import { CommonModule, NgClass } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule, CardComponent, CardHeaderComponent, CardModule, ColComponent, FormModule, GridModule, ModalComponent, ModalModule, ModalToggleDirective, TableDirective, TabsComponent } from '@coreui/angular';
-import { CouponService } from 'src/app/commons/services/Coupon/coupon.service';
-import { ToastService } from 'src/app/commons/services/Toaster/toast.service';
-import { Coupon, CouponType } from 'src/app/commons/models/coupon.model' 
-import { ImageUploadService } from 'src/app/commons/services/ImageUpload/image-upload.service';
+import { CouponService } from '../../../../commons/services/Coupon/coupon.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
+import { Coupon, CouponType } from '../../../../commons/models/coupon.model' 
+import { ImageUploadService } from '../../../../commons/services/ImageUpload/image-upload.service';
 
 @Component({
   selector: 'app-generate-coupon',
