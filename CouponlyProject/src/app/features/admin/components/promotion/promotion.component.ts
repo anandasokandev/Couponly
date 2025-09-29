@@ -104,7 +104,7 @@ export class PromotionComponent {
   ngOnInit(): void {
     this.costService.getAllServices().subscribe(services => {
       this.serviceCosts = services.data;
-      console.log('Service Costs:', this.serviceCosts);
+      console.log('Service Costs:', services);
     });
   }
 
@@ -114,6 +114,13 @@ export class PromotionComponent {
 
   updateChannel(channel: keyof PromotionCampaign['channels']): void {
     this.campaign.channels[channel] = !this.campaign.channels[channel];
+    this.calculateCost(channel);
+  }
+  calculateCost(channel: keyof PromotionCampaign['channels']): void {
+    if (!this.campaign.channels[channel]) {
+      this.campaign.costs[channel] = 0;
+      return;
+    }
     const service = this.serviceCosts.find(service => service.name.toLowerCase() === channel);
     if (service) {
       const charge = service.charge * this.campaign.contactCount;
@@ -135,15 +142,22 @@ export class PromotionComponent {
     
   }
 
-  handleContactsAdded(event: { store: any; count: number; contactsNeeded: number; coupon: any }): void {
+  handleContactsAdded(event: { store: any; count: number; contactsNeeded: number; publicContacts: number; coupon: any }): void {
     console.log('Contacts added:', event);
     // Update the campaign details based on the event data
     this.campaign.selectedCategory = event.store.category;
     this.campaign.selectedStore = event.store.store;
     this.campaign.storeId = event.store.id;
     this.campaign.contactCount = event.contactsNeeded;
+    this.campaign.publicContacts = event.publicContacts;
     this.campaign.couponId = event.coupon.id;
     this.campaign.couponCode = event.coupon.couponCode;
     this.campaign.couponName = event.coupon.name;
+    // Recalculate costs for all selected channels
+    for (const channel of Object.keys(this.campaign.channels) as (keyof PromotionCampaign['channels'])[]) {
+      if (this.campaign.channels[channel]) {
+        this.calculateCost(channel);
+      }
+    }
   }
 }

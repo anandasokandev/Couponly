@@ -152,7 +152,7 @@
         <div *ngIf="selectedStore" class="selection-area">
             <p>You have selected: <strong>{{ selectedStore.store }}</strong> ({{ StoreContactCount }} contacts available under {{ selectedStore.store }})</p>
             <p>Coupon: <strong>{{ selectedCoupon?.couponCode || 'None selected' }}</strong></p>
-            <p>Contacts available in public repo.: {{ PublicContactCount }}</p>
+            <p>Contacts available in public repo.: {{ PublicContactCount - StoreContactCount }}</p>
             <div class="d-flex gap-3">
                 <label for="contactsNeeded">No.of contacts for promotion:</label>
                 <input

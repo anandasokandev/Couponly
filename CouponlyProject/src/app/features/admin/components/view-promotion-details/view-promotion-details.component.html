@@ -1,66 +1,157 @@
 <c-col xs="12">
   <c-card class="mb-4">
     <c-card-header class="d-flex justify-content-between align-items-center">
-      <strong class="fs-5">Promotion Details</strong>
-      <button cButton color="primary" size="sm" (click)="goBack()">
-        &larr; Back to List
-      </button>
+      <div *ngIf="promotion">
+        <h5 class="mb-0">{{ promotion.title }}</h5>
+        <small class="text-body-secondary">
+          Created on: {{ promotion.date | date: 'fullDate' }}
+        </small>
+      </div>
+      <div>
+        <button cButton color="primary" size="sm" (click)="goBack()">
+          &larr; Back to List
+        </button>
+        <button
+          cButton
+          size="sm"
+          color="success"
+          class="ms-3"
+          style="color: blanchedalmond;"
+          *ngIf="PaymentStatusInfo.text === 'Failed' && promotion.status == 'Created'"
+        >
+          <i class="fa fa-key" aria-hidden="true"></i>
+          Resend Payment URL
+        </button>
+      </div>
     </c-card-header>
-    <c-card-body *ngIf="promotion; else loading">
-      <div class="row g-3">
-        <strong class="fs-5">{{ promotion.title }}</strong>
-        <hr>
-        <div class="col-md-6">
-          <span class="fs-5">Promotion Details</span>
-          <hr>
-          <p>
-            <strong>Created on:</strong>
-            {{ promotion.date | date: 'fullDate' }} at {{ promotion.date | date: 'shortTime' }}
-          </p>
-          <p><strong>Sending:</strong> {{ promotion.sentType }}</p>
-          <p *ngIf="promotion.sentType === 'Scheduled'"><strong>Scheduled On:</strong> {{ promotion.scheduled | date: 'short' }}</p>
-          <p><strong class="me-2">Coupon Code:</strong> <span class="badge bg-success-light text-dark">{{ promotion.couponCode }}</span></p>
 
-          <span class="fs-5">Store Details</span>
-          <hr>
-          <p><strong>Store:</strong> {{ promotion.store.storeName }}</p>
-          <p><strong>Category:</strong> {{ promotion.store.category }}</p>
-          <p><strong>Location:</strong> {{ promotion.store.location }}</p>
-          <p><strong>Contact:</strong> {{ promotion.store.contact }}</p>
-          <p><strong>Email:</strong> {{ promotion.store.email }}</p>
+    <c-card-body *ngIf="promotion; else loading">
+      <div class="row">
+        <div class="col-lg-8">
+          <h5 class="mb-3">Store Information</h5>
+          <div class="row mb-4 ms-lg-1 border rounded p-3">
+            <div class="col-md-4 mb-3">
+              <div class="text-body-secondary">Store Name</div>
+              <strong>{{ promotion.store.name }}</strong>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="text-body-secondary">Category</div>
+              <strong>{{ promotion.store.category }}</strong>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="text-body-secondary">Location</div>
+              <strong>{{ promotion.store.location }}</strong>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="text-body-secondary">Contact</div>
+              <strong>{{ promotion.store.contact }}</strong>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="text-body-secondary">Email</div>
+              <strong>{{ promotion.store.email }}</strong>
+            </div>
+          </div>
+
+          <h5 class="mb-3">Coupon Details</h5>
+          <div class="row border ms-lg-1 rounded p-3 align-items-center">
+            <div [ngClass]="promotion.coupon.image ? 'col-md-7' : 'col-md-12'">
+              <dl class="row mb-0">
+                <dt class="col-sm-4">Coupon Name</dt>
+                <dd class="col-sm-8">{{ promotion.coupon.name }}</dd>
+
+                <dt class="col-sm-4">Coupon Code</dt>
+                <dd class="col-sm-8">
+                  <c-badge color="success" shape="rounded-pill">
+                    {{ promotion.coupon.code }}
+                  </c-badge>
+                </dd>
+              </dl>
+            </div>
+            <div class="col-md-5" *ngIf="promotion.coupon.image">
+              <img
+                [src]="promotion.coupon.image"
+                alt="Coupon Image"
+                class="img-fluid rounded"
+              />
+            </div>
+          </div>
         </div>
-        <div class="col-md-6">
-          <h5>Status & Contacts</h5>
-          <hr>
-          <p>
-            <strong class="me-2">Promotion Status:</strong>
-            <span class="status-badge" [ngClass]="'status-' + promotion.status.toLowerCase()">
-              {{ promotion.status }}
-            </span>
-          </p>
-          <p>
-            <strong class="me-2">Payment Status:</strong>
-            <span class="status-badge status-paid" *ngIf="promotion.paymentStatus">
-              Paid
-            </span>
-            <span class="status-badge status-pending" *ngIf="!promotion.paymentStatus && promotion.date > today">
-              Pending
-            </span>
-            <span class="status-badge status-failed" *ngIf="!promotion.paymentStatus && promotion.date <= today">
-              Failed
-            </span>
-          </p>
-          <p><strong>Total Contacts Targeted:</strong> {{ promotion.totalContacts }}</p>
-          <p><strong>Contacts from Public repo.:</strong> {{ promotion.publicContacts }}</p>
+
+        <div class="col-lg-4">
+          <h5 class="mb-3">Summary & Status</h5>
+          <ul class="list-group">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Promotion Status
+              <c-badge [color]="PromotionStatusInfo.color">
+                {{ PromotionStatusInfo.text }}
+              </c-badge>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Payment Status
+              <c-badge [color]="PaymentStatusInfo.color">
+                {{ PaymentStatusInfo.text }}
+              </c-badge>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Amount
+              <span>&#8377;{{ promotion.amount }}/-</span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Sending Type
+              <span>{{ promotion.sentType }}</span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              *ngIf="promotion.sentType === 'Scheduled'"
+            >
+              Scheduled For
+              <span>{{ promotion.scheduled | date: 'short' }}</span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Total Contacts
+              <c-badge color="info" shape="rounded-pill">
+                {{ promotion.totalContacts }}
+              </c-badge>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Public Contacts
+              <c-badge color="secondary" shape="rounded-pill">
+                {{ promotion.publicContacts }}
+              </c-badge>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Channels
+              <div class="">
+              <c-badge [color]="channelColor(channel)" shape="rounded-pill" *ngFor="let channel of promotion.channels; let i = index" class="ms-1">
+                {{ channel }}
+              </c-badge>
+            </div>
+          </ul>
         </div>
       </div>
     </c-card-body>
 
     <ng-template #loading>
-       <div class="d-flex justify-content-center p-5">
-         <c-spinner color="primary"></c-spinner>
-       </div>
+      <div
+        class="d-flex justify-content-center align-items-center p-5"
+        style="min-height: 300px"
+      >
+        <c-spinner color="primary"></c-spinner>
+      </div>
     </ng-template>
-
   </c-card>
 </c-col>
