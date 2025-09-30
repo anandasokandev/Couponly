@@ -7,6 +7,7 @@ import { PromotionService } from '../../../../../commons/services/Promotion/prom
 import { IconModule } from '@coreui/icons-angular';
 import { Title } from '@angular/platform-browser';
 import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-promotion-calculator-model',
@@ -35,7 +36,7 @@ export class PromotionCalculatorModelComponent {
     
   }
 
-  constructor(private promotionService: PromotionService) {
+  constructor(private promotionService: PromotionService, private router: Router) {
     
   }
 
@@ -81,6 +82,7 @@ export class PromotionCalculatorModelComponent {
         console.log('Promotion created successfully:', response);
         this.toast.show({message: 'Promotion created successfully!', type: 'success'});
         this.isSaving = false;
+        this.router.navigate(['/admin/promotion/details/', response.data]);
       },
       (error) => {
         console.error('Error creating promotion:', error);

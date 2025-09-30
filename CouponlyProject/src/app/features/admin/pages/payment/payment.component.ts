@@ -23,6 +23,8 @@ export class PaymentComponent {
   totalAmount: number = 0;
   isPaid=false;
   isTokenInvalid=false;
+  paymentSuccess=false;
+  paymentFailure=false;
 
   constructor(
     private fb: FormBuilder,
@@ -125,41 +127,30 @@ export class PaymentComponent {
 
   //  Navigate based on payment result
   navigate(): void {
-  this.showResult = false;
-  const payload = {
-  PromotionId: this.promotionId,
-  TotalAmount: this.totalAmount,
-  Status: this.isSuccess
-};
-this.paymentapi.Payment(payload).subscribe({
-  next: (res: boolean) => {
-
-    const paymentWebhookdata= {
+    this.showResult = false;
+    const payload = {
       PromotionId: this.promotionId,
-      PaymentStatus: res ? 1 : 2
-    }
-
-    this.paymentapi.PaymentWebhook(paymentWebhookdata);
-
-    if (res === true) {
-      this.handleResult(true); 
-    } else {
-      this.handleResult(false); 
-    }
-  },
-  error: (err) => {
-    console.error('Payment API error:', err);
-    this.handleResult(false); // Treat error as failure
+      TotalAmount: this.totalAmount,
+      Status: this.isSuccess
+    };
+    this.paymentapi.Payment(payload).subscribe({
+      next: (res) => {
+        if (this.isSuccess === true) {
+          this.paymentapi.PaymentWebhook({PromotionId: this.promotionId, PaymentStatus: 1}).subscribe();
+          this.paymentSuccess=true;
+        }
+        else {
+          this.paymentFailure=true;
+          this.paymentapi.PaymentWebhook({PromotionId: this.promotionId, PaymentStatus: 2}).subscribe();
+        }
+        // this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        console.error('Payment Failed:', err);
+        this.paymentFailure=true;
+      }
+    });
   }
-});
-
-  if (this.isSuccess) {
-    this.router.navigate(['/home']);
-  } else {
-    this.paymentForm.reset();
-    window.location.reload(); 
-  }
-}
 
   //  Restrict input to letters and spaces
   allowOnlyLetters(event: KeyboardEvent): void {
