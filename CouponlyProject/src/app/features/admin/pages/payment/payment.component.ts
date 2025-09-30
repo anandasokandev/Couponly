@@ -138,6 +138,9 @@ this.paymentapi.Payment(payload).subscribe({
       PromotionId: this.promotionId,
       PaymentStatus: res ? 1 : 2
     }
+
+    this.paymentapi.PaymentWebhook(paymentWebhookdata);
+
     if (res === true) {
       this.handleResult(true); 
     } else {
