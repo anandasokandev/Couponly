@@ -1,9 +1,14 @@
 <c-col xs="12">
   <c-card class="mb-4">
-    
-    <!-- 🔘 Header Only -->
+
+    <!-- 🔘 Header -->
     <c-card-header>
-      <strong class="fs-5">Coupon List</strong>
+      <div class="d-flex justify-content-between align-items-center">
+        <strong class="fs-5">Coupon List</strong>
+        <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap" [cModalToggle]="'addCouponModal'">
+          Add Coupon
+        </button>
+      </div>
     </c-card-header>
 
     <c-card-body>
@@ -97,3 +102,18 @@
     </c-card-body>
   </c-card>
 </c-col>
+
+<!-- ✅ Add Coupon Modal (outside the card) -->
+<c-modal id="addCouponModal" [scrollable]="true" alignment="center">
+  <c-modal-header>
+    <h5 cModalTitle>Add Coupon</h5>
+    <button type="button" class="btn-close" aria-label="Close" [cModalToggle]="'addCouponModal'" cButtonClose></button>
+  </c-modal-header>
+  <c-modal-body>
+    <p>Coupon form content...</p>
+  </c-modal-body>
+  <c-modal-footer>
+    <button type="button" class="btn btn-secondary" [cModalToggle]="'addCouponModal'">Close</button>
+    <button type="button" class="btn btn-primary">Save Coupon</button>
+  </c-modal-footer>
+</c-modal>
