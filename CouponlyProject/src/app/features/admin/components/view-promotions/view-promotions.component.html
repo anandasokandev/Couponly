@@ -66,8 +66,8 @@
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let promo of paginatedPromotions; let i = index">
+        <tbody *ngIf="!isLoading">
+          <tr *ngFor="let promo of allPromotions; let i = index">
             <td >{{ ((currentPage - 1) * itemsPerPage) + (i + 1) }}</td>
             <td data-label="Title">{{ promo.title }}</td>
             <td data-label="Date">{{ promo.date | date: 'short' }}</td>
@@ -93,8 +93,15 @@
         </tbody>
       </table>
 
-      <div *ngIf="isLoading" class="d-flex justify-content-center m-2">
-        <c-spinner color="info" class="me-2" />Loading...
+      <div *ngIf="isLoading">
+        <!-- <c-spinner color="info" class="me-2" />Loading... -->
+         <p cPlaceholderAnimation="glow">
+          <span cPlaceholder style="width: 100%;"></span>
+        </p>
+
+        <p cPlaceholderAnimation="wave">
+          <span cCol="12" cPlaceholder cBgColor="dark"></span>
+        </p>
       </div>
       <div class="d-flex justify-content-center m-2" *ngIf="!isLoading && displayedPromotions.length === 0">
         No promotions found!
