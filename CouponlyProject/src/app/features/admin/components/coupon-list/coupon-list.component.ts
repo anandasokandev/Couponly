@@ -1,17 +1,21 @@
 import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from '../../pages/pagination/pagination.component';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent } from '@coreui/angular';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, ModalComponent, ModalModule } from '@coreui/angular';
 import { CouponService } from '../../../../commons/services/Coupon/coupon.service';
 import { StoreService } from '../../../../commons/services/Store/store.service';
 import { StoreWiseCouponComponent } from '../store-wise-coupon/store-wise-coupon.component';
+import { AddCouponModalComponentComponent } from '../../pages/add-coupon-modal-component/add-coupon-modal-component.component';
 
 @Component({
   selector: 'app-couponlist',
   standalone: true,
   imports: [
     CommonModule,
+    ModalComponent,
+    ModalModule,
     FormsModule,
     ReactiveFormsModule,
     PaginationComponent,
@@ -19,7 +23,8 @@ import { StoreWiseCouponComponent } from '../store-wise-coupon/store-wise-coupon
     CardHeaderComponent,
     CardBodyComponent,
     StoreWiseCouponComponent,
-    ColComponent
+    ColComponent,
+    
   ],
   templateUrl: './coupon-list.component.html',
   styleUrls: ['./coupon-list.component.scss']
