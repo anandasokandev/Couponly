@@ -1,7 +1,7 @@
 <c-col xs="12">
-  <c-card class="mb-4">
+  <c-card class="mb-4" *ngIf="promotion">
     <c-card-header class="d-flex justify-content-between align-items-center">
-      <div *ngIf="promotion">
+      <div>
         <h5 class="mb-0">{{ promotion.title }}</h5>
         <small class="text-body-secondary">
           Created on: {{ promotion.date | date: 'fullDate' }}
@@ -25,7 +25,7 @@
       </div>
     </c-card-header>
 
-    <c-card-body *ngIf="promotion; else loading">
+    <c-card-body *ngIf="promotion">
       <div class="row">
         <div class="col-lg-8">
           <h5 class="mb-3">Store Information</h5>
@@ -145,13 +145,92 @@
       </div>
     </c-card-body>
 
-    <ng-template #loading>
+    <!-- <ng-template #loading>
       <div
         class="d-flex justify-content-center align-items-center p-5"
         style="min-height: 300px"
       >
         <c-spinner color="primary"></c-spinner>
       </div>
-    </ng-template>
+    </ng-template> -->
+  </c-card>
+
+  <c-card class="mb-4" *ngIf="!promotion">
+    <c-card-header class="d-flex justify-content-between align-items-center">
+      <div cCol="9" cPlaceholderAnimation=glow>
+        <h5><span cPlaceholder class="placeholder placeholder-lg col-5"></span></h5>
+        <small><span cPlaceholder class="placeholder col-4"></span></small>
+      </div>
+      <div cCol="3" cPlaceholderAnimation=glow>
+        <button cButton color="secondary" disabled cCol="5" cPlaceholder size="sm"></button>
+        <button cButton color="secondary" disabled cCol="5" cPlaceholder size="sm" class="ms-3"></button>
+      </div>
+    </c-card-header>
+    <c-card-body>
+      <div class="row">
+        <div class="col-lg-8" cPlaceholderAnimation=glow>
+          <h5 class="mb-3"><span cPlaceholder class="placeholder placeholder-md col-5"></span></h5>
+          <div class="row mb-4 ms-lg-1 border rounded p-3">
+            <div class="col-md-4 mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+            <div class="col-md-4 mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+            <div class="col-md-4 mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+            <div class="col-md-4 mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+            <div class="col-md-4 mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+          </div>
+
+          <h5 class="mb-3"><span cPlaceholder class="placeholder placeholder-md col-5"></span></h5>
+          <div class="row border ms-lg-1 rounded p-3 align-items-center">
+            <div class="col-md-7">
+              <div>
+                <div class="mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+                <div class="mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <img aria-label="Placeholder" cCardImg="top" cPlaceholder focusable="false" height="100"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4" cPlaceholderAnimation=glow>
+          <h5 class="mb-3"><span cPlaceholder class="placeholder placeholder-md col-6"></span></h5>
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-4"></span>
+              <span cPlaceholder class="placeholder col-3"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-6"></span>
+              <span cPlaceholder class="placeholder col-2"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-5"></span>
+              <span cPlaceholder class="placeholder col-1"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-3"></span>
+              <span cPlaceholder class="placeholder col-3"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-7"></span>
+              <span cPlaceholder class="placeholder col-2"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-4"></span>
+              <span cPlaceholder class="placeholder col-1"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-6"></span>
+              <span cPlaceholder class="placeholder col-1"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-3"></span>
+              <span cPlaceholder class="placeholder col-5"></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </c-card-body>
+    
   </c-card>
 </c-col>
