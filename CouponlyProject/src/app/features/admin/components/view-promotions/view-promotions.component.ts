@@ -26,9 +26,9 @@ import { PaginationComponent } from '../../pages/pagination/pagination.component
     PaginationComponent,
     RouterModule,
     PlaceholderAnimationDirective, 
-    ColDirective, 
+    // ColDirective, 
     PlaceholderDirective, 
-    BgColorDirective,
+    // BgColorDirective,
   ],
   templateUrl: './view-promotions.component.html',
   styleUrl: './view-promotions.component.scss'
