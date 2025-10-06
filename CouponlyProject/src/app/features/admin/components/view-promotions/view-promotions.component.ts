@@ -29,6 +29,7 @@ import { PaginationComponent } from '../../pages/pagination/pagination.component
     // ColDirective, 
     PlaceholderDirective, 
     // BgColorDirective,
+    ColDirective
   ],
   templateUrl: './view-promotions.component.html',
   styleUrl: './view-promotions.component.scss'
