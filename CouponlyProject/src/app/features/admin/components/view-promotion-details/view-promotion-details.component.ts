@@ -1,20 +1,23 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BadgeComponent, ButtonDirective, CardComponent, CardModule, CardTitleDirective, ColComponent, FormModule, SpinnerComponent } from '@coreui/angular';
+import { BadgeComponent, ButtonDirective, CardComponent, CardModule, CardTitleDirective, ColComponent, ColDirective, FormModule, PlaceholderAnimationDirective, PlaceholderDirective, SpinnerComponent } from '@coreui/angular';
 import { PromotionService } from '../../../../commons/services/Promotion/promotion.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-promotion-details',
   imports: [
-    SpinnerComponent,
+    // SpinnerComponent,
     CommonModule,
     CardModule,
     CardComponent,
     ColComponent,
     ButtonDirective,
-    BadgeComponent 
+    BadgeComponent ,
+    PlaceholderAnimationDirective, 
+    PlaceholderDirective, 
+    ColDirective
   ],
   templateUrl: './view-promotion-details.component.html',
   styleUrl: './view-promotion-details.component.scss'
@@ -32,7 +35,6 @@ export class ViewPromotionDetailsComponent {
       const id = parseInt(promotionId, 10);
       this.promotionService.getPromotionById(id).subscribe(promotion => {
         this.promotion = promotion.data;
-        console.log(this.promotion);
 
         const promotionTime = new Date(this.promotion.date).getTime();
         const expirationTime = promotionTime + (24 * 60 * 60 * 1000);

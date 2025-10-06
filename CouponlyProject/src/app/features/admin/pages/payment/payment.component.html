@@ -78,3 +78,16 @@
   <h2>❌ Invalid Token</h2>
   <p>The payment link is invalid or expired.</p>
 </div>
+
+
+<!-- Show Payment Success Message -->
+<div class="center-message" *ngIf="paymentSuccess">
+  <h2>✅ Payment Success</h2>
+  <p>The payment was processed successfully.</p>
+</div>
+
+<!-- Show Payment Failure Message -->
+<div class="center-message" *ngIf="paymentFailure">
+  <h2>❌ Payment Failed</h2>
+  <p>The payment could not be processed. Refresh the page and try again.</p>
+</div>
