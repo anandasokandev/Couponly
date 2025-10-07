@@ -27,6 +27,7 @@ export class GenerateCouponComponent implements OnInit {
 
   selectedFile: File | null = null;
   imagePreviewUrl: string | null = null;
+  today: string = '';
 
   aiImage: string | null = null;
   couponTypeList: CouponType [] = [];
@@ -53,6 +54,9 @@ export class GenerateCouponComponent implements OnInit {
   constructor(private couponApi: CouponService, private toastService: ToastService, private imageUpload: ImageUploadService) {}
 
   ngOnInit(): void {
+
+    const now = new Date();
+    this.today = now.toISOString().split('T')[0];
 
     console.log(this.userId);
     console.log(this.isUserLimit);
