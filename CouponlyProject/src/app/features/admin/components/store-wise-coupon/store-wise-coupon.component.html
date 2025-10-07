@@ -5,7 +5,6 @@
         {{ isViewingCoupons ? 'Coupons for ' + selectedStore?.name : 'Store-Wise Coupons' }}
       </strong>
     </c-card-header>
-
     <c-card-body>
 
       <!-- 🔁 Store List View -->
@@ -72,7 +71,7 @@
 
       <!-- 🎟️ Coupon List View -->
       <div *ngIf="isViewingCoupons">
-        <button class="btn btn-sm btn-secondary mb-3" (click)="goBackToStores()">
+        <button class="btn btn-sm btn-primary mb-3" (click)="goBackToStores()">
           ← Back to Stores List
         </button>
 
