@@ -1,48 +1,93 @@
 
-<div class="payment-wrapper">
-  <div class="payment-card">
-    <h2>Complete Your Payment</h2>
-    <form [formGroup]="paymentForm">
-      <div class="form-group">
-        <label>Cardholder Name</label>
-        <input formControlName="cardholderName" placeholder="e.g., Rahul Sharma" />
-      </div>
-      <div class="form-group">
-        <label>Card Number</label>
-        <input formControlName="cardNumber" maxlength="16" placeholder="XXXX XXXX XXXX XXXX" />
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Expiry</label>
-          <input formControlName="expiry" placeholder="MM/YY" />
-        </div>
-        <div class="form-group">
-          <label>CVV</label>
-          <input formControlName="cvv" maxlength="3" placeholder="CVV" />
-        </div>
-      </div>
-      <button type="button" class="pay-btn" (click)="startPayment()">Pay ₹500</button>
-    </form>
-  </div>
-</div>
 
-<div class="loader-overlay" *ngIf="loading">
-  <div class="spinner"></div>
-  <div class="actions">
-    <button (click)="handleResult(true)">Success</button>
-    <button (click)="handleResult(false)">Fail</button>
-  </div>
-</div>
+  <div class="payment-wrapper">
+     <div class="blur-overlay" *ngIf="isPaid || isTokenInvalid"></div>
+    <div class="payment-card">
+      <h2>Complete Your Payment</h2>
+      <form [formGroup]="paymentForm">
+        <div class="form-group">
+          <label>Cardholder Name</label>
+          <input formControlName="cardholderName" placeholder="e.g., Rahul Sharma" (keypress)="allowOnlyLetters($event)" />
+          <span class="small-error" *ngIf="paymentForm.get('cardholderName')?.invalid && paymentForm.get('cardholderName')?.touched">
+            * Please enter a valid name must start with uppercase
+          </span>
+        </div>
 
-<div class="result-popup" *ngIf="showResult">
-  <div class="popup" [ngClass]="{ success: isSuccess, fail: !isSuccess }">
-    <div class="icon" [ngClass]="{ success: isSuccess, fail: !isSuccess }">
-      <span>{{ isSuccess ? '✓' : '✕' }}</span>
+        <div class="form-group">
+          <label>Card Number</label>
+          <input formControlName="cardNumber" placeholder="XXXXXXXXXXXXXXXX" type="text"
+            (keypress)="allowOnlyNumbers($event)" inputmode="numeric" maxlength="16" class="form-control" />
+          <span class="small-error" *ngIf="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched">
+            * Card number must be 16 digits
+          </span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Expiry</label>
+            <input formControlName="expiry" type="month" placeholder="MM/YYYY" />
+            <span class="small-error" *ngIf="paymentForm.get('expiry')?.invalid && paymentForm.get('expiry')?.touched">
+              * Expiry date is required
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label>CVV</label>
+            <input formControlName="cvv" maxlength="3" placeholder="CVV" />
+            <span class="small-error" *ngIf="paymentForm.get('cvv')?.invalid && paymentForm.get('cvv')?.touched">
+              * CVV must be 3 digits
+            </span>
+          </div>
+        </div>
+
+        <button type="button" class="pay-btn" (click)="startPayment()">Pay ₹ {{totalAmount}}</button>
+      </form>
     </div>
-    <h3>{{ isSuccess ? 'Payment Successful!' : 'Payment Failed' }}</h3>
-    <p>
-      {{ isSuccess ? 'Your transaction has been completed.' : 'Transaction could not be processed. Please try again.' }}
-    </p>
-    <button [ngClass]="{ fail: !isSuccess }" (click)="navigate()">Continue</button>
   </div>
+
+  <div class="loader-overlay" *ngIf="loading">
+    <div class="spinner"></div>
+    <div class="actions">
+      <button (click)="handleResult(true)">Success</button>
+      <button (click)="handleResult(false)">Fail</button>
+    </div>
+  </div>
+
+  <div class="result-popup" *ngIf="showResult">
+    <div class="popup" [ngClass]="{ success: isSuccess, fail: !isSuccess }">
+      <div class="icon" [ngClass]="{ success: isSuccess, fail: !isSuccess }">
+        <span>{{ isSuccess ? '✓' : '✕' }}</span>
+      </div>
+      <h3>{{ isSuccess ? 'Payment Successful!' : 'Payment Failed' }}</h3>
+      <p>
+        {{ isSuccess ? 'Your transaction has been completed.' : 'Transaction could not be processed. Please try again.' }}
+      </p>
+      <button [ngClass]="{ fail: !isSuccess }" (click)="navigate()">Continue</button>
+    </div>
+  </div>
+
+
+<!-- Show Paid Message -->
+<div class="center-message" *ngIf="isPaid">
+  <h2>✅ Payment Already Completed</h2>
+  <p>Your transaction has already been processed.</p>
+</div>
+
+<!-- Show Token Invalid Message -->
+<div class="center-message" *ngIf="isTokenInvalid">
+  <h2>❌ Invalid Token</h2>
+  <p>The payment link is invalid or expired.</p>
+</div>
+
+
+<!-- Show Payment Success Message -->
+<div class="center-message" *ngIf="paymentSuccess">
+  <h2>✅ Payment Success</h2>
+  <p>The payment was processed successfully.</p>
+</div>
+
+<!-- Show Payment Failure Message -->
+<div class="center-message" *ngIf="paymentFailure">
+  <h2>❌ Payment Failed</h2>
+  <p>The payment could not be processed. Refresh the page and try again.</p>
 </div>

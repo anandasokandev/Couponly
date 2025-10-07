@@ -1,0 +1,124 @@
+<c-modal #CreatePromotionModal [scrollable]="true" alignment="center">
+  </c-modal>
+
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-header class="d-flex align-items-center">
+      <strong class="w-100 fs-5">Promotions</strong>
+      <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
+        <button class="btn btn-primary btn-sm" (click)="openNewPromotion()">
+          <svg [cIcon]="icons.cilPenNib" class="me-2"></svg>
+          Add New Promotion
+        </button>
+      </div>
+    </c-card-header>
+
+    <c-card-body>
+      <form [formGroup]="filterForm" (ngSubmit)="applyFiltersAndSort()">
+        <div class="d-flex flex-wrap justify-content-start align-items-center py-3">
+          <div class="m-2">
+            <select cSelect class="form-select form-select-sm" formControlName="status">
+              <option value="">All Statuses</option>
+              <option value="Sent">Sent</option>
+              <option value="Scheduled">Scheduled</option>
+              <option value="Draft">Draft</option>
+            </select>
+          </div>
+          <div class="d-flex gap-1 align-items-center m-2">
+            <label for="fromDate" class="text-nowrap">From:</label>
+            <input type="date" id="fromDate" class="form-control form-control-sm" formControlName="fromDate" />
+          </div>
+          <div class="d-flex gap-1 align-items-center m-2">
+            <label for="toDate" class="text-nowrap">To:</label>
+            <input type="date" id="toDate" class="form-control form-control-sm" formControlName="toDate" />
+          </div>
+          <!-- <button class="btn btn-sm btn-success text-white m-2" type="submit">
+            <i class="fas fa-filter"></i> 
+          </button> -->
+          <button class="btn btn-sm btn-danger text-white m-2" type="button" (click)="resetFilters()">
+            <i class="fas fa-arrows-rotate"></i>
+          </button>
+        </div>
+      </form>
+      <div class="table-responsive">
+      <table [hover]="true" cTable class="responsive-table">
+        <thead>
+          <tr class="text-nowrap">
+            <th>#</th>
+            <th (click)="onSort('title')">Title <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
+            <th (click)="onSort('sentOn')">Date <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
+            <th (click)="onSort('store')">Store Name <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
+            <th (click)="onSort('couponCode')">Coupon Code <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
+            <th (click)="onSort('totalContacts')"> Total Contacts <svg [cIcon]="icons.cilSortNumericDown"></svg></th>
+            <!-- <th (click)="onSort('ownContacts')">Own Contacts <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
+            <th (click)="onSort('publicContacts')">Public Contacts <svg [cIcon]="icons.cilSortAlphaUp"></svg></th> -->
+            <th (click)="onSort('status')">Status <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
+            <th>Actions</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by title..." [(ngModel)]="titleFilter" (ngModelChange)="applyFiltersAndSort()" /></th>
+            <th></th> 
+            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by title..." [(ngModel)]="titleFilter" (ngModelChange)="applyFiltersAndSort()" /></th> 
+            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by title..." [(ngModel)]="titleFilter" (ngModelChange)="applyFiltersAndSort()" /></th> 
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="!isLoading">
+          <tr *ngFor="let promo of allPromotions; let i = index">
+            <td >{{ ((currentPage - 1) * itemsPerPage) + (i + 1) }}</td>
+            <td data-label="Title">{{ promo.title }}</td>
+            <td data-label="Date">{{ promo.date | date: 'short' }}</td>
+            <td data-label="Store Name">{{ promo.store }}</td>
+            <td data-label="Coupon Code">{{ promo.couponCode }}</td>
+            <td data-label="Contacts">{{ promo.totalContacts }}</td>
+            <!-- <td data-label="Own Contacts">{{ promo.totalContacts - promo.publicContacts }}</td>
+            <td data-label="Public Contacts">{{ promo.publicContacts }}</td> -->
+            <td data-label="Status">
+              <span class="status-badge" [ngClass]="'status-' + promo.status.toLowerCase()">
+                {{ promo.status }}
+              </span>
+            </td>
+            <td data-label="Actions" class="gap-2 d-flex">
+              <button class="btn btn-sm btn-outline-primary" [routerLink]="['/admin/promotion/details', promo.id]">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </button>
+              <!-- <button class="btn btn-sm btn-outline-primary">
+                <i class="fa fa-key" aria-hidden="true"></i>
+              </button> -->
+            </td> 
+          </tr>
+        </tbody>
+        <tbody *ngIf="isLoading">
+          <tr cPlaceholderAnimation="glow" *ngFor="let i of [1, 2, 3, 4]">
+            <td ><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <td data-label="Title"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <td data-label="Date"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <td data-label="Store Name"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <td data-label="Coupon Code"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <td data-label="Contacts"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <!-- <td data-label="Own Contacts">{{ promo.totalContacts - promo.publicContacts }}</td>
+            <td data-label="Public Contacts">{{ promo.publicContacts }}</td> -->
+            <td data-label="Status"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <td data-label="Actions"><button cButton color="secondary" cCol="4" cPlaceholder cPlaceholderSize="sm"></button></td> 
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      
+      <div class="d-flex justify-content-center m-2" *ngIf="!isLoading && displayedPromotions.length === 0">
+        No promotions found!
+      </div>
+
+      <app-pagination *ngIf="!isLoading && displayedPromotions.length > 0"
+        [totalItems]="totalItems"
+        [itemsPerPage]="itemsPerPage"
+        [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)"
+        (itemsPerPageChange)="itemsPerPage = $event; onPageChange(1)">
+      </app-pagination>
+    </c-card-body>
+  </c-card>
+</c-col>

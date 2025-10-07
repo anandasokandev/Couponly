@@ -39,11 +39,16 @@ searchContacts(pageNumber: number, pagesize: number, name: string, email: string
 }
 
 
-
-
 addContact(contactData: any): Observable<any> {
-  return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.contact.AddContact}`, contactData);
+  const token = sessionStorage.getItem('token'); 
+
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+
+  return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.contact.AddContact}`, contactData, { headers });
 }
+
 
 updateContact(contactId: number, contactData: any): Observable<any> {
   const headers = new HttpHeaders({

@@ -1,5 +1,5 @@
-<div class="pagination" *ngIf="totalPages > 1">
-  <div class="pagination-info">
+<div class="pagination" [ngClass]="{'float-end': totalPages <= 1}">
+  <div class="pagination-info" *ngIf="totalPages > 1">
     <button (click)="onPrev()" [disabled]="currentPage === 1">
       &lt; Prev
     </button>
@@ -22,12 +22,12 @@
   </div>  
 
   <div class="page-size-selector d-flex float-end" *ngIf="!fromModel">
-      <label for="pageSizeSelect">Items per page:</label>
-      <select id="pageSizeSelect" [value]="itemsPerPage" (change)="onPageSizeChange($event)">
-          <option *ngFor="let size of pageSizeOptions" [value]="size" [selected]="size === itemsPerPage">
-              {{ size }}
-          </option>
-      </select>
+    <label for="pageSizeSelect">Items per page:</label>
+    <select id="pageSizeSelect" [value]="itemsPerPage" (change)="onPageSizeChange($event)">
+        <option *ngFor="let size of pageSizeOptions" [value]="size" [selected]="size === itemsPerPage">
+            {{ size }}
+        </option>
+    </select>
   </div>
 </div>
 

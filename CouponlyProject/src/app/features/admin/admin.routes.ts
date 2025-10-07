@@ -80,11 +80,32 @@ export const routes: Routes = [
           title: 'Cost Settings'
         }
       },
+      // {
+      //   path: 'promotion',
+      //   loadComponent: () => import('./components/promotion/promotion.component').then(m => m.PromotionComponent),
+      //   data: {
+      //     title: 'Promotion'
+      //   }
+      // },
       {
         path: 'promotion',
-        loadComponent: () => import('./components/promotion/promotion.component').then(m => m.PromotionComponent),
+        loadComponent: () => import('./components/view-promotions/view-promotions.component').then(m => m.ViewPromotionsComponent),
         data: {
           title: 'Promotion'
+        },
+      },
+      {
+        path: 'promotion/details/:id',
+        loadComponent: () => import('./components/view-promotion-details/view-promotion-details.component').then(m => m.ViewPromotionDetailsComponent),
+        data: {
+          title: 'Promotion Details'
+        }
+      },
+      {
+        path: 'NewPromotion', // Example child path
+        loadComponent: () => import('./components/promotion/promotion.component').then(m => m.PromotionComponent),
+        data: {
+          title: 'New Promotion'
         }
       },
       {

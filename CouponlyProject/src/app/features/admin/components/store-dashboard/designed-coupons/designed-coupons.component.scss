@@ -1,0 +1,116 @@
+.coupon-card {
+  width: 280px;
+  height: auto;
+  border: 1px solid #ccc; 
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  padding: 0;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    border-color: #bbb;
+  }
+}
+
+.coupon-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.coupon-content {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;  
+  flex: 1;
+}
+
+.coupon-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #222;
+}
+
+.coupon-desc {
+  font-size: 0.95rem;       
+  color: #555;
+  font-style: italic;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+button.active {
+  background-color: #007bff;
+  color: white;
+}
+/* Tabs overall layout */
+.nav-tabs {
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* Inactive tab */
+.nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  color: #6c757d;
+  background-color: transparent;
+  font-weight: 500;
+}
+
+/* Active tab */
+.nav-tabs .nav-link.active {
+  color: #000;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-bottom-color: transparent;
+  font-weight: 600;
+}
+
+
+
+.coupon-code-box {
+  display: inline-block;
+  background-color: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.coupon-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.coupon-details p {
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.2;
+  color: #555;
+}
+
+.coupon-details p.user-limit {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #222;
+}
+
+.coupon-dates {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 6px;
+}
