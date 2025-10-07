@@ -40,7 +40,7 @@
           </button>
         </div>
       </form>
-
+      <div class="table-responsive">
       <table [hover]="true" cTable class="responsive-table">
         <thead>
           <tr class="text-nowrap">
@@ -66,8 +66,8 @@
             <th></th>
           </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let promo of paginatedPromotions; let i = index">
+        <tbody *ngIf="!isLoading">
+          <tr *ngFor="let promo of allPromotions; let i = index">
             <td >{{ ((currentPage - 1) * itemsPerPage) + (i + 1) }}</td>
             <td data-label="Title">{{ promo.title }}</td>
             <td data-label="Date">{{ promo.date | date: 'short' }}</td>
@@ -81,7 +81,7 @@
                 {{ promo.status }}
               </span>
             </td>
-            <td data-label="Actions" class="text-nowrap gap-2 d-flex">
+            <td data-label="Actions" class="gap-2 d-flex">
               <button class="btn btn-sm btn-outline-primary" [routerLink]="['/admin/promotion/details', promo.id]">
                 <i class="fa fa-eye" aria-hidden="true"></i>
               </button>
@@ -91,11 +91,23 @@
             </td> 
           </tr>
         </tbody>
+        <tbody *ngIf="isLoading">
+          <tr cPlaceholderAnimation="glow" *ngFor="let i of [1, 2, 3, 4]">
+            <td ><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <td data-label="Title"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <td data-label="Date"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <td data-label="Store Name"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <td data-label="Coupon Code"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <td data-label="Contacts"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <!-- <td data-label="Own Contacts">{{ promo.totalContacts - promo.publicContacts }}</td>
+            <td data-label="Public Contacts">{{ promo.publicContacts }}</td> -->
+            <td data-label="Status"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <td data-label="Actions"><button cButton color="secondary" cCol="4" cPlaceholder cPlaceholderSize="sm"></button></td> 
+          </tr>
+        </tbody>
       </table>
-
-      <div *ngIf="isLoading" class="d-flex justify-content-center m-2">
-        <c-spinner color="info" class="me-2" />Loading...
       </div>
+      
       <div class="d-flex justify-content-center m-2" *ngIf="!isLoading && displayedPromotions.length === 0">
         No promotions found!
       </div>

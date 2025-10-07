@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormGroupDirective, FormsModule, ReactiveFormsM
 import { cilEyedropper, cilOpentype, cilPenNib, cilPlus, cilSearch, cilSortAlphaUp, cilSortNumericDown } from '@coreui/icons';
 import { PromotionService } from '../../../../commons/services/Promotion/promotion.service';
 import { CommonModule } from '@angular/common';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormModule, ModalComponent, ModalToggleDirective, SpinnerComponent, TableDirective } from '@coreui/angular';
+import { BgColorDirective, CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, ColDirective, FormModule, GridModule, ModalComponent, ModalToggleDirective, PlaceholderAnimationDirective, PlaceholderDirective, PlaceholderModule, SpinnerComponent, TableDirective, UtilitiesModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { PaginationComponent } from '../../pages/pagination/pagination.component';
@@ -12,7 +12,7 @@ import { PaginationComponent } from '../../pages/pagination/pagination.component
   selector: 'app-view-promotions',
   imports: [
     CommonModule,
-    SpinnerComponent,
+    // SpinnerComponent,
     FormsModule,
     IconModule,
     TableDirective,
@@ -24,7 +24,12 @@ import { PaginationComponent } from '../../pages/pagination/pagination.component
     ModalComponent,
     ColComponent,
     PaginationComponent,
-    RouterModule
+    RouterModule,
+    PlaceholderAnimationDirective, 
+    // ColDirective, 
+    PlaceholderDirective, 
+    // BgColorDirective,
+    ColDirective
   ],
   templateUrl: './view-promotions.component.html',
   styleUrl: './view-promotions.component.scss'
@@ -63,6 +68,10 @@ export class ViewPromotionsComponent {
   }
 
   ngOnInit(): void {
+    this.loadPromotions();
+  }
+
+  loadPromotions(): void {
     this.isLoading = true;
     this.promotionService.getPromotions(this.currentPage, this.itemsPerPage).subscribe(res => {
       this.allPromotions = res.data.items || [];
@@ -100,7 +109,7 @@ export class ViewPromotionsComponent {
       return this.sortDirection === 'desc' ? comparison * -1 : comparison;
     });
 
-    this.displayedPromotions = filtered;
+    this.displayedPromotions = this.allPromotions;
     this.updatePaginatedPromotions();
   }
   
@@ -123,7 +132,7 @@ export class ViewPromotionsComponent {
   // --- Pagination Logic ---
   onPageChange(page: number): void {
     this.currentPage = page;
-    this.updatePaginatedPromotions();
+    this.loadPromotions();
   }
 
   updatePaginatedPromotions(): void {
