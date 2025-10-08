@@ -76,7 +76,10 @@ export const environment = {
       GetCouponType : 'Coupon/CouponTypes', 
       GenerateCoupon: 'Coupon',
       GetAllCoupons: 'Coupon',
-      FilterCoupons:'Coupon/filter'
+      FilterCoupons:'Coupon/filter',
+      // validcoupons: 'Coupon/valid',
+      // expiredcoupons:'Coupon/expired',
+      // upcomingcoupon:'Coupon/upcoming',
     },
 
     promotion: {

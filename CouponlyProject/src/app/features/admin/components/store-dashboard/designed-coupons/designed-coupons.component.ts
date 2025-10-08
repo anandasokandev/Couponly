@@ -24,6 +24,7 @@ export class DesignedCouponsComponent implements OnInit {
   couponTypes: any[] = [];
   couponCode: string = '';
   typeId?: number;
+  selectedDateFilter = '1'; // default to 'All Coupons'
 colors: string[] = [
   '#e74c3c', // red
   '#27ae60', // green
@@ -77,6 +78,7 @@ getColor(index: number): string {
   resetFilters() {
     this.couponCode = '';
     this.typeId = undefined;
+    this.selectedDateFilter = '1'; 
     this.fetchCoupons();
   }
 }

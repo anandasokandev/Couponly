@@ -38,6 +38,7 @@ export class StoreWiseCouponComponent implements OnInit {
   storeSearch: string = '';
   couponCodeSearch = '';
   selectedTypeId?: number;
+   selectedDateFilter = '1';
   filteredCoupons: any[] = [];
   types: any[] = [];
 
