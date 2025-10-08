@@ -6,6 +6,7 @@ import { CouponService } from '../../../../commons/services/Coupon/coupon.servic
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 import { Coupon, CouponType } from '../../../../commons/models/coupon.model' 
 import { ImageUploadService } from '../../../../commons/services/ImageUpload/image-upload.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-generate-coupon',
@@ -32,7 +33,7 @@ export class GenerateCouponComponent implements OnInit {
   aiImage: string | null = null;
   couponTypeList: CouponType [] = [];
   isUserLimit: boolean = false;
-  storeId: number = 14;
+  storeId!: number;
   userId = sessionStorage.getItem('userId');
   prompt: string = ''
   loading: boolean = false;
@@ -51,7 +52,17 @@ export class GenerateCouponComponent implements OnInit {
     validUntil: ''
   };
 
-  constructor(private couponApi: CouponService, private toastService: ToastService, private imageUpload: ImageUploadService) {}
+  constructor(
+    private couponApi: CouponService, 
+    private toastService: ToastService, 
+    private imageUpload: ImageUploadService, 
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.route.params.subscribe(params => {
+    this.storeId = params['id'];
+  });
+  }
 
   ngOnInit(): void {
 
@@ -122,7 +133,6 @@ export class GenerateCouponComponent implements OnInit {
     };
   }
 
-
   saveCoupon() {
     console.log(this.coupon);
     
@@ -136,7 +146,9 @@ export class GenerateCouponComponent implements OnInit {
               next: (res : any )=>{
                 this.toastService.show({ type: 'success', message: 'Coupon Generated Successfully' });
                 console.log('Coupon Generated Successfully');
-                this.coupon = this.initialCoupon();
+                setTimeout(()=>{
+                  this.router.navigate(['/admin/couponlist'])
+                },5000);
               },
               error:( err: any) => {
                 this.toastService.show({ type: 'error', message: 'Coupon generation failed' });
