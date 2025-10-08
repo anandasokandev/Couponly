@@ -22,14 +22,14 @@
       <div class="border-bottom mb-3">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link" [ngClass]="{ active: activeTab === 'coupons' }" (click)="activeTab = 'coupons'"
+
             <a class="nav-link" [ngClass]="{ active: activeTab === 'coupons' }" (click)="activeTab = 'coupons'"
               href="javascript:void(0)">
               Coupons
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [ngClass]="{ active: activeTab === 'storeWise' }" (click)="activeTab = 'storeWise'"
+
             <a class="nav-link" [ngClass]="{ active: activeTab === 'storeWise' }" (click)="activeTab = 'storeWise'"
               href="javascript:void(0)">
               Store-Wise Coupons
@@ -44,16 +44,11 @@
         <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
           <input type="text" class="form-control form-control-sm" style="max-width: 210px" [(ngModel)]="couponCode"
             placeholder="Search Coupon Code" (input)="filterCoupons()" />
-          <input type="text" class="form-control form-control-sm" style="max-width: 210px" [(ngModel)]="couponCode"
-            placeholder="Search Coupon Code" (input)="filterCoupons()" />
+
 
           <input type="text" class="form-control form-control-sm" style="max-width: 210px" [(ngModel)]="storeNameSearch"
             placeholder="Search Store Name" (input)="filterCoupons()" />
-          <input type="text" class="form-control form-control-sm" style="max-width: 210px" [(ngModel)]="storeNameSearch"
-            placeholder="Search Store Name" (input)="filterCoupons()" />
 
-          <select class="form-select form-select-sm" style="max-width: 210px" [(ngModel)]="selectedType"
-            (change)="filterCoupons()">
           <select class="form-select form-select-sm" style="max-width: 210px" [(ngModel)]="selectedType"
             (change)="filterCoupons()">
             <option [ngValue]="undefined">-- Select Type --</option>
@@ -106,11 +101,12 @@
         <!-- 🔢 Pagination -->
         <app-pagination *ngIf="!isLoading" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
           [currentPage]="currentPage" (pageChange)="onPageChange($event)"
-        <app-pagination *ngIf="!isLoading" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
-          [currentPage]="currentPage" (pageChange)="onPageChange($event)"
           (itemsPerPageChange)="onItemsPerPageChange($event)">
         </app-pagination>
       </ng-container>
+
+
+
 
       <!-- ✅ Store-Wise Tab -->
       <ng-container *ngIf="activeTab === 'storeWise'">
@@ -121,17 +117,3 @@
   </c-card>
 </c-col>
 
-<!-- ✅ Add Coupon Modal (outside the card)
-<c-modal id="addCouponModal" [scrollable]="true" alignment="center">
-  <c-modal-header>
-    <h5 cModalTitle>Add Coupon</h5>
-    <button type="button" class="btn-close" aria-label="Close" [cModalToggle]="'addCouponModal'" cButtonClose></button>
-  </c-modal-header>
-  <c-modal-body>
-    <p>Coupon form content...</p>
-  </c-modal-body>
-  <c-modal-footer>
-    <button type="button" class="btn btn-secondary" [cModalToggle]="'addCouponModal'">Close</button>
-    <button type="button" class="btn btn-primary">Save Coupon</button>
-  </c-modal-footer>
-</c-modal>
