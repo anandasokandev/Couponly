@@ -1,3 +1,8 @@
+<c-modal #addCouponModal [scrollable]="true" alignment="center" id="addCouponModal">
+  <app-add-coupon-modal></app-add-coupon-modal>
+</c-modal>
+
+
 <c-col xs="12">
   <c-card class="mb-4">
 
@@ -5,8 +10,8 @@
     <c-card-header>
       <div class="d-flex justify-content-between align-items-center">
         <strong class="fs-5">Coupon List</strong>
-        <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap" [cModalToggle]="'addCouponModal'">
-          Add Coupon
+        <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap" [cModalToggle]="addCouponModal.id">
+          Generate Coupon
         </button>
       </div>
     </c-card-header>
@@ -18,11 +23,13 @@
         <ul class="nav nav-tabs">
           <li class="nav-item">
             <a class="nav-link" [ngClass]="{ active: activeTab === 'coupons' }" (click)="activeTab = 'coupons'"
+            <a class="nav-link" [ngClass]="{ active: activeTab === 'coupons' }" (click)="activeTab = 'coupons'"
               href="javascript:void(0)">
               Coupons
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" [ngClass]="{ active: activeTab === 'storeWise' }" (click)="activeTab = 'storeWise'"
             <a class="nav-link" [ngClass]="{ active: activeTab === 'storeWise' }" (click)="activeTab = 'storeWise'"
               href="javascript:void(0)">
               Store-Wise Coupons
@@ -37,10 +44,16 @@
         <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
           <input type="text" class="form-control form-control-sm" style="max-width: 210px" [(ngModel)]="couponCode"
             placeholder="Search Coupon Code" (input)="filterCoupons()" />
+          <input type="text" class="form-control form-control-sm" style="max-width: 210px" [(ngModel)]="couponCode"
+            placeholder="Search Coupon Code" (input)="filterCoupons()" />
 
           <input type="text" class="form-control form-control-sm" style="max-width: 210px" [(ngModel)]="storeNameSearch"
             placeholder="Search Store Name" (input)="filterCoupons()" />
+          <input type="text" class="form-control form-control-sm" style="max-width: 210px" [(ngModel)]="storeNameSearch"
+            placeholder="Search Store Name" (input)="filterCoupons()" />
 
+          <select class="form-select form-select-sm" style="max-width: 210px" [(ngModel)]="selectedType"
+            (change)="filterCoupons()">
           <select class="form-select form-select-sm" style="max-width: 210px" [(ngModel)]="selectedType"
             (change)="filterCoupons()">
             <option [ngValue]="undefined">-- Select Type --</option>
@@ -93,6 +106,8 @@
         <!-- 🔢 Pagination -->
         <app-pagination *ngIf="!isLoading" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
           [currentPage]="currentPage" (pageChange)="onPageChange($event)"
+        <app-pagination *ngIf="!isLoading" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+          [currentPage]="currentPage" (pageChange)="onPageChange($event)"
           (itemsPerPageChange)="onItemsPerPageChange($event)">
         </app-pagination>
       </ng-container>
@@ -106,7 +121,7 @@
   </c-card>
 </c-col>
 
-<!-- ✅ Add Coupon Modal (outside the card) -->
+<!-- ✅ Add Coupon Modal (outside the card)
 <c-modal id="addCouponModal" [scrollable]="true" alignment="center">
   <c-modal-header>
     <h5 cModalTitle>Add Coupon</h5>
