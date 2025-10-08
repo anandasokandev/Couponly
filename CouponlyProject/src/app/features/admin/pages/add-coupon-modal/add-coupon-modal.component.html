@@ -1,0 +1,109 @@
+<c-modal #addCouponModal [scrollable]="true" alignment="center" id="addCouponModal" class="wide-modal">
+
+    <c-modal-header>
+        <h5 cModalTitle>Generate Coupon</h5>
+        <button class="btn-close btn-sm" cButtonClose [cModalToggle]="addCouponModal.id"></button>
+    </c-modal-header>
+
+    <c-modal-body class="p-4">
+        <h6 class="mb-1">Choose Store</h6>
+        <form [formGroup]="storeForm">
+            <div class="d-flex gap-4">
+                <c-input-group>
+                    <span cInputGroupText>
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input cFormControl class="form-control-sm" type="text" formControlName="storeName"
+                        placeholder="Search by name...">
+                </c-input-group>
+                <button cButton color="secondary" class="btn btn-sm d-flex align-items-center" (click)="searchStores()">
+                    Search <i class="fas fa-search ms-2"></i></button>
+            </div>
+        </form>
+
+        <hr>
+
+        <h6>Search Results</h6>
+
+        <!-- Show loading spinner -->
+        <div *ngIf="isStoreLoading" class="d-flex justify-content-center my-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+        <!-- If a store is selected, show only that -->
+        <div *ngIf="selectedStore && !isStoreLoading" class="mt-3">
+            <table [hover]="true" cTable class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Logo</th>
+                        <th>Store Name</th>
+                        <th>Store Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="align-middle">
+                        <td>1</td>
+                        <td><img [src]="selectedStore.storeLogo" class="img"></td>
+                        <td>{{ selectedStore.store }}</td>
+                        <td>{{ selectedStore.category }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-sm btn-outline-secondary mt-2" (click)="selectedStore = null">
+                Change Store
+            </button>
+        </div>
+
+        <!-- If no store is selected, show search results -->
+        <ng-container *ngIf="searchResults && !selectedStore && searchResults.length > 0 && !isStoreLoading">
+            <table [hover]="true" cTable class="responsive-table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Logo</th>
+                    <th>Store Name</th>
+                    <th>Store Category</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let store of searchResults; let i = index" class="align-middle" (click)="selectStore(store)" style="cursor: pointer;">
+                    <td>{{ currentPage * itemsPerPage - itemsPerPage + i + 1 }}</td>
+                    <td><img [src]="store.storeLogo" class="img"></td>
+                    <td>{{store.store}}</td>
+                    <td>{{store.category}}</td>
+                    <!-- <td>
+                    <button cButton class="btn-sm" variant="ghost" [disabled]="store === selectedStore">
+                        <i class="fas fa-check"></i>
+                    </button>
+                    </td> -->
+                </tr>
+                <tr *ngIf="searchResults.length === 0">
+                    <td colspan="4">No stores found. Please adjust your filters.</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <app-pagination 
+                [currentPage]="currentPage"
+                [itemsPerPage]="itemsPerPage"
+                [totalItems]="totalItems"
+                [fromModel]="true"
+                (pageChange)="onPageChange($event)"
+            ></app-pagination>
+        </ng-container>
+
+        <!-- No results -->
+        <div *ngIf="!selectedStore && searchResults.length === 0 && !isStoreLoading" class="mt-3">
+            <p>No stores found.</p>
+        </div>
+    </c-modal-body>
+    <c-modal-footer>
+        <button [cModalToggle]="addCouponModal.id" cButton color="secondary">
+            Close
+        </button>
+        <button cButton color="primary" (click)="generateCoupon()">Generate</button>
+    </c-modal-footer>
+</c-modal>
