@@ -7,7 +7,7 @@ import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, Mo
 import { CouponService } from '../../../../commons/services/Coupon/coupon.service';
 import { StoreService } from '../../../../commons/services/Store/store.service';
 import { StoreWiseCouponComponent } from '../store-wise-coupon/store-wise-coupon.component';
-import { AddCouponModalComponentComponent } from '../../pages/add-coupon-modal-component/add-coupon-modal-component.component';
+import { AddCouponModalComponent } from '../../pages/add-coupon-modal/add-coupon-modal.component';
 
 @Component({
   selector: 'app-couponlist',
@@ -24,7 +24,7 @@ import { AddCouponModalComponentComponent } from '../../pages/add-coupon-modal-c
     CardBodyComponent,
     StoreWiseCouponComponent,
     ColComponent,
-    
+    AddCouponModalComponent
   ],
   templateUrl: './coupon-list.component.html',
   styleUrls: ['./coupon-list.component.scss']
