@@ -53,7 +53,7 @@ export const routes: Routes = [
         }
       },
       {
-        path: 'generatecoupon',
+        path: 'generatecoupon/:id',
         loadComponent: () => import('./components/generate-coupon/generate-coupon.component').then(m => m.GenerateCouponComponent),
         data: {
           title: 'GenerateCoupon'
