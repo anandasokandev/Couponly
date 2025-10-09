@@ -56,7 +56,9 @@ export class DefaultLayoutComponent {
 
   loadPage: boolean = false;
 
-  constructor(public toast: ToastService, private router: Router) {
+  constructor(public toast: ToastService, private router: Router) { }
+
+  ngOnInt() {
     const token = sessionStorage.getItem('token');
     if (!token) {
       this.loadPage = false;
