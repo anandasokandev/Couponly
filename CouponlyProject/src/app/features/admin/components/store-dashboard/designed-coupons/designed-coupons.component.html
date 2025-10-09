@@ -17,6 +17,14 @@
                         <option *ngFor="let type of couponTypes" [value]="type.id">{{ type.name }}</option>
                     </select>
 
+                    <select class="form-select form-select-sm" style="max-width: 180px;"
+                        [(ngModel)]="selectedDateFilter" >
+                        <option value="1">All Coupons</option>
+                        <option value="2">Valid Coupons</option>
+                        <option value="3">Upcoming Coupons</option>
+                        <option value="4">Expired Coupons</option>
+                    </select>
+
                     <button type="button" class="btn btn-danger btn-sm text-white" title="Reset"
                         (click)="resetFilters()">
                         <i class="fas fa-arrows-rotate"></i>
@@ -40,7 +48,7 @@
                         <div class="coupon-code-box text-center">{{ coupon.couponCode }}</div>
                         <p class="coupon-desc">{{ coupon.description }}</p>
                         <div class="coupon-details">
-                            <p><span class="label">Store:</span> {{ coupon.storeName }}</p>
+                            <p><span class="label">Coupon Type:</span> {{ coupon.typeName }}</p>
                             <p><span class="label">Min Amount:</span> ₹{{ coupon.minAmount }}</p>
                             <div class="user-limit-box">
                                 User Limit: {{ coupon.userLimit ? coupon.userLimitCount : 'Unlimited' }}

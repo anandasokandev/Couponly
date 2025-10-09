@@ -64,7 +64,9 @@ export class EditLocationModalComponent {
       this.locationForm.control.markAllAsTouched();
       return;
     }
+    console.log(this.location);
     
+
     if (this.location) {
       this.locationApi.editLocation(this.location)
         .subscribe({

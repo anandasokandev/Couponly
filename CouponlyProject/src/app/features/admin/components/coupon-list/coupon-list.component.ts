@@ -7,7 +7,7 @@ import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, Mo
 import { CouponService } from '../../../../commons/services/Coupon/coupon.service';
 import { StoreService } from '../../../../commons/services/Store/store.service';
 import { StoreWiseCouponComponent } from '../store-wise-coupon/store-wise-coupon.component';
-import { AddCouponModalComponentComponent } from '../../pages/add-coupon-modal-component/add-coupon-modal-component.component';
+import { AddCouponModalComponent } from '../../pages/add-coupon-modal/add-coupon-modal.component';
 
 @Component({
   selector: 'app-couponlist',
@@ -24,7 +24,7 @@ import { AddCouponModalComponentComponent } from '../../pages/add-coupon-modal-c
     CardBodyComponent,
     StoreWiseCouponComponent,
     ColComponent,
-    
+AddCouponModalComponent
   ],
   templateUrl: './coupon-list.component.html',
   styleUrls: ['./coupon-list.component.scss']
@@ -41,29 +41,31 @@ export class CouponlistComponent implements OnInit {
   couponCode = '';
   storeNameSearch = '';
   selectedStore?: number;
-  selectedType?: number; 
+  selectedType?: number;
+
+  selectedDateFilter = '1'; // default to 'All Coupons'
   activeTab: 'coupons' | 'storeWise' = 'coupons';  // default
 
 
   stores: any[] = [];
-  types: any[] = []; 
-colors: string[] = [
-  '#e74c3c', // red
-  '#27ae60', // green
-  '#2980b9', // blue
-  '#8e44ad', // purple
-  '#f39c12', // orange
-  '#16a085'  // teal
-];
+  types: any[] = [];
+  colors: string[] = [
+    '#e74c3c', // red
+    '#27ae60', // green
+    '#2980b9', // blue
+    '#8e44ad', // purple
+    '#f39c12', // orange
+    '#16a085'  // teal
+  ];
 
-getColor(index: number): string {
-  return this.colors[index % this.colors.length];
-}
+  getColor(index: number): string {
+    return this.colors[index % this.colors.length];
+  }
 
   constructor(
     private couponService: CouponService,
     private storeService: StoreService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadStoresAndTypes();
@@ -77,14 +79,39 @@ getColor(index: number): string {
     });
 
     this.couponService.getCouponType().subscribe({
-      next: (res) => (this.types = res.data || []), 
+      next: (res) => (this.types = res.data || []),
       error: () => (this.types = [])
     });
   }
 
+
   loadCoupons() {
     this.isLoading = true;
-    this.couponService.getAllCoupons().subscribe({
+
+    let dateFilter: string | undefined;
+
+    switch (this.selectedDateFilter) {
+      case '2':
+        dateFilter = 'valid';
+        break;
+      case '3':
+        dateFilter = 'upcoming';
+        break;
+      case '4':
+        dateFilter = 'expired';
+        break;
+      default:
+        dateFilter = undefined;
+        break;
+    }
+
+    this.couponService.getCouponsByFilter({
+      couponCode: this.couponCode,
+      storeName: this.storeNameSearch,
+      storeId: this.selectedStore,
+      typeId: this.selectedType,
+      dateFilter: dateFilter
+    }).subscribe({
       next: (res: any) => {
         this.coupons = res.data || [];
         this.totalItems = this.coupons.length;
@@ -98,32 +125,37 @@ getColor(index: number): string {
   }
 
   filterCoupons() {
-    this.isLoading = true;
-    this.couponService
-      .getCouponsByFilter({
-        couponCode: this.couponCode,
-        storeName: this.storeNameSearch,
-        storeId: this.selectedStore,
-        typeId: this.selectedType 
-      })
-      .subscribe({
-        next: (res: any) => {
-          this.coupons = res.data || [];
-          this.totalItems = this.coupons.length;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.error(err);
-          this.isLoading = false;
-        }
-      });
+    this.loadCoupons();
   }
+
+  // filterCoupons() {
+  //   this.isLoading = true;
+  //   this.couponService
+  //     .getCouponsByFilter({
+  //       couponCode: this.couponCode,
+  //       storeName: this.storeNameSearch,
+  //       storeId: this.selectedStore,
+  //       typeId: this.selectedType
+  //     })
+  //     .subscribe({
+  //       next: (res: any) => {
+  //         this.coupons = res.data || [];
+  //         this.totalItems = this.coupons.length;
+  //         this.isLoading = false;
+  //       },
+  //       error: (err) => {
+  //         console.error(err);
+  //         this.isLoading = false;
+  //       }
+  //     });
+  // }
 
   resetFilters() {
     this.couponCode = '';
     this.storeNameSearch = '';
     this.selectedStore = undefined;
-    this.selectedType = undefined; 
+    this.selectedType = undefined;
+    this.selectedDateFilter = '1';
     this.currentPage = 1;
     this.loadCoupons();
   }
