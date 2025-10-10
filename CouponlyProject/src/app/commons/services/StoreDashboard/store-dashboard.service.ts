@@ -83,17 +83,19 @@ export class StoreDashboardService {
     return this.http.get<any>(`${environment.apiBaseUrl}/${environment.endpoints.storedashboard.coupontype}`);
   }
 
-  getStoreCoupons(couponCode: string = '', typeId?: number): Observable<any> {
+  getStoreCoupons(couponCode: string = '', typeId?: number, dateFilter?: string): Observable<any> {
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     let params = new HttpParams();
     if (couponCode) params = params.set('couponCode', couponCode);
     if (typeId !== undefined) params = params.set('typeId', typeId);
+    if (dateFilter) params = params.set('dateFilter', dateFilter);
 
     const url = `${environment.apiBaseUrl}/${environment.endpoints.storedashboard.coupons}`;
     return this.http.get(url, { headers, params });
   }
+  
 
   exportStoreRedeemsToExcel(
   searchType: number = 4,

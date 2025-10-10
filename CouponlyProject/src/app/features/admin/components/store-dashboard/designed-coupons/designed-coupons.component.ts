@@ -25,18 +25,18 @@ export class DesignedCouponsComponent implements OnInit {
   couponCode: string = '';
   typeId?: number;
   selectedDateFilter = '1'; // default to 'All Coupons'
-colors: string[] = [
-  '#e74c3c', // red
-  '#27ae60', // green
-  '#2980b9', // blue
-  '#8e44ad', // purple
-  '#f39c12', // orange
-  '#16a085'  // teal
-];
+  colors: string[] = [
+    '#e74c3c', // red
+    '#27ae60', // green
+    '#2980b9', // blue
+    '#8e44ad', // purple
+    '#f39c12', // orange
+    '#16a085'  // teal
+  ];
 
-getColor(index: number): string {
-  return this.colors[index % this.colors.length];
-}
+  getColor(index: number): string {
+    return this.colors[index % this.colors.length];
+  }
   isLoading: boolean = false;
 
   constructor(
@@ -63,7 +63,22 @@ getColor(index: number): string {
   fetchCoupons() {
     this.isLoading = true;
 
-    this.api.getStoreCoupons(this.couponCode, this.typeId).subscribe({
+    let dateFilter: string | undefined;
+    switch (this.selectedDateFilter) {
+      case '2':
+        dateFilter = 'valid';
+        break;
+      case '3':
+        dateFilter = 'upcoming';
+        break;
+      case '4':
+        dateFilter = 'expired';
+        break;
+      default:
+        dateFilter = undefined; // 'All Coupons'
+    }
+
+    this.api.getStoreCoupons(this.couponCode, this.typeId, dateFilter).subscribe({
       next: (response: any) => {
         this.coupons = response.data;
         this.isLoading = false;
@@ -78,7 +93,7 @@ getColor(index: number): string {
   resetFilters() {
     this.couponCode = '';
     this.typeId = undefined;
-    this.selectedDateFilter = '1'; 
+    this.selectedDateFilter = '1';
     this.fetchCoupons();
   }
 }
