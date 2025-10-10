@@ -56,9 +56,7 @@ export class DefaultLayoutComponent {
 
   loadPage: boolean = false;
 
-  constructor(public toast: ToastService, private router: Router) { }
-
-  ngOnInt() {
+  constructor(public toast: ToastService, private router: Router) {
     const token = sessionStorage.getItem('token');
     if (!token) {
       this.loadPage = false;
@@ -67,6 +65,7 @@ export class DefaultLayoutComponent {
     else
       this.loadPage = true;
   }
+
 
   onRemove(id: number) {
     this.toast.remove(id);
