@@ -53,13 +53,14 @@ export class ViewPromotionsComponent {
   // --- Sorting ---
   sortColumn = 'sentOn';
   sortDirection: 'asc' | 'desc' = 'desc';
-
+  expirationTime = new Date(Date.now() - 24 * 60 * 60 * 1000);
   // --- Pagination ---
   currentPage = 1;
   itemsPerPage = 10;
   totalItems = 0;
 
   constructor(private fb: FormBuilder, private promotionService: PromotionService, private router: Router) {
+  console.log(this.expirationTime);
     this.filterForm = this.fb.group({
       status: [''],
       fromDate: [''],
@@ -74,7 +75,12 @@ export class ViewPromotionsComponent {
   loadPromotions(): void {
     this.isLoading = true;
     this.promotionService.getPromotions(this.currentPage, this.itemsPerPage).subscribe(res => {
-      this.allPromotions = res.data.items || [];
+      this.allPromotions = res.data.items.map((promo: any) => {
+          return {
+            ...promo, // Copy existing promotion properties
+            isActionAvailable: promo.status === 'Created' && (new Date(promo.date) < this.expirationTime)
+          };
+        }) || [];
       this.totalItems = res.data.totalCount || 0;
       this.applyFiltersAndSort(); // Apply initial filters
       this.isLoading = false;

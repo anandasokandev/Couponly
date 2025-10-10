@@ -49,7 +49,7 @@
             <th (click)="onSort('sentOn')">Date <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
             <th (click)="onSort('store')">Store Name <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
             <th (click)="onSort('couponCode')">Coupon Code <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
-            <th (click)="onSort('totalContacts')"> Total Contacts <svg [cIcon]="icons.cilSortNumericDown"></svg></th>
+            <th (click)="onSort('totalContacts')"> Contacts <svg [cIcon]="icons.cilSortNumericDown"></svg></th>
             <!-- <th (click)="onSort('ownContacts')">Own Contacts <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
             <th (click)="onSort('publicContacts')">Public Contacts <svg [cIcon]="icons.cilSortAlphaUp"></svg></th> -->
             <th (click)="onSort('status')">Status <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
@@ -81,13 +81,16 @@
                 {{ promo.status }}
               </span>
             </td>
-            <td data-label="Actions" class="gap-2 d-flex">
-              <button class="btn btn-sm btn-outline-primary" [routerLink]="['/admin/promotion/details', promo.id]">
+            <td data-label="Actions">
+              <button class="btn btn-sm btn-outline-primary me-2" [routerLink]="['/admin/promotion/details', promo.id]">
                 <i class="fa fa-eye" aria-hidden="true"></i>
               </button>
-              <!-- <button class="btn btn-sm btn-outline-primary">
+              <button class="btn btn-sm btn-outline-success me-2" *ngIf="promo.isActionAvailable">
                 <i class="fa fa-key" aria-hidden="true"></i>
-              </button> -->
+              </button>
+              <button class="btn btn-sm btn-outline-danger" *ngIf="promo.status === 'Failed'">
+                <i class="fa fa-key" aria-hidden="true"></i>
+              </button>
             </td> 
           </tr>
         </tbody>

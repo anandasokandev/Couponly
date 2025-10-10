@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, FormCheckComponent, FormCheckInputDirective, ModalComponent, ModalToggleDirective, SpinnerComponent, TableDirective } from '@coreui/angular';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, ColDirective, FormCheckComponent, FormCheckInputDirective, ModalComponent, ModalToggleDirective, PlaceholderAnimationDirective, PlaceholderDirective, SpinnerComponent, TableDirective } from '@coreui/angular';
 import { IconComponent, IconModule } from '@coreui/icons-angular';
 import { IconSubset } from '../../../../icons/icon-subset';
 import { cibIcloud, cibSoundcloud, cilCloudDownload, cilSortAlphaDown, cilSortAlphaUp } from '@coreui/icons';
@@ -37,8 +37,13 @@ import { PaginationComponent } from '../../pages/pagination/pagination.component
     ReactiveFormsModule,
     ModalToggleDirective,
     ModalComponent,
-    SpinnerComponent,
+    // SpinnerComponent,
     PaginationComponent,
+    PlaceholderAnimationDirective, 
+    // ColDirective, 
+    PlaceholderDirective, 
+    // BgColorDirective,
+    ColDirective
   ],
   templateUrl: './redeem-history.component.html',
   styleUrl: './redeem-history.component.scss'
@@ -196,8 +201,9 @@ export class RedeemHistoryComponent {
       this.locationId,
       this.fromDate,
       this.toDate
-    )?.subscribe((data: RedeemHistory[]) => {
-      this.redeems = data;
+    )?.subscribe((data: {RedeemHistory: RedeemHistory[], total: number}) => {
+      this.redeems = data.RedeemHistory;
+      this.totalItems = data.total;
       this.isLoading = false;
       this.isPageChange = false;
     });

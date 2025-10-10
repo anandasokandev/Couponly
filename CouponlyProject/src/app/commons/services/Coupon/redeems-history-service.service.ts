@@ -33,9 +33,9 @@ export class RedeemsHistoryServiceService {
     .pipe(
       map((response: any) => {
         if (response && response.statusCode == 200) {
-          return response.data.items as RedeemHistory[];
+          return {RedeemHistory: response.data.items as RedeemHistory[], total: response.data.totalCount as number};
         }
-        return [];
+        return {RedeemHistory: [], total: 0};
       })
     );
   
