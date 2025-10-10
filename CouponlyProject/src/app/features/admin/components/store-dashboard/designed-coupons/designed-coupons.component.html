@@ -18,7 +18,7 @@
                     </select>
 
                     <select class="form-select form-select-sm" style="max-width: 180px;"
-                        [(ngModel)]="selectedDateFilter" >
+                        [(ngModel)]="selectedDateFilter" name="selectedDateFilter" (change)="fetchCoupons()">
                         <option value="1">All Coupons</option>
                         <option value="2">Valid Coupons</option>
                         <option value="3">Upcoming Coupons</option>
@@ -55,8 +55,8 @@
                             </div>
                         </div>
                         <div class="coupon-dates">
-                            <p>Start: {{ coupon.startingDate | date: 'yyyy-MM-dd' }}</p>
-                            <p>End: {{ coupon.endingDate | date: 'yyyy-MM-dd' }}</p>
+                            <p>Start: {{ coupon.startingDate | date: 'dd-MM-yyyy' }}</p>
+                            <p>End: {{ coupon.endingDate | date: 'dd-MM-yyyy' }}</p>
                         </div>
                     </div>
                 </div>

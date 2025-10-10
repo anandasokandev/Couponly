@@ -38,7 +38,7 @@ export class StoreWiseCouponComponent implements OnInit {
   storeSearch: string = '';
   couponCodeSearch = '';
   selectedTypeId?: number;
-   selectedDateFilter = '1';
+  selectedDateFilter = '1';
   filteredCoupons: any[] = [];
   types: any[] = [];
 
@@ -58,6 +58,7 @@ export class StoreWiseCouponComponent implements OnInit {
       error: () => (this.types = [])
     });
   }
+
 
   loadStoresByName() {
     if (!this.isPageChange) this.currentPage = 1;
@@ -91,6 +92,7 @@ export class StoreWiseCouponComponent implements OnInit {
     });
   }
 
+
   onPageChange(page: number) {
     this.currentPage = page;
     this.isPageChange = true;
@@ -109,6 +111,11 @@ export class StoreWiseCouponComponent implements OnInit {
     this.loadStoresByName();
   }
 
+
+
+
+
+
   viewCoupons(store: any) {
     this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe(res => {
       const coupons = res.data || [];
@@ -125,12 +132,35 @@ export class StoreWiseCouponComponent implements OnInit {
     });
   }
 
+
   filterStoreCoupons() {
-    const code = this.couponCodeSearch.toLowerCase();
-    this.filteredCoupons = this.selectedStore.coupons.filter((coupon: any) =>
-      (!code || coupon.couponCode?.toLowerCase().includes(code)) &&
-      (!this.selectedTypeId || this.getTypeNameById(this.selectedTypeId) === coupon.typeName)
-    );
+    if (!this.selectedStore) return;
+
+    let dateFilter: string | undefined;
+
+    switch (this.selectedDateFilter) {
+      case '2':
+        dateFilter = 'valid';
+        break;
+      case '3':
+        dateFilter = 'upcoming';
+        break;
+      case '4':
+        dateFilter = 'expired';
+        break;
+      default:
+        dateFilter = undefined;
+        break;
+    }
+
+    this.couponService.getCouponsByFilter({
+      storeId: this.selectedStore.id,
+      couponCode: this.couponCodeSearch,
+      typeId: this.selectedTypeId,
+      dateFilter: dateFilter
+    }).subscribe(res => {
+      this.filteredCoupons = res.data || [];
+    });
   }
 
   getTypeNameById(id: number): string | undefined {
@@ -141,6 +171,7 @@ export class StoreWiseCouponComponent implements OnInit {
   resetStoreCouponFilters() {
     this.couponCodeSearch = '';
     this.selectedTypeId = undefined;
+    this.selectedDateFilter = '1';
     this.filteredCoupons = [...this.selectedStore.coupons];
   }
 

@@ -24,7 +24,7 @@ import { AddCouponModalComponent } from '../../pages/add-coupon-modal/add-coupon
     CardBodyComponent,
     StoreWiseCouponComponent,
     ColComponent,
-AddCouponModalComponent
+    AddCouponModalComponent
   ],
   templateUrl: './coupon-list.component.html',
   styleUrls: ['./coupon-list.component.scss']
@@ -128,27 +128,6 @@ export class CouponlistComponent implements OnInit {
     this.loadCoupons();
   }
 
-  // filterCoupons() {
-  //   this.isLoading = true;
-  //   this.couponService
-  //     .getCouponsByFilter({
-  //       couponCode: this.couponCode,
-  //       storeName: this.storeNameSearch,
-  //       storeId: this.selectedStore,
-  //       typeId: this.selectedType
-  //     })
-  //     .subscribe({
-  //       next: (res: any) => {
-  //         this.coupons = res.data || [];
-  //         this.totalItems = this.coupons.length;
-  //         this.isLoading = false;
-  //       },
-  //       error: (err) => {
-  //         console.error(err);
-  //         this.isLoading = false;
-  //       }
-  //     });
-  // }
 
   resetFilters() {
     this.couponCode = '';
