@@ -14,32 +14,28 @@
     </c-card-header>
 
     <c-card-body>
-      <form [formGroup]="filterForm" (ngSubmit)="applyFiltersAndSort()">
-        <div class="d-flex flex-wrap justify-content-start align-items-center py-3">
-          <div class="m-2">
-            <select cSelect class="form-select form-select-sm" formControlName="status">
-              <option value="">All Statuses</option>
-              <option value="Sent">Sent</option>
-              <option value="Scheduled">Scheduled</option>
-              <option value="Draft">Draft</option>
-            </select>
-          </div>
-          <div class="d-flex gap-1 align-items-center m-2">
-            <label for="fromDate" class="text-nowrap">From:</label>
-            <input type="date" id="fromDate" class="form-control form-control-sm" formControlName="fromDate" />
-          </div>
-          <div class="d-flex gap-1 align-items-center m-2">
-            <label for="toDate" class="text-nowrap">To:</label>
-            <input type="date" id="toDate" class="form-control form-control-sm" formControlName="toDate" />
-          </div>
-          <!-- <button class="btn btn-sm btn-success text-white m-2" type="submit">
-            <i class="fas fa-filter"></i> 
-          </button> -->
-          <button class="btn btn-sm btn-danger text-white m-2" type="button" (click)="resetFilters()">
-            <i class="fas fa-arrows-rotate"></i>
-          </button>
+      <div class="d-flex flex-wrap justify-content-start align-items-center py-3">
+        <div class="m-2">
+          <select cSelect class="form-select form-select-sm" [disabled]="isPromotionLoading">
+            <option value="">All Statuses</option>
+            <option *ngFor="let status of Statuses" [value]="status.id">{{ status.status }}</option>
+          </select>
         </div>
-      </form>
+        <div class="d-flex gap-1 align-items-center m-2">
+          <label for="fromDate" class="text-nowrap">From:</label>
+          <input type="date" id="fromDate" class="form-control form-control-sm" [disabled]="isLoading" />
+        </div>
+        <div class="d-flex gap-1 align-items-center m-2">
+          <label for="toDate" class="text-nowrap">To:</label>
+          <input type="date" id="toDate" class="form-control form-control-sm" [disabled]="isLoading" />
+        </div>
+        <!-- <button class="btn btn-sm btn-success text-white m-2" type="submit">
+          <i class="fas fa-filter"></i> 
+        </button> -->
+        <button class="btn btn-sm btn-danger text-white m-2" type="button" (click)="resetFilters()">
+          <i class="fas fa-arrows-rotate"></i>
+        </button>
+      </div>
       <div class="table-responsive">
       <table [hover]="true" cTable class="responsive-table">
         <thead>
@@ -57,10 +53,10 @@
           </tr>
           <tr>
             <th></th>
-            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by title..." [(ngModel)]="titleFilter" (ngModelChange)="applyFiltersAndSort()" /></th>
+            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by title..." [(ngModel)]="titleFilter" (ngModelChange)="applyFiltersAndSort()" [disabled]="isLoading" /></th>
             <th></th> 
-            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by title..." [(ngModel)]="titleFilter" (ngModelChange)="applyFiltersAndSort()" /></th> 
-            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by title..." [(ngModel)]="titleFilter" (ngModelChange)="applyFiltersAndSort()" /></th> 
+            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by Store..." [(ngModel)]="titleFilter" (ngModelChange)="applyFiltersAndSort()" [disabled]="isLoading" /></th> 
+            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by Code..." [(ngModel)]="titleFilter" (ngModelChange)="applyFiltersAndSort()" [disabled]="isLoading" /></th> 
             <th></th>
             <th></th>
             <th></th>
@@ -85,12 +81,12 @@
               <button class="btn btn-sm btn-outline-primary me-2" [routerLink]="['/admin/promotion/details', promo.id]">
                 <i class="fa fa-eye" aria-hidden="true"></i>
               </button>
-              <button class="btn btn-sm btn-outline-success me-2" *ngIf="promo.isActionAvailable">
+              <!-- <button class="btn btn-sm btn-outline-success me-2" *ngIf="promo.isActionAvailable">
                 <i class="fa fa-key" aria-hidden="true"></i>
               </button>
               <button class="btn btn-sm btn-outline-danger" *ngIf="promo.status === 'Failed'">
                 <i class="fa fa-key" aria-hidden="true"></i>
-              </button>
+              </button> -->
             </td> 
           </tr>
         </tbody>

@@ -74,6 +74,10 @@ export class PromotionService {
       });
     }
 
+    GetStatuses(): Observable<any> {
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.FetchStatuses}`);
+    }
+
     Payment(paymentData:any):Observable<any>{
       return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.service.Payment}`,paymentData)
     }

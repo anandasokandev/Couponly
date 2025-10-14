@@ -45,6 +45,7 @@ export class ViewPromotionsComponent {
 
   // --- State Management ---
   isLoading = false;
+  isPromotionLoading = false;
 
   // --- Filtering ---
   filterForm: FormGroup;
@@ -58,6 +59,7 @@ export class ViewPromotionsComponent {
   currentPage = 1;
   itemsPerPage = 10;
   totalItems = 0;
+  Statuses: any[] = [];
 
   constructor(private fb: FormBuilder, private promotionService: PromotionService, private router: Router) {
   console.log(this.expirationTime);
@@ -70,21 +72,32 @@ export class ViewPromotionsComponent {
 
   ngOnInit(): void {
     this.loadPromotions();
+    this.loadStatuses();
+  }
+
+  loadStatuses(): void {
+    this.isPromotionLoading = true;
+    this.promotionService.GetStatuses().subscribe(res => {
+      this.Statuses = res.data || [];
+      // console.log(this.Statuses);
+      this.isPromotionLoading = false;
+    });
   }
 
   loadPromotions(): void {
     this.isLoading = true;
     this.promotionService.getPromotions(this.currentPage, this.itemsPerPage).subscribe(res => {
-      this.allPromotions = res.data.items.map((promo: any) => {
-          return {
-            ...promo, // Copy existing promotion properties
-            isActionAvailable: promo.status === 'Created' && (new Date(promo.date) < this.expirationTime)
-          };
-        }) || [];
+      // this.allPromotions = res.data.items.map((promo: any) => {
+      //     return {
+      //       ...promo, // Copy existing promotion properties
+      //       isActionAvailable: promo.status === 'Created' && (new Date(promo.date) < this.expirationTime)
+      //     };
+      //   }) || [];
+      this.allPromotions = res.data.items;
       this.totalItems = res.data.totalCount || 0;
       this.applyFiltersAndSort(); // Apply initial filters
       this.isLoading = false;
-      console.log(res.data);
+      // console.log(res.data);
     });
   }
 
