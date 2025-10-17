@@ -38,11 +38,54 @@ export class PromotionService {
       return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.FetchPromotionById}`, { params });
     }
 
+    downloadPromotionReportExcel(title: string, store: string, code: string, status: number, fromDate: string | null, toDate: string | null, sortColumn: string, sortDirection: 'asc' | 'desc'): Observable<Blob> {
+      let params = new HttpParams()
+        .set('Title', title)
+        .set('Store', store)
+        .set('Code', code)
+        .set('Status', status)
+        .set('FromDate', fromDate ? fromDate : '')
+        .set('ToDate', toDate ? toDate : '')
+        .set('SortColumn', sortColumn)
+        .set('SortDirection', sortDirection);
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.DownloadPromotionReportExcel}`, { responseType: 'blob', params });
+    }
+
+    emailPromotionReportExcel(title: string, store: string, code: string, status: number, fromDate: string | null, toDate: string | null, sortColumn: string, sortDirection: 'asc' | 'desc'): Observable<any> {
+      let params = new HttpParams()
+        .set('Title', title)
+        .set('Store', store)
+        .set('Code', code)
+        .set('Status', status)
+        .set('FromDate', fromDate ? fromDate : '')
+        .set('ToDate', toDate ? toDate : '')
+        .set('SortColumn', sortColumn)
+        .set('SortDirection', sortDirection);
+      let headers = new HttpHeaders({ userId: sessionStorage.getItem('userId') ?? 0 });
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.ExportPromotionReportToExcelAndMail}`, { params, headers });
+    }
+
     getPromotions(currentPage: number, itemsPerPage: number): Observable<any> {
       let params = new HttpParams()
         .set('PageNumber', currentPage)
         .set('PageSize', itemsPerPage);
       return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.FetchPromotions}`, { params });
+    }
+
+    getPromotionsWithFilter(currentPage: number, itemsPerPage: number, title: string, store: string, code: string, status: number, fromDate: string | null, toDate: string | null, sortColumn: string, sortDirection: 'asc' | 'desc'): Observable<any> {
+      let params = new HttpParams()
+        .set('PageNumber', currentPage)
+        .set('PageSize', itemsPerPage)
+        .set('Title', title)
+        .set('Store', store)
+        .set('Code', code)
+        .set('Status', status)
+        .set('FromDate', fromDate ? fromDate : '')
+        .set('ToDate', toDate ? toDate : '')
+        .set('SortColumn', sortColumn)
+        .set('SortDirection', sortDirection);
+        console.log(params);
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.FetchPromotionsWithFilter}`, { params });
     }
 
     getStores(currentPage: number, itemsPerPage: number, type: string, searchtype: string, searchtext: string) {
@@ -78,11 +121,23 @@ export class PromotionService {
       return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.FetchStatuses}`);
     }
 
-    Payment(paymentData:any):Observable<any>{
-      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.service.Payment}`,paymentData)
+    CancelPromotion(promotionId: number): Observable<any> {
+      const headers = new HttpHeaders({ loginid: sessionStorage.getItem('userId') ?? 0, promotionid: promotionId ?? 0 });
+      // let params = new HttpParams()
+      //   .set('id', promotionId);
+      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.CancelPromotion}`, null, { headers });
     }
 
-    PaymentWebhook(PaymentWebhook: any): Observable<any>{
-      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.paymentWebhook}`,PaymentWebhook)
+    ResendPaymentLink(promotionId: number): Observable<any> {
+      const headers = new HttpHeaders({ loginid: sessionStorage.getItem('userId') ?? 0, promotionid: promotionId ?? 0 });
+      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.GeneratePaymentTokenUrl}`, null, { headers });
+    }
+
+    Payment(paymentData: any): Observable<any> {
+      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.service.Payment}`, paymentData);
+    }
+
+    PaymentWebhook(PaymentWebhook: any): Observable<any> {
+      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.paymentWebhook}`, PaymentWebhook);
     }
 }

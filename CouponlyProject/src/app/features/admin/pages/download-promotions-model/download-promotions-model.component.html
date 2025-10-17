@@ -1,0 +1,72 @@
+
+
+<c-modal
+  #DownloadPromotionsModal
+  [scrollable]="true"
+  alignment="center"
+  id="DownloadPromotionsModal"
+>
+  <c-modal-header>
+    <h5 cModalTitle>🚀 Get Your Promotions History Report</h5>
+    <!-- <button
+      [cModalToggle]="DownloadPromotionsModal.id"
+      class="btn-close"
+      cButtonClose
+    ></button> -->
+  </c-modal-header>
+
+  <c-modal-body class="p-4">
+    <p class="text-center text-muted mb-4">
+      Your report is ready! Choose your preferred method below to receive it.
+    </p>
+
+    <div class="d-grid gap-4 d-md-flex">
+      <div
+        class="option-card text-center p-4 border rounded flex-fill"
+      >
+        <svg
+          [cIcon]="icons.cilCloudDownload"
+          size="xxl"
+          class="text-primary mb-3"
+        ></svg>
+        <h6 class="fw-semibold">Instant Download</h6>
+        <p class="small text-muted mb-3">
+          An Excel (.xlsx) file will be downloaded immediately to your device.
+        </p>
+        <button
+          cButton
+          color="primary"
+          class="w-100 btn btn-sm"
+          (click)="downloadPromotionsHistory()"
+          [cModalToggle]="DownloadPromotionsModal.id"
+        >
+          Download Now
+        </button>
+      </div>
+
+      <div
+        class="option-card text-center p-4 border rounded flex-fill"
+      >
+        <svg
+          [cIcon]="icons.cilEnvelopeOpen"
+          size="xxl"
+          class="text-success mb-3"
+        ></svg>
+        <h6 class="fw-semibold">Send to My Inbox</h6>
+        <p class="small text-muted mb-3">
+          We'll send a copy of the report to your registered email address.
+        </p>
+        <button
+          cButton
+          color="success"
+          class="w-100 btn btn-sm"
+          (click)="sendPromotionsHistoryEmail()"
+          [cModalToggle]="DownloadPromotionsModal.id"
+        >
+          Email Me
+        </button>
+      </div>
+    </div>
+  </c-modal-body>
+
+</c-modal>

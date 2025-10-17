@@ -18,9 +18,25 @@
           class="ms-3"
           style="color: blanchedalmond;"
           *ngIf="PaymentStatusInfo.text === 'Failed' && promotion.status == 'Created'"
+          (click)="resendPaymentLink(promotion.id)"
+          [disabled]="resending"
         >
-          <i class="fa fa-key" aria-hidden="true"></i>
+          <i class="fa fa-key" aria-hidden="true" *ngIf="!resending"></i>
+          <i class="fa fa-spinner fa-spin" aria-hidden="true" *ngIf="resending"></i>
           Resend Payment URL
+        </button>
+        <button
+          cButton
+          size="sm"
+          color="danger"
+          class="ms-3 text-white"
+          *ngIf="promotion.status === 'Created'"
+          (click)="cancelPromotion(promotion.id)"
+          [disabled]="canceling"
+        >
+          <i class="fa fa-times" aria-hidden="true" *ngIf="!canceling"></i>
+          <i class="fa fa-spinner fa-spin" aria-hidden="true" *ngIf="canceling"></i>
+          Cancel
         </button>
       </div>
     </c-card-header>

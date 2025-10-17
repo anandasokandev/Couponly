@@ -107,10 +107,15 @@ export const environment = {
       ValidateToken: 'Promotion/ValidatePaymentToken',
       NewPromotion: 'Promotion/NewPromotion',
       FetchPromotions: 'Promotion/GetPromotions',
+      FetchPromotionsWithFilter: 'Promotion/GetPromotionsWithFilter',
       FetchPromotionsByStoreId: 'Promotion/GetPromotionsByStoreId',
       FetchPromotionById: 'Promotion/GetPromotionById',
       paymentWebhook: 'Promotion/PaymentWebhook',
-      FetchStatuses: 'Promotion/AllStatuses'
+      FetchStatuses: 'Promotion/AllStatuses',
+      CancelPromotion: 'Promotion/CancelPromotion',
+      GeneratePaymentTokenUrl: 'Promotion/GeneratePaymentTokenUrl',
+      DownloadPromotionReportExcel: 'Promotion/DownloadPromotionReportExcel',
+      ExportPromotionReportToExcelAndMail: 'Promotion/ExportPromotionReportToExcelAndMail'
     },
 
     storedashboard: {

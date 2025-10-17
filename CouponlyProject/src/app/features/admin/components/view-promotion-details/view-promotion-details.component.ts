@@ -1,9 +1,10 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BadgeComponent, ButtonDirective, CardComponent, CardModule, CardTitleDirective, ColComponent, ColDirective, FormModule, PlaceholderAnimationDirective, PlaceholderDirective, SpinnerComponent } from '@coreui/angular';
 import { PromotionService } from '../../../../commons/services/Promotion/promotion.service';
 import { ActivatedRoute } from '@angular/router';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-view-promotion-details',
@@ -27,6 +28,9 @@ export class ViewPromotionDetailsComponent {
   today: Date = new Date();
   PaymentStatusInfo: { text: string; color: string } = { text: '', color: '' };
   PromotionStatusInfo: { text: string; color: string } = { text: '', color: '' };
+  canceling = false;
+  resending = false;
+  private toast = inject(ToastService);
   constructor(private promotionService: PromotionService, private route: ActivatedRoute, private location: Location) {}
 
   ngOnInit() {
@@ -78,5 +82,49 @@ export class ViewPromotionDetailsComponent {
       default:
         return 'secondary';
     }
+  }
+
+  resendPaymentLink(id: number) {
+    if (id) {
+      this.resending = true;
+      this.promotionService.ResendPaymentLink(id).subscribe(response => {
+        if (response.isSuccess) {
+          this.promotion.status = 'Token Resent';
+          this.PromotionStatusInfo = { text: 'Token Resent', color: 'info' };
+          this.toast.show({ type: 'success', message: 'Payment link resent successfully.' });
+        }
+        else if (!response.isSuccess) {
+          this.toast.show({ type: 'error', message: response.message || 'Failed to resend payment link.' });
+          console.error('Failed to resend payment link:', response.message);
+        }
+        else {
+          this.toast.show({ type: 'error', message: 'Unexpected response from server.' });
+          console.error('Unexpected response from server:', response);
+        }
+      });
+      this.resending = false;
+    }
+    else {
+      this.toast.show({ type: 'error', message: 'Promotion ID is not available.' });
+      console.error('Promotion ID is not available.');
+    }
+  }
+
+  cancelPromotion(id: number) {
+    this.canceling = true;
+    if (id) {
+      this.promotionService.CancelPromotion(id).subscribe(response => {
+        console.log('Promotion cancelled:', response);
+        this.toast.show({ type: 'success', message: 'Promotion cancelled successfully.' });
+        // Optionally, update the local promotion status
+        this.promotion.status = 'Cancelled';
+        this.PromotionStatusInfo = { text: 'Cancelled', color: 'danger' };
+      });
+    }
+    else {
+      this.toast.show({ type: 'error', message: 'Promotion ID is not available.' });
+      console.error('Promotion ID is not available.');
+    }
+    this.canceling = false;
   }
 }
