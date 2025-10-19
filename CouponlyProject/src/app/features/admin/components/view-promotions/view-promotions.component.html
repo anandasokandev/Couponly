@@ -53,23 +53,39 @@
       <table [hover]="true" cTable class="responsive-table">
         <thead class="table-secondary text-center">
           <tr>
-            <th>#</th>
-            <th (click)="onSort('title')">Promotion Title <svg [cIcon]="icons.cilSortAlphaDown" class="ms-5" *ngIf="sortColumn !== 'title' || (sortColumn === 'title' && sortDirection === 'asc')"></svg> <svg [cIcon]="icons.cilSortAlphaUp" class="ms-5" *ngIf="sortColumn === 'title' && sortDirection === 'desc'"></svg></th>
-            <th (click)="onSort('date')">Date <svg [cIcon]="icons.cilSortAlphaDown" class="ms-5" *ngIf="sortColumn !== 'date' || (sortColumn === 'date' && sortDirection === 'asc')"></svg> <svg [cIcon]="icons.cilSortAlphaUp" class="ms-5" *ngIf="sortColumn === 'date' && sortDirection === 'desc'"></svg></th>
-            <th (click)="onSort('store')">Store Name <svg [cIcon]="icons.cilSortAlphaDown" class="ms-5" *ngIf="sortColumn !== 'store' || (sortColumn === 'store' && sortDirection === 'asc')"></svg> <svg [cIcon]="icons.cilSortAlphaUp" class="ms-5" *ngIf="sortColumn === 'store' && sortDirection === 'desc'"></svg></th>
-            <th (click)="onSort('code')">Coupon <svg [cIcon]="icons.cilSortAlphaDown" class="ms-5" *ngIf="sortColumn !== 'code' || (sortColumn === 'code' && sortDirection === 'asc')"></svg> <svg [cIcon]="icons.cilSortAlphaUp" class="ms-5" *ngIf="sortColumn === 'code' && sortDirection === 'desc'"></svg></th>
-            <th (click)="onSort('contact')"> Contacts <svg [cIcon]="icons.cilSortNumericDown" class="ms-2" *ngIf="sortColumn !== 'contact' || (sortColumn === 'contact' && sortDirection === 'asc')"></svg> <svg [cIcon]="icons.cilSortNumericUp" class="ms-2" *ngIf="sortColumn === 'contact' && sortDirection === 'desc'"></svg></th>
-            <!-- <th (click)="onSort('ownContacts')">Own Contacts <svg [cIcon]="icons.cilSortAlphaUp"></svg></th>
-            <th (click)="onSort('publicContacts')">Public Contacts <svg [cIcon]="icons.cilSortAlphaUp"></svg></th> -->
-            <th (click)="onSort('status')">Status <svg [cIcon]="icons.cilSortAlphaDown" class="ms-5" *ngIf="sortColumn !== 'status' || (sortColumn === 'status' && sortDirection === 'asc')"></svg> <svg [cIcon]="icons.cilSortAlphaUp" class="ms-5" *ngIf="sortColumn === 'status' && sortDirection === 'desc'"></svg></th>
-            <th>Actions</th>
+            <th class="text-nowrap align-middle">#</th>
+            <th (click)="onSort('title')" class="text-nowrap"> Promotion Title
+              <svg [cIcon]="icons.cilSortAlphaDown" class="float-end align-middle" *ngIf="sortColumn !== 'title' || (sortColumn === 'title' && sortDirection === 'asc')"></svg>
+              <svg [cIcon]="icons.cilSortAlphaUp" class="float-end align-middle" *ngIf="sortColumn === 'title' && sortDirection === 'desc'"></svg>
+            </th>
+            <th (click)="onSort('date')" class="text-nowrap"> Date
+              <svg [cIcon]="icons.cilSortAlphaDown" class="float-end align-middle" *ngIf="sortColumn !== 'date' || (sortColumn === 'date' && sortDirection === 'asc')"></svg>
+              <svg [cIcon]="icons.cilSortAlphaUp" class="float-end align-middle" *ngIf="sortColumn === 'date' && sortDirection === 'desc'"></svg>
+            </th>
+            <th (click)="onSort('store')" class="text-nowrap"> Store Name
+              <svg [cIcon]="icons.cilSortAlphaDown" class="float-end align-middle" *ngIf="sortColumn !== 'store' || (sortColumn === 'store' && sortDirection === 'asc')"></svg>
+              <svg [cIcon]="icons.cilSortAlphaUp" class="float-end align-middle" *ngIf="sortColumn === 'store' && sortDirection === 'desc'"></svg>
+            </th>
+            <th (click)="onSort('code')" class="text-nowrap"> Coupon
+              <svg [cIcon]="icons.cilSortAlphaDown" class="float-end align-middle" *ngIf="sortColumn !== 'code' || (sortColumn === 'code' && sortDirection === 'asc')"></svg>
+              <svg [cIcon]="icons.cilSortAlphaUp" class="float-end align-middle" *ngIf="sortColumn === 'code' && sortDirection === 'desc'"></svg>
+            </th>
+            <th (click)="onSort('contact')" class="text-nowrap"> Contacts
+              <svg [cIcon]="icons.cilSortNumericDown" class="float-end align-middle" *ngIf="sortColumn !== 'contact' || (sortColumn === 'contact' && sortDirection === 'asc')"></svg>
+              <svg [cIcon]="icons.cilSortNumericUp" class="float-end align-middle" *ngIf="sortColumn === 'contact' && sortDirection === 'desc'"></svg>
+            </th>
+            <th (click)="onSort('status')" class="text-nowrap"> Status
+              <svg [cIcon]="icons.cilSortAlphaDown" class="float-end align-middle" *ngIf="sortColumn !== 'status' || (sortColumn === 'status' && sortDirection === 'asc')"></svg>
+              <svg [cIcon]="icons.cilSortAlphaUp" class="float-end align-middle" *ngIf="sortColumn === 'status' && sortDirection === 'desc'"></svg>
+            </th>
+            <th class="text-nowrap align-middle">Actions</th>
           </tr>
           <tr>
             <th></th>
             <th><input type="text" class="form-control form-control-sm" placeholder="Filter by title..." [(ngModel)]="titleFilter" (ngModelChange)="currentPage = 1; loadPromotions()" /></th>
-            <th></th> 
-            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by Store..." [(ngModel)]="storeFilter" (ngModelChange)="currentPage = 1; loadPromotions()" /></th> 
-            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by Code..." [(ngModel)]="codeFilter" (ngModelChange)="currentPage = 1; loadPromotions()" /></th> 
+            <th></th>
+            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by Store..." [(ngModel)]="storeFilter" (ngModelChange)="currentPage = 1; loadPromotions()" /></th>
+            <th><input type="text" class="form-control form-control-sm" placeholder="Filter by Code..." [(ngModel)]="codeFilter" (ngModelChange)="currentPage = 1; loadPromotions()" /></th>
             <th></th>
             <th></th>
             <th></th>
@@ -83,8 +99,6 @@
             <td data-label="Store Name" class="text-center">{{ promo.store }}</td>
             <td data-label="Coupon Code" class="text-center">{{ promo.couponCode }}</td>
             <td data-label="Contacts" class="text-center">{{ promo.totalContacts }}</td>
-            <!-- <td data-label="Own Contacts">{{ promo.totalContacts - promo.publicContacts }}</td>
-            <td data-label="Public Contacts">{{ promo.publicContacts }}</td> -->
             <td data-label="Status" class="text-center">
               <span class="status-badge" [ngClass]="'status-' + promo.status.toLowerCase()">
                 {{ promo.status }}
@@ -94,27 +108,19 @@
               <button class="btn btn-sm btn-outline-primary me-2" [routerLink]="['/admin/promotion/details', promo.id]">
                 <i class="fa fa-eye" aria-hidden="true"></i>
               </button>
-              <!-- <button class="btn btn-sm btn-outline-success me-2" *ngIf="promo.isActionAvailable">
-                <i class="fa fa-key" aria-hidden="true"></i>
-              </button>
-              <button class="btn btn-sm btn-outline-danger" *ngIf="promo.status === 'Failed'">
-                <i class="fa fa-key" aria-hidden="true"></i>
-              </button> -->
-            </td> 
+              </td>
           </tr>
         </tbody>
         <tbody *ngIf="isLoading">
           <tr cPlaceholderAnimation="glow" *ngFor="let i of [1, 2, 3, 4]">
-            <td ><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
+            <td><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
             <td data-label="Title"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
             <td data-label="Date"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
             <td data-label="Store Name"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
             <td data-label="Coupon Code"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
             <td data-label="Contacts"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
-            <!-- <td data-label="Own Contacts">{{ promo.totalContacts - promo.publicContacts }}</td>
-            <td data-label="Public Contacts">{{ promo.publicContacts }}</td> -->
             <td data-label="Status"><span cPlaceholder cPlaceholderSize="sm" cCol="12"></span></td>
-            <td data-label="Actions"><button cButton color="secondary" cCol="4" cPlaceholder cPlaceholderSize="sm"></button></td> 
+            <td data-label="Actions"><button cButton color="secondary" cCol="4" cPlaceholder cPlaceholderSize="sm"></button></td>
           </tr>
         </tbody>
       </table>

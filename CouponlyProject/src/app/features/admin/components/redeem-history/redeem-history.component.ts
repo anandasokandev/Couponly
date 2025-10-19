@@ -154,17 +154,20 @@ export class RedeemHistoryComponent {
       this.locationId,
       this.fromDate,
       this.toDate
-    )?.subscribe(blob => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Redeems History.xlsx';
-      a.click();
-      window.URL.revokeObjectURL(url);
-      this.toast.show({ type: 'success', message: 'Redeem history downloaded successfully!' });
-    }, error => {
-      console.error('Download failed', error);
-      this.toast.show({ type: 'error', message: 'Failed to download redeem history.' });
+    )?.subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Redeems History.xlsx';
+        a.click();
+        window.URL.revokeObjectURL(url);
+        this.toast.show({ type: 'success', message: 'Redeem history downloaded successfully!' });
+      },
+      error: (error) => {
+        console.error('Download failed', error);
+        this.toast.show({ type: 'error', message: 'Failed to download redeem history.' });
+      }
     });
   }
 

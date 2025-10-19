@@ -52,7 +52,6 @@ export class LoginComponent {
 
     this.api.login(payload).subscribe({
       next: (response: any) => {
-        this.isLoading = false;
         console.log(response);
         if (response.isSuccess) {
           sessionStorage.setItem('token', response.data.token);
@@ -83,11 +82,11 @@ export class LoginComponent {
         }
       },
       error: (err) => {
-        this.isLoading = false;
         console.error(err);
         this.errorMessage = 'Invalid Username or Password';
-      }
+      },
     });
+    this.isLoading = false;
   }
 
   reset() {

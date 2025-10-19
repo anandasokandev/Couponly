@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { cilCloudDownload, cilEyedropper, cilOpentype, cilPenNib, cilPlus, cilSearch, cilSortAlphaDown, cilSortAlphaUp, cilSortAscending, cilSortNumericDown, cilSortNumericUp } from '@coreui/icons';
 import { PromotionService } from '../../../../commons/services/Promotion/promotion.service';
@@ -8,6 +8,7 @@ import { IconModule } from '@coreui/icons-angular';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { PaginationComponent } from '../../pages/pagination/pagination.component';
 import { DownloadPromotionsModelComponent } from '../../pages/download-promotions-model/download-promotions-model.component';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 enum sortColumns {
   title = 'title',
@@ -79,6 +80,7 @@ export class ViewPromotionsComponent {
   itemsPerPage = 10;
   totalItems = 0;
 
+  private toast = inject(ToastService);
   constructor(private promotionService: PromotionService, private router: Router) { }
 
   ngOnInit(): void {
@@ -118,6 +120,9 @@ export class ViewPromotionsComponent {
       this.totalItems = res.data.totalCount || 0;
       this.isLoading = false;
       console.log(res.data);
+    }, error => {
+      this.isLoading = false;
+      this.toast.show({ type: 'error', message: 'Failed to load promotions.' });
     });
   }
 
@@ -151,16 +156,55 @@ export class ViewPromotionsComponent {
     this.router.navigate(['admin/NewPromotion']);
   }
 
-  // downloadExcel() {
-  //   this.promotionService.downloadPromotionReportExcel.subscribe(
-  //     this.titleFilter,
-  //     this.storeFilter,
-  //     this.codeFilter,
-  //     this.statusFilter,
-  //     this.fromDateFilter,
-  //     this.toDateFilter,
-  //     this.sortColumn,
-  //     this.sortDirection
-  //   );
-  // }
+  downloadExcel() {
+    this.promotionService.downloadPromotionReportExcel(
+      this.titleFilter, 
+      this.storeFilter, 
+      this.codeFilter,
+      this.statusFilter,
+      this.fromDateFilter,
+      this.toDateFilter,
+      this.sortColumn,
+      this.sortDirection
+    )?.subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Promotions History.xlsx';
+        a.click();
+        window.URL.revokeObjectURL(url);
+        this.toast.show({ type: 'success', message: 'Promotions history downloaded successfully!' });
+      },
+      error: (error: any) => {
+        console.error('Download failed', error);
+        this.toast.show({ type: 'error', message: 'Failed to download promotions history.' });
+      }
+    });
+  }
+
+  emailExcel() {
+    this.promotionService.emailPromotionReportExcel(
+      this.titleFilter,
+      this.storeFilter,
+      this.codeFilter,
+      this.statusFilter,
+      this.fromDateFilter,
+      this.toDateFilter,
+      this.sortColumn,
+      this.sortDirection
+    ).subscribe({
+      next: (response) => {
+        if (response.isSuccess) {
+          this.toast.show({ type: 'success', message: response.data });
+        } else {
+          this.toast.show({ type: 'error', message: 'Failed to send redeem history email.' });
+        }
+      },
+      error: (error) => {
+        console.error('Email failed', error);
+        this.toast.show({ type: 'error', message: 'Failed to email promotions history.' });
+      }
+    });
+  }
 }
