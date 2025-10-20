@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PromotionComponent } from './promotion.component';
+import { PromotionComponent } from './new-promotion.component';
 
 describe('PromotionComponent', () => {
   let component: PromotionComponent;

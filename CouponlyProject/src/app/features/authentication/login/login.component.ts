@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { LoginService } from './../../../commons/services/Authentication/login.service';
 import { SpinnerModule } from '@coreui/angular';
+import { ToastComponent } from '../../admin/pages/toast/toast.component';
+import { ToastService } from 'src/app/commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,8 @@ import { SpinnerModule } from '@coreui/angular';
     FormsModule,
     CommonModule,
     RouterModule,
-    SpinnerModule
+    SpinnerModule,
+    ToastComponent,
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -25,6 +28,7 @@ export class LoginComponent {
   isLoading = false;
 
   constructor(
+    public toast: ToastService,
     private fb: FormBuilder,
     private api: LoginService,
     private router: Router
@@ -79,18 +83,23 @@ export class LoginComponent {
         } else {
           console.log(response);
           this.errorMessage = response.message || 'Invalid credentials';
+          this.isLoading = false;
         }
       },
       error: (err) => {
         console.error(err);
         this.errorMessage = 'Invalid Username or Password';
+        this.isLoading = false;
       },
     });
-    this.isLoading = false;
   }
 
   reset() {
     this.loginForm.reset();
     this.errorMessage = '';
+  }
+
+  onRemove(id: number) {
+    this.toast.remove(id);
   }
 }

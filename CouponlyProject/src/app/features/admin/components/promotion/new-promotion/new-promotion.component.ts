@@ -15,10 +15,10 @@ import {
   ModalToggleDirective,
 } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
-import { FindStoreModelComponent } from '../../pages/Promotion/find-store-model/find-store-model.component';
-import { PromotionCalculatorModelComponent } from '../../pages/Promotion/promotion-calculator-model/promotion-calculator-model.component';
-import { CostSettingService } from '../../../../commons/services/Promotion/cost-setting.service';
-import { CostSetting } from '../../../../commons/models/CostSetting.model';
+import { FindStoreModelComponent } from '../../../pages/Promotion/find-store-model/find-store-model.component';
+import { PromotionCalculatorModelComponent } from '../../../pages/Promotion/promotion-calculator-model/promotion-calculator-model.component';
+import { CostSettingService } from '../../../../../commons/services/Promotion/cost-setting.service';
+import { CostSetting } from '../../../../../commons/models/CostSetting.model';
 import { cilArrowThickFromLeft, cilArrowThickFromRight, cilPenNib, cilPlus, cilSortAlphaUp, cilSortNumericDown } from '@coreui/icons';
 import { Router } from '@angular/router';
 
@@ -67,10 +67,10 @@ export interface PromotionCampaign {
     ModalComponent,
     ModalToggleDirective
   ],
-  templateUrl: './promotion.component.html',
-  styleUrls: ['./promotion.component.scss']
+  templateUrl: './new-promotion.component.html',
+  styleUrls: ['./new-promotion.component.scss']
 })
-export class PromotionComponent {
+export class NewPromotionComponent {
    campaign: PromotionCampaign = {
      promotionName: '',
      selectedCategory: '',

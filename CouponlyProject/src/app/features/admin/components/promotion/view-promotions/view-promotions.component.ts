@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { cilCloudDownload, cilEyedropper, cilOpentype, cilPenNib, cilPlus, cilSearch, cilSortAlphaDown, cilSortAlphaUp, cilSortAscending, cilSortNumericDown, cilSortNumericUp } from '@coreui/icons';
-import { PromotionService } from '../../../../commons/services/Promotion/promotion.service';
+import { PromotionService } from '../../../../../commons/services/Promotion/promotion.service';
 import { CommonModule } from '@angular/common';
 import { BgColorDirective, CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, ColDirective, FormModule, GridModule, ModalComponent, ModalToggleDirective, PlaceholderAnimationDirective, PlaceholderDirective, PlaceholderModule, SpinnerComponent, TableDirective, UtilitiesModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { Router, RouterLink, RouterModule } from '@angular/router';
-import { PaginationComponent } from '../../pages/pagination/pagination.component';
-import { DownloadPromotionsModelComponent } from '../../pages/download-promotions-model/download-promotions-model.component';
-import { ToastService } from '../../../../commons/services/Toaster/toast.service';
+import { PaginationComponent } from '../../../pages/pagination/pagination.component';
+import { DownloadPromotionsModelComponent } from '../../../pages/download-promotions-model/download-promotions-model.component';
+import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
 
 enum sortColumns {
   title = 'title',
@@ -44,6 +44,7 @@ enum sortColumns {
     DownloadPromotionsModelComponent,
     ModalToggleDirective,
     ModalComponent,
+    RouterLink
   ],
   templateUrl: './view-promotions.component.html',
   styleUrl: './view-promotions.component.scss'

@@ -86,7 +86,6 @@ export const environment = {
       service: {
         AllServices: 'ServiceHandler/AllServices',
         UpdateService: 'ServiceHandler/UpdateService',
-        Payment: 'Payment/AddPayment'
       },
 
       coupon: {
@@ -104,18 +103,28 @@ export const environment = {
         SelectedContacts: ''
       },
 
-      ValidateToken: 'Promotion/ValidatePaymentToken',
+      payment: {
+        ValidateToken: 'Promotion/ValidatePaymentToken',
+        paymentWebhook: 'Promotion/PaymentWebhook',
+        GeneratePaymentTokenUrl: 'Promotion/GeneratePaymentTokenUrl',
+        Payment: 'Payment/AddPayment'
+      },
+
+      status: {
+        AllStatuses: 'Promotion/AllStatuses'
+      },
+
+      Excel: {
+        DownloadPromotionReportExcel: 'Promotion/DownloadPromotionReportExcel',
+        ExportPromotionReportToExcelAndMail: 'Promotion/ExportPromotionReportToExcelAndMail'
+      },
+
       NewPromotion: 'Promotion/NewPromotion',
       FetchPromotions: 'Promotion/GetPromotions',
       FetchPromotionsWithFilter: 'Promotion/GetPromotionsWithFilter',
       FetchPromotionsByStoreId: 'Promotion/GetPromotionsByStoreId',
       FetchPromotionById: 'Promotion/GetPromotionById',
-      paymentWebhook: 'Promotion/PaymentWebhook',
-      FetchStatuses: 'Promotion/AllStatuses',
-      CancelPromotion: 'Promotion/CancelPromotion',
-      GeneratePaymentTokenUrl: 'Promotion/GeneratePaymentTokenUrl',
-      DownloadPromotionReportExcel: 'Promotion/DownloadPromotionReportExcel',
-      ExportPromotionReportToExcelAndMail: 'Promotion/ExportPromotionReportToExcelAndMail'
+      CancelPromotion: 'Promotion/CancelPromotion'
     },
 
     storedashboard: {

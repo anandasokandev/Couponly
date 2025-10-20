@@ -5,7 +5,7 @@ import { IconModule } from '@coreui/icons-angular';
 import { cilCloudDownload } from '@coreui/icons/dist/esm/free/cil-cloud-download';
 import { cilEnvelopeOpen } from '@coreui/icons/dist/esm/free/cil-envelope-open';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
-import { ViewPromotionsComponent } from '../../components/view-promotions/view-promotions.component';
+import { ViewPromotionsComponent } from '../../components/promotion/view-promotions/view-promotions.component';
 
 @Component({
   selector: 'app-download-promotions-model',

@@ -48,7 +48,7 @@ export class PromotionService {
         .set('ToDate', toDate ? toDate : '')
         .set('SortColumn', sortColumn)
         .set('SortDirection', sortDirection);
-      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.DownloadPromotionReportExcel}`, { responseType: 'blob', params });
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.Excel.DownloadPromotionReportExcel}`, { responseType: 'blob', params });
     }
 
     emailPromotionReportExcel(title: string, store: string, code: string, status: number, fromDate: string | null, toDate: string | null, sortColumn: string, sortDirection: 'asc' | 'desc'): Observable<any> {
@@ -62,7 +62,7 @@ export class PromotionService {
         .set('SortColumn', sortColumn)
         .set('SortDirection', sortDirection);
       let headers = new HttpHeaders({ userId: sessionStorage.getItem('userId') ?? 0 });
-      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.ExportPromotionReportToExcelAndMail}`, { params, headers });
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.Excel.ExportPromotionReportToExcelAndMail}`, { params, headers });
     }
 
     getPromotions(currentPage: number, itemsPerPage: number): Observable<any> {
@@ -118,7 +118,7 @@ export class PromotionService {
     }
 
     GetStatuses(): Observable<any> {
-      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.FetchStatuses}`);
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.status.AllStatuses}`);
     }
 
     CancelPromotion(promotionId: number): Observable<any> {
@@ -130,14 +130,14 @@ export class PromotionService {
 
     ResendPaymentLink(promotionId: number): Observable<any> {
       const headers = new HttpHeaders({ loginid: sessionStorage.getItem('userId') ?? 0, promotionid: promotionId ?? 0 });
-      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.GeneratePaymentTokenUrl}`, null, { headers });
+      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.payment.GeneratePaymentTokenUrl}`, null, { headers });
     }
 
     Payment(paymentData: any): Observable<any> {
-      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.service.Payment}`, paymentData);
+      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.payment.Payment}`, paymentData);
     }
 
     PaymentWebhook(PaymentWebhook: any): Observable<any> {
-      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.paymentWebhook}`, PaymentWebhook);
+      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.payment.paymentWebhook}`, PaymentWebhook);
     }
 }

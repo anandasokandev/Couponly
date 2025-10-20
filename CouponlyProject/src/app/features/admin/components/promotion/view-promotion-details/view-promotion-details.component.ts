@@ -2,9 +2,9 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BadgeComponent, ButtonDirective, CardComponent, CardModule, CardTitleDirective, ColComponent, ColDirective, FormModule, PlaceholderAnimationDirective, PlaceholderDirective, SpinnerComponent } from '@coreui/angular';
-import { PromotionService } from '../../../../commons/services/Promotion/promotion.service';
+import { PromotionService } from '../../../../../commons/services/Promotion/promotion.service';
 import { ActivatedRoute } from '@angular/router';
-import { ToastService } from '../../../../commons/services/Toaster/toast.service';
+import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-view-promotion-details',

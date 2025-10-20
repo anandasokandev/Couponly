@@ -23,6 +23,7 @@ import {
 } from '@coreui/angular';
 
 import { IconDirective } from '@coreui/icons-angular';
+import { ToastService } from 'src/app/commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-default-header',
@@ -45,6 +46,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
     return this.colorModes.find(mode => mode.name === currentMode)?.icon ?? 'cilSun';
   });
 
+  private toast = inject(ToastService);
   constructor() {
     super();
   }
@@ -126,4 +128,9 @@ export class DefaultHeaderComponent extends HeaderComponent {
     { id: 4, title: 'Angular Version', value: 100, color: 'success' }
   ];
 
+  logout() {
+    sessionStorage.clear();
+    this.toast.show({ type: 'error', message: 'Logged out successfully!' });
+    // this.router.navigate(['/login']);
+  }
 }
