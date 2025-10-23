@@ -15,10 +15,10 @@ import {
   cilSortAlphaUp
 } from '@coreui/icons';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PromotionHistory } from '../../../../../commons/models/promotion-history.model';
-import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
-import { PaginationComponent } from '../../../pages/pagination/pagination.component';
-import { StoreDashboardService } from '../../../../../commons/services/StoreDashboard/store-dashboard.service';
+import { PromotionHistory } from '../../../commons/models/promotion-history.model';
+import { ToastService } from '../../../commons/services/Toaster/toast.service';
+import { PaginationComponent } from '../../admin/pages/pagination/pagination.component';
+import { StoreDashboardService } from '../../../commons/services/StoreDashboard/store-dashboard.service';
 
 @Component({
   selector: 'app-promotion-history',

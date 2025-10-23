@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CardModule, NavModule } from '@coreui/angular';
-import { StoreDashboardService } from '../../../../../commons/services/StoreDashboard/store-dashboard.service';
+import { StoreDashboardService } from '../../../commons/services/StoreDashboard/store-dashboard.service';
 
 @Component({
   selector: 'app-counts-tabs',

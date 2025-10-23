@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CardModule, NavModule } from '@coreui/angular';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { StoreDashboardService } from '../../../../../commons/services/StoreDashboard/store-dashboard.service';
+import { StoreDashboardService } from '../../../commons/services/StoreDashboard/store-dashboard.service';
 
 @Component({
-  selector: 'app-store-info',
-  imports: [CardModule, NavModule, CommonModule],
-  templateUrl: './store-info.component.html',
-  styleUrl: './store-info.component.scss'
+  selector: 'app-header',
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CardModule, NavModule, CommonModule],
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss'
 })
-export class StoreInfoComponent implements OnInit {
+
+export class HeaderComponent implements OnInit {
   storeData: any;
   isLoading = true;
 
@@ -19,10 +21,15 @@ export class StoreInfoComponent implements OnInit {
     private storeDashboardService: StoreDashboardService
   ) { }
 
+  shouldShowStoreCard(): boolean {
+    return !this.router.url.includes('/store-dashboard/store-info');
+  }
+
+
   ngOnInit(): void {
     const token = localStorage.getItem('token');
     // console.log('Token in header:', token); // ✅ Confirm token is available
-    // console.log('Token from localStorage:', token);
+
     this.storeDashboardService.getStoreInfo().subscribe({
       next: (res) => {
         // console.log('Store Info API response:', res); // ✅ Log full response
@@ -40,4 +47,17 @@ export class StoreInfoComponent implements OnInit {
   }
 
 
+
 }
+
+
+
+
+
+
+
+
+
+
+
+

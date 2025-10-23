@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
-import { ManageUsersComponent } from './components/manage-users/manage-users.component';
+import { AuthRoleGuard } from '../../app.guard';
 
-export const routes: Routes = [
+export const adminRoutes: Routes = [
   {
     path: '',
+    canActivate: [AuthRoleGuard],
     data: {
-      title: 'Admin'
+      title: 'Admin',
+      requiredRoles: ['Admin']
     },
     children: [
       {
@@ -29,14 +31,12 @@ export const routes: Routes = [
 
       },
       {
-          path: 'couponlist',
-          loadComponent: () => import('./components/coupon-list/coupon-list.component')  .then(m => m.CouponlistComponent),
-          data: {
-            title: 'Coupon List'
-          }
-        },
-
-
+        path: 'couponlist',
+        loadComponent: () => import('./components/coupon-list/coupon-list.component')  .then(m => m.CouponlistComponent),
+        data: {
+          title: 'Coupon List'
+        }
+      },
       {
         path: 'contact',
         loadComponent: () => import('./components/contact/contact.component').then(m => m.ContactComponent),
@@ -84,40 +84,12 @@ export const routes: Routes = [
         path: 'promotion',
         loadChildren: () => import('./components/promotion/promotions.routes').then(m => m.promotionRoutes),
       },
-      {
-        path: 'store-dashboard',
-        // This is the parent component that will contain the navigation header
-        loadComponent: () => import('./components/store-dashboard/header/header.component').then(m => m.HeaderComponent),
-        children: [
-          {
-            path: 'counts-tabs',
-            loadComponent: () => import('./components/store-dashboard/counts-tabs/counts-tabs.component').then(m => m.CountsTabsComponent)
-          },
-          {
-            path: 'designed-coupons',
-            loadComponent: () => import('./components/store-dashboard/designed-coupons/designed-coupons.component').then(m => m.DesignedCouponsComponent)
-          },
-          {
-            path: 'store-info',
-            loadComponent: () => import('./components/store-dashboard/store-info/store-info.component').then(m => m.StoreInfoComponent)
-          },
-          {
-            path: 'redeem-history',
-            loadComponent: () => import('./components/store-dashboard/redeem-history/redeem-history.component').then(m => m.RedeemHistoryComponent)
-          },
-          {
-            path: 'promotion-history',
-            loadComponent: () => import('./components/store-dashboard/promotion-history/promotion-history.component').then(m => m.PromotionHistoryComponent)
-          },
-          {
-            path: '', // Default redirect
-            redirectTo: 'counts-tabs',
-            pathMatch: 'full'
-          }
-        ]
-      },
-      
     ]
-  }
+  },
+  {
+    path: '**',
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
+  },
 ];
 

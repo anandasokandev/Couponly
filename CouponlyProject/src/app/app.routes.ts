@@ -57,8 +57,12 @@ export const routes: Routes = [
       // },
       {
         path: 'admin',
-        loadChildren: () => import('./features/admin/admin.routes').then((m) => m.routes)
+        loadChildren: () => import('./features/admin/admin.routes').then((m) => m.adminRoutes)
      },
+     {
+       path: 'store',
+       loadChildren: () => import('./features/store/store.routes').then((m) => m.storeRoutes)
+     }
     ]
   },
   {
@@ -111,5 +115,5 @@ export const routes: Routes = [
     }
   },
   
-  { path: '**', redirectTo: 'admin' }
+  { path: '**', redirectTo: '500' }
 ];
