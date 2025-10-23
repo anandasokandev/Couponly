@@ -36,7 +36,7 @@ export const AuthRoleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   } else {
     // Role is NOT authorized. Redirect to the 404 page.
     console.error(`AuthRoleGuard: Role '${userRole}' not authorized. Required: ${requiredRoles.join(', ')}`);
-    router.navigate(['/404']); // Redirect to a neutral, safe route
+    router.navigate(['/401']); // Redirect to a neutral, safe route
     return false;
   }
 };

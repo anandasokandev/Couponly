@@ -58,11 +58,11 @@ export const routes: Routes = [
       {
         path: 'admin',
         loadChildren: () => import('./features/admin/admin.routes').then((m) => m.adminRoutes)
-     },
-     {
-       path: 'store',
-       loadChildren: () => import('./features/store/store.routes').then((m) => m.storeRoutes)
-     }
+      },
+      {
+        path: 'store',
+        loadChildren: () => import('./features/store/store.routes').then((m) => m.storeRoutes)
+      }
     ]
   },
   {
@@ -70,6 +70,13 @@ export const routes: Routes = [
     loadComponent: () => import('./features/admin/pages/payment/payment.component').then(m => m.PaymentComponent),
     data: {
       title: 'Payment'
+    }
+  },
+  {
+    path: '401',
+    loadComponent: () => import('./views/pages/page401/page401.component').then(m => m.Page401Component),
+    data: {
+      title: 'Page 401'
     }
   },
   {
