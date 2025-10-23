@@ -82,6 +82,15 @@ export const storeNavItems: INavData[] = [
     url: '/store/redeem-history',
     iconComponent: { name: 'cil-layers' }
   },
+
+
+  {
+    name: 'Redeem Store',
+    url: '/store/redeem-store',
+    iconComponent: { name: 'cil-layers' }
+  },
+  
+
   {
     name: 'Promotion History',
     url: '/store/promotion-history',

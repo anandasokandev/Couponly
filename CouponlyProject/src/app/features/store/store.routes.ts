@@ -46,6 +46,16 @@ export const storeRoutes: Routes = [
                     title: 'Redeem History'
                 }
             },
+
+          {
+                path: 'redeem-store',
+                loadComponent: () => import('../store/redeem-store/redeem-store.component').then(m => m.RedeemStoreComponent),
+                data: {
+                    title: 'Redeem Store'
+                }
+            },
+
+
             {
                 path: 'promotion-history',
                 loadComponent: () => import('../store/promotion-history/promotion-history.component').then(m => m.PromotionHistoryComponent),
