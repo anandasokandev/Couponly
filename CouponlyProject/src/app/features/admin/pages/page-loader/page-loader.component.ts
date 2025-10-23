@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { CardModule, PlaceholderAnimationDirective, PlaceholderDirective } from '@coreui/angular';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-page-loader',
-  imports: [CommonModule],
+  imports: [CommonModule, CardModule, 
+    PlaceholderAnimationDirective, 
+    PlaceholderDirective, ],
   templateUrl: './page-loader.component.html',
   styleUrl: './page-loader.component.scss'
 })
