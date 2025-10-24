@@ -1,0 +1,22 @@
+<!-- <div class="fade show d-flex align-items-center justify-content-center" style="text-align: center; height: 70vh">
+    <i class="spinner-grow spinner-grow-sm"></i>
+    <span class="m-1">Loading...</span>
+</div> -->
+
+<!-- <div class="body" *ngIf="isLoading$ | async">
+<div class="loader-container">
+    <div class="spinner-box"></div>
+    <div class="logo">
+        <div class="logo-recreated">
+            <div class="coupon-text">
+                <span class="coupon-part">coupon</span><span class="ly-part">ly</span>
+                <span class="store-part">.store</span>
+            </div>
+        </div>
+    </div>
+</div>
+</div> -->
+
+<div class="mt-4" cPlaceholderAnimation=glow *ngIf="isLoading$ | async">
+    <img aria-label="Placeholder" cCardImg="top" cPlaceholder focusable="false" height="500vh" style="border-radius: 10px;"/>
+</div>

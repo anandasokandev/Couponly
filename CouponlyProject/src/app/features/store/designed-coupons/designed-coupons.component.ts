@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StoreDashboardService } from '../../../../../commons/services/StoreDashboard/store-dashboard.service';
-import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
+import { StoreDashboardService } from '../../../commons/services/StoreDashboard/store-dashboard.service';
+import { ToastService } from '../../../commons/services/Toaster/toast.service';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent } from '@coreui/angular';
 
 @Component({
