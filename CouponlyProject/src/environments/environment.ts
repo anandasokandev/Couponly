@@ -136,6 +136,10 @@ export const environment = {
       promotions:'StoreDashboardRedeem/FilterStorePromotions',
       excelpromo:'StoreDashboardRedeem/ExportStorePromotionsToExcel',
       excelredeem:'StoreDashboardRedeem/ExportStoreRedeemsToExcel'
+    },
+
+    admindashboard:{
+      dashboarddata:'Dashboard/getDashboardData'
     }
   }
 };

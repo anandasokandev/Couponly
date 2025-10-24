@@ -15,7 +15,7 @@ import {
   TemplateIdDirective,
   WidgetStatAComponent
 } from '@coreui/angular';
-
+import { AdminDashboardService } from '../../../commons/services/Admin/admin-dashboard.service';
 @Component({
   selector: 'app-widgets-dropdown',
   templateUrl: './widgets-dropdown.component.html',
@@ -23,6 +23,12 @@ import {
 })
 export class WidgetsDropdownComponent implements OnInit, AfterContentInit {
   private changeDetectorRef = inject(ChangeDetectorRef);
+  constructor(private api: AdminDashboardService) { }
+  userCount:number=0;
+  income:any;
+  coupons:number=0;
+  promotions:number=0;
+  storeCount:number=0;
 
   data: any[] = [];
   options: any[] = [];
@@ -121,9 +127,23 @@ export class WidgetsDropdownComponent implements OnInit, AfterContentInit {
   };
 
   ngOnInit(): void {
+    this.getDashboardData()
     this.setData();
   }
-
+  getDashboardData() {
+    this.api.getDashboardData().subscribe({
+      next: (res: any) => {
+        this.coupons = res.couponCount;
+        this.promotions = res.promotionCount;
+        this.income = res.totalEarnings;
+        this.userCount = res.userCount;
+        this.storeCount = res.storeCount;
+      },
+      error: (err) => {
+        console.error('Failed to fetch dashboard data:', err);
+      }
+    });
+  }
   ngAfterContentInit(): void {
     this.changeDetectorRef.detectChanges();
 

@@ -18,10 +18,12 @@ export interface IChartProps {
   providedIn: 'any'
 })
 export class DashboardChartsData {
+
   constructor() {
     this.initMainChart();
   }
 
+  
   public mainChart: IChartProps = { type: 'line' };
 
   public random(min: number, max: number) {
