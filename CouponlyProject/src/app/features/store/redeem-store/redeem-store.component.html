@@ -1,1 +1,74 @@
-<p>redeem-store works!</p>
+<c-col xs="12">
+  <c-card class="mb-4 shadow-sm border-0" style="background-color: #f0f8ff;"> <!-- Light blue background -->
+    <c-card-header class="d-flex align-items-center text-white" style="
+  background: linear-gradient(to right, #b3d9ff, #3399ff);
+">
+  <strong class="w-100 fs-5 text-black">🎁 Redeem Store</strong>
+    </c-card-header>
+
+    <c-card-body>
+      <form>
+        <div class="row g-4 py-3">
+
+          <!-- Left Column -->
+          <div class="col-md-8">
+            <div class="d-flex flex-column gap-3 position-relative" style="z-index: 1;"> <!-- z-index fix -->
+
+              <!-- Coupon Dropdown -->
+              <div class="position-relative">
+                <label class="fw-bold mb-1">🧾 Select Coupon</label>
+                <select class="form-select form-select-sm" name="selectedCoupon" style="z-index: 2; position: relative;">
+                  <option>10% Off</option>
+                  <option>Free Shipping</option>
+                  <option>Buy 1 Get 1</option>
+                </select>
+              </div>
+
+              <!-- Contact Number Input -->
+              <div>
+                <label class="fw-bold mb-1">📱 Contact Number</label>
+                <input type="text" class="form-control form-control-sm" placeholder="Enter mobile number" name="contactNumber" />
+              </div>
+
+              <!-- Contact Info Card -->
+              <div class="border rounded p-3 bg-white shadow-sm">
+                <p class="mb-1"><strong>👤 Name:</strong> Kumar</p>
+                <p class="mb-1"><strong>📞 Phone:</strong> 9876543210</p>
+                <p class="mb-1"><strong>📧 Email:</strong> kumar&#64;gmail.com</p>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="col-md-4">
+            <div class="border rounded p-3 bg-white shadow-sm h-100">
+              <label class="fw-bold mb-2">➕ Add New Contact</label>
+              <input type="text" class="form-control form-control-sm mb-2" placeholder="Name" name="Name" />
+              <input type="email" class="form-control form-control-sm mb-2" placeholder="Email" name="Email" />
+               <input type="number" class="form-control form-control-sm mb-2" placeholder="Number" name="Number" />
+             <button class="btn btn-sm text-black w-100 rounded-pill shadow-sm"
+  style="background: linear-gradient(to right, #28a745, #5cd65c); border: none;">
+  ➕ Add Contact
+</button>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Redeem Button -->
+        <div class="text-center mt-4">
+        <div class="text-center">
+  <button class="btn btn-lg text-dark d-flex align-items-center justify-content-center px-4 py-2 rounded-pill shadow-sm mx-auto"
+    style="background: linear-gradient(to right, #b3d9ff, #3399ff); border: none;">
+    <strong> 🎉 Redeem Now</strong> 
+  </button>
+</div>
+
+
+        </div>
+      </form>
+    </c-card-body>
+  </c-card>
+</c-col>
