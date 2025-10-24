@@ -2,6 +2,8 @@ import { NgStyle } from '@angular/common';
 import { Component, DestroyRef, DOCUMENT, effect, inject, OnInit, Renderer2, signal, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ChartOptions } from 'chart.js';
+import { AdminDashboardService } from '../../commons/services/Admin/admin-dashboard.service';
+
 import {
   AvatarComponent,
   ButtonDirective,
@@ -15,7 +17,7 @@ import {
   GutterDirective,
   ProgressComponent,
   RowComponent,
-  TableDirective
+  TableDirective,
 } from '@coreui/angular';
 import { ChartjsComponent } from '@coreui/angular-chartjs';
 import { IconDirective } from '@coreui/icons-angular';
@@ -45,10 +47,13 @@ interface IUser {
 })
 export class DashboardComponent implements OnInit {
 
+
   readonly #destroyRef: DestroyRef = inject(DestroyRef);
   readonly #document: Document = inject(DOCUMENT);
   readonly #renderer: Renderer2 = inject(Renderer2);
   readonly #chartsData: DashboardChartsData = inject(DashboardChartsData);
+
+  
 
   public users: IUser[] = [
     {
@@ -144,9 +149,11 @@ export class DashboardComponent implements OnInit {
   });
 
   ngOnInit(): void {
+
     this.initCharts();
     this.updateChartOnColorModeChange();
   }
+
 
   initCharts(): void {
     this.mainChartRef()?.stop();

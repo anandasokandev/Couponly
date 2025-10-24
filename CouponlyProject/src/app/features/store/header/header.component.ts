@@ -1,63 +1,68 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { StoreDashboardService } from '../../../commons/services/StoreDashboard/store-dashboard.service';
+import { filter, Subscription } from 'rxjs';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CardModule, NavModule } from '@coreui/angular';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { StoreDashboardService } from '../../../commons/services/StoreDashboard/store-dashboard.service';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, CardModule, NavModule, CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.scss'],
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    CardModule,
+    NavModule,
+    CommonModule
+  ]
 })
-
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   storeData: any;
   isLoading = true;
+  hideNavContainer = false;
+  routerSubscription: Subscription | undefined;
 
   constructor(
     public router: Router,
     private storeDashboardService: StoreDashboardService
-  ) { }
-
-  shouldShowStoreCard(): boolean {
-    return !this.router.url.includes('/store-dashboard/store-info');
-  }
-
+  ) {}
 
   ngOnInit(): void {
-    const token = localStorage.getItem('token');
-    // console.log('Token in header:', token); // ✅ Confirm token is available
+    this.updateNavContainerVisibility(this.router.url);
+
+    this.routerSubscription = this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.updateNavContainerVisibility(this.router.url);
+      });
 
     this.storeDashboardService.getStoreInfo().subscribe({
       next: (res) => {
-        // console.log('Store Info API response:', res); // ✅ Log full response
         if (res?.isSuccess) {
           this.storeData = res.data;
-          // console.log('Store data:', this.storeData); // ✅ Should show full store info
         }
         this.isLoading = false;
       },
-      error: (err) => {
-        // console.error('Error fetching store info:', err);
+      error: () => {
         this.isLoading = false;
       }
     });
   }
 
+  private updateNavContainerVisibility(url: string): void {
+    this.hideNavContainer = url.includes('/redeem-store');
+  }
 
+  shouldShowStoreCard(): boolean {
+    return !this.router.url.includes('/store-info');
+  }
 
+  ngOnDestroy(): void {
+    this.routerSubscription?.unsubscribe();
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
