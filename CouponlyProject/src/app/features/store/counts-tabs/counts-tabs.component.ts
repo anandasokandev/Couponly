@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CardModule, NavModule } from '@coreui/angular';
 import { StoreDashboardService } from '../../../commons/services/StoreDashboard/store-dashboard.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-counts-tabs',
-  imports: [CardModule, NavModule],
+  imports: [CardModule, NavModule,RouterModule],
   templateUrl: './counts-tabs.component.html',
   styleUrl: './counts-tabs.component.scss'
 })
