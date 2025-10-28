@@ -111,6 +111,10 @@ export class PromotionService {
       return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.store.filterstore}`, { params });
     }
 
+    getStoreById(storeId: number): Observable<any> {
+      return this.http.get(`${environment.apiBaseUrl}/Store/id${storeId}`);
+    }
+
     getDistricts(): Observable<any> {
       return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.location.fetchDistrict}`);
     }

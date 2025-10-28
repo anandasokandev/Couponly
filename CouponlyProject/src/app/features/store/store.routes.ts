@@ -64,6 +64,13 @@ export const storeRoutes: Routes = [
                 }
             },
             {
+                path: 'NewPromotion',
+                loadComponent: () => import('./../admin/components/promotion/new-promotion/new-promotion.component').then(m => m.NewPromotionComponent),
+                data: {
+                    title: 'New Promotion'
+                }
+            },
+            {
                 path: '', // Default redirect
                 redirectTo: 'dashboard',
                 pathMatch: 'full'

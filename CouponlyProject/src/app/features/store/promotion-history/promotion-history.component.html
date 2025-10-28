@@ -3,7 +3,11 @@
     <c-card-header class="d-flex align-items-center">
       <strong class="w-100 fs-5">Promotions History</strong>
       <div class="d-grid gap-4 d-sm-flex justify-content-md-end w-100">
-        <div class="float-end">
+        <div class="float-end d-flex gap-2">
+          <button class="btn btn-primary btn-sm" (click)="navigateToNewPromotion()">
+          <svg [cIcon]="icons.cilPenNib" class="me-2"></svg>
+          New Promotion
+        </button>
           <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap d-flex align-items-center"
                         (click)="downloadsExcel()">
                         <svg [cIcon]="icons.cilCloudDownload"></svg> &nbsp; Download
