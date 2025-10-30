@@ -5,10 +5,10 @@ import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, Ta
 import { IconModule } from '@coreui/icons-angular';
 import { cibSoundcloud, cilCloudDownload, cilSortAlphaDown, cilSortAlphaUp } from '@coreui/icons';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RedeemHistory } from '../../../../../commons/models/redeem-history.model';
-import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
-import { PaginationComponent } from '../../../pages/pagination/pagination.component';
-import { StoreDashboardService } from '../../../../../commons/services/StoreDashboard/store-dashboard.service';
+import { RedeemHistory } from '../../../commons/models/redeem-history.model';
+import { ToastService } from '../../../commons/services/Toaster/toast.service';
+import { PaginationComponent } from '../../admin/pages/pagination/pagination.component';
+import { StoreDashboardService } from '../../../commons/services/StoreDashboard/store-dashboard.service';
 
 @Component({
   selector: 'app-redeem-history',

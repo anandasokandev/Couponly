@@ -11,14 +11,16 @@ import { IconModule } from '@coreui/icons-angular';
 import {
   cibSoundcloud,
   cilCloudDownload,
+  cilPenNib,
   cilSortAlphaDown,
   cilSortAlphaUp
 } from '@coreui/icons';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PromotionHistory } from '../../../../../commons/models/promotion-history.model';
-import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
-import { PaginationComponent } from '../../../pages/pagination/pagination.component';
-import { StoreDashboardService } from '../../../../../commons/services/StoreDashboard/store-dashboard.service';
+import { PromotionHistory } from '../../../commons/models/promotion-history.model';
+import { ToastService } from '../../../commons/services/Toaster/toast.service';
+import { PaginationComponent } from '../../admin/pages/pagination/pagination.component';
+import { StoreDashboardService } from '../../../commons/services/StoreDashboard/store-dashboard.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-promotion-history',
@@ -33,13 +35,14 @@ import { StoreDashboardService } from '../../../../../commons/services/StoreDash
     IconModule,
     FormsModule,
     ReactiveFormsModule,
-    PaginationComponent
+    PaginationComponent,
+    RouterModule
   ],
   templateUrl: './promotion-history.component.html',
   styleUrls: ['./promotion-history.component.scss']
 })
 export class PromotionHistoryComponent {
-  icons = { cilSortAlphaUp, cibSoundcloud, cilCloudDownload, cilSortAlphaDown };
+  icons = { cilSortAlphaUp, cibSoundcloud, cilCloudDownload, cilSortAlphaDown, cilPenNib };
 
   promotions: PromotionHistory[] = [];
 
@@ -60,6 +63,7 @@ export class PromotionHistoryComponent {
 
   private api = inject(StoreDashboardService);
   private toast = inject(ToastService);
+  private router = inject(Router)
 
   ngOnInit() {
     this.fetchPromotions();
@@ -102,6 +106,11 @@ export class PromotionHistoryComponent {
     this.currentPage = page;
     this.isPageChange = true;
     this.fetchPromotions();
+  }
+
+  navigateToNewPromotion() {
+    sessionStorage.setItem('NavContainer', 'true');
+    this.router.navigate(['/store/NewPromotion']);
   }
 
   downloadsExcel() {

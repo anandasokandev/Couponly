@@ -1,31 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
-
-// Import styles with default layout.
-@use "@coreui/coreui/scss/coreui" as * with (
-  $enable-deprecation-messages: false
-);
-
-// Import Chart.js custom tooltips styles
-@use "@coreui/chartjs/scss/coreui-chartjs";
-
-// Custom styles for this theme
-@use "theme";
-
-// Some temp fixes
-//@use "fixes";
-
-// If you want to add custom CSS you can put it here.
-@use "custom";
-
-// Examples
-// We use those styles to show code examples, you should remove them in your application.
-@use "examples";
-
-.toast-icon svg {
-  width: 24px;
-  height: 24px;
-}
-
 
 /* --- Keyframes for the Animation --- */
 @keyframes rotate {
@@ -35,7 +7,7 @@
 }
 
 /* --- Base Styling and Centering --- */
-.loader-body {
+.body {
     /* Full viewport height, dark background for contrast */
     min-height: 100vh;
     display: flex;
@@ -48,8 +20,8 @@
 .loader-container {
     position: relative;
     /* Size of the overall loader area */
-    width: 170px;
-    height: 170px;
+    width: 200px;
+    height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,10 +37,8 @@
     height: 100%;
     
     /* Create the round border with faint inactive outline */
-    border: 6px dotted rgba(255, 255, 255, 0.1); /* Faint inactive border */
+    border: 8px solid rgba(255, 255, 255, 0.1); /* Faint inactive border */
     border-radius: 50%; 
-
-    border-style:dashed;
     
     /* Define the active sides for the THREE-QUARTER effect */
     border-top-color: #ff5722; /* Vibrant orange/red */
@@ -76,7 +46,7 @@
     border-bottom-color: #ff5722; /* ACTIVE BOTTOM BORDER */
     
     /* Apply the rotation animation */
-    animation: rotate 5s linear infinite;
+    animation: rotate 1.5s linear infinite;
 }
 
 /* --- The Logo Container (Holds the Logo: Image + Text) --- */
@@ -114,12 +84,10 @@
 
 /* 2. Text Content */
 .coupon-text {
-    font-size: 34px;
+    font-size: 40px;
     font-weight: 800;
     line-height: 0.9;
     text-transform: lowercase;
-    font-family: 'Varela Round';
-    padding-top: 10px;
 }
 
 .coupon-text .coupon-part {
@@ -132,11 +100,10 @@
 
 .coupon-text .store-part {
     display: block;
-    font-size: 20px;
-    // font-weight: 700;
+    font-size: 16px;
+    font-weight: 700;
     color: #4aa9e3; /* Light Blue */
     line-height: 1;
-    margin-top: 1px; /* Pull up for alignment */
+    margin-top: 5px; /* Pull up for alignment */
     text-align: right;
-    margin-right: 20px;
 }

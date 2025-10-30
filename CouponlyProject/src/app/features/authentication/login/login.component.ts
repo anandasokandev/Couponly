@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { LoginService } from './../../../commons/services/Authentication/login.service';
 import { SpinnerModule } from '@coreui/angular';
 import { ToastComponent } from '../../admin/pages/toast/toast.component';
-import { ToastService } from 'src/app/commons/services/Toaster/toast.service';
+import { ToastService } from '../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -73,7 +73,7 @@ export class LoginComponent {
           } else if (response.data.role === 'User') {
             this.router.navigate(['/user']);
           } else if (response.data.role === 'Store') {
-            this.router.navigate(['/admin/store-dashboard']);
+            this.router.navigate(['/store']);
           } else {
             console.log('Unrecognized role:', response.role);
             this.errorMessage = 'Unrecognized role';

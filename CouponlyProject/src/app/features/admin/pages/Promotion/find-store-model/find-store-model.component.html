@@ -18,8 +18,8 @@
     </c-modal-header>
 
     <c-modal-body class="p-4">
-        <h6 class="mb-1">Choose Store</h6>
-        <form [formGroup]="filterForm">
+        <h6 class="mb-1" *ngIf="!isStore">Choose Store</h6>
+        <form [formGroup]="filterForm" *ngIf="!isStore">
             <!-- <div class="d-flex gap-3 py-3">
                 <select class="form-select form-select-sm" formControlName="district">
                     <option value=0 [selected]="districtId === 0">All Distircts</option>
@@ -47,7 +47,7 @@
             </div>
         </form>
 
-    <hr>
+    <hr *ngIf="!isStore">
 
     <ng-container *ngIf="storeBox">
         <h6>Search Results</h6>
@@ -56,6 +56,10 @@
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
+        </div>
+
+        <div *ngIf="!isStoreLoading && searchResults.length === 0" class="d-flex justify-content-center my-5">
+                <span>No stores found. Please adjust your filters.</span>
         </div>
 
         <ng-container *ngIf="searchResults && searchResults.length > 0 && !isStoreLoading">
