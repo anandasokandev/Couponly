@@ -47,7 +47,7 @@ export const storeRoutes: Routes = [
                 }
             },
 
-          {
+            {
                 path: 'redeem-store',
                 loadComponent: () => import('../store/redeem-store/redeem-store.component').then(m => m.RedeemStoreComponent),
                 data: {
@@ -55,6 +55,35 @@ export const storeRoutes: Routes = [
                 }
             },
 
+            {
+                path: 'promotion',
+                data: {
+                    title: 'Promotion'
+                },
+                children: [
+                    {
+                        path: 'history',
+                        loadComponent: () => import('../store/promotion-history/promotion-history.component').then(m => m.PromotionHistoryComponent),
+                        data: {
+                            title: 'Promotion History'
+                        }
+                    },
+                    {
+                        path: 'new-promotion',
+                        loadComponent: () => import('../commons/components/new-promotion/new-promotion.component').then(m => m.NewPromotionComponent),
+                        data: {
+                            title: 'New Promotion'
+                        }
+                    },
+                    {
+                        path: 'view/:id',
+                        loadComponent: () => import('../commons/components/view-promotion-details/view-promotion-details.component').then(m => m.ViewPromotionDetailsComponent),
+                        data: {
+                            title: 'View Promotion'
+                        }
+                    }
+                ]
+            },
 
             {
                 path: 'promotion-history',
@@ -65,7 +94,7 @@ export const storeRoutes: Routes = [
             },
             {
                 path: 'NewPromotion',
-                loadComponent: () => import('./../admin/components/promotion/new-promotion/new-promotion.component').then(m => m.NewPromotionComponent),
+                loadComponent: () => import('../commons/components/new-promotion/new-promotion.component').then(m => m.NewPromotionComponent),
                 data: {
                     title: 'New Promotion'
                 }

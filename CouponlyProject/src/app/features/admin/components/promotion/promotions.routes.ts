@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { NewPromotionComponent } from './new-promotion/new-promotion.component';
+import { NewPromotionComponent } from '../../../commons/components/new-promotion/new-promotion.component';
 
 /**
  * Child routes for the promotions feature.
@@ -22,14 +22,14 @@ export const promotionRoutes: Routes = [
             },
             {
                 path: 'NewPromotion',
-                loadComponent: () => import('./new-promotion/new-promotion.component').then(m => m.NewPromotionComponent),
+                loadComponent: () => import('../../../commons/components/new-promotion/new-promotion.component').then(m => m.NewPromotionComponent),
                 data: {
                     title: 'New Promotion'
                 }
             },
             {
                 path: 'details/:id',
-                loadComponent: () => import('./view-promotion-details/view-promotion-details.component').then(m => m.ViewPromotionDetailsComponent),
+                loadComponent: () => import('../../../commons/components/view-promotion-details/view-promotion-details.component').then(m => m.ViewPromotionDetailsComponent),
                 data: {
                     title: 'Promotion Details'
                 }

@@ -110,7 +110,7 @@ export class PromotionHistoryComponent {
 
   navigateToNewPromotion() {
     sessionStorage.setItem('NavContainer', 'true');
-    this.router.navigate(['/store/NewPromotion']);
+    this.router.navigate(['/store/promotion/new-promotion']);
   }
 
   downloadsExcel() {

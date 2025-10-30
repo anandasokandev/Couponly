@@ -102,7 +102,7 @@
     </ng-container>
 
     <div class="mt-2" *ngIf="couponBox">
-        <table [hover]="true" cTable class="responsive-table">
+        <table [hover]="true" cTable class="responsive-table" *ngIf="!isStore">
             <thead>
                 <tr>
                     <th>#</th>
@@ -127,7 +127,7 @@
                 <span cInputGroupText>
                     <i class="fas fa-search"></i>
                 </span>
-                <input cFormControl class="form-control-sm" type="text" [(ngModel)]="couponText" placeholder="Search by coupon code...">
+                <input cFormControl class="form-control-sm" type="text" [(ngModel)]="couponText" (input)="searchCoupon()" placeholder="Search by coupon code...">
             </c-input-group>
             <button cButton color="secondary" class="btn btn-sm d-flex align-items-center" (click)="searchCoupon()" [disabled]="!couponText || isCouponLoading">
                 Search <i class="fas fa-search ms-2"></i>
@@ -154,6 +154,7 @@
 
     <div *ngIf="!storeBox && !couponBox" class="mt-4">
         <div *ngIf="selectedStore" class="selection-area">
+            <div class="float-end"><button cButton class="btn btn-sm btn-danger text-white" (click)="changeCoupon()">Change Coupon</button></div>
             <p>You have selected: <strong>{{ selectedStore.store }}</strong> ({{ StoreContactCount }} contacts available under {{ selectedStore.store }})</p>
             <p>Coupon: <strong>{{ selectedCoupon?.couponCode || 'None selected' }}</strong></p>
             <p>Contacts available in public repo.: {{ PublicContactCount - StoreContactCount }}</p>

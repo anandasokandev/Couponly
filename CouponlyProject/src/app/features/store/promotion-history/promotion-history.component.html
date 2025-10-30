@@ -60,9 +60,9 @@
 
       <div *ngIf="!isLoading" class="table-responsive">
         <table cTable class="responsive-table">
-          <thead>
+          <thead class="text-center">
             <tr>
-              <th>#</th>
+              <th class="align-middle">#</th>
               <th>Campaign Title</th>
               <th>Coupon Name</th>
               <th>Coupon Code</th>
@@ -70,6 +70,7 @@
               <th>Amount</th>
               <th>Sent Date</th>
               <th>Invoice</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -78,13 +79,18 @@
                 <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
                 <td>{{ promo.campaignName }}</td>
                 <td>{{ promo.couponName }}</td>
-                <td>{{ promo.couponCode }}</td>
-                <td>{{ promo.contacts }}</td>
-                <td>{{ promo.amount }}</td>
-                <td>{{ promo.date | date: 'yyyy-MM-dd' }}</td>
+                <td class="text-center">{{ promo.couponCode }}</td>
+                <td class="text-center">{{ promo.contacts }}</td>
+                <td class="text-center">{{ promo.amount }}</td>
+                <td class="text-center">{{ promo.date | date: 'yyyy-MM-dd' }}</td>
                 <td>
-                  <button class="btn btn-primary btn-sm px-3 py-1 text-nowrap d-flex align-items-center">
+                  <button cButton class="btn btn-primary btn-sm px-3 py-1 text-nowrap d-flex align-items-center">
                     <svg [cIcon]="icons.cilCloudDownload"></svg> &nbsp; Invoice
+                  </button>
+                </td> 
+                <td>
+                  <button cButton class="btn btn-primary btn-sm px-3 py-1 text-nowrap d-flex align-items-center gap-2 " [routerLink]="['/store/promotion/view', promo.id]">
+                    <i class="fa fa-eye" aria-hidden="true"></i> View
                   </button>
                 </td>
               </tr>
