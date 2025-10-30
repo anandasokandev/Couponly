@@ -1,183 +1,273 @@
-/* Image styling */
+/* Image Styling */
 img {
   width: 50px;
   height: 50px;
   object-fit: contain;
-  border-radius: 4px; /* optional: rounded corners */
+  border-radius: 4px;
 }
 
-/* Table wrapper for horizontal scrolling */
+/* Table Wrapper */
 .responsive-table-wrapper {
   width: 100%;
   overflow-x: auto;
 }
 
-/* Table styles */
+/* Table Styles */
 .responsive-table {
   width: 100%;
-  min-width: 100%;
   border-collapse: collapse;
-  overflow-x: auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* clean modern font */
-  font-size: 16px; /* increase font size for better readability */
-  color: #333;
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  color: #000; /* pure black text */
 }
 
-/* Header and body cells */
 .responsive-table thead tr th,
 .responsive-table tbody tr td {
   white-space: nowrap;
-  padding: 10px 12px;
+  padding: 12px 14px;
   border: none !important;
   vertical-align: middle;
 }
 
-/* Optional: header background and text color */
 .responsive-table thead tr {
-  background-color: #007bff;
-  color: white;
+  background-color: #0d6efd; /* professional blue header */
+  color: #fff;
   font-weight: 600;
 }
 
-/* Row hover effect */
 .responsive-table tbody tr:hover {
-  background-color: #f8f9fa;
+  background-color: #f2f2f2;
   transition: background-color 0.2s ease-in-out;
 }
 
-.coupon-card {
-  width: 280px;
-  height: auto;
-  border: 1px solid #ccc; 
-  border-radius: 6px;
+/* General Page Styling */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8fafc;
+  color: #000; /* consistent black text across page */
+}
+
+/* 🏬 Store Grid */
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Store Card */
+.store-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  padding: 18px 16px;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  position: relative;
-  padding: 0;
+  justify-content: space-between;
+  border: 1px solid #e5e9f2;
+}
 
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-    border-color: #bbb;
-  }
+.store-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-color: #d1d5db;
+}
+
+/* Header */
+.store-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.store-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  object-fit: contain;
+  background-color: #f3f4f6;
+  padding: 6px;
+  border: 1px solid #e1e5ec;
+}
+
+.store-name {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.store-category {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Store Body */
+.store-body {
+  background-color: #fafafa;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-top: 6px;
+}
+
+.store-body p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Highlighted Values */
+.store-body strong {
+  color: #000;
+  font-weight: 600;
+}
+
+.total-coupons {
+  background: #0d6efd;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 6px rgba(13, 110, 253, 0.25);
+}
+
+.store-code {
+  background: #e8eaf6;
+  color: #000;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 0.85rem;
+}
+
+/* Footer Section */
+.store-footer {
+  margin-top: 14px;
+  text-align: right;
+}
+
+/* Primary Button (Professional Look) */
+.store-footer .btn {
+  display: inline-block;
+  border-radius: 6px;
+  font-weight: 500;
+  background-color: #0078d4; /* corporate blue (used by Microsoft, Infosys, etc.) */
+  color: #ffffff;
+  border: none;
+  padding: 8px 18px;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Hover Effect – confident, not flashy */
+.store-footer .btn:hover {
+  background-color: #005ea6; /* deeper blue */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* Active/Pressed state */
+.store-footer .btn:active {
+  background-color: #004d8c;
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Disabled (optional – if needed later) */
+.store-footer .btn:disabled {
+  background-color: #e0e0e0;
+  color: #7a7a7a;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+
+/* 🎟️ Coupon Grid */
+.coupon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Coupon Card */
+.coupon-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.coupon-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-color: #cbd5e1;
 }
 
 .coupon-image {
   width: 100%;
   height: 160px;
   object-fit: cover;
+  border-bottom: 1px solid #f1f5f9;
 }
 
 .coupon-content {
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;  
-  flex: 1;
+  padding: 14px 16px;
 }
 
 .coupon-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #222;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 4px;
+}
+
+.coupon-code-box {
+  background: #e0f2fe;
+  color: #000;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-block;
+  margin-bottom: 8px;
 }
 
 .coupon-desc {
-  font-size: 0.95rem;       
-  color: #555;
-  font-style: italic;
-  line-height: 1.4;
-  margin-bottom: 4px;
-}
-
-button.active {
-  background-color: #007bff;
-  color: white;
-}
-/* Tabs overall layout */
-.nav-tabs {
-  border-bottom: 1px solid #dee2e6;
-}
-
-/* Inactive tab */
-.nav-tabs .nav-link {
-  border: 1px solid transparent;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
-  color: #6c757d;
-  background-color: transparent;
-  font-weight: 500;
-}
-
-/* Active tab */
-.nav-tabs .nav-link.active {
-  color: #000;
-  background-color: #fff;
-  border: 1px solid #dee2e6;
-  border-bottom-color: transparent;
-  font-weight: 600;
-}
-
-
-
-.coupon-code-box {
-  display: inline-block;
-  background-color: #f0f0f0;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-weight: bold;
   font-size: 0.9rem;
-  color: #222;
-  margin-bottom: 4px;
-}
-
-.coupon-details {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  color: #000;
+  margin-bottom: 8px;
 }
 
 .coupon-details p {
-  font-size: 0.9rem;
-  margin: 0;
-  line-height: 1.2;
-  color: #555;
-}
-
-.coupon-details p.user-limit {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #222;
+  font-size: 0.85rem;
+  margin: 2px 0;
+  color: #000;
 }
 
 .coupon-dates {
   display: flex;
   justify-content: space-between;
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 6px;
+  font-size: 0.8rem;
+  color: #444;
+  border-top: 1px solid #e5e7eb;
+  margin-top: 8px;
+  padding-top: 6px;
 }
 
-/* Responsive behavior for smaller screens */
-@media (max-width: 991.98px) {
-  .responsive-table {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .responsive-table table,
-  .responsive-table thead,
-  .responsive-table tbody,
-  .responsive-table th,
-  .responsive-table td,
-  .responsive-table tr {
-    display: revert;
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .store-grid, .coupon-grid {
+    grid-template-columns: 1fr;
   }
 }
-
