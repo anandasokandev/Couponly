@@ -34,7 +34,7 @@ export class StoreWiseCouponComponent implements OnInit {
   isLoading = false;
   isViewingCoupons = false;
   isPageChange = false;
-
+ selectedStoreType: number = 0;
   storeSearch: string = '';
   couponCodeSearch = '';
   selectedTypeId?: number;
