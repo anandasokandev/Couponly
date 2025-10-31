@@ -129,7 +129,7 @@ export class PromotionService {
 
     getCoupons(storeId: number, couponCode: string): Observable<any> {
       return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.coupon.CouponSearch}`, {
-        params: { StoreId: storeId.toString(), CouponCode: couponCode }
+        params: { StoreId: storeId.toString(), CouponCode: couponCode, DateFilter: 'valid' }
       });
     }
 

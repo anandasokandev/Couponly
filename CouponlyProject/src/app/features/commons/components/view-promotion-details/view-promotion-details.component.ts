@@ -2,9 +2,9 @@ import { CommonModule, Location } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BadgeComponent, ButtonDirective, CardComponent, CardModule, CardTitleDirective, ColComponent, ColDirective, FormModule, PlaceholderAnimationDirective, PlaceholderDirective, SpinnerComponent } from '@coreui/angular';
-import { PromotionService } from '../../../../../commons/services/Promotion/promotion.service';
+import { PromotionService } from '../../../../commons/services/Promotion/promotion.service';
 import { ActivatedRoute } from '@angular/router';
-import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-view-promotion-details',
@@ -30,12 +30,14 @@ export class ViewPromotionDetailsComponent {
   PromotionStatusInfo: { text: string; color: string } = { text: '', color: '' };
   canceling = false;
   resending = false;
+  isStore = false;
   private toast = inject(ToastService);
   constructor(private promotionService: PromotionService, private route: ActivatedRoute, private location: Location) {}
 
   ngOnInit() {
     const promotionId = this.route.snapshot.paramMap.get('id');
     if (promotionId) {
+      this.isStore = sessionStorage.getItem('role') === 'Store';
       const id = parseInt(promotionId, 10);
       this.promotionService.getPromotionById(id).subscribe(promotion => {
         this.promotion = promotion.data;
