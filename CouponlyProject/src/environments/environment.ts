@@ -46,6 +46,7 @@ export const environment = {
       fetchstore:'Store/id',
       upload:'ImageUpload',
       addStore:'Store/AddStore',
+      fetchStoreRedeem: 'CouponRedeem/GetCouponByStore/', // Add this storeredeem
       updateStore:'Store/',
       storeExists:'Store/check-store-existence',
       emailExists:'Store/check-email-existence',
@@ -64,6 +65,7 @@ export const environment = {
       importcsv:'Contact/ImportContactsFromCsv',
       importvcard :'Contact/ImportContactsFromVCard'
     },
+
 
     login:{
       signup: '/Login',

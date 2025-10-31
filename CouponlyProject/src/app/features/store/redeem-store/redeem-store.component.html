@@ -15,14 +15,13 @@
             <div class="d-flex flex-column gap-3 position-relative" style="z-index: 1;"> <!-- z-index fix -->
 
               <!-- Coupon Dropdown -->
-              <div class="position-relative">
-                <label class="fw-bold mb-1">Select Coupon</label>
-                <select class="form-select form-select-sm" name="selectedCoupon" style="z-index: 2; position: relative;">
-                  <option>10% Off</option>
-                  <option>Free Shipping</option>
-                  <option>Buy 1 Get 1</option>
-                </select>
-              </div>
+             <div class="position-relative">
+  <label class="fw-bold mb-1">Select Coupon</label>
+  <select class="form-select form-select-sm" name="selectedCoupon" [(ngModel)]="selectedCoupon" style="z-index: 2; position: relative;">
+    <option *ngFor="let coupon of coupons" [value]="coupon.couponId">{{ coupon.CouponName }}</option>
+  </select>
+</div>
+
 
               <!-- Contact Number Input -->
               <div>
