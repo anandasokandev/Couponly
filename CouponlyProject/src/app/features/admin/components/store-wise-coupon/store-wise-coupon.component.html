@@ -14,6 +14,12 @@
   <div *ngIf="!isViewingCoupons">
     <!-- 🔍 Store Filters -->
     <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
+    <select class="form-select form-select-sm" style="max-width: 160px;" [(ngModel)]="selectedStoreType"
+    (change)="loadStoresByName()">
+    <option [ngValue]="0">All Stores</option>
+    <option [ngValue]="1">Online</option>
+    <option [ngValue]="2">Offline</option>
+  </select>
       <input type="text" class="form-control form-control-sm" style="max-width: 210px"
         [(ngModel)]="storeSearch" placeholder="Search Store Name" (input)="loadStoresByName()" />
       <button type="button" class="btn btn-danger btn-sm text-white" title="Reset" (click)="resetFilters()">
