@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { IconModule } from '@coreui/icons-angular';
 import { CardModule, GridModule } from '@coreui/angular'; // Import CoreUI Card module
-import { StoreService } from 'src/app/commons/services/Store/store.service';
+import { StoreService } from '../../../commons/services/Store/store.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
