@@ -1,6 +1,6 @@
 <c-col xs="12" class="px-0" style="background-color: #f4f7fa; min-height: 100vh;">
   <c-row class="justify-content-center m-0">
-    <c-col xs="12" lg="11" xl="10" class="p-0">
+    <c-col xs="12" lg="11" class="p-0">
       
       <c-card class="shadow-sm border-0 redeem-theme" 
               style="background-color: #f8f9fa; height: 100vh; display: flex; flex-direction: column; overflow: hidden;">
@@ -24,7 +24,7 @@
                 style="display: flex; flex-direction: column; height: 100%;">
 
             <div class="mb-3" style="flex-shrink: 0;">
-              <h5 class="fw-bold mb-3 theme-heading">1. Select Coupon</h5>
+              <h5 class="fw-bold mb-3 theme-heading">Select Coupon</h5>
               
               <div class="mb-3">
                 <input type="text" class="form-control form-control-sm" placeholder="Search by coupon name (e.g., 'Coffee')" />
@@ -36,7 +36,18 @@
                   <strong>&lt;</strong>
                 </button>
                 
-                <div class="coupon-scroller d-flex gap-3" style="overflow-x: auto; flex-wrap: nowrap; padding: 0.5rem;">
+                <div class="coupon-scroller d-flex gap-3 mx-5" style="overflow-x: auto; flex-wrap: nowrap; padding: 0.5rem;">
+                  
+
+                  <div style="flex: 0 0 240px;">
+                    <div class="card h-100 coupon-card-inactive shadow-sm">
+                      <div class="card-body p-2">
+                        <h6 class="card-title fw-bold mb-1">20% Off Bill</h6>
+                        <small class="card-text text-muted mb-0 d-block">Expires: 30 Nov</small>
+                        <button type="button" class="btn btn-sm btn-theme-outline-primary w-100 mt-2 py-1">Select</button>
+                      </div>
+                    </div>
+                  </div>
                   
                   <div style="flex: 0 0 240px;">
                     <div class="card h-100 coupon-card-active shadow">
@@ -44,7 +55,7 @@
                         <h6 class="card-title fw-bold mb-1">Free Coffee</h6>
                         <small class="card-text mb-0 d-block" style="color: var(--accent-color-dark)">150 Points</small>
                         <button type="button" class="btn btn-sm btn-theme-primary w-100 mt-2 py-1" disabled>
-                          ✔ Selected
+                          Selected
                         </button>
                       </div>
                     </div>
@@ -53,9 +64,31 @@
                   <div style="flex: 0 0 240px;">
                     <div class="card h-100 coupon-card-inactive shadow-sm">
                       <div class="card-body p-2">
+                        <h6 class="card-title fw-bold mb-1">BOGO Muffin</h6>
+                        <small class="card-text text-muted mb-0 d-block">Expires: 15 Dec</small>
+                        <button type="button" class="btn btn-sm btn-theme-outline-primary w-100 mt-2 py-1">Select</button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div style="flex: 0 0 240px;">
+                    <div class="card h-100 coupon-card-inactive shadow-sm">
+                      <div class="card-body p-2">
                         <h6 class="card-title fw-bold mb-1">20% Off Bill</h6>
                         <small class="card-text text-muted mb-0 d-block">Expires: 30 Nov</small>
                         <button type="button" class="btn btn-sm btn-theme-outline-primary w-100 mt-2 py-1">Select</button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div style="flex: 0 0 240px;">
+                    <div class="card h-100 coupon-card-inactive shadow-sm">
+                      <div class="card-body p-2">
+                        <h6 class="card-title fw-bold mb-1">Free Coffee</h6>
+                        <small class="card-text text-muted mb-0 d-block">150 Points</small>
+                        <button type="button" class="btn btn-sm btn-theme-outline-primary w-100 mt-2 py-1">
+                          Select
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -79,7 +112,7 @@
 
             <div class="mb-3 d-flex flex-column" 
                  style="flex-grow: 1; min-height: 0;">
-              <h5 class="fw-bold mb-3 theme-heading">2. Find Customer</h5>
+              <h5 class="fw-bold mb-3 theme-heading">Find Customer</h5>
               
               <div class="p-3 bg-white rounded shadow-sm border d-flex flex-column" 
                    style="flex-grow: 1;">
@@ -90,22 +123,25 @@
                   <div class="col-sm-4">
                     <button type="button" class="btn btn-theme-outline-primary btn-sm w-100" 
                             data-bs-toggle="modal" data-bs-target="#addNewUserModal">
-                      ➕ Add New
+                      Add New
                     </button>
                   </div>
                 </div>
 
                 <div style="flex-grow: 1; overflow-y: auto;">
                   <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active p-2">
+                    <a class="list-group-item list-group-item-action active p-2">
                       <strong class="mb-1 fs-6">Kumar</strong>
                       <small class="d-block">9876543210 | kumar&#64;gmail.com</small>
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action p-2">
+                    <a class="list-group-item list-group-item-action p-2">
                       <strong class="mb-1 fs-6">Sunita Sharma</strong>
                       <small class="d-block text-muted">9123456789 | sunita&#64;example.com</small>
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action p-2"><strong class="mb-1 fs-6">Ravi</strong></a>
+                    <a class="list-group-item list-group-item-action p-2">
+                      <strong class="mb-1 fs-6">Ravi</strong>
+                      <small class="d-block text-muted">9123456789 | sunita&#64;example.com</small>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -125,7 +161,7 @@
       <div class="modal fade" id="addNewUserModal" tabindex="-1" aria-labelledby="addNewUserModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content redeem-theme"> <div class="modal-header">
-              <h5 class="modal-title theme-heading" id="addNewUserModalLabel">➕ Add New Contact</h5>
+              <h5 class="modal-title theme-heading" id="addNewUserModalLabel">Add New Contact</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -178,112 +214,3 @@
       </c-col>
   </c-row>
 </c-col>
-
-<style>
-  /* --- 🎨 YOUR LOGO THEME ---
-  These colors are now set to match your logo:
-  --primary-color: Orange (from "couponly")
-  --accent-color: Green (from "Redeem Now" button)
-  */
-  .redeem-theme {
-    --primary-color: #F59E0B;         /* Main brand ORANGE */
-    --primary-color-dark: #D97706;   /* A darker shade of orange */
-    --primary-color-light: #FFFBEB;  /* A very light tint of orange */
-    
-    --accent-color: #d8b982;         /* The GREEN from your redeem button */
-    --accent-color-dark: #c7a23e;   /* A darker shade of the green for hover */
-
-    --text-color-primary: #2D3748;   /* Color for main headings (dark gray) */
-  }
-
-  /* --- Headings --- */
-  .theme-heading {
-    color: var(--text-color-primary);
-  }
-
-  /* --- Nav Links --- */
-  .nav-link-theme {
-    color: var(--text-color-primary);
-  }
-  .nav-link-theme.active,
-  .nav-link-theme:hover {
-    color: var(--primary-color);
-    border-bottom-color: var(--primary-color);
-  }
-
-  /* --- Buttons --- */
-  .btn-theme-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    color: #fff;
-  }
-  .btn-theme-primary:hover,
-  .btn-theme-primary:disabled {
-    background-color: var(--primary-color-dark);
-    border-color: var(--primary-color-dark);
-    color: #fff;
-  }
-  .btn-theme-outline-primary {
-    color: var(--primary-color);
-    border-color: var(--primary-color);
-  }
-  .btn-theme-outline-primary:hover {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    color: #fff;
-  }
-  .btn-theme-accent {
-    background-color: var(--accent-color);
-    border-color: var(--accent-color);
-    color: #fff;
-  }
-  .btn-theme-accent:hover {
-    background-color: var(--accent-color-dark);
-    border-color: var(--accent-color-dark);
-    color: #fff;
-  }
-  .btn-theme-accent-gradient {
-    /* This gradient now matches your redeem button (Green + Orange) */
-    background: linear-gradient(to right, var(--accent-color), var(--primary-color));
-    border: none;
-    color: #fff;
-  }
-  .btn-theme-accent-gradient:hover {
-    background: linear-gradient(to right, var(--accent-color-dark), var(--primary-color-dark));
-    color: #fff;
-  }
-
-  /* --- Coupon Card States --- */
-  .coupon-card-inactive {
-    border: 2px solid #dee2e6;
-    transition: all 0.2s ease-in-out;
-  }
-  .coupon-card-inactive:hover {
-    border-color: var(--primary-color);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
-  }
-  .coupon-card-active {
-    border: 2px solid var(--primary-color);
-    background-color: var(--primary-color-light);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
-  }
-
-  /* --- Customer List --- */
- .list-group-item.active {
-   background-color: #fef4cb; /* Your requested color */
-   border-color: var(--primary-color); /* Keeps the orange border */
-   color: var(--text-color-primary);  /* Ensures main text is dark */
- }
- /* Fix for active list item text color */
- .list-group-item.active small {
-   color: var(--text-color-primary) !important; /* Changed from #fff */
-   opacity: 0.75; /* Adjusted for dark text */
- }
-
-  /* --- Carousel Styles --- */
-  .coupon-scroller::-webkit-scrollbar { display: none; }
-  .coupon-scroller { -ms-overflow-style: none; scrollbar-width: none; scroll-behavior: smooth; }
-  .btn-circle.btn-sm { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0; }
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
