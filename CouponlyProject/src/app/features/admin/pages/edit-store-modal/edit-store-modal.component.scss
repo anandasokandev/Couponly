@@ -5,3 +5,6 @@ img{
 *{
     font-weight: 400;
 }
+::ng-deep .wide-modal .modal-dialog {
+  max-width: 800px;
+}
