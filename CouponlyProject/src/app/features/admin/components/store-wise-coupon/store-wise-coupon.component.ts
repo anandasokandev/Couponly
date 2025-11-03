@@ -34,7 +34,7 @@ export class StoreWiseCouponComponent implements OnInit {
   isLoading = false;
   isViewingCoupons = false;
   isPageChange = false;
-
+ selectedStoreType: number = 0;
   storeSearch: string = '';
   couponCodeSearch = '';
   selectedTypeId?: number;
@@ -58,39 +58,44 @@ export class StoreWiseCouponComponent implements OnInit {
       error: () => (this.types = [])
     });
   }
+loadStoresByName() {
+  if (!this.isPageChange) this.currentPage = 1;
 
+  this.isLoading = true;
+  this.storeService.searchStores(
+    this.currentPage,
+    this.itemsPerPage,
+    this.selectedStoreType,  
+    1,                       
+    this.storeSearch
+  ).subscribe({
+    next: (res: any) => {
+      const storeList = Array.isArray(res?.data?.items) ? res.data.items : [];
+      this.stores = storeList;
+      this.totalItems = res.data?.totalCount || storeList.length;
 
-  loadStoresByName() {
-    if (!this.isPageChange) this.currentPage = 1;
-
-    this.isLoading = true;
-    this.storeService.searchStores(this.currentPage, this.itemsPerPage, 0, 1, this.storeSearch).subscribe({
-      next: (res: any) => {
-        const storeList = Array.isArray(res?.data?.items) ? res.data.items : [];
-        this.stores = storeList;
-        this.totalItems = res.data?.totalCount || storeList.length;
-
-        this.stores.forEach((store) => {
-          this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe({
-            next: (couponRes: any) => {
-              store.totalCoupons = couponRes?.data?.length || 0;
-            },
-            error: () => {
-              store.totalCoupons = 0;
-            }
-          });
+      //  Get total coupon count for each store
+      this.stores.forEach((store) => {
+        this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe({
+          next: (couponRes: any) => {
+            store.totalCoupons = couponRes?.data?.length || 0;
+          },
+          error: () => {
+            store.totalCoupons = 0;
+          }
         });
+      });
 
-        this.isLoading = false;
-        this.isPageChange = false;
-      },
-      error: () => {
-        this.stores = [];
-        this.totalItems = 0;
-        this.isLoading = false;
-      }
-    });
-  }
+      this.isLoading = false;
+      this.isPageChange = false;
+    },
+    error: () => {
+      this.stores = [];
+      this.totalItems = 0;
+      this.isLoading = false;
+    }
+  });
+}
 
 
   onPageChange(page: number) {

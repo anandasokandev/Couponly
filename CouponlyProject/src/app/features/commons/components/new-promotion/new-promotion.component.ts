@@ -13,12 +13,17 @@ import {
   AccordionModule,
   ModalComponent,
   ModalToggleDirective,
+  CardComponent,
+  ColComponent,
+  CardHeaderComponent,
+  CardFooterComponent,
+  CardBodyComponent,
 } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
-import { FindStoreModelComponent } from '../../../pages/Promotion/find-store-model/find-store-model.component';
-import { PromotionCalculatorModelComponent } from '../../../pages/Promotion/promotion-calculator-model/promotion-calculator-model.component';
-import { CostSettingService } from '../../../../../commons/services/Promotion/cost-setting.service';
-import { CostSetting } from '../../../../../commons/models/CostSetting.model';
+import { FindStoreModelComponent } from '../../pages/find-store-model/find-store-model.component';
+import { PromotionCalculatorModelComponent } from '../../pages/promotion-calculator-model/promotion-calculator-model.component';
+import { CostSettingService } from '../../../../commons/services/Promotion/cost-setting.service';
+import { CostSetting } from '../../../../commons/models/CostSetting.model';
 import { cilArrowThickFromLeft, cilArrowThickFromRight, cilPenNib, cilPlus, cilSortAlphaUp, cilSortNumericDown } from '@coreui/icons';
 import { Router } from '@angular/router';
 
@@ -52,7 +57,7 @@ export interface PromotionCampaign {
   imports: [
     CommonModule,
     FormsModule,
-    CardModule,
+    ColComponent,
     GridModule,
     FormModule,
     ButtonModule,
@@ -65,7 +70,11 @@ export interface PromotionCampaign {
     FindStoreModelComponent,
     PromotionCalculatorModelComponent,
     ModalComponent,
-    ModalToggleDirective
+    ModalToggleDirective,
+    CardComponent,
+    CardHeaderComponent,
+    CardBodyComponent,
+    CardFooterComponent,
   ],
   templateUrl: './new-promotion.component.html',
   styleUrls: ['./new-promotion.component.scss']
@@ -95,6 +104,7 @@ export class NewPromotionComponent {
      scheduleDate: ''
    };
    serviceCosts: CostSetting[] = [];
+   isStore: boolean = false;
 
   isSaving: boolean = false;
   icons = { cilSortAlphaUp, cilSortNumericDown, cilPlus, cilPenNib, cilArrowThickFromRight };
@@ -106,10 +116,23 @@ export class NewPromotionComponent {
       this.serviceCosts = services.data;
       console.log('Service Costs:', services);
     });
+    if(sessionStorage.getItem('role') == 'Store') {
+      this.isStore = true;
+      sessionStorage.setItem('NavContainer', 'true');
+      this.campaign.storeId = Number(sessionStorage.getItem('userId'));
+      this.campaign.selectedStore = sessionStorage.getItem('StoreName') || '';
+      this.campaign.selectedCategory = sessionStorage.getItem('StoreCat') || '';
+    }
+    console.log('Is Store:', this.isStore);
+
   }
 
   viewPromotion(): void {
-    this.router.navigate(['/admin/promotion']);
+    if(this.isStore) {
+      this.router.navigate(['/store/promotion-history']);
+    } else {
+      this.router.navigate(['/admin/promotion']);
+    }
   }
 
   updateChannel(channel: keyof PromotionCampaign['channels']): void {

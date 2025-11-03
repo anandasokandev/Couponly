@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Inject, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonDirective, FormModule, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, SpinnerModule, TableModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
-import { District } from '../../../../../commons/models/district.model';
-import { Location } from '../../../../../commons/models/location.model';
-import { Category } from '../../../../../commons/models/category.model';
-import { PromotionService } from '../../../../../commons/services/Promotion/promotion.service';
-import { PaginationComponent } from '../../pagination/pagination.component';
-import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
-import { CostSettingService } from '../../../../../commons/services/Promotion/cost-setting.service';
+import { District } from '../../../../commons/models/district.model';
+import { Location } from '../../../../commons/models/location.model';
+import { Category } from '../../../../commons/models/category.model';
+import { PromotionService } from '../../../../commons/services/Promotion/promotion.service';
+import { PaginationComponent } from '../../../admin/pages/pagination/pagination.component';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
+import { CostSettingService } from '../../../../commons/services/Promotion/cost-setting.service';
+import { I } from 'node_modules/@angular/cdk/a11y-module.d--J1yhM7R';
 
 export interface Coupon {
   id: number;
@@ -46,6 +47,7 @@ export interface Coupon {
 
 
 export class FindStoreModelComponent {
+
   // --- Pagination & Search Controls ---
   currentPage: number = 1;
   itemsPerPage: number = 5;
@@ -75,6 +77,7 @@ export class FindStoreModelComponent {
   Math = Math;
 
   filterForm: FormGroup;
+  isStore: boolean = false;
 
   @Output() contactsAdded = new EventEmitter<{ store: any; count: number; contactsNeeded: number; publicContacts: number; coupon: any }>();
 
@@ -89,7 +92,6 @@ export class FindStoreModelComponent {
   }
 
   ngOnInit(): void {
-    
     this.searchResults = [];
     // Optionally, you can load initial data or all stores here
     // this.searchStores();
@@ -110,9 +112,25 @@ export class FindStoreModelComponent {
     //   this.filterForm.get('location')?.setValue('0');
     //   this.getLocations();
     // });
-    this.filterForm.get('storeName')?.valueChanges.subscribe(value => {
-      this.searchtext = value;
-    });
+
+    if(sessionStorage.getItem('role') === "Store")
+    {
+      this.isStore = true;
+      this.promotionService.getStores(this.currentPage, this.itemsPerPage, '0', '8', sessionStorage.getItem('userId') || '').subscribe({
+        next: (response: any) => {
+          this.selectedStore = response.data.items[0];
+          this.selectStore(this.selectedStore);
+          console.log(this.selectedStore);
+        }
+      });
+      // this.couponBox = true;
+    } else {
+
+      this.filterForm.get('storeName')?.valueChanges.subscribe(value => {
+        this.searchtext = value;
+        this.searchStores();
+      });
+    }
   }
 
   getLocations() {
@@ -131,10 +149,11 @@ export class FindStoreModelComponent {
     }
   }
 
-  /**
-   * Fetches stores from a service based on the current filter values.
-   */
   searchStores(): void {
+    if(!this.searchtext) {
+      this.searchResults = [];
+      return;
+    }
     this.couponBox = false;
     this.couponDetails = null;
     this.storeBox = true;
@@ -156,6 +175,10 @@ export class FindStoreModelComponent {
   }
 
   searchCoupon(): void {
+    // if(this.couponText == '') {
+    //   return;
+    // }
+
     this.isCouponLoading = true;
 
     this.promotionService.getCoupons(this.selectedStore.id, this.couponText).subscribe({
@@ -168,16 +191,6 @@ export class FindStoreModelComponent {
       }
     });
 
-    //temporary placeholder for coupon search
-    // setTimeout(() => {
-    //   this.couponDetails = [{
-    //     id: 1,
-    //     couponCode: 'SAVE20',
-    //     couponName: '20% Off Summer Sale',
-    //     couponImage: 'https://tse2.mm.bing.net/th/id/OIP.XAQ6mOO-gPKohh53kkKw3wHaEv?rs=1&pid=ImgDetMain&o=7&rm=3'
-    //   }];
-    //   this.isCouponLoading = false;
-    // }, 2000);
   }
 
   selectStore(store: any): void {
@@ -206,6 +219,13 @@ export class FindStoreModelComponent {
     });
   }
 
+  changeCoupon(): void {
+    this.selectedCoupon = null;
+    this.couponDetails = null;
+    this.couponBox = true;
+    this.searchCoupon();
+  }
+
   checkContactsNeeded(): void {
     this.contactsNeeded = Math.min(this.contactsNeeded, (this.PublicContactCount + this.StoreContactCount));
   }
@@ -226,14 +246,6 @@ export class FindStoreModelComponent {
 
     this.contactsAdded.emit(dataToEmit);
   }
-
-  /**
-   * Closes the modal without taking action.
-   */
-  // closeModal(): void {
-  //   this.activeModal.dismiss();
-  //   console.log('Modal closed');
-  // }
 
   onPageChange(page: number): void {
     this.currentPage = page;

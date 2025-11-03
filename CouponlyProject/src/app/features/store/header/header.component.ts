@@ -45,6 +45,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       next: (res) => {
         if (res?.isSuccess) {
           this.storeData = res.data;
+          sessionStorage.setItem('StoreName', res.data.name);
+          sessionStorage.setItem('StoreCat', res.data.categoryName);
+          console.log('Store Data:', res.data);
         }
         this.isLoading = false;
       },
@@ -56,6 +59,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private updateNavContainerVisibility(url: string): void {
     this.hideNavContainer = url.includes('/redeem-store');
+
+    // this.hideNavContainer = sessionStorage.getItem('NavContainer') === 'true';
   }
 
   shouldShowStoreCard(): boolean {

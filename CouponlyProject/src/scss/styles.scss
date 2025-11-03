@@ -48,8 +48,8 @@
 .loader-container {
     position: relative;
     /* Size of the overall loader area */
-    width: 200px;
-    height: 200px;
+    width: 170px;
+    height: 170px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,8 +65,10 @@
     height: 100%;
     
     /* Create the round border with faint inactive outline */
-    border: 8px solid rgba(255, 255, 255, 0.1); /* Faint inactive border */
+    border: 6px dotted rgba(255, 255, 255, 0.1); /* Faint inactive border */
     border-radius: 50%; 
+
+    border-style:dashed;
     
     /* Define the active sides for the THREE-QUARTER effect */
     border-top-color: #ff5722; /* Vibrant orange/red */
@@ -74,7 +76,7 @@
     border-bottom-color: #ff5722; /* ACTIVE BOTTOM BORDER */
     
     /* Apply the rotation animation */
-    animation: rotate 1.5s linear infinite;
+    animation: rotate 5s linear infinite;
 }
 
 /* --- The Logo Container (Holds the Logo: Image + Text) --- */
@@ -112,10 +114,12 @@
 
 /* 2. Text Content */
 .coupon-text {
-    font-size: 40px;
+    font-size: 34px;
     font-weight: 800;
     line-height: 0.9;
     text-transform: lowercase;
+    font-family: 'Varela Round';
+    padding-top: 10px;
 }
 
 .coupon-text .coupon-part {
@@ -128,10 +132,11 @@
 
 .coupon-text .store-part {
     display: block;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 20px;
+    // font-weight: 700;
     color: #4aa9e3; /* Light Blue */
     line-height: 1;
-    margin-top: 5px; /* Pull up for alignment */
+    margin-top: 1px; /* Pull up for alignment */
     text-align: right;
+    margin-right: 20px;
 }

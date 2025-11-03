@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalModule, ModalToggleDirective, SpinnerModule } from '@coreui/angular';
-import { CostSettingService } from '../../../../../commons/services/Promotion/cost-setting.service';
-import { CostSetting } from '../../../../../commons/models/CostSetting.model';
-import { PromotionService } from '../../../../../commons/services/Promotion/promotion.service';
+import { CostSettingService } from '../../../../commons/services/Promotion/cost-setting.service';
+import { CostSetting } from '../../../../commons/models/CostSetting.model';
+import { PromotionService } from '../../../../commons/services/Promotion/promotion.service';
 import { IconModule } from '@coreui/icons-angular';
 import { Title } from '@angular/platform-browser';
-import { ToastService } from '../../../../../commons/services/Toaster/toast.service';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 import { Route, Router } from '@angular/router';
 
 @Component({

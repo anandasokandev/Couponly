@@ -11,15 +11,17 @@ export class CostSettingService {
   constructor(private http: HttpClient) { }
 
     getAllServices(): Observable<any> {
-      let header = new HttpHeaders().set('loginid', sessionStorage.getItem('userId') || '0').set('role', sessionStorage.getItem('role') || '');
-      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.service.AllServices}`, { headers: header });
+      const token = sessionStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.service.AllServices}`, { headers });
     }
 
     updateService(service: CostSetting): Observable<any> {
 
-      let header = new HttpHeaders().set('loginid', sessionStorage.getItem('userId') || '0').set('role', sessionStorage.getItem('role') || '');
+      const token = sessionStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.service.UpdateService}`, service, { headers: header });
+      return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.service.UpdateService}`, service, { headers });
     }
 
 }
