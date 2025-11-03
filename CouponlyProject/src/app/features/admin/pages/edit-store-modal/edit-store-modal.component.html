@@ -1,118 +1,97 @@
-<c-modal #editStoreModal [scrollable]="true" alignment="center" id="editStoreModal">
+<c-modal #editStoreModal [scrollable]="true" alignment="center" id="editStoreModal" class="wide-modal">
     <c-modal-header>
         <h5 cModalTitle>Edit Store</h5>
         <button #closeButton cModalToggle cButtonClose></button>
     </c-modal-header>
     <c-modal-body>
         <form cForm [formGroup]="editStoreForm">
-            <div class="mb-3">
-                <label cLabel for="editStoreName">Store Name</label>
-                <input aria-label="sm input example" cFormControl sizing="sm" type="text" id="editStoreName"
-                    formControlName="storeName">
-                <div *ngIf="editStoreForm.get('storeName')?.touched && editStoreForm.get('storeName')?.invalid">
-                    <span class="text-danger" *ngIf="editStoreForm.get('storeName')?.errors?.['required']">
-                        *store name is required.
-                    </span>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label cLabel for="editLogoInput">Logo</label>
-                <div><img src="{{logo}}" alt="CoreUI for Angular"></div>
-                <input cFormControl id="editLogoInput" sizing="sm" type="file" formControlName="storeLogo" (change)="onFileSelected($event)" />
-                <div *ngIf="editStoreForm.get('storeLogo')?.touched && editStoreForm.get('storeLogo')?.invalid">
-                    <span class="text-danger" *ngIf="editStoreForm.get('storeLogo')?.errors?.['required']">
-                        *store logo is required.
-                    </span>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label cLabel for="editCategorySelect">Category</label>
-                <select class="form-select form-select-sm" name="location" id="editCategorySelect"
-                    formControlName="storeCategory">
-                    <option value="">Select Category</option>
-                     <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
-                </select>
-                <div *ngIf="editStoreForm.get('storeCategory')?.touched && editStoreForm.get('storeCategory')?.invalid">
-                    <span class="text-danger" *ngIf="editStoreForm.get('storeCategory')?.errors?.['required']">
-                        *choose the category.
-                    </span>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label cLabel for="districtSelect">District</label>
-                <select class="form-select form-select-sm" name="district" id="districtSelect"
-                    formControlName="district" (change)="selectLocationByDistrict()">
-                    <option value="">Select District</option>
-                     <option *ngFor="let district of districts" value="{{district.id}}">{{district.districtName}}</option>
-                </select>
-                <div *ngIf="editStoreForm.get('district')?.touched && editStoreForm.get('district')?.invalid">
-                    <span class="text-danger" *ngIf="editStoreForm.get('district')?.errors?.['required']">
-                        *choose the district.
-                    </span>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label cLabel for="editLocationSelect">Location</label>
-                <select class="form-select form-select-sm" name="location" id="editLocationSelect" formControlName="storeLocation">
-                    <option value="">Select Location</option>
-                    <option *ngFor="let location of locations" value="{{location.id}}">{{location.locationName}}</option>
-                </select>
-                <div *ngIf="editStoreForm.get('storeLocation')?.touched && editStoreForm.get('storeLocation')?.invalid">
-                    <span class="text-danger" *ngIf="editStoreForm.get('storeLocation')?.errors?.['required']">
-                        *choose the location.
-                    </span>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label cLabel for="editAddressTextarea">Address</label>
-                <textarea cFormControl id="editAddressTextarea" rows="3" formControlName="storeAddress"></textarea>
-                <div *ngIf="editStoreForm.get('storeAddress')?.touched && editStoreForm.get('storeAddress')?.invalid">
-                    <span class="text-danger" *ngIf="editStoreForm.get('storeAddress')?.errors?.['required']">
-                        *store address is required.
-                    </span>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label cLabel for="editContactInput">Contact</label>
-                <input aria-label="sm input example" cFormControl sizing="sm" type="tel" id="editContactInput"
-                    formControlName="storeContact" (keypress)="allowOnlyNumbers($event)">
-                <div *ngIf="editStoreForm.get('storeContact')?.touched && editStoreForm.get('storeContact')?.invalid">
-                    <span class="text-danger" *ngIf="editStoreForm.get('storeContact')?.errors?.['required']">
-                        *contact is required.
-                    </span>
-                    <span class="text-danger" *ngIf="editStoreForm.get('storeContact')?.errors?.['pattern']">
-                        *contact should contain 10 digits.
-                    </span>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label cLabel for="editEmailInput">Email address</label>
-                <input cFormControl sizing="sm" id="exampleFormControlInput1" type="email" id="editEmailInput"
-                    formControlName="storeEmail" />
-                <div *ngIf="editStoreForm.get('storeEmail')?.touched && editStoreForm.get('storeEmail')?.invalid">
-                    <span class="text-danger" *ngIf="editStoreForm.get('storeEmail')?.errors?.['required']">
-                        *email is required.
-                    </span>
-                    <span class="text-danger" *ngIf="editStoreForm.get('storeEmail')?.errors?.['strictEmail'] && editStoreForm.get('storeEmail')?.touched">
-                        *Please enter a valid email address with a domain
-                    </span>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label cLabel for="editTypeSelect">Type</label>
-                <select class="form-select form-select-sm" name="location" id="editTypeSelect"
-                    formControlName="storeType">
-                    <option value="">Select Type</option>
-                    <option value=2>Offline</option>
-                    <option value=1>Online</option>
-                </select>
-                <div *ngIf="editStoreForm.get('storeType')?.touched && editStoreForm.get('storeType')?.invalid">
-                    <span class="text-danger" *ngIf="editStoreForm.get('storeType')?.errors?.['required']">
-                        *choose store type.
-                    </span>
-                </div>
-            </div>
-        </form>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label cLabel for="editStoreName">Store Name</label>
+      <input aria-label="sm input example" cFormControl sizing="sm" type="text" id="editStoreName" formControlName="storeName" class="form-control">
+      <div *ngIf="editStoreForm.get('storeName')?.touched && editStoreForm.get('storeName')?.invalid">
+        <span class="text-danger" *ngIf="editStoreForm.get('storeName')?.errors?.['required']">*store name is required.</span>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label cLabel for="editLogoInput">Logo</label>
+      <div class="mb-2"><img [src]="logo" alt="Store Logo" class="img-thumbnail" style="max-height: 80px;"></div>
+      <input cFormControl id="editLogoInput" sizing="sm" type="file" formControlName="storeLogo" (change)="onFileSelected($event)" class="form-control" />
+      <div *ngIf="editStoreForm.get('storeLogo')?.touched && editStoreForm.get('storeLogo')?.invalid">
+        <span class="text-danger" *ngIf="editStoreForm.get('storeLogo')?.errors?.['required']">*store logo is required.</span>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label cLabel for="editCategorySelect">Category</label>
+      <select class="form-select form-select-sm" id="editCategorySelect" formControlName="storeCategory">
+        <option value="">Select Category</option>
+        <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+      </select>
+      <div *ngIf="editStoreForm.get('storeCategory')?.touched && editStoreForm.get('storeCategory')?.invalid">
+        <span class="text-danger" *ngIf="editStoreForm.get('storeCategory')?.errors?.['required']">*choose the category.</span>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label cLabel for="districtSelect">District</label>
+      <select class="form-select form-select-sm" id="districtSelect" formControlName="district" (change)="selectLocationByDistrict()">
+        <option value="">Select District</option>
+        <option *ngFor="let district of districts" [value]="district.id">{{district.districtName}}</option>
+      </select>
+      <div *ngIf="editStoreForm.get('district')?.touched && editStoreForm.get('district')?.invalid">
+        <span class="text-danger" *ngIf="editStoreForm.get('district')?.errors?.['required']">*choose the district.</span>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label cLabel for="editLocationSelect">Location</label>
+      <select class="form-select form-select-sm" id="editLocationSelect" formControlName="storeLocation">
+        <option value="">Select Location</option>
+        <option *ngFor="let location of locations" [value]="location.id">{{location.locationName}}</option>
+      </select>
+      <div *ngIf="editStoreForm.get('storeLocation')?.touched && editStoreForm.get('storeLocation')?.invalid">
+        <span class="text-danger" *ngIf="editStoreForm.get('storeLocation')?.errors?.['required']">*choose the location.</span>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label cLabel for="editAddressTextarea">Address</label>
+      <textarea cFormControl id="editAddressTextarea" rows="3" formControlName="storeAddress" class="form-control"></textarea>
+      <div *ngIf="editStoreForm.get('storeAddress')?.touched && editStoreForm.get('storeAddress')?.invalid">
+        <span class="text-danger" *ngIf="editStoreForm.get('storeAddress')?.errors?.['required']">*store address is required.</span>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label cLabel for="editContactInput">Contact</label>
+      <input aria-label="sm input example" cFormControl sizing="sm" type="tel" id="editContactInput" formControlName="storeContact" (keypress)="allowOnlyNumbers($event)" class="form-control">
+      <div *ngIf="editStoreForm.get('storeContact')?.touched && editStoreForm.get('storeContact')?.invalid">
+        <span class="text-danger" *ngIf="editStoreForm.get('storeContact')?.errors?.['required']">*contact is required.</span>
+        <span class="text-danger" *ngIf="editStoreForm.get('storeContact')?.errors?.['pattern']">*contact should contain 10 digits.</span>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label cLabel for="editEmailInput">Email address</label>
+      <input cFormControl sizing="sm" type="email" id="editEmailInput" formControlName="storeEmail" class="form-control" />
+      <div *ngIf="editStoreForm.get('storeEmail')?.touched && editStoreForm.get('storeEmail')?.invalid">
+        <span class="text-danger" *ngIf="editStoreForm.get('storeEmail')?.errors?.['required']">*email is required.</span>
+        <span class="text-danger" *ngIf="editStoreForm.get('storeEmail')?.errors?.['strictEmail']">*Please enter a valid email address with a domain</span>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label cLabel for="editTypeSelect">Type</label>
+      <select class="form-select form-select-sm" id="editTypeSelect" formControlName="storeType">
+        <option value="">Select Type</option>
+        <option value="2">Offline</option>
+        <option value="1">Online</option>
+      </select>
+      <div *ngIf="editStoreForm.get('storeType')?.touched && editStoreForm.get('storeType')?.invalid">
+        <span class="text-danger" *ngIf="editStoreForm.get('storeType')?.errors?.['required']">*choose store type.</span>
+      </div>
+    </div>
+  </div>
+</form>
+
     </c-modal-body>
     <c-modal-footer>
         <button [cModalToggle]="editStoreModal.id" cButton color="secondary">
