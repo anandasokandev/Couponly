@@ -1,20 +1,99 @@
+.redeem-theme {
+    --primary-color: #F59E0B;         /* Main brand ORANGE */
+    --primary-color-dark: #D97706;   /* A darker shade of orange */
+    --primary-color-light: #FFFBEB;  /* A very light tint of orange */
+    
+    --accent-color: #d8b982;         /* The GREEN from your redeem button */
+    --accent-color-dark: #c7a23e;   /* A darker shade of the green for hover */
 
-  .animate-logo {
-    animation: fadeBounce 0.6s ease-in-out;
+    --text-color-primary: #2D3748;   /* Color for main headings (dark gray) */
   }
 
-  @keyframes fadeBounce {
-    0% {
-      opacity: 0;
-      transform: scale(0.8) translateY(-10px);
-    }
-    60% {
-      opacity: 1;
-      transform: scale(1.05) translateY(0);
-    }
-    100% {
-      transform: scale(1) translateY(0);
-    }
+  /* --- Headings --- */
+  .theme-heading {
+    color: var(--text-color-primary);
   }
 
+  /* --- Nav Links --- */
+  .nav-link-theme {
+    color: var(--text-color-primary);
+  }
+  .nav-link-theme.active,
+  .nav-link-theme:hover {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+  }
 
+  /* --- Buttons --- */
+  .btn-theme-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+  }
+  .btn-theme-primary:hover,
+  .btn-theme-primary:disabled {
+    background-color: var(--primary-color-dark);
+    border-color: var(--primary-color-dark);
+    color: #fff;
+  }
+  .btn-theme-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  .btn-theme-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+  }
+  .btn-theme-accent {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #fff;
+  }
+  .btn-theme-accent:hover {
+    background-color: var(--accent-color-dark);
+    border-color: var(--accent-color-dark);
+    color: #fff;
+  }
+  .btn-theme-accent-gradient {
+    /* This gradient now matches your redeem button (Green + Orange) */
+    background: linear-gradient(to right, var(--accent-color), var(--primary-color));
+    border: none;
+    color: #fff;
+  }
+  .btn-theme-accent-gradient:hover {
+    background: linear-gradient(to right, var(--accent-color-dark), var(--primary-color-dark));
+    color: #fff;
+  }
+
+  /* --- Coupon Card States --- */
+  .coupon-card-inactive {
+    border: 2px solid #dee2e6;
+    transition: all 0.2s ease-in-out;
+  }
+  .coupon-card-inactive:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08) !important;
+  }
+  .coupon-card-active {
+    border: 2px solid var(--primary-color);
+    background-color: var(--primary-color-light);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+  }
+
+  /* --- Customer List --- */
+ .list-group-item.active {
+   background-color: #fef4cb; /* Your requested color */
+   border-color: var(--primary-color); /* Keeps the orange border */
+   color: var(--text-color-primary);  /* Ensures main text is dark */
+ }
+ /* Fix for active list item text color */
+ .list-group-item.active small {
+   color: var(--text-color-primary) !important; /* Changed from #fff */
+   opacity: 0.75; /* Adjusted for dark text */
+ }
+
+  /* --- Carousel Styles --- */
+  .coupon-scroller::-webkit-scrollbar { display: none; }
+  .coupon-scroller { -ms-overflow-style: none; scrollbar-width: none; scroll-behavior: smooth; }
+  .btn-circle.btn-sm { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0; }

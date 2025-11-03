@@ -1,14 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { IconModule } from '@coreui/icons-angular';
-import { CardModule, GridModule } from '@coreui/angular'; // Import CoreUI Card module
+import { CardBodyComponent, CardComponent, CardHeaderComponent, CardModule, ColComponent, GridModule, RowComponent } from '@coreui/angular'; // Import CoreUI Card module
 import { StoreService } from '../../../commons/services/Store/store.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-redeem-store',
   standalone: true,
-  imports: [CommonModule, IconModule, CardModule,GridModule,FormsModule], 
+  imports: [
+    CardComponent,
+    CardBodyComponent,
+    CardHeaderComponent,
+    ColComponent,
+    RowComponent
+  ], 
   templateUrl: './redeem-store.component.html',
   styleUrls: ['./redeem-store.component.scss']
 })
