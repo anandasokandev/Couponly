@@ -6,7 +6,7 @@
 <c-col xs="12">
   <c-card class="mb-4">
 
-    <!-- 🔘 Header -->
+    <!-- Header -->
     <c-card-header>
       <div class="d-flex justify-content-between align-items-center">
         <strong class="fs-5">Coupon List</strong>
@@ -18,7 +18,7 @@
 
     <c-card-body>
 
-      <!-- ✅ Tabs Just Below Header -->
+      <!-- Tabs Just Below Header -->
       <div class="border-bottom mb-3">
         <ul class="nav nav-tabs">
           <li class="nav-item">
@@ -38,7 +38,7 @@
         </ul>
       </div>
 
-      <!-- ✅ Coupons Tab -->
+      <!--  Coupons Tab -->
       <ng-container *ngIf="activeTab === 'coupons'">
         <!-- 🔍 Filters -->
         <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
@@ -70,11 +70,11 @@
           </button>
         </div>
 
-        <!-- 🔄 Loader / Empty -->
+        <!--  Loader / Empty -->
         <div *ngIf="isLoading" class="text-center">Loading...</div>
         <div *ngIf="!isLoading && coupons.length === 0" class="text-center">No coupons found.</div>
 
-        <!-- 📜 Coupon List -->
+        <!--  Coupon List -->
         <div *ngIf="!isLoading" class="d-flex flex-wrap gap-3 justify-content-start">
           <div *ngFor="let coupon of coupons; let i = index" class="coupon-card">
             <img *ngIf="coupon.couponImage" [src]="coupon.couponImage" alt="Coupon Image" class="coupon-image" />
@@ -98,7 +98,7 @@
           </div>
         </div>
 
-        <!-- 🔢 Pagination -->
+        <!--  Pagination -->
         <app-pagination *ngIf="!isLoading" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
           [currentPage]="currentPage" (pageChange)="onPageChange($event)"
           (itemsPerPageChange)="onItemsPerPageChange($event)">
@@ -108,7 +108,7 @@
 
 
 
-      <!-- ✅ Store-Wise Tab -->
+      <!--  Store-Wise Tab -->
       <ng-container *ngIf="activeTab === 'storeWise'">
         <app-store-wise-coupon></app-store-wise-coupon>
       </ng-container>
