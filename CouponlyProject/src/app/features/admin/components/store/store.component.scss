@@ -10,7 +10,7 @@ img{
 }
 
 .responsive-table thead tr th,
-.responsive-table tbody tr td {
+.responsive-table tbody tr td:not(.fixed-address) {
   white-space: nowrap;
 }
 
@@ -29,4 +29,10 @@ img{
   .responsive-table tr {
     display: revert;
   }
+.responsive-table td.fixed-address {
+  white-space: normal !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 70px; /* Adjust as needed */
+}
 }
