@@ -1,7 +1,8 @@
 .coupon-card {
-  width: 280px;
+  width: calc(25% - 20px); 
+  min-width: 240px; /* Prevent too small on small screens */
   height: auto;
-  border: 1px solid #ccc; 
+  border: 1px solid #ccc;
   border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -11,12 +12,12 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
   padding: 0;
+}
 
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-    border-color: #bbb;
-  }
+.coupon-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  border-color: #bbb;
 }
 
 .coupon-image {
