@@ -14,24 +14,21 @@ import { FormsModule } from '@angular/forms';
 })
 export class RedeemStoreComponent implements OnInit {
 
- coupons: any[] = [];
-selectedCoupon: string = '';
-storeId: number = Number(localStorage.getItem('storeId')) || 0; // fallback to 0 if null
+  coupons: any[] = [];
+  selectedCoupon: string = '';
+  storeId:any= sessionStorage.getItem('userId') ; 
 
-constructor(private storeService: StoreService) {}
+  constructor(private storeService: StoreService) {} 
 
-ngOnInit(): void {
-  if (this.storeId > 0) {
+  ngOnInit(): void {
+    console.log('StoreId',this.storeId)
     this.storeService.FetchStoreRedeem(this.storeId).subscribe({
       next: (res) => {
-        this.coupons = res;
+        this.coupons = res.data;
       },
       error: (err) => {
         console.error('Error fetching coupons:', err);
       }
     });
-  } else {
-    console.warn('Invalid storeId from localStorage');
   }
-}
 }
