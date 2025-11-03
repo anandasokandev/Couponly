@@ -86,7 +86,7 @@ export const storeNavItems: INavData[] = [
 
   {
     name: 'Redeem Store',
-    url: '/store/redeem-store',
+    url: '/redeem-store',
     iconComponent: { name: 'cil-layers' }
   },
   

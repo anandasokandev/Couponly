@@ -16,11 +16,12 @@ export class RedeemStoreComponent implements OnInit {
 
   coupons: any[] = [];
   selectedCoupon: string = '';
-  storeId:any= sessionStorage.getItem('userId') ; 
+  storeId: any = null ; 
 
   constructor(private storeService: StoreService) {} 
 
   ngOnInit(): void {
+    this.storeId = sessionStorage.getItem('storeId');
     console.log('StoreId',this.storeId)
     this.storeService.FetchStoreRedeem(this.storeId).subscribe({
       next: (res) => {
