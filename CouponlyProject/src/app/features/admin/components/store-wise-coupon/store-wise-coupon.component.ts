@@ -121,52 +121,68 @@ loadStoresByName() {
 
 
 
-  viewCoupons(store: any) {
-    this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe(res => {
-      const coupons = res.data || [];
-      this.selectedStore = {
-        id: store.id,
-        name: store.store,
-        coupons: coupons,
-        couponCount: coupons.length
-      };
-      this.filteredCoupons = [...coupons];
-      this.isViewingCoupons = true;
-      this.couponCodeSearch = '';
-      this.selectedTypeId = undefined;
-    });
+viewCoupons(store: any) {
+  this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe(res => {
+    let coupons = res.data || [];
+
+    //  Sort latest coupons first based on startingDate
+    coupons = coupons.sort(
+      (a: any, b: any) => new Date(b.startingDate).getTime() - new Date(a.startingDate).getTime()
+    );
+
+    this.selectedStore = {
+      id: store.id,
+      name: store.store,
+      coupons: coupons,
+      couponCount: coupons.length
+    };
+
+    this.filteredCoupons = [...coupons];
+    this.isViewingCoupons = true;
+    this.couponCodeSearch = '';
+    this.selectedTypeId = undefined;
+  });
+}
+
+
+
+ filterStoreCoupons() {
+  if (!this.selectedStore) return;
+
+  let dateFilter: string | undefined;
+
+  switch (this.selectedDateFilter) {
+    case '2':
+      dateFilter = 'valid';
+      break;
+    case '3':
+      dateFilter = 'upcoming';
+      break;
+    case '4':
+      dateFilter = 'expired';
+      break;
+    default:
+      dateFilter = undefined;
+      break;
   }
 
+  this.couponService.getCouponsByFilter({
+    storeId: this.selectedStore.id,
+    couponCode: this.couponCodeSearch,
+    typeId: this.selectedTypeId,
+    dateFilter: dateFilter
+  }).subscribe(res => {
+    let coupons = res.data || [];
 
-  filterStoreCoupons() {
-    if (!this.selectedStore) return;
+    // Sort latest coupons first
+    coupons = coupons.sort(
+      (a: any, b: any) => new Date(b.startingDate).getTime() - new Date(a.startingDate).getTime()
+    );
 
-    let dateFilter: string | undefined;
+    this.filteredCoupons = coupons;
+  });
+}
 
-    switch (this.selectedDateFilter) {
-      case '2':
-        dateFilter = 'valid';
-        break;
-      case '3':
-        dateFilter = 'upcoming';
-        break;
-      case '4':
-        dateFilter = 'expired';
-        break;
-      default:
-        dateFilter = undefined;
-        break;
-    }
-
-    this.couponService.getCouponsByFilter({
-      storeId: this.selectedStore.id,
-      couponCode: this.couponCodeSearch,
-      typeId: this.selectedTypeId,
-      dateFilter: dateFilter
-    }).subscribe(res => {
-      this.filteredCoupons = res.data || [];
-    });
-  }
 
   getTypeNameById(id: number): string | undefined {
     const type = this.types.find(t => t.id === id);
