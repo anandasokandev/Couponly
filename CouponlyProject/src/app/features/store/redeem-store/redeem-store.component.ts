@@ -32,4 +32,15 @@ export class RedeemStoreComponent implements OnInit {
       }
     });
   }
+
+
+
+selectedCouponImage: string | null = null;
+
+
+updateSelectedCouponImage(): void {
+  const selected = this.coupons.find(c => c.couponId === this.selectedCoupon);
+  this.selectedCouponImage = selected?.imageUrl || null;
+}
+
 }

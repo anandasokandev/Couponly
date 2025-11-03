@@ -41,7 +41,7 @@
               "src/scss/styles.scss",
               "node_modules/@coreui/coreui/scss/coreui.scss"
             ],
-            "scripts": [],
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"],
             "allowedCommonJsDependencies": [],
             "stylePreprocessorOptions": {
               "sass": {
@@ -110,7 +110,7 @@
               "src/scss/styles.scss",
               "node_modules/@coreui/coreui/scss/coreui.scss"
             ],
-            "scripts": []
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"]
           }
         }
       }

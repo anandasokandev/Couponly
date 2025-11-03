@@ -81,6 +81,13 @@ export const routes: Routes = [
       }
   },
   {
+      path: 'redeemdemo',
+      loadComponent: () => import('./features/commons/redeem-store-demo/redeem-store-demo.component').then(m => m.RedeemStoreDemoComponent),
+      data: {
+          title: 'Redeem Demo'
+      }
+  },
+  {
     path: '401',
     loadComponent: () => import('./views/pages/page401/page401.component').then(m => m.Page401Component),
     data: {
