@@ -62,7 +62,8 @@ export const routes: Routes = [
       {
         path: 'store',
         loadChildren: () => import('./features/store/store.routes').then((m) => m.storeRoutes)
-      }
+      },
+      
     ]
   },
   {
@@ -71,6 +72,13 @@ export const routes: Routes = [
     data: {
       title: 'Payment'
     }
+  },
+  {
+      path: 'redeem-store',
+      loadComponent: () => import('./features/store/redeem-store/redeem-store.component').then(m => m.RedeemStoreComponent),
+      data: {
+          title: 'Redeem Store'
+      }
   },
   {
     path: '401',
