@@ -10,7 +10,7 @@
     </c-card-header>
   <c-card-body>
 
-  <!-- 🔁 Store List View -->
+  <!--  Store List View -->
   <div *ngIf="!isViewingCoupons">
     <!-- 🔍 Store Filters -->
     <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
@@ -27,7 +27,7 @@
       </button>
     </div>
 
-    <!-- 🏬 Store Cards Grid -->
+    <!-- Store Cards Grid -->
     <div class="store-grid">
       <div *ngFor="let store of stores; let i = index" class="store-card">
         <div class="store-header">
@@ -62,7 +62,7 @@
     </app-pagination>
   </div>
 
-  <!-- 🎟️ Coupon List View -->
+  <!--  Coupon List View -->
   <div *ngIf="isViewingCoupons">
     <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
       <input type="text" class="form-control form-control-sm" style="max-width: 210px"
