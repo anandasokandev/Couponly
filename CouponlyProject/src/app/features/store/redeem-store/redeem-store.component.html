@@ -13,7 +13,7 @@
     <c-col xs="12" class="p-0">
       
       <c-card class="shadow-sm border-0 redeem-theme" 
-              style="background-color: #f8f9fa; height: 100vh; display: flex; flex-direction: column; overflow: hidden;">
+              style="background-color: #f8f9fa; display: flex; flex-direction: column; overflow: hidden; scroll-behavior: smooth;">
         
         <c-card-header class="d-flex align-items-center shadow-sm" 
                        style="background: #ffffff; border-bottom: 1px solid #dee2e6; flex-shrink: 0;">
@@ -62,15 +62,20 @@
                      style="overflow-x: auto; flex-wrap: nowrap; padding: 0.5rem;">
                   
                   <!-- Coupon 1 -->
-                  <div style="flex: 0 0 240px;">
-                    <div class="card h-100 coupon-card-inactive shadow-sm">
-                      <div class="card-body p-2">
-                        <h6 class="card-title fw-bold mb-1">20% Off Bill</h6>
-                        <small class="card-text text-muted mb-0 d-block">Expires: 30 Nov</small>
-                        <button type="button" class="btn btn-sm btn-theme-outline-primary w-100 mt-2 py-1">Select</button>
-                      </div>
-                    </div>
-                  </div>
+<!-- Coupon: Summer Sale with Top Image -->
+<div style="flex: 0 0 240px;">
+  <div class="card h-100 coupon-card-inactive d-flex flex-row" style="text-decoration: none; cursor: pointer;">
+    <!-- Top image section -->
+    <img src="https://images.couponly.store/images/474a30917c894b58b94f2587288b8d4c.png" class="card-img-top" alt="Coupon Image" style="max-width: 50%;">
+
+    <!-- Coupon details -->
+    <div class="card-body">
+      <h6 class="card-title fw-bold mb-1">Summer Sale</h6>
+      <small class="card-text text-muted d-block mb-1"><span class="text-dark fw-semibold">SUMMER2025</span></small>
+    </div>
+  </div>
+</div>
+
                   
                   <!-- Coupon 2 (Selected) -->
                   <div style="flex: 0 0 240px;">
