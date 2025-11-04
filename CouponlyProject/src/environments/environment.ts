@@ -47,6 +47,8 @@ export const environment = {
       upload:'ImageUpload',
       addStore:'Store/AddStore',
       fetchStoreRedeem: 'CouponRedeem/GetCouponByStore/', // Add this storeredeem
+      addContact: 'Contact/AddContact', // ✅ Add this new contact
+      
       updateStore:'Store/',
       storeExists:'Store/check-store-existence',
       emailExists:'Store/check-email-existence',

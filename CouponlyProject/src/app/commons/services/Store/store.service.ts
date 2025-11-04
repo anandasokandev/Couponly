@@ -108,4 +108,11 @@ FetchStoreRedeem(id: number): Observable<any> {
 }
 
 
+//add new contact
+
+AddNewContact(contactData: any): Observable<any> {
+  return this.http.post( `${environment.apiBaseUrl}/${environment.endpoints.store.addContact}`,contactData);
+}
+
+
 }
