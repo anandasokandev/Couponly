@@ -28,7 +28,7 @@
 
         <c-card-body style="flex: 1; padding: 0; overflow: hidden;">
           
-          <form class="p-4" 
+          <div class="p-4" 
                 style="display: flex; flex-direction: column; height: 100%;">
 
             <div class="mb-3" style="flex-shrink: 0;">
@@ -126,7 +126,8 @@
                    style="flex-grow: 1;">
                 <div class="row g-2 align-items-center mb-3" style="flex-shrink: 0;">
                   <div class="col-sm-8">
-                    <input type="text" class="form-control form-control-sm" id="customerSearch" [(ngModel)]="contactSearch" placeholder="Search by Name or Phone..." />
+                    <input type="text" class="form-control form-control-sm" id="customerSearch" 
+                    [(ngModel)]="contactSearch" placeholder="Search by Name or Phone..." (input)="searchContact()"/>
                   </div>
                   <div class="col-sm-4">
                     <button type="button" class="btn btn-theme-outline-primary btn-sm w-100" 
@@ -165,7 +166,7 @@
                 <strong>🎉 Redeem Now</strong>
               </button>
             </div>
-          </form>
+          </div>
         </c-card-body>
       </c-card>
       

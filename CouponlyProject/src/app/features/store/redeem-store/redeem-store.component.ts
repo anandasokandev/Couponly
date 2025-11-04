@@ -29,7 +29,7 @@ export class RedeemStoreComponent implements OnInit {
   selectedCoupon: string = '';
   selectedCouponImage: string | null = null;
   storeId: any = null;
-
+  contacts:any[]=[];
   contactForm: FormGroup;
   public toast = inject(ToastService);
 
@@ -69,8 +69,25 @@ export class RedeemStoreComponent implements OnInit {
   }
 
 searchContact(){
-
+  if(!this.contactSearch){
+    this.contacts=[];
+  }
+else{
+  this.conatctService.searchContacts(1, 5,'', '', this.contactSearch).subscribe({
+    next: (response: any) => {
+      this.contacts = response.data.items;
+      if (this.contacts.length > 0) {
+        console.log(this.contacts)
+      }
+    },
+    error: (err) => {
+      console.error('Search error:', err);
+    }
+  });
 }
+  
+}
+
 
   createContact(): void {
     if (this.contactForm.invalid) {
