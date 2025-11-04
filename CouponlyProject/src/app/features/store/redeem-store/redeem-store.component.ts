@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild, Output, EventEmitter, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule , FormsModule} from '@angular/forms';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, RowComponent } from '@coreui/angular';
 import { StoreService } from '../../../commons/services/Store/store.service';
-import { ToastService, ReactiveFormsModule } from '../../../commons/services/Toaster/toast.service';
+import { ToastService,} from '../../../commons/services/Toaster/toast.service';
 import { ToastComponent } from '../../admin/pages/toast/toast.component';
 import { ContactService } from '../../../commons/services/Contacts/contact.service';
 
@@ -37,7 +37,7 @@ export class RedeemStoreComponent implements OnInit {
   @Output() contactAdded = new EventEmitter<void>();
  
 
-  constructor(private storeService: StoreService, private fb: FormBuilder) {
+  constructor(private storeService: StoreService, private fb: FormBuilder,private conatctService: ContactService) {
     this.contactForm = this.fb.group({
       Name: ['', [Validators.required]],
       Email: ['', [Validators.required, Validators.email]],
@@ -45,10 +45,7 @@ export class RedeemStoreComponent implements OnInit {
       Message: ['']
     });
   }
-  storeId: any = null ; 
-  contactSearch:any;
-
-  constructor(private storeService: StoreService, private conatctService: ContactService) {} 
+  contactSearch:any; 
 
   ngOnInit(): void {
     this.storeId = sessionStorage.getItem('storeId');
