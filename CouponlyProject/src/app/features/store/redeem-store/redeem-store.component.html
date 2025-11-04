@@ -1,3 +1,11 @@
+<div class="toaster-container">
+  <app-toast 
+    *ngFor="let t of (toast.toasts$ | async)" 
+    [toast]="t"
+    (remove)="onRemove($event)">
+  </app-toast>
+</div>
+
 <c-col xs="12" class="px-0" style="background-color: #f4f7fa; min-height: 100vh;">
   <c-row class="justify-content-center m-0">
     <c-col xs="12" lg="11" class="p-0">
@@ -158,26 +166,53 @@
         </c-card-body>
       </c-card>
       
-      <div class="modal fade" id="addNewUserModal" tabindex="-1" aria-labelledby="addNewUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content redeem-theme"> <div class="modal-header">
-              <h5 class="modal-title theme-heading" id="addNewUserModalLabel">Add New Contact</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="mb-2"><label class="form-label small">Full Name</label><input type="text" class="form-control form-control-sm" placeholder="Kumar"></div>
-                <div class="mb-2"><label class="form-label small">Phone Number</label><input type="tel" class="form-control form-control-sm" placeholder="9876543210"></div>
-                <div class="mb-2"><label class="form-label small">Email (Optional)</label><input type="email" class="form-control form-control-sm" placeholder="kumar@gmail.com"></div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-sm btn-theme-primary">Save Contact</button>
+    <!-- Add New Contact Modal -->
+<div class="modal fade" id="addNewUserModal" tabindex="-1" aria-labelledby="addNewUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content redeem-theme">
+      <div class="modal-header">
+        <h5 class="modal-title theme-heading" id="addNewUserModalLabel">Add New Contact</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" #closeButton></button>
+      </div>
+
+      <form [formGroup]="contactForm" (ngSubmit)="createContact()">
+        <div class="modal-body">
+          <div class="mb-2">
+            <label class="form-label small">Full Name</label>
+            <input type="text" class="form-control form-control-sm" formControlName="Name" placeholder="enter your name" (keypress)="validateNameInput($event)">
+            <div *ngIf="contactForm.get('Name')?.touched && contactForm.get('Name')?.invalid" class="text-danger small">
+              Name is required.
             </div>
           </div>
+
+          <div class="mb-2">
+            <label class="form-label small">Phone Number</label>
+            <input type="tel" class="form-control form-control-sm" formControlName="PhoneNumber" placeholder="enter your PhoneNumber " (keypress)="validatePhoneInput($event)">
+            <div *ngIf="contactForm.get('PhoneNumber')?.touched && contactForm.get('PhoneNumber')?.invalid" class="text-danger small">
+              Enter a valid 10-digit phone number.
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label small">Email</label>
+            <input type="email" class="form-control form-control-sm" formControlName="Email" placeholder="enter your Email ">
+            <div *ngIf="contactForm.get('Email')?.touched && contactForm.get('Email')?.invalid" class="text-danger small">
+              Enter a valid email.
+            </div>
+          </div>
+
+          
         </div>
-      </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-sm btn-theme-primary">Save Contact</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 
       <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
