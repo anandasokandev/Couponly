@@ -31,6 +31,7 @@ export class RedeemStoreComponent implements OnInit {
   storeId: any = null;
   contacts:any[]=[];
   contactForm: FormGroup;
+  searchStart:boolean=false;
   public toast = inject(ToastService);
 
   @ViewChild('closeButton') closeButton!: ElementRef;
@@ -68,25 +69,31 @@ export class RedeemStoreComponent implements OnInit {
     this.selectedCouponImage = selected?.imageUrl || null;
   }
 
-searchContact(){
-  if(!this.contactSearch){
-    this.contacts=[];
+searchContact() {
+  const query = this.contactSearch?.trim();
+
+  if (!query) {
+    this.contacts = [];
+    this.searchStart = false;
+    console.log('IFFF',this.contacts)
+    return;
   }
-else{
-  this.conatctService.searchContacts(1, 5,'', '', this.contactSearch).subscribe({
+  else{
+console.log('ELSE',this.contacts)
+  this.searchStart = true;
+  this.conatctService.searchContacts(1, 4, '', '', query).subscribe({
     next: (response: any) => {
       this.contacts = response.data.items;
-      if (this.contacts.length > 0) {
-        console.log(this.contacts)
-      }
+      this.searchStart = false;
     },
     error: (err) => {
       console.error('Search error:', err);
+      this.searchStart = false;
     }
   });
 }
-  
 }
+
 
 
   createContact(): void {
@@ -103,7 +110,8 @@ else{
         console.log(response)
         if(response.isSuccess == true) {
           this.toast.show({ type: 'success', message: 'Contact created successfully!' });
-
+          this.contactSearch=contactData.PhoneNumber
+          this.searchContact();
           console.log(this.storeService);
           
           this.contactForm.reset();
