@@ -111,7 +111,7 @@ console.log('ELSE',this.contacts)
         if(response.isSuccess == true) {
           this.toast.show({ type: 'success', message: 'Contact created successfully!' });
           this.contactSearch=contactData.PhoneNumber
-          
+          this.searchContact();
           console.log(this.storeService);
           
           this.contactForm.reset();
