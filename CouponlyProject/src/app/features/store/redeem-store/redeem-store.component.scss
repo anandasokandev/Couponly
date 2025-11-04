@@ -98,6 +98,17 @@
   .coupon-scroller { -ms-overflow-style: none; scrollbar-width: none; scroll-behavior: smooth; }
   .btn-circle.btn-sm { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; padding: 0; }
 
+
+  .display-div{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+  }
+  .search-icon{
+    height:170px;
+    width: 170px;
+  }
+
   .toaster-container {
   position: fixed;
   top: 20px;
