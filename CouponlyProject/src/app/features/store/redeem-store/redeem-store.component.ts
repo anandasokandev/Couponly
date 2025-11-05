@@ -33,6 +33,7 @@ export class RedeemStoreComponent implements OnInit,AfterViewInit {
   contacts:any[]=[];
   contactForm: FormGroup;
   searchStart:boolean=false;
+  selectedContact: any = null;
   public toast = inject(ToastService);
 
   @ViewChild('closeButton') closeButton!: ElementRef;
@@ -82,7 +83,7 @@ searchContact() {
   else{
 console.log('ELSE',this.contacts)
   this.searchStart = true;
-  this.conatctService.searchContacts(1, 4, '', '', query).subscribe({
+  this.conatctService.searchContacts(1, 3, '', '', query).subscribe({
     next: (response: any) => {
       this.contacts = response.data.items;
       this.searchStart = false;
@@ -169,6 +170,17 @@ console.log('ELSE',this.contacts)
   onRemove(id: number) {
     this.toast.remove(id);
   }
+
+  refreshSearch(): void {
+  this.contactSearch = '';
+  this.contacts = [];
+  this.searchStart = false;
+}
+
+selectContact(contact: any): void {
+  this.selectedContact = contact;
+}
+
 
 
 
