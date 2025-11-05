@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild, Output, EventEmitter, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Output, EventEmitter, inject, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule , FormsModule} from '@angular/forms';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, RowComponent } from '@coreui/angular';
 import { StoreService } from '../../../commons/services/Store/store.service';
 import { ToastService,} from '../../../commons/services/Toaster/toast.service';
 import { ToastComponent } from '../../admin/pages/toast/toast.component';
 import { ContactService } from '../../../commons/services/Contacts/contact.service';
+import { StoreDashboardService } from '../../../commons/services/StoreDashboard/store-dashboard.service';
 
 @Component({
   selector: 'app-redeem-store',
@@ -24,11 +25,12 @@ import { ContactService } from '../../../commons/services/Contacts/contact.servi
   templateUrl: './redeem-store.component.html',
   styleUrls: ['./redeem-store.component.scss']
 })
-export class RedeemStoreComponent implements OnInit {
+export class RedeemStoreComponent implements OnInit, AfterViewInit  {
+  couponSearch = '';
+  filteredCoupons: any[] = [];
   coupons: any[] = [];
   selectedCoupon: string = '';
   selectedCouponImage: string | null = null;
-  storeId: any = null;
   contacts:any[]=[];
   contactForm: FormGroup;
   searchStart:boolean=false;
@@ -37,9 +39,12 @@ export class RedeemStoreComponent implements OnInit {
 
   @ViewChild('closeButton') closeButton!: ElementRef;
   @Output() contactAdded = new EventEmitter<void>();
+  
  
 
-  constructor(private storeService: StoreService, private fb: FormBuilder,private conatctService: ContactService) {
+  constructor(private storeService: StoreService, private fb: FormBuilder,private conatctService: ContactService,
+    private api:StoreDashboardService
+  ) {
     this.contactForm = this.fb.group({
       Name: ['', [Validators.required]],
       Email: ['', [Validators.required, Validators.email]],
@@ -49,21 +54,10 @@ export class RedeemStoreComponent implements OnInit {
   }
   contactSearch:any; 
 
-  ngOnInit(): void {
-    this.storeId = sessionStorage.getItem('storeId');
-    console.log('StoreId:', this.storeId);
+ngOnInit(): void {
 
-    if (this.storeId) {
-      this.storeService.FetchStoreRedeem(this.storeId).subscribe({
-        next: (res) => {
-          this.coupons = res.data;
-        },
-        error: (err) => {
-          console.error('Error fetching coupons:', err);
-        }
-      });
-    }
-  }
+  this.loadValidCoupons();
+}
 
   updateSelectedCouponImage(): void {
     const selected = this.coupons.find(c => c.couponId === this.selectedCoupon);
@@ -169,4 +163,67 @@ selectContact(contact: any): void {
   this.selectedContact = contact;
 }
 
+ngAfterViewInit(): void {
+  const scroller = document.querySelector('.coupon-scroller') as HTMLElement | null;
+  const leftBtn = document.getElementById('scrollLeft');
+  const rightBtn = document.getElementById('scrollRight');
+
+  if (!scroller || !leftBtn || !rightBtn) return;
+
+  const scrollAmount = 260; // Adjust based on your card width
+
+  leftBtn.addEventListener('click', () => {
+    scroller.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  });
+
+  rightBtn.addEventListener('click', () => {
+    scroller.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  });
 }
+
+
+filterCoupons(): void {
+  const term = this.couponSearch?.trim().toLowerCase() ?? '';
+  this.filteredCoupons = this.coupons.filter(c =>
+    c.name?.toLowerCase().includes(term) ||
+    c.couponCode?.toLowerCase().includes(term)
+  );
+}
+
+clearCouponSearch(): void {
+  this.couponSearch = '';
+  this.filteredCoupons = [...this.coupons];
+}
+
+selectCoupon(coupon: any): void {
+  this.selectedCoupon = coupon.couponId;
+  this.updateSelectedCouponImage();   // if you still need the image for checkout
+}
+
+private loadValidCoupons(): void {
+
+
+  this.api.getStoreCoupons('', undefined, 'valid').subscribe({
+    next: (response: any) => {
+      console.log('COUPONS FROM API →', response);
+      this.coupons = response.data ?? [];
+      this.filteredCoupons = [...this.coupons];
+
+
+      if (this.coupons.length === 0) {
+        this.toast.show({ type: 'info', message: 'No valid coupons found.' });
+      }
+    },
+    error: (err: any) => {
+      console.error('Failed to fetch coupons:', err);
+      this.toast.show({ type: 'error', message: 'Failed to fetch coupons.' });
+      this.coupons = [];
+      this.filteredCoupons = [];
+
+    }
+  });
+}
+
+}
+
+
