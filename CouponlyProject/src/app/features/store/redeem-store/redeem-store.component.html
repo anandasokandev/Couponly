@@ -56,7 +56,58 @@
                 <div class="coupon-scroller d-flex gap-3 mx-5"
                   style="overflow-x: auto; flex-wrap: nowrap; padding: 0.5rem;">
 
-                  <!-- Coupon 1 -->
+<!-- Coupon 1 -->
+<!-- Coupon: Summer Sale with Top Image -->
+<div style="flex: 0 0 240px;">
+  <div class="card h-100 coupon-card-inactive d-flex flex-row" style="text-decoration: none; cursor: pointer;">
+    <!-- Top image section -->
+    <img src="https://images.couponly.store/images/474a30917c894b58b94f2587288b8d4c.png" class="card-img-top" alt="Coupon Image" style="max-width: 50%;">
+
+    <!-- Coupon details -->
+    <div class="card-body">
+      <h6 class="card-title fw-bold mb-1">Summer Sale</h6>
+      <small class="card-text text-muted d-block mb-1"><span class="text-dark fw-semibold">SUMMER2025</span></small>
+      
+      <div class="text-end mt-2">
+  <a href="#" class="small text-muted text-decoration-none" data-bs-toggle="modal" data-bs-target="#couponModal">
+    View
+  </a>
+</div>
+
+
+    </div>
+    </div>
+</div>     
+<!--coupon popup-->
+<div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-light rounded-3">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="couponModalLabel">Summer Sale</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <!-- Red Coupon Graphic -->
+        <img src="your-coupon-image.png" alt="Coupon Graphic" class="img-fluid rounded mb-3" style="max-width: 300px;" />
+
+        <!-- Coupon Details -->
+        <div class="text-start d-inline-block small">
+          <p class="mb-1"><strong>Coupon Code:</strong> SUMMER2025</p>
+          <p class="mb-1">Get 20% off on orders above ₹500</p>
+          <p class="mb-1"><strong>Coupon Type:</strong> Discount Coupons</p>
+          <p class="mb-1"><strong>Minimum Amount:</strong> ₹500</p>
+          <p class="mb-1"><strong>User Limit:</strong> 2</p>
+          <p class="mb-1"><strong>Start Date:</strong> 01-06-2025</p>
+          <p class="mb-1"><strong>End Date:</strong> 30-06-2025</p>
+        </div>
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Coupon 2 (Selected) -->
 <!-- Coupon: Summer Sale with Top Image -->
 <div style="flex: 0 0 240px;">
   <div class="card h-100 coupon-card-inactive d-flex flex-row" style="text-decoration: none; cursor: pointer;">
@@ -68,22 +119,8 @@
       <h6 class="card-title fw-bold mb-1">Summer Sale</h6>
       <small class="card-text text-muted d-block mb-1"><span class="text-dark fw-semibold">SUMMER2025</span></small>
     </div>
-  </div>
-</div>
-
-                  
-                  <!-- Coupon 2 (Selected) -->
-                  <div style="flex: 0 0 240px;">
-                    <div class="card h-100 coupon-card-active shadow">
-                      <div class="card-body p-2">
-                        <h6 class="card-title fw-bold mb-1">Free Coffee</h6>
-                        <small class="card-text mb-0 d-block" style="color: var(--accent-color-dark)">150 Points</small>
-                        <button type="button" class="btn btn-sm btn-theme-primary w-100 mt-2 py-1" disabled>
-                          Selected
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+    </div>
+</div>   
 
                   <!-- Coupon 3 -->
                   <div style="flex: 0 0 240px;">
@@ -145,7 +182,7 @@
             </div>
 
             <!-- ======================== FIND CUSTOMER ======================== -->
-            <div class="mb-3 d-flex flex-column" style="flex-grow: 1; min-height: 0;">
+            <div class="mb-3 mx-5 d-flex flex-column" style="flex-grow: 1; min-height: 0;">
               <h5 class="fw-bold mb-3 theme-heading">Find Customer</h5>
 
               <div class="p-3 bg-white rounded shadow-sm border d-flex flex-column" style="flex-grow: 1;">
