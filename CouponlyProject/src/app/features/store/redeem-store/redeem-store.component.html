@@ -5,7 +5,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-<c-col xs="12" class="px-0" style="background-color: #f4f7fa; min-height: 100vh;">
+<c-col xs="12" class="px-0" style="background-color: #f4f7fa; height: 100vh; overflow: hidden;">
   <c-row class="justify-content-center m-0">
     <c-col xs="12" class="p-0">
 
@@ -249,7 +249,7 @@
             </div>
 
             <!-- ======================== FIND CUSTOMER ======================== -->
-            <div class="mb-3 mx-5 d-flex flex-column" style="flex-grow: 1; min-height: 0;">
+            <div class="mb-3 mx-5 d-flex flex-column" style="min-height: 360px;">
               <h5 class="fw-bold mb-3 theme-heading">Find Customer</h5>
 
               <div class="p-3 bg-white rounded shadow-sm border d-flex flex-column" style="flex-grow: 1;">
@@ -309,11 +309,12 @@
                     No contacts found
                   </div>
                 </ng-template>
+                
               </div>
             </div>
 
             <!-- ======================== REDEEM BUTTON ======================== -->
-            <div class="text-center pt-3 pb-1" style="flex-shrink: 0;">
+            <div class="text-center pt-2 pb-3" style="flex-shrink: 0;">
               <button type="button"
                 class="btn btn-theme-primary text-white d-flex align-items-center justify-content-center px-4 py-2 rounded-pill shadow mx-auto"
                 data-bs-toggle="modal" data-bs-target="#checkoutModal">
