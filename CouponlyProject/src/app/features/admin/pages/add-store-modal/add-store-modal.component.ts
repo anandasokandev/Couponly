@@ -189,9 +189,9 @@ closeModal(): void {
 
 }
 
-  export function strictEmailValidator(control: AbstractControl): ValidationErrors | null {
+export function strictEmailValidator(control: AbstractControl): ValidationErrors | null {
   const email = control.value;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
 
   if (!emailRegex.test(email)) {
     return { strictEmail: true };
