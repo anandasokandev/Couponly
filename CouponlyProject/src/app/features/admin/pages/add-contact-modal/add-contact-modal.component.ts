@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, inject, viewChild } from '@angular/core';
 import { ButtonCloseDirective, ButtonDirective, FormControlDirective, FormDirective, FormLabelDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 
-import { FormBuilder, FormGroup, Validators,ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators,ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ContactService } from '../../../../commons/services/Contacts/contact.service';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 import { ViewChild } from '@angular/core';
@@ -38,7 +38,7 @@ export class AddContactModalComponent {
     this.contactForm = this.fb.group({
       Name: ['', Validators.required],
       PhoneNumber: ['', [ Validators.required, Validators.pattern(/^[6-9][0-9]{9}$/) ]],
-      Email: ['', [Validators.required, Validators.email]]
+      Email: ['', [Validators.required, Validators.email, strictEmailValidator]]
     });
   }
 
@@ -113,4 +113,13 @@ validatePhoneInput(event: KeyboardEvent): void {
   }
 }
   
+}
+ export function strictEmailValidator(control: AbstractControl): ValidationErrors | null {
+  const email = control.value;
+  if (!email) return null;
+
+  // Allow only gmail.com, gmail.in, gmail.org
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.(com|org|in)$/i;
+
+  return emailRegex.test(email) ? null : { strictEmail: true };
 }

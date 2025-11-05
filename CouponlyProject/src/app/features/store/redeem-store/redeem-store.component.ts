@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild, Output, EventEmitter, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Output, EventEmitter, inject, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule , FormsModule} from '@angular/forms';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, ColComponent, RowComponent } from '@coreui/angular';
 import { StoreService } from '../../../commons/services/Store/store.service';
 import { ToastService,} from '../../../commons/services/Toaster/toast.service';
 import { ToastComponent } from '../../admin/pages/toast/toast.component';
 import { ContactService } from '../../../commons/services/Contacts/contact.service';
+
 
 @Component({
   selector: 'app-redeem-store',
@@ -24,7 +25,7 @@ import { ContactService } from '../../../commons/services/Contacts/contact.servi
   templateUrl: './redeem-store.component.html',
   styleUrls: ['./redeem-store.component.scss']
 })
-export class RedeemStoreComponent implements OnInit {
+export class RedeemStoreComponent implements OnInit,AfterViewInit {
   coupons: any[] = [];
   selectedCoupon: string = '';
   selectedCouponImage: string | null = null;
@@ -42,7 +43,7 @@ export class RedeemStoreComponent implements OnInit {
   constructor(private storeService: StoreService, private fb: FormBuilder,private conatctService: ContactService) {
     this.contactForm = this.fb.group({
       Name: ['', [Validators.required]],
-      Email: ['', [Validators.required, Validators.email]],
+      Email: ['', [Validators.required, this.validEmailDomain]],
       PhoneNumber: ['', [Validators.required, Validators.pattern(/^[6-9][0-9]{9}$/)]],
       Message: ['']
     });
@@ -82,7 +83,7 @@ searchContact() {
   else{
 console.log('ELSE',this.contacts)
   this.searchStart = true;
-  this.conatctService.searchContacts(1, 4, '', '', query).subscribe({
+  this.conatctService.searchContacts(1, 3, '', '', query).subscribe({
     next: (response: any) => {
       this.contacts = response.data.items;
       this.searchStart = false;
@@ -115,9 +116,10 @@ console.log('ELSE',this.contacts)
           this.searchContact();
           console.log(this.storeService);
           
-          this.contactForm.reset();
-          this.contactAdded.emit();
-          this.closeModal();
+          this.contactForm.reset(); 
+      this.contactAdded.emit();
+      
+      this.closeModal();
         } else {
         console.error('Error creating contact:', response.errors[0]);
         this.toast.show({ type: 'error', message: response.errors[0] });
@@ -130,9 +132,9 @@ console.log('ELSE',this.contacts)
     });
   }
 
-  closeModal(): void {
-    this.closeButton.nativeElement.click();
-  }
+  // closeModal(): void {
+  //   this.closeButton.nativeElement.click();
+  // }
 
   validateNameInput(event: KeyboardEvent): void {
     const inputChar = event.key;
@@ -155,6 +157,16 @@ console.log('ELSE',this.contacts)
     }
   }
 
+
+  validEmailDomain(control: any) {
+  const email = control.value;
+  if (!email) return null;
+
+  const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|in)$/;
+  return pattern.test(email) ? null : { invalidEmailDomain: true };
+}
+
+
   onRemove(id: number) {
     this.toast.remove(id);
   }
@@ -168,5 +180,39 @@ console.log('ELSE',this.contacts)
 selectContact(contact: any): void {
   this.selectedContact = contact;
 }
+
+
+
+
+
+  ngAfterViewInit(): void {
+    const modalEl = document.getElementById('addNewUserModal');
+    if (modalEl) {
+      modalEl.addEventListener('shown.bs.modal', () => {
+        this.resetModal();
+      });
+    }
+  }
+
+  resetModal(): void {
+    this.contactForm.reset();
+    this.contactSearch = '';
+    this.contacts = [];
+    this.contactForm.markAsPristine();
+    this.contactForm.markAsUntouched();
+  }
+
+isModalOpen = false;
+
+openModal(): void {
+  this.resetModal(); // reset before showing
+  this.isModalOpen = true;
+}
+
+closeModal(): void {
+  this.isModalOpen = false;
+}
+
+  
 
 }
