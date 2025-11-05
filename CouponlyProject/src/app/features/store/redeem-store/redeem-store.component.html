@@ -47,147 +47,147 @@
               </div>
 
               <div class="position-relative">
-<button type="button" id="scrollLeft"
-  class="btn btn-circle btn-theme-primary btn-sm position-absolute top-50 start-0 translate-middle-y shadow"
-  style="z-index: 2; margin-left: -10px;">
-  <strong>&lt;</strong>
-</button>
+                <button type="button" id="scrollLeft"
+                  class="btn btn-circle btn-theme-primary btn-sm position-absolute top-50 start-0 translate-middle-y shadow"
+                  style="z-index: 2; margin-left: -10px;">
+                  <strong>&lt;</strong>
+                </button>
 
                 <div class="coupon-scroller d-flex gap-3 mx-5"
                   style="overflow-x: auto; flex-wrap: nowrap; padding: 0.5rem;">
 
-<!-- Coupon 1 -->
-<div style="flex: 0 0 240px;">
-  <div class="card h-100 coupon-card-inactive d-flex flex-row align-items-start" 
-       style="text-decoration: none; cursor: pointer;">
+                  <!-- Coupon 1 -->
+                  <div style="flex: 0 0 240px;">
+                    <div class="card h-100 coupon-card-inactive d-flex flex-row align-items-start"
+                      style="text-decoration: none; cursor: pointer;">
 
-    <!-- Left Image -->
-    <img src="https://images.couponly.store/images/474a30917c894b58b94f2587288b8d4c.png" 
-         class="card-img-top" alt="Coupon Image" 
-         style="max-width: 50%; height: 100%;">
+                      <!-- Left Image -->
+                      <img src="https://images.couponly.store/images/474a30917c894b58b94f2587288b8d4c.png"
+                        class="card-img-top" alt="Coupon Image" style="max-width: 50%; height: 100%;">
 
-    <!-- Right Side Details -->
-    <div class="card-body p-2 pt-4 d-flex flex-column justify-content-between">
-      <div>
-        <h6 class="card-title fw-bold mb-1">Summer Sale</h6>
-        <small class="card-text text-muted d-block mb-1">
-          <span class="text-dark fw-semibold">SUMMER2025</span>
-        </small>
-      </div>
-      <!-- View link (bottom right, small text) -->
-      <small class="text-end mt-auto">
-        <a href="#" data-bs-toggle="modal" data-bs-target="#couponModal"
-           class="text-primary text-decoration-underline"
-           style="font-size: 12px;">View</a>
-      </small>
-    </div>
-  </div>
-</div>
+                      <!-- Right Side Details -->
+                      <div class="card-body p-2 pt-4 d-flex flex-column justify-content-between">
+                        <div>
+                          <h6 class="card-title fw-bold mb-1">Summer Sale</h6>
+                          <small class="card-text text-muted d-block mb-1">
+                            <span class="text-dark fw-semibold">SUMMER2025</span>
+                          </small>
+                        </div>
+                        <!-- View link (bottom right, small text) -->
+                        <small class="text-end mt-auto">
+                          <a href="#" data-bs-toggle="modal" data-bs-target="#couponModal"
+                            class="text-primary text-decoration-underline" style="font-size: 12px;">View</a>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
 
-<!-- Coupon Details Modal (Styled like a Card) -->
-<div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow-lg rounded-4" style="overflow: hidden;">
+                  <!-- Coupon Details Modal (Styled like a Card) -->
+                  <div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content border-0 shadow-lg rounded-4" style="overflow: hidden;">
 
-      <!-- Coupon Card Style -->
-      <div class="card border-0 h-100">
-        <!-- Image Section -->
-        <div class="d-flex justify-content-center pt-4 pb-2">
-          <img src="https://images.couponly.store/images/474a30917c894b58b94f2587288b8d4c.png"
-               alt="Coupon Image" class="img-fluid" style="max-width: 45%;">
-        </div>
+                        <!-- Coupon Card Style -->
+                        <div class="card border-0 h-100">
+                          <!-- Image Section -->
+                          <div class="d-flex justify-content-center pt-4 pb-2">
+                            <img src="https://images.couponly.store/images/474a30917c894b58b94f2587288b8d4c.png"
+                              alt="Coupon Image" class="img-fluid" style="max-width: 45%;">
+                          </div>
 
-        <!-- Card Body -->
-        <div class="card-body text-center pt-3 pb-2">
-          <h5 class="card-title fw-bold mb-2" id="couponModalLabel">Summer Sale</h5>
-          <p class="text-muted mb-3"><em>Get 20% off on orders above ₹500</em></p>
+                          <!-- Card Body -->
+                          <div class="card-body text-center pt-3 pb-2">
+                            <h5 class="card-title fw-bold mb-2" id="couponModalLabel">Summer Sale</h5>
+                            <p class="text-muted mb-3"><em>Get 20% off on orders above ₹500</em></p>
 
-          <div class="bg-light p-2 rounded-3 d-inline-block mb-3">
-            <span class="fw-semibold text-dark">Coupon Code:</span>
-            <span class="badge bg-primary-subtle text-dark ms-2">SUMMER2025</span>
-          </div>
-          <div class="text-start mx-auto" style="max-width: 300px;">
-            <p class="mb-1"><strong>Coupon Type:</strong> Discount Coupon</p>
-            <p class="mb-1"><strong>Min Amount:</strong> ₹500</p>
-            <p class="mb-1"><strong>User Limit:</strong> 2</p>
-            <p class="mb-0"><strong>Validity:</strong> 01-06-2025 → 30-06-2025</p>
-          </div>
-        </div>
-        <!-- Footer (styled like a card bottom bar) -->
-        <div class="card-footer bg-transparent border-0 text-center pb-4 pt-2">
-          <button type="button" class="btn btn-outline-primary btn-sm px-4" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
+                            <div class="bg-light p-2 rounded-3 d-inline-block mb-3">
+                              <span class="fw-semibold text-dark">Coupon Code:</span>
+                              <span class="badge bg-primary-subtle text-dark ms-2">SUMMER2025</span>
+                            </div>
+                            <div class="text-start mx-auto" style="max-width: 300px;">
+                              <p class="mb-1"><strong>Coupon Type:</strong> Discount Coupon</p>
+                              <p class="mb-1"><strong>Min Amount:</strong> ₹500</p>
+                              <p class="mb-1"><strong>User Limit:</strong> 2</p>
+                              <p class="mb-0"><strong>Validity:</strong> 01-06-2025 → 30-06-2025</p>
+                            </div>
+                          </div>
+                          <!-- Footer (styled like a card bottom bar) -->
+                          <div class="card-footer bg-transparent border-0 text-center pb-4 pt-2">
+                            <button type="button" class="btn btn-outline-primary btn-sm px-4"
+                              data-bs-dismiss="modal">Close</button>
+                          </div>
+                        </div>
 
-    </div>
-  </div>
-</div>
-<!-- Coupon 2 (Selected) -->
-<div style="flex: 0 0 240px;">
-  <div class="card h-100 coupon-card-inactive d-flex flex-row align-items-start" 
-       style="text-decoration: none; cursor: pointer;">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Coupon 2 (Selected) -->
+                  <div style="flex: 0 0 240px;">
+                    <div class="card h-100 coupon-card-inactive d-flex flex-row align-items-start"
+                      style="text-decoration: none; cursor: pointer;">
 
-    <!-- Left Image -->
-    <img src="https://images.couponly.store/images/474a30917c894b58b94f2587288b8d4c.png" 
-         class="card-img-top" alt="Coupon Image" 
-         style="max-width: 50%; height: 100%;">
+                      <!-- Left Image -->
+                      <img src="https://images.couponly.store/images/474a30917c894b58b94f2587288b8d4c.png"
+                        class="card-img-top" alt="Coupon Image" style="max-width: 50%; height: 100%;">
 
-    <!-- Right Side Details -->
-    <div class="card-body p-2 pt-4 d-flex flex-column justify-content-between">
-      <div>
-        <h6 class="card-title fw-bold mb-1">Summer Sale</h6>
-        <small class="card-text text-muted d-block mb-1">
-          <span class="text-dark fw-semibold">SUMMER2025</span>
-        </small>
-      </div>
-      <!-- View link (bottom right, small text) -->
-      <small class="text-end mt-auto">
-        <a href="#" data-bs-toggle="modal" data-bs-target="#couponModal"
-           class="text-primary text-decoration-underline"
-           style="font-size: 12px;">View</a>
-      </small>
-    </div>
-  </div>
-</div>
+                      <!-- Right Side Details -->
+                      <div class="card-body p-2 pt-4 d-flex flex-column justify-content-between">
+                        <div>
+                          <h6 class="card-title fw-bold mb-1">Summer Sale</h6>
+                          <small class="card-text text-muted d-block mb-1">
+                            <span class="text-dark fw-semibold">SUMMER2025</span>
+                          </small>
+                        </div>
+                        <!-- View link (bottom right, small text) -->
+                        <small class="text-end mt-auto">
+                          <a href="#" data-bs-toggle="modal" data-bs-target="#couponModal"
+                            class="text-primary text-decoration-underline" style="font-size: 12px;">View</a>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
 
-<!-- Coupon Details Modal (Styled like a Card) -->
-<div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content border-0 shadow-lg rounded-4" style="overflow: hidden;">
+                  <!-- Coupon Details Modal (Styled like a Card) -->
+                  <div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content border-0 shadow-lg rounded-4" style="overflow: hidden;">
 
-      <!-- Coupon Card Style -->
-      <div class="card border-0 h-100">
-        <!-- Image Section -->
-        <div class="d-flex justify-content-center pt-4 pb-2">
-          <img src="https://images.couponly.store/images/474a30917c894b58b94f2587288b8d4c.png"
-               alt="Coupon Image" class="img-fluid" style="max-width: 45%;">
-        </div>
+                        <!-- Coupon Card Style -->
+                        <div class="card border-0 h-100">
+                          <!-- Image Section -->
+                          <div class="d-flex justify-content-center pt-4 pb-2">
+                            <img src="https://images.couponly.store/images/474a30917c894b58b94f2587288b8d4c.png"
+                              alt="Coupon Image" class="img-fluid" style="max-width: 45%;">
+                          </div>
 
-        <!-- Card Body -->
-        <div class="card-body text-center pt-3 pb-2">
-          <h5 class="card-title fw-bold mb-2" id="couponModalLabel">Summer Sale</h5>
-          <p class="text-muted mb-3"><em>Get 20% off on orders above ₹500</em></p>
+                          <!-- Card Body -->
+                          <div class="card-body text-center pt-3 pb-2">
+                            <h5 class="card-title fw-bold mb-2" id="couponModalLabel">Summer Sale</h5>
+                            <p class="text-muted mb-3"><em>Get 20% off on orders above ₹500</em></p>
 
-          <div class="bg-light p-2 rounded-3 d-inline-block mb-3">
-            <span class="fw-semibold text-dark">Coupon Code:</span>
-            <span class="badge bg-primary-subtle text-dark ms-2">SUMMER2025</span>
-          </div>
-          <div class="text-start mx-auto" style="max-width: 300px;">
-            <p class="mb-1"><strong>Coupon Type:</strong> Discount Coupon</p>
-            <p class="mb-1"><strong>Min Amount:</strong> ₹500</p>
-            <p class="mb-1"><strong>User Limit:</strong> 2</p>
-            <p class="mb-0"><strong>Validity:</strong> 01-06-2025 → 30-06-2025</p>
-          </div>
-        </div>
-        <!-- Footer (styled like a card bottom bar) -->
-        <div class="card-footer bg-transparent border-0 text-center pb-4 pt-2">
-          <button type="button" class="btn btn-outline-primary btn-sm px-4" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
+                            <div class="bg-light p-2 rounded-3 d-inline-block mb-3">
+                              <span class="fw-semibold text-dark">Coupon Code:</span>
+                              <span class="badge bg-primary-subtle text-dark ms-2">SUMMER2025</span>
+                            </div>
+                            <div class="text-start mx-auto" style="max-width: 300px;">
+                              <p class="mb-1"><strong>Coupon Type:</strong> Discount Coupon</p>
+                              <p class="mb-1"><strong>Min Amount:</strong> ₹500</p>
+                              <p class="mb-1"><strong>User Limit:</strong> 2</p>
+                              <p class="mb-0"><strong>Validity:</strong> 01-06-2025 → 30-06-2025</p>
+                            </div>
+                          </div>
+                          <!-- Footer (styled like a card bottom bar) -->
+                          <div class="card-footer bg-transparent border-0 text-center pb-4 pt-2">
+                            <button type="button" class="btn btn-outline-primary btn-sm px-4"
+                              data-bs-dismiss="modal">Close</button>
+                          </div>
+                        </div>
 
-    </div>
-  </div>
-</div>
+                      </div>
+                    </div>
+                  </div>
 
                   <!-- Coupon 3 -->
                   <div style="flex: 0 0 240px;">
@@ -240,11 +240,11 @@
 
                 </div>
 
-<button type="button" id="scrollRight"
-  class="btn btn-circle btn-theme-primary btn-sm position-absolute top-50 end-0 translate-middle-y shadow"
-  style="z-index: 2; margin-right: -10px;">
-  <strong>&gt;</strong>
-</button>
+                <button type="button" id="scrollRight"
+                  class="btn btn-circle btn-theme-primary btn-sm position-absolute top-50 end-0 translate-middle-y shadow"
+                  style="z-index: 2; margin-right: -10px;">
+                  <strong>&gt;</strong>
+                </button>
               </div>
             </div>
 
@@ -258,10 +258,11 @@
                   <div class="col-sm-8">
                     <!-- SEARCH + RESET (CUSTOMER) -->
                     <div class="input-group input-group-sm gap-2">
-                      <input type="text" class="form-control form-control-sm" id="customerSearch"
-                      [maxlength]="10"
-                        [(ngModel)]="contactSearch" placeholder="Search by Phone..." (input)="searchContact()" (keypress)="validatePhoneInput($event)">
-                      <button type="button" class="btn btn-theme-outline-primary" title="Search customers" (click)="searchContact()">
+                      <input type="text" class="form-control form-control-sm" id="customerSearch" [maxlength]="10"
+                        [(ngModel)]="contactSearch" placeholder="Search by Phone..." (input)="searchContact()"
+                        (keypress)="validatePhoneInput($event)">
+                      <button type="button" class="btn btn-theme-outline-primary" title="Search customers"
+                        (click)="searchContact()">
                         <i class="bi bi-search"></i>
                       </button>
                       <button type="button" class="btn btn-outline-secondary" title="Clear search"
@@ -284,13 +285,11 @@
                 <!--SPINNER-->
                 <div class="spinner" *ngIf="contactSearch?.trim() && searchStart"></div>
                 <!--CONTACTS-->
-               <!-- Contact Results -->
+                <!-- Contact Results -->
                 <div *ngIf="contactSearch?.trim() && !searchStart">
                   <ng-container *ngIf="contacts.length > 0; else noContacts">
                     <div class="list-group">
-                      <a *ngFor="let contact of contacts" 
-                        (click)="selectContact(contact)"
-                        [ngClass]="{
+                      <a *ngFor="let contact of contacts" (click)="selectContact(contact)" [ngClass]="{
                           'list-group-item': true,
                           'list-group-item-action': true,
                           'p-2': true,
@@ -305,11 +304,11 @@
 
                 <!-- No Contacts Message -->
                 <ng-template #noContacts>
-                  <div class="text-center text-muted p-3">
+                  <div class="d-flex justify-content-center align-items-center text-muted w-100" style="height: 200px;">
                     No contacts found
                   </div>
                 </ng-template>
-                
+
               </div>
             </div>
 
@@ -416,6 +415,3 @@
     </c-col>
   </c-row>
 </c-col>
-
-
-
