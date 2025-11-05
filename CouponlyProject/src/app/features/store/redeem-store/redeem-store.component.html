@@ -192,12 +192,13 @@
                     <!-- SEARCH + RESET (CUSTOMER) -->
                     <div class="input-group input-group-sm gap-2">
                       <input type="text" class="form-control form-control-sm" id="customerSearch"
-                        [(ngModel)]="contactSearch" placeholder="Search by Phone..." (input)="searchContact()">
+                      [maxlength]="10"
+                        [(ngModel)]="contactSearch" placeholder="Search by Phone..." (input)="searchContact()" (keypress)="validatePhoneInput($event)">
                       <button type="button" class="btn btn-theme-outline-primary" title="Search customers" (click)="searchContact()">
                         <i class="bi bi-search"></i>
                       </button>
                       <button type="button" class="btn btn-outline-secondary" title="Clear search"
-                        >
+                        (click)="refreshSearch()">
                         <i class="bi bi-arrow-clockwise"></i>
                       </button>
                     </div>
@@ -214,17 +215,33 @@
                   <img src="assets/contactsearch.png" alt="couponly.store Logo" class="search-icon" />
                 </div>
                 <!--SPINNER-->
-                <div class="spinner" *ngIf="contactSearch && searchStart"></div>
+                <div class="spinner" *ngIf="contactSearch?.trim() && searchStart"></div>
                 <!--CONTACTS-->
-               <div style="flex-grow: 1; overflow-y: auto; padding-top: 20px;" *ngIf="contacts.length > 0 && contactSearch.trim()">
-                  <div class="list-group">
-                    <a  *ngFor="let contact of contacts" 
-                    class="list-group-item list-group-item-action active p-2">
-                      <strong class="mb-1 fs-6">{{contact.name}}</strong>
-                      <small class="d-block">{{contact.contact}} | {{contact.mail}}</small>
-                    </a>
-                  </div>
+               <!-- Contact Results -->
+                <div *ngIf="contactSearch?.trim() && !searchStart">
+                  <ng-container *ngIf="contacts.length > 0; else noContacts">
+                    <div class="list-group">
+                      <a *ngFor="let contact of contacts" 
+                        (click)="selectContact(contact)"
+                        [ngClass]="{
+                          'list-group-item': true,
+                          'list-group-item-action': true,
+                          'p-2': true,
+                          'active': contact === selectedContact
+                        }">
+                        <strong class="mb-1 fs-6">{{contact.name}}</strong>
+                        <small class="d-block">{{contact.contact}} | {{contact.mail}}</small>
+                      </a>
+                    </div>
+                  </ng-container>
                 </div>
+
+                <!-- No Contacts Message -->
+                <ng-template #noContacts>
+                  <div class="text-center text-muted p-3">
+                    No contacts found
+                  </div>
+                </ng-template>
               </div>
             </div>
 
