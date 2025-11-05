@@ -46,15 +46,15 @@ export class PromotionCalculatorModelComponent {
 
   saveChanges() {
     this.isSaving = true;
-    const channels: number[] = [];
+    const channels: {ChannelId: number, Cost: number}[] = [];
     for (const [key, value] of Object.entries(this.campaign.channels)) {
       if (value) {
         if(key === 'whatsapp') {
-          channels.push(2);
+          channels.push({ChannelId: 2, Cost: this.campaign.costs.whatsapp});
         } else if(key === 'email') {
-          channels.push(4);
+          channels.push({ChannelId: 4, Cost: this.campaign.costs.email});
         } else if(key === 'sms') {
-          channels.push(5);
+          channels.push({ChannelId: 5, Cost: this.campaign.costs.sms});
         }
       }
     }
@@ -74,7 +74,6 @@ export class PromotionCalculatorModelComponent {
       },
       Channels: channels,
       TotalAmount: this.campaign.costs.whatsapp + this.campaign.costs.email + this.campaign.costs.sms,
-      
     };
 
     this.promotionService.createPromotion(promotionData).subscribe(

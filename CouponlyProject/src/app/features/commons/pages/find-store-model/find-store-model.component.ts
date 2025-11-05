@@ -10,7 +10,6 @@ import { PromotionService } from '../../../../commons/services/Promotion/promoti
 import { PaginationComponent } from '../../../admin/pages/pagination/pagination.component';
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 import { CostSettingService } from '../../../../commons/services/Promotion/cost-setting.service';
-import { I } from 'node_modules/@angular/cdk/a11y-module.d--J1yhM7R';
 
 export interface Coupon {
   id: number;
