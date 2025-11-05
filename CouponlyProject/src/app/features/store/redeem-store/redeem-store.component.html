@@ -1,216 +1,331 @@
-<c-col xs="12" class="px-0" style="background-color: #f4f7fa; min-height: 100vh;">
+<div class="toaster-container">
+  <app-toast *ngFor="let t of (toast.toasts$ | async)" [toast]="t" (remove)="onRemove($event)">
+  </app-toast>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<c-col xs="12" class="px-0" style="background-color: #f4f7fa; height: 100vh; overflow: hidden;">
   <c-row class="justify-content-center m-0">
-    <c-col xs="12" lg="11" class="p-0">
-      
-      <c-card class="shadow-sm border-0 redeem-theme" 
-              style="background-color: #f8f9fa; height: 100vh; display: flex; flex-direction: column; overflow: hidden;">
-        
-        <c-card-header class="d-flex align-items-center shadow-sm" 
-                       style="background: #ffffff; border-bottom: 1px solid #dee2e6; flex-shrink: 0;">
-          <img src="http://localhost:4200/assets/logo.png" 
-               alt="Logo" 
-               style="height: 35px;">
-          
+    <c-col xs="12" class="p-0">
+
+      <c-card class="shadow-sm border-0 redeem-theme"
+        style="background-color: #f8f9fa; display: flex; flex-direction: column; overflow: hidden; scroll-behavior: smooth;">
+
+        <c-card-header class="d-flex align-items-center shadow-sm"
+          style="background: #ffffff; border-bottom: 1px solid #dee2e6; flex-shrink: 0;">
+          <img src="http://localhost:4200/assets/logo.png" alt="Logo" style="height: 35px;">
+
           <div class="ms-auto d-flex align-items-center gap-4">
             <a href="#" class="nav-link-theme fw-bold text-decoration-none fs-6">Coupons</a>
-            <a href="#" class="nav-link-theme fw-bold text-decoration-none active fs-6" style="border-bottom-width: 2px; padding-bottom: 5px;">Redeems</a>
+            <a href="#" class="nav-link-theme fw-bold text-decoration-none active fs-6"
+              style="border-bottom-width: 2px; padding-bottom: 5px;">Redeems</a>
             <a href="#" class="nav-link-theme fw-bold text-decoration-none fs-6">Promotions</a>
           </div>
         </c-card-header>
 
         <c-card-body style="flex: 1; padding: 0; overflow: hidden;">
-          
-          <form class="p-4" 
-                style="display: flex; flex-direction: column; height: 100%;">
 
-            <div class="mb-3" style="flex-shrink: 0;">
-              <h5 class="fw-bold mb-3 theme-heading">Select Coupon</h5>
-              
-              <div class="mb-3">
-                <input type="text" class="form-control form-control-sm" placeholder="Search by coupon name (e.g., 'Coffee')" />
-              </div>
+          <div class="p-4" style="display: flex; flex-direction: column; height: 100%;">
 
-              <div class="position-relative">
-                <button type="button" class="btn btn-circle btn-theme-primary btn-sm position-absolute top-50 start-0 translate-middle-y shadow" 
-                        style="z-index: 2; margin-left: -10px;">
-                  <strong>&lt;</strong>
-                </button>
-                
-                <div class="coupon-scroller d-flex gap-3 mx-5" style="overflow-x: auto; flex-wrap: nowrap; padding: 0.5rem;">
-                  
+            <!-- ======================== SELECT COUPON ======================== -->
+<div class="mb-3" style="flex-shrink: 0;">
+  <h5 class="fw-bold mb-3 mx-5 theme-heading">Select Coupon</h5>
 
-                  <div style="flex: 0 0 240px;">
-                    <div class="card h-100 coupon-card-inactive shadow-sm">
-                      <div class="card-body p-2">
-                        <h6 class="card-title fw-bold mb-1">20% Off Bill</h6>
-                        <small class="card-text text-muted mb-0 d-block">Expires: 30 Nov</small>
-                        <button type="button" class="btn btn-sm btn-theme-outline-primary w-100 mt-2 py-1">Select</button>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div style="flex: 0 0 240px;">
-                    <div class="card h-100 coupon-card-active shadow">
-                      <div class="card-body p-2">
-                        <h6 class="card-title fw-bold mb-1">Free Coffee</h6>
-                        <small class="card-text mb-0 d-block" style="color: var(--accent-color-dark)">150 Points</small>
-                        <button type="button" class="btn btn-sm btn-theme-primary w-100 mt-2 py-1" disabled>
-                          Selected
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+  <!-- SEARCH + RESET (COUPON) -->
+  <div class="mb-3 mx-5">
+    <div class="input-group input-group-sm gap-2">
+      <input type="text" class="form-control" placeholder="Search by coupon name or coupon code..."
+        aria-label="Search coupons" [(ngModel)]="couponSearch" (input)="filterCoupons()">
+      <button type="button" class="btn btn-theme-outline-primary" title="Search coupons">
+        <i class="bi bi-search"></i>
+      </button>
+      <button type="button" class="btn btn-outline-secondary" title="Clear search" (click)="clearCouponSearch()">
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+  </div>
 
-                  <div style="flex: 0 0 240px;">
-                    <div class="card h-100 coupon-card-inactive shadow-sm">
-                      <div class="card-body p-2">
-                        <h6 class="card-title fw-bold mb-1">BOGO Muffin</h6>
-                        <small class="card-text text-muted mb-0 d-block">Expires: 15 Dec</small>
-                        <button type="button" class="btn btn-sm btn-theme-outline-primary w-100 mt-2 py-1">Select</button>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div style="flex: 0 0 240px;">
-                    <div class="card h-100 coupon-card-inactive shadow-sm">
-                      <div class="card-body p-2">
-                        <h6 class="card-title fw-bold mb-1">20% Off Bill</h6>
-                        <small class="card-text text-muted mb-0 d-block">Expires: 30 Nov</small>
-                        <button type="button" class="btn btn-sm btn-theme-outline-primary w-100 mt-2 py-1">Select</button>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div style="flex: 0 0 240px;">
-                    <div class="card h-100 coupon-card-inactive shadow-sm">
-                      <div class="card-body p-2">
-                        <h6 class="card-title fw-bold mb-1">Free Coffee</h6>
-                        <small class="card-text text-muted mb-0 d-block">150 Points</small>
-                        <button type="button" class="btn btn-sm btn-theme-outline-primary w-100 mt-2 py-1">
-                          Select
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+  <div class="position-relative">
+    <button type="button" id="scrollLeft"
+      class="btn btn-circle btn-theme-primary btn-sm position-absolute top-50 start-0 translate-middle-y shadow"
+      style="z-index: 2; margin-left: -10px;">
+      <strong>&lt;</strong>
+    </button>
 
-                  <div style="flex: 0 0 240px;">
-                    <div class="card h-100 coupon-card-inactive shadow-sm">
-                      <div class="card-body p-2">
-                        <h6 class="card-title fw-bold mb-1">BOGO Muffin</h6>
-                        <small class="card-text text-muted mb-0 d-block">Expires: 15 Dec</small>
-                        <button type="button" class="btn btn-sm btn-theme-outline-primary w-100 mt-2 py-1">Select</button>
-                      </div>
-                    </div>
-                  </div>
+    <div class="coupon-scroller d-flex gap-3 mx-5"
+      style="overflow-x: auto; flex-wrap: nowrap; padding: 0.5rem;">
 
-                </div> <button type="button" class="btn btn-circle btn-theme-primary btn-sm position-absolute top-50 end-0 translate-middle-y shadow" 
-                        style="z-index: 2; margin-right: -10px;">
-                  <strong>&gt;</strong>
-                </button>
-              </div>
+      <!-- DYNAMIC COUPONS -->
+      <div *ngFor="let coupon of filteredCoupons" style="flex: 0 0 240px;">
+        <div class="card h-100 coupon-card-inactive d-flex flex-row align-items-start"
+          [class.coupon-card-active]="selectedCoupon === coupon.couponId"
+          style="text-decoration: none; cursor: pointer;"
+          (click)="selectCoupon(coupon)">
+
+          <!-- Left Image -->
+          <img [src]="coupon.couponImage || coupon.imageUrl"
+            class="card-img-top" alt="Coupon Image"
+            style="max-width: 50%; height: 100%; object-fit: cover;">
+
+          <!-- Right Side Details -->
+          <div class="card-body p-2 pt-4 d-flex flex-column justify-content-between">
+            <div>
+              <h6 class="card-title fw-bold mb-1">{{ coupon.name }}</h6>
+              <small class="card-text text-muted d-block mb-1">
+                <span class="text-dark fw-semibold">{{ coupon.couponCode }}</span>
+              </small>
             </div>
 
-            <div class="mb-3 d-flex flex-column" 
-                 style="flex-grow: 1; min-height: 0;">
-              <h5 class="fw-bold mb-3 theme-heading">Find Customer</h5>
-              
-              <div class="p-3 bg-white rounded shadow-sm border d-flex flex-column" 
-                   style="flex-grow: 1;">
-                <div class="row g-2 align-items-center mb-3" style="flex-shrink: 0;">
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control form-control-sm" id="customerSearch" placeholder="Search by Name or Phone..." />
+            <!-- View link (bottom right) -->
+            <small class="text-end mt-auto">
+              <a href="#" data-bs-toggle="modal" [attr.data-bs-target]="'#couponModal'+coupon.couponId"
+                class="text-primary text-decoration-underline" style="font-size: 12px;">View</a>
+            </small>
+          </div>
+        </div>
+
+        <!-- MODAL FOR THIS COUPON -->
+        <div class="modal fade" [id]="'couponModal'+coupon.couponId" tabindex="-1"
+          [attr.aria-labelledby]="'couponModalLabel'+coupon.couponId" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4" style="overflow: hidden;">
+              <div class="card border-0 h-100">
+                <div class="d-flex justify-content-center pt-4 pb-2">
+                  <img [src]="coupon.couponImage || coupon.imageUrl" alt="Coupon Image"
+                    class="img-fluid" style="max-width: 45%;">
+                </div>
+
+                <div class="card-body text-center pt-3 pb-2">
+                  <h5 class="card-title fw-bold mb-2" [id]="'couponModalLabel'+coupon.couponId">
+                    {{ coupon.name }}
+                  </h5>
+                  <p class="text-muted mb-3"><em>{{ coupon.description }}</em></p>
+
+                  <div class="bg-light p-2 rounded-3 d-inline-block mb-3">
+                    <span class="fw-semibold text-dark">Coupon Code:</span>
+                    <span class="badge bg-primary-subtle text-dark ms-2">{{ coupon.couponCode }}</span>
                   </div>
-                  <div class="col-sm-4">
-                    <button type="button" class="btn btn-theme-outline-primary btn-sm w-100" 
-                            data-bs-toggle="modal" data-bs-target="#addNewUserModal">
-                      Add New
-                    </button>
+
+                  <div class="text-start mx-auto" style="max-width: 300px;">
+                    <p class="mb-1"><strong>Coupon Type:</strong> {{ coupon.typeName }}</p>
+                    <p class="mb-1"><strong>Min Amount:</strong> ₹{{ coupon.minAmount }}</p>
+                    <p class="mb-1"><strong>User Limit:</strong>
+                      {{ coupon.userLimit ? coupon.userLimitCount : 'Unlimited' }}</p>
+                    <p class="mb-0"><strong>Validity:</strong>
+                      {{ coupon.startingDate | date:'dd-MM-yyyy' }} → {{ coupon.endingDate | date:'dd-MM-yyyy' }}</p>
                   </div>
                 </div>
 
-                <div style="flex-grow: 1; overflow-y: auto;">
-                  <div class="list-group">
-                    <a class="list-group-item list-group-item-action active p-2">
-                      <strong class="mb-1 fs-6">Kumar</strong>
-                      <small class="d-block">9876543210 | kumar&#64;gmail.com</small>
-                    </a>
-                    <a class="list-group-item list-group-item-action p-2">
-                      <strong class="mb-1 fs-6">Sunita Sharma</strong>
-                      <small class="d-block text-muted">9123456789 | sunita&#64;example.com</small>
-                    </a>
-                    <a class="list-group-item list-group-item-action p-2">
-                      <strong class="mb-1 fs-6">Ravi</strong>
-                      <small class="d-block text-muted">9123456789 | sunita&#64;example.com</small>
-                    </a>
-                  </div>
+                <div class="card-footer bg-transparent border-0 text-center pb-4 pt-2">
+                  <button type="button" class="btn btn-outline-primary btn-sm px-4"
+                    data-bs-dismiss="modal">Close</button>
                 </div>
               </div>
-            </div>
-
-            <div class="text-center pt-3 pb-1" style="flex-shrink: 0;">
-              <button type="button" 
-                      class="btn btn-theme-accent-gradient text-white d-flex align-items-center justify-content-center px-4 py-2 rounded-pill shadow mx-auto"
-                      data-bs-toggle="modal" data-bs-target="#checkoutModal">
-                <strong>🎉 Redeem Now</strong>
-              </button>
-            </div>
-          </form>
-        </c-card-body>
-      </c-card>
-      
-      <div class="modal fade" id="addNewUserModal" tabindex="-1" aria-labelledby="addNewUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content redeem-theme"> <div class="modal-header">
-              <h5 class="modal-title theme-heading" id="addNewUserModalLabel">Add New Contact</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="mb-2"><label class="form-label small">Full Name</label><input type="text" class="form-control form-control-sm" placeholder="Kumar"></div>
-                <div class="mb-2"><label class="form-label small">Phone Number</label><input type="tel" class="form-control form-control-sm" placeholder="9876543210"></div>
-                <div class="mb-2"><label class="form-label small">Email (Optional)</label><input type="email" class="form-control form-control-sm" placeholder="kumar@gmail.com"></div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-sm btn-theme-primary">Save Contact</button>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- NO COUPONS MESSAGE -->
+      <div *ngIf="filteredCoupons.length === 0" class="w-100 text-center text-muted py-4">
+        No coupons available
+      </div>
 
+    </div>
+
+    <button type="button" id="scrollRight"
+      class="btn btn-circle btn-theme-primary btn-sm position-absolute top-50 end-0 translate-middle-y shadow"
+      style="z-index: 2; margin-right: -10px;">
+      <strong>&gt;</strong>
+    </button>
+  </div>
+</div>
+
+<button type="button" id="scrollRight"
+  class="btn btn-circle btn-theme-primary btn-sm position-absolute top-50 end-0 translate-middle-y shadow"
+  style="z-index: 2; margin-right: -10px;">
+  <strong>&gt;</strong>
+</button>
+              
+            </div>
+
+            <!-- ======================== FIND CUSTOMER ======================== -->
+            <div class="mb-3 mx-5 d-flex flex-column" style="min-height: 360px;">
+              <h5 class="fw-bold mb-3 theme-heading">Find Customer</h5>
+
+              <div class="p-3 bg-white rounded shadow-sm border d-flex flex-column" style="flex-grow: 1;">
+                <div class="row align-items-center mb-3 mx-4 mt-3 justify-content-between gap-4"
+                  style="flex-shrink: 0;">
+                  <div class="col-sm-8">
+                    <!-- SEARCH + RESET (CUSTOMER) -->
+                    <div class="input-group input-group-sm gap-2">
+                      <input type="text" class="form-control form-control-sm" id="customerSearch" [maxlength]="10"
+                        [(ngModel)]="contactSearch" placeholder="Search by Phone..." (input)="searchContact()"
+                        (keypress)="validatePhoneInput($event)">
+                      <button type="button" class="btn btn-theme-outline-primary" title="Search customers"
+                        (click)="searchContact()">
+                        <i class="bi bi-search"></i>
+                      </button>
+                      <button type="button" class="btn btn-outline-secondary" title="Clear search"
+                        (click)="refreshSearch()">
+                        <i class="bi bi-arrow-clockwise"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <button type="button" class="btn btn-theme-outline-primary btn-sm w-100" (click)="openModal()" data-bs-toggle="modal"
+                      data-bs-target="#addNewUserModal">
+                      Add New
+                    </button>
+                  </div>
+                </div>
+                <!--CONTACT SEARCH ICON-->
+                <div *ngIf="!contactSearch" class="d-flex justify-content-center align-items-center text-muted w-100" style="height: 200px;">
+                  <img src="assets/contactsearch.png" alt="couponly.store Logo" class="search-icon" />
+                </div>
+                <!--SPINNER-->
+                <div class="spinner" *ngIf="contactSearch?.trim() && searchStart"></div>
+                <!--CONTACTS-->
+                <!-- Contact Results -->
+                <div *ngIf="contactSearch?.trim() && !searchStart">
+                  <ng-container *ngIf="contacts.length > 0; else noContacts">
+                    <div class="list-group">
+                      <a *ngFor="let contact of contacts" (click)="selectContact(contact)" [ngClass]="{
+                          'list-group-item': true,
+                          'list-group-item-action': true,
+                          'p-2': true,
+                          'active': contact === selectedContact
+                        }">
+                        <strong class="mb-1 fs-6">{{contact.name}}</strong>
+                        <small class="d-block">{{contact.contact}} | {{contact.mail}}</small>
+                      </a>
+                    </div>
+                  </ng-container>
+                </div>
+
+                <!-- No Contacts Message -->
+                <ng-template #noContacts>
+                  <div class="d-flex justify-content-center align-items-center text-muted w-100" style="height: 200px;">
+                    No contacts found
+                  </div>
+                </ng-template>
+
+              </div>
+            </div>
+
+            <!-- ======================== REDEEM BUTTON ======================== -->
+            <div class="text-center pt-2 pb-3" style="flex-shrink: 0;">
+              <button type="button"
+                class="btn btn-theme-primary text-white d-flex align-items-center justify-content-center px-4 py-2 rounded-pill shadow mx-auto"
+                data-bs-toggle="modal" data-bs-target="#checkoutModal">
+                <strong>🎉Redeem Now</strong>
+              </button>
+            </div>
+          
+        </c-card-body>
+      </c-card>
+
+      <!-- ======================== ADD NEW CONTACT MODAL ======================== -->
+      <div class="modal fade" id="addNewUserModal" tabindex="-1" aria-labelledby="addNewUserModalLabel" 
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content redeem-theme">
+            <div class="modal-header">
+              <h5 class="modal-title theme-heading" id="addNewUserModalLabel">Add New Contact</h5>
+              <button type="button" class="btn-close"   (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form [formGroup]="contactForm" (ngSubmit)="createContact()">
+              <div class="modal-body">
+                <div class="mb-2">
+                  <label class="form-label small">Full Name</label>
+                  <input type="text" class="form-control form-control-sm" formControlName="Name"
+                    placeholder="enter your name" (keypress)="validateNameInput($event)">
+                  <div *ngIf="contactForm.get('Name')?.touched && contactForm.get('Name')?.invalid"
+                    class="text-danger small">
+                    Name is required.
+                  </div>
+                </div>
+
+                <div class="mb-2">
+                  <label class="form-label small">Phone Number</label>
+                  <input type="tel" class="form-control form-control-sm" formControlName="PhoneNumber"
+                    placeholder="enter your PhoneNumber" (keypress)="validatePhoneInput($event)">
+                  <div *ngIf="contactForm.get('PhoneNumber')?.touched && contactForm.get('PhoneNumber')?.invalid"
+                    class="text-danger small">
+                    Enter a valid 10-digit phone number.
+                  </div>
+                </div>
+
+                <div class="mb-2">
+                  <label class="form-label small">Email</label>
+                  <input type="email" class="form-control form-control-sm" formControlName="Email"
+                    placeholder="enter your Email">
+                  <div
+  *ngIf="contactForm.get('Email')?.touched && contactForm.get('Email')?.invalid"
+  class="text-danger small"
+>
+  <ng-container *ngIf="contactForm.get('Email')?.errors?.['required']">
+    Email is required.
+  </ng-container>
+  <ng-container *ngIf="contactForm.get('Email')?.errors?.['invalidEmailDomain']">
+    Enter a valid domain
+  </ng-container>
+  <ng-container *ngIf="!contactForm.get('Email')?.errors?.['invalidEmailDomain'] && contactForm.get('Email')?.errors?.['email']">
+    Enter a valid email.
+  </ng-container>
+</div>
+
+                
+              </div>
+               </div> 
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" (click)="closeModal()" data-bs-dismiss="modal" >Close</button>
+                <button type="submit" class="btn btn-sm btn-theme-primary" > Save Contact</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================== CHECKOUT MODAL ======================== -->
       <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content redeem-theme"> <div class="modal-header" style="background-color: #f8f9fa;">
+          <div class="modal-content redeem-theme">
+            <div class="modal-header" style="background-color: #f8f9fa;">
               <h5 class="modal-title theme-heading" id="checkoutModalLabel">Confirm Redemption</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-3">
               <p>Please confirm the details below:</p>
-              
+
               <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between align-items-center py-2">
-                  <div><strong class="d-block text-muted small">CUSTOMER</strong><span class="fs-6">Kumar</span></div><span class="fs-4">📞</span>
+                  <div><strong class="d-block text-muted small">CUSTOMER</strong><span class="fs-6">Kumar</span></div>
+                  <span class="fs-4">Phone</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center py-2">
-                  <div><strong class="d-block text-muted small">COUPON</strong><span class="fs-6 fw-bold" style="color: var(--primary-color);">Free Coffee</span></div><span class="fs-4">☕</span>
+                  <div><strong class="d-block text-muted small">COUPON</strong><span class="fs-6 fw-bold"
+                      style="color: var(--primary-color);">Free Coffee</span></div><span class="fs-4">Coffee</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center py-2">
-                  <div><strong class="d-block text-muted small">COST</strong><span class="fs-6 fw-bold" style="color: var(--accent-color);">150 Points</span></div><span class="fs-4">⭐</span>
+                  <div><strong class="d-block text-muted small">COST</strong><span class="fs-6 fw-bold"
+                      style="color: var(--accent-color);">150 Points</span></div><span class="fs-4">Star</span>
                 </li>
               </ul>
-
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="button" class="btn btn-theme-accent">
+              <button type="button" class="btn btn-theme-primary">
                 <strong>Confirm & Redeem</strong>
               </button>
             </div>
           </div>
         </div>
       </div>
-      </c-col>
+
+    </c-col>
   </c-row>
 </c-col>

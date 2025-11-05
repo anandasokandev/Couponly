@@ -24,7 +24,7 @@ export class DesignedCouponsComponent implements OnInit {
   couponTypes: any[] = [];
   couponCode: string = '';
   typeId?: number;
-  selectedDateFilter = '1'; // default to 'All Coupons'
+  selectedDateFilter = '1'; // default to All Coupons
   colors: string[] = [
     '#e74c3c', // red
     '#27ae60', // green
@@ -75,7 +75,7 @@ export class DesignedCouponsComponent implements OnInit {
         dateFilter = 'expired';
         break;
       default:
-        dateFilter = undefined; // 'All Coupons'
+        dateFilter = undefined; //All Coupons
     }
 
     this.api.getStoreCoupons(this.couponCode, this.typeId, dateFilter).subscribe({

@@ -142,5 +142,14 @@ exportStorePromotionsToExcel(
 }
 
 
+downloadPromotionInvoice(promotionId: number): Observable<Blob> {
+  const token = sessionStorage.getItem('token');
+  const headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${token}`)
+    .set('Accept', 'application/pdf');
+
+  const url = `${environment.apiBaseUrl}/${environment.endpoints.storedashboard.invoice}/${promotionId}`;
+  return this.http.get(url, { headers, responseType: 'blob' });
+}
 
 }

@@ -134,4 +134,23 @@ export class PromotionHistoryComponent {
   });
 }
 
+
+downloadInvoice(promotionId: number) {
+  this.api.downloadPromotionInvoice(promotionId).subscribe({
+    next: (blob: Blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `PromotionInvoice.pdf`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    },
+    error: () => {
+      this.toast.show({ type: 'error', message: 'Failed to download invoice.' });
+    }
+  });
+}
+
+
+
 }

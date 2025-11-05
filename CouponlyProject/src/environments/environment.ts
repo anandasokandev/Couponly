@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  // apiBaseUrl: 'https://api.couponly.store/api',
-  apiBaseUrl: 'https://localhost:7224/api',
+  apiBaseUrl: 'https://api.couponly.store/api',
+  // apiBaseUrl: 'https://localhost:7224/api',
 
   imageUploadUrl: 'https://images.couponly.store/api/upload',
   imageKey: '5dtg419dtny9y84nu67ry7',
@@ -47,6 +47,8 @@ export const environment = {
       upload:'ImageUpload',
       addStore:'Store/AddStore',
       fetchStoreRedeem: 'CouponRedeem/GetCouponByStore/', // Add this storeredeem
+      addContact: 'Contact/AddContact', // ✅ Add this new contact
+      
       updateStore:'Store/',
       storeExists:'Store/check-store-existence',
       emailExists:'Store/check-email-existence',
@@ -137,7 +139,8 @@ export const environment = {
       coupons: 'StoreDashBoardCoupons/StoreCoupons',
       promotions:'StoreDashboardRedeem/FilterStorePromotions',
       excelpromo:'StoreDashboardRedeem/ExportStorePromotionsToExcel',
-      excelredeem:'StoreDashboardRedeem/ExportStoreRedeemsToExcel'
+      excelredeem:'StoreDashboardRedeem/ExportStoreRedeemsToExcel',
+      invoice:'StoreDashboardRedeem/GeneratePromotionInvoice',
     },
 
     admindashboard:{
