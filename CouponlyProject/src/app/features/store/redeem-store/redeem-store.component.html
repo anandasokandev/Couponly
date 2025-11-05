@@ -5,7 +5,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-<c-col xs="12" class="px-0" style="background-color: #f4f7fa; min-height: 100vh;">
+<c-col xs="12" class="px-0" style="background-color: #f4f7fa; height: 100vh; overflow: hidden;">
   <c-row class="justify-content-center m-0">
     <c-col xs="12" class="p-0">
 
@@ -151,7 +151,7 @@
             </div>
 
             <!-- ======================== FIND CUSTOMER ======================== -->
-            <div class="mb-3 mx-5 d-flex flex-column" style="flex-grow: 1; min-height: 0;">
+            <div class="mb-3 mx-5 d-flex flex-column" style="min-height: 360px;">
               <h5 class="fw-bold mb-3 theme-heading">Find Customer</h5>
 
               <div class="p-3 bg-white rounded shadow-sm border d-flex flex-column" style="flex-grow: 1;">
@@ -160,10 +160,11 @@
                   <div class="col-sm-8">
                     <!-- SEARCH + RESET (CUSTOMER) -->
                     <div class="input-group input-group-sm gap-2">
-                      <input type="text" class="form-control form-control-sm" id="customerSearch"
-                      [maxlength]="10"
-                        [(ngModel)]="contactSearch" placeholder="Search by Phone..." (input)="searchContact()" (keypress)="validatePhoneInput($event)">
-                      <button type="button" class="btn btn-theme-outline-primary" title="Search customers" (click)="searchContact()">
+                      <input type="text" class="form-control form-control-sm" id="customerSearch" [maxlength]="10"
+                        [(ngModel)]="contactSearch" placeholder="Search by Phone..." (input)="searchContact()"
+                        (keypress)="validatePhoneInput($event)">
+                      <button type="button" class="btn btn-theme-outline-primary" title="Search customers"
+                        (click)="searchContact()">
                         <i class="bi bi-search"></i>
                       </button>
                       <button type="button" class="btn btn-outline-secondary" title="Clear search"
@@ -173,26 +174,24 @@
                     </div>
                   </div>
                   <div class="col">
-                    <button type="button" class="btn btn-theme-outline-primary btn-sm w-100" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-theme-outline-primary btn-sm w-100" (click)="openModal()" data-bs-toggle="modal"
                       data-bs-target="#addNewUserModal">
                       Add New
                     </button>
                   </div>
                 </div>
                 <!--CONTACT SEARCH ICON-->
-                <div *ngIf="!contactSearch" class="display-div">
+                <div *ngIf="!contactSearch" class="d-flex justify-content-center align-items-center text-muted w-100" style="height: 200px;">
                   <img src="assets/contactsearch.png" alt="couponly.store Logo" class="search-icon" />
                 </div>
                 <!--SPINNER-->
                 <div class="spinner" *ngIf="contactSearch?.trim() && searchStart"></div>
                 <!--CONTACTS-->
-               <!-- Contact Results -->
+                <!-- Contact Results -->
                 <div *ngIf="contactSearch?.trim() && !searchStart">
                   <ng-container *ngIf="contacts.length > 0; else noContacts">
                     <div class="list-group">
-                      <a *ngFor="let contact of contacts" 
-                        (click)="selectContact(contact)"
-                        [ngClass]="{
+                      <a *ngFor="let contact of contacts" (click)="selectContact(contact)" [ngClass]="{
                           'list-group-item': true,
                           'list-group-item-action': true,
                           'p-2': true,
@@ -207,15 +206,16 @@
 
                 <!-- No Contacts Message -->
                 <ng-template #noContacts>
-                  <div class="text-center text-muted p-3">
+                  <div class="d-flex justify-content-center align-items-center text-muted w-100" style="height: 200px;">
                     No contacts found
                   </div>
                 </ng-template>
+
               </div>
             </div>
 
             <!-- ======================== REDEEM BUTTON ======================== -->
-            <div class="text-center pt-3 pb-1" style="flex-shrink: 0;">
+            <div class="text-center pt-2 pb-3" style="flex-shrink: 0;">
               <button type="button"
                 class="btn btn-theme-primary text-white d-flex align-items-center justify-content-center px-4 py-2 rounded-pill shadow mx-auto"
                 data-bs-toggle="modal" data-bs-target="#checkoutModal">
@@ -227,13 +227,13 @@
       </c-card>
 
       <!-- ======================== ADD NEW CONTACT MODAL ======================== -->
-      <div class="modal fade" id="addNewUserModal" tabindex="-1" aria-labelledby="addNewUserModalLabel"
+      <div class="modal fade" id="addNewUserModal" tabindex="-1" aria-labelledby="addNewUserModalLabel" 
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content redeem-theme">
             <div class="modal-header">
               <h5 class="modal-title theme-heading" id="addNewUserModalLabel">Add New Contact</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close"   (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <form [formGroup]="contactForm" (ngSubmit)="createContact()">
@@ -262,16 +262,28 @@
                   <label class="form-label small">Email</label>
                   <input type="email" class="form-control form-control-sm" formControlName="Email"
                     placeholder="enter your Email">
-                  <div *ngIf="contactForm.get('Email')?.touched && contactForm.get('Email')?.invalid"
-                    class="text-danger small">
-                    Enter a valid email.
-                  </div>
-                </div>
+                  <div
+  *ngIf="contactForm.get('Email')?.touched && contactForm.get('Email')?.invalid"
+  class="text-danger small"
+>
+  <ng-container *ngIf="contactForm.get('Email')?.errors?.['required']">
+    Email is required.
+  </ng-container>
+  <ng-container *ngIf="contactForm.get('Email')?.errors?.['invalidEmailDomain']">
+    Enter a valid domain
+  </ng-container>
+  <ng-container *ngIf="!contactForm.get('Email')?.errors?.['invalidEmailDomain'] && contactForm.get('Email')?.errors?.['email']">
+    Enter a valid email.
+  </ng-container>
+</div>
+
+                
               </div>
+               </div> 
 
               <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-sm btn-theme-primary">Save Contact</button>
+                <button type="button" class="btn btn-sm btn-secondary" (click)="closeModal()" data-bs-dismiss="modal" >Close</button>
+                <button type="submit" class="btn btn-sm btn-theme-primary" > Save Contact</button>
               </div>
             </form>
           </div>
@@ -317,6 +329,3 @@
     </c-col>
   </c-row>
 </c-col>
-
-
-

@@ -65,11 +65,21 @@
 />
 
 <div *ngIf="editContactForm.get('Email')?.touched && editContactForm.get('Email')?.invalid" class="text-danger">
-          <div *ngIf="editContactForm.get('Email')?.errors?.['required']">Email is required.</div>
-          <!-- <div *ngIf="editContactForm.get('Email')?.errors?.['email']">Please enter a valid email address.</div> -->
-           <div *ngIf="!isValidEmail(editContactForm.get('Email')?.value) && editContactForm.get('Email')?.value" class="text-danger">
-  Invalid email format. Must contain '&#64;' and '.'
-</div>
+  <div *ngIf="editContactForm.get('Email')?.errors?.['required']">
+    Email is required.
+  </div>
+
+  <!-- Basic format check using isValidEmail() -->
+  <div *ngIf="editContactForm.get('Email')?.value && !isValidEmail(editContactForm.get('Email')?.value)">
+    Invalid email format.
+  </div>
+
+  <!-- Custom domain check -->
+  <div *ngIf="editContactForm.get('Email')?.errors?.['strictEmail']">
+    Only valid domain is allowed.
+  </div>
+
+
 
         </div>
       </div>

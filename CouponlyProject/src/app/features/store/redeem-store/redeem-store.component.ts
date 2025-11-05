@@ -31,6 +31,7 @@ export class RedeemStoreComponent implements OnInit, AfterViewInit  {
   coupons: any[] = [];
   selectedCoupon: string = '';
   selectedCouponImage: string | null = null;
+  storeId: any = null;
   contacts:any[]=[];
   contactForm: FormGroup;
   searchStart:boolean=false;
@@ -55,7 +56,17 @@ export class RedeemStoreComponent implements OnInit, AfterViewInit  {
   contactSearch:any; 
 
 ngOnInit(): void {
+  const raw = sessionStorage.getItem('storeId');
+  this.storeId = (raw && raw !== 'null') ? Number(raw) : null;
 
+  if (!this.storeId) {
+    console.warn('No valid storeId in sessionStorage');
+    this.toast.show({ type: 'warning', message: 'Please select a store first.' });
+    
+    return;
+  }
+
+  // Use the new function instead of FetchStoreRedeem
   this.loadValidCoupons();
 }
 
