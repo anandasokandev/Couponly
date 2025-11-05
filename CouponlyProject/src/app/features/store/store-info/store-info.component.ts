@@ -39,5 +39,13 @@ export class StoreInfoComponent implements OnInit {
     });
   }
 
+ 
+
 
 }
+
+
+
+ 
+ 
+
