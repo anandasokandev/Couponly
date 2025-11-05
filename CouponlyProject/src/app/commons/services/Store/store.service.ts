@@ -107,5 +107,9 @@ FetchStoreRedeem(id: number): Observable<any> {
   return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchStoreRedeem}?storeId=${id}`);
 }
 
-
+fetchStoreUsers(): Observable<any[]> {
+  const token = sessionStorage.getItem('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.user.StoreUsers}`, { headers });
+}
 }

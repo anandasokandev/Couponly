@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Inject, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonDirective, FormModule, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, SpinnerModule, TableModule } from '@coreui/angular';
+import { ButtonDirective, CardBodyComponent, CardComponent, ColComponent, FormModule, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, NavComponent, NavItemComponent, NavModule, RowComponent, SpinnerModule, TableModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { District } from '../../../../commons/models/district.model';
 import { Location } from '../../../../commons/models/location.model';
@@ -37,6 +37,12 @@ export interface Coupon {
     ReactiveFormsModule,
     TableModule,
     PaginationComponent,
+    NavModule,
+    NavComponent,
+    CardComponent,
+    CardBodyComponent,
+    ColComponent,
+    RowComponent
   ],
   templateUrl: './find-store-model.component.html',
   styleUrl: './find-store-model.component.scss'
@@ -77,15 +83,18 @@ export class FindStoreModelComponent {
 
   filterForm: FormGroup;
   isStore: boolean = false;
+  currentStep: number = 1;
+  stepCheck = {
+    store: false,
+    coupon: false,
+    contacts: false
+  };
 
   @Output() contactsAdded = new EventEmitter<{ store: any; count: number; contactsNeeded: number; publicContacts: number; coupon: any }>();
 
   private toastService = inject(ToastService);
   constructor(private fb: FormBuilder, private promotionService: PromotionService) {
     this.filterForm = this.fb.group({
-      district: ['0'],
-      location: ['0'],
-      category: ['0'],
       storeName: ['']
     });
   }
@@ -115,11 +124,10 @@ export class FindStoreModelComponent {
     if(sessionStorage.getItem('role') === "Store")
     {
       this.isStore = true;
-      this.promotionService.getStores(this.currentPage, this.itemsPerPage, '0', '8', sessionStorage.getItem('userId') || '').subscribe({
+      this.promotionService.getStores(this.currentPage, this.itemsPerPage, '0', '8', sessionStorage.getItem('storeId') || '').subscribe({
         next: (response: any) => {
           this.selectedStore = response.data.items[0];
           this.selectStore(this.selectedStore);
-          console.log(this.selectedStore);
         }
       });
       // this.couponBox = true;
@@ -128,22 +136,6 @@ export class FindStoreModelComponent {
       this.filterForm.get('storeName')?.valueChanges.subscribe(value => {
         this.searchtext = value;
         this.searchStores();
-      });
-    }
-  }
-
-  getLocations() {
-    if(this.districtId == 0) {
-      this.locations = [];
-    }
-    else {
-      this.promotionService.getLocations(this.districtId).subscribe((data: any) => {
-        if(data && data.statusCode == 200) {
-          const locations = data.data as Location[];
-          this.locations = locations;
-        } else {
-          this.locations = [];
-        }
       });
     }
   }
@@ -182,8 +174,10 @@ export class FindStoreModelComponent {
 
     this.promotionService.getCoupons(this.selectedStore.id, this.couponText).subscribe({
       next: (response: any) => {
+        console.log(response)
         this.couponDetails = response.data;
         this.isCouponLoading = false;
+        console.log("Coupon: ", this.couponDetails);
       },
       error: () => {
         this.isCouponLoading = false;
@@ -194,16 +188,19 @@ export class FindStoreModelComponent {
 
   selectStore(store: any): void {
     this.selectedStore = store;
+    this.stepCheck.store = true;
+    this.currentStep = 2;
     this.couponDetails = null; // Reset coupon details when a new store is selected
-    this.couponBox = true; // Show coupon box when a new store is selected
-    this.storeBox = false;
     this.contactsNeeded = 0; // Reset contacts needed when a new store is selected
     this.searchResults = [];
     this.searchCoupon();
+    console.log("Store selected: ", this.selectedStore);
   }
 
   selectCoupon(coupon: Coupon) {
     this.selectedCoupon = coupon;
+    this.stepCheck.coupon = true;
+    this.currentStep = 3;
     this.couponDetails = null;
     this.couponBox = false;
     this.promotionService.getStoreContactCount(this.selectedStore.id).subscribe({
@@ -222,7 +219,22 @@ export class FindStoreModelComponent {
     this.selectedCoupon = null;
     this.couponDetails = null;
     this.couponBox = true;
+    this.stepCheck.coupon = false;
+    this.stepCheck.contacts = false;
+    this.currentStep = 2;
     this.searchCoupon();
+  }
+
+  changeStore(): void {
+    this.selectedCoupon = null;
+    this.selectedStore = null;
+    this.searchResults = [];
+    this.filterForm.reset();
+    this.couponDetails = null;
+    this.stepCheck.store = false;
+    this.stepCheck.coupon = false;
+    this.stepCheck.contacts = false;
+    this.currentStep = 1;
   }
 
   checkContactsNeeded(): void {
@@ -242,7 +254,7 @@ export class FindStoreModelComponent {
       publicContacts: this.contactsNeeded - this.StoreContactCount > 0 ? this.contactsNeeded - this.StoreContactCount : 0,
       coupon: this.selectedCoupon
     };
-
+    this.stepCheck.contacts = true;
     this.contactsAdded.emit(dataToEmit);
   }
 
