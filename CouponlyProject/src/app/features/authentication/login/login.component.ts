@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { LoginService } from './../../../commons/services/Authentication/login.service';
 import { SpinnerModule } from '@coreui/angular';
 import { ToastComponent } from '../../admin/pages/toast/toast.component';
-import { ToastService } from 'src/app/commons/services/Toaster/toast.service';
+import { ToastService } from '../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -54,44 +54,50 @@ export class LoginComponent {
 
 
 
-    this.api.login(payload).subscribe({
-      next: (response: any) => {
-        console.log(response);
-        if (response.isSuccess) {
-          sessionStorage.setItem('token', response.data.token);
-          sessionStorage.setItem('role', response.data.role);
-          sessionStorage.setItem('userId', response.data.userId);
-          console.log(sessionStorage.getItem('role'))
-          console.log(sessionStorage.getItem('userId'))
-          // localStorage.setItem('token', response.data.token);
-          // localStorage.setItem('role', response.data.role);
-          // localStorage.setItem('userId', response.data.userId);
-          // console.log(localStorage.getItem('role'));
-          // console.log(localStorage.getItem('userId'));
-          if (response.data.role === 'Admin') {
-            this.router.navigate(['/admin']);
-          } else if (response.data.role === 'User') {
-            this.router.navigate(['/user']);
-          } else if (response.data.role === 'Store') {
-            this.router.navigate(['/admin/store-dashboard']);
-          } else {
-            console.log('Unrecognized role:', response.role);
-            this.errorMessage = 'Unrecognized role';
-          }
+this.api.login(payload).subscribe({
+  next: (response: any) => {
+    console.log(response);
+    if (response.isSuccess) {
+      const { token, role, userId, storeId } = response.data;
 
-          this.errorMessage = '';
-        } else {
-          console.log(response);
-          this.errorMessage = response.message || 'Invalid credentials';
-          this.isLoading = false;
-        }
-      },
-      error: (err) => {
-        console.error(err);
-        this.errorMessage = 'Invalid Username or Password';
-        this.isLoading = false;
-      },
-    });
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('role', role);
+
+      if (role === 'Store') {
+        sessionStorage.setItem('storeId', storeId);
+      } else {
+        sessionStorage.setItem('userId', userId);
+      }
+
+      console.log('Role:', sessionStorage.getItem('role'));
+      console.log('UserId:', sessionStorage.getItem('userId'));
+      console.log('StoreId:', sessionStorage.getItem('storeId'));
+
+      if (role === 'Admin') {
+        this.router.navigate(['/admin']);
+      } else if (role === 'User') {
+        this.router.navigate(['/user']);
+      } else if (role === 'Store') {
+        this.router.navigate(['/store']);
+      } else {
+        console.log('Unrecognized role:', role);
+        this.errorMessage = 'Unrecognized role';
+      }
+
+      this.errorMessage = '';
+    } else {
+      console.log(response);
+      this.errorMessage = response.message || 'Invalid credentials';
+      this.isLoading = false;
+    }
+  },
+  error: (err) => {
+    console.error(err);
+    this.errorMessage = 'Invalid Username or Password';
+    this.isLoading = false;
+  },
+});
+
   }
 
   reset() {

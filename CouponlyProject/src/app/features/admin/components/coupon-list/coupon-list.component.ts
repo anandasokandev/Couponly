@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from '../../pages/pagination/pagination.component';
@@ -85,44 +84,63 @@ export class CouponlistComponent implements OnInit {
   }
 
 
-  loadCoupons() {
-    this.isLoading = true;
+loadCoupons() {
+  this.isLoading = true;
 
-    let dateFilter: string | undefined;
+  let dateFilter: string | undefined;
 
-    switch (this.selectedDateFilter) {
-      case '2':
-        dateFilter = 'valid';
-        break;
-      case '3':
-        dateFilter = 'upcoming';
-        break;
-      case '4':
-        dateFilter = 'expired';
-        break;
-      default:
-        dateFilter = undefined;
-        break;
-    }
-
-    this.couponService.getCouponsByFilter({
-      couponCode: this.couponCode,
-      storeName: this.storeNameSearch,
-      storeId: this.selectedStore,
-      typeId: this.selectedType,
-      dateFilter: dateFilter
-    }).subscribe({
-      next: (res: any) => {
-        this.coupons = res.data || [];
-        this.totalItems = this.coupons.length;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error(err);
-        this.isLoading = false;
-      }
-    });
+  switch (this.selectedDateFilter) {
+    case '2':
+      dateFilter = 'valid';
+      break;
+    case '3':
+      dateFilter = 'upcoming';
+      break;
+    case '4':
+      dateFilter = 'expired';
+      break;
+    default:
+      dateFilter = undefined;
+      break;
   }
+
+  this.couponService.getCouponsByFilter({
+    couponCode: this.couponCode,
+    storeName: this.storeNameSearch,
+    storeId: this.selectedStore,
+    typeId: this.selectedType,
+    dateFilter: dateFilter
+  }).subscribe({
+    next: (res: any) => {
+      if (res?.data?.length) {
+        //  Sort latest first
+        const sortedCoupons = res.data.sort(
+          (a: any, b: any) =>
+            new Date(b.startingDate).getTime() - new Date(a.startingDate).getTime()
+        );
+
+        this.totalItems = sortedCoupons.length;
+
+        //  Calculate pagination range
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+
+        //  Slice based on page
+        this.coupons = sortedCoupons.slice(startIndex, endIndex);
+      } else {
+        this.coupons = [];
+        this.totalItems = 0;
+      }
+
+      this.isLoading = false;
+    },
+    error: (err) => {
+      console.error(err);
+      this.isLoading = false;
+    }
+  });
+}
+
 
   filterCoupons() {
     this.loadCoupons();

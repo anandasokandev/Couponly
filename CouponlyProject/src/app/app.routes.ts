@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-    {
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
@@ -57,8 +57,13 @@ export const routes: Routes = [
       // },
       {
         path: 'admin',
-        loadChildren: () => import('./features/admin/admin.routes').then((m) => m.routes)
-     },
+        loadChildren: () => import('./features/admin/admin.routes').then((m) => m.adminRoutes)
+      },
+      {
+        path: 'store',
+        loadChildren: () => import('./features/store/store.routes').then((m) => m.storeRoutes)
+      },
+      
     ]
   },
   {
@@ -66,6 +71,27 @@ export const routes: Routes = [
     loadComponent: () => import('./features/admin/pages/payment/payment.component').then(m => m.PaymentComponent),
     data: {
       title: 'Payment'
+    }
+  },
+  {
+      path: 'redeem-store',
+      loadComponent: () => import('./features/store/redeem-store/redeem-store.component').then(m => m.RedeemStoreComponent),
+      data: {
+          title: 'Redeem Store'
+      }
+  },
+  {
+      path: 'redeemdemo',
+      loadComponent: () => import('./features/commons/redeem-store-demo/redeem-store-demo.component').then(m => m.RedeemStoreDemoComponent),
+      data: {
+          title: 'Redeem Demo'
+      }
+  },
+  {
+    path: '401',
+    loadComponent: () => import('./views/pages/page401/page401.component').then(m => m.Page401Component),
+    data: {
+      title: 'Page 401'
     }
   },
   {
@@ -111,5 +137,5 @@ export const routes: Routes = [
     }
   },
   
-  { path: '**', redirectTo: 'admin' }
+  { path: '**', redirectTo: '500' }
 ];

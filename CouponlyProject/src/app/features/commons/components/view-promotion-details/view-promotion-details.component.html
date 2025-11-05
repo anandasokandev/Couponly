@@ -1,0 +1,271 @@
+<c-col xs="12">
+  <c-card class="mb-4" *ngIf="promotion">
+    <c-card-header class="d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="mb-0">{{ promotion.title }}</h5>
+        <small class="text-body-secondary">
+          Created on: {{ promotion.date | date: 'fullDate' }}
+        </small>
+      </div>
+      <div>
+        <button cButton color="primary" size="sm" (click)="goBack()">
+          &larr; Back
+        </button>
+        <button
+          cButton
+          size="sm"
+          color="success"
+          class="ms-3"
+          style="color: blanchedalmond;"
+          *ngIf="PaymentStatusInfo.text === 'Failed' && promotion.status == 'Created'"
+          (click)="resendPaymentLink(promotion.id)"
+          [disabled]="resending"
+        >
+          <i class="fa fa-key" aria-hidden="true" *ngIf="!resending && !isStore"></i>
+          <i class="fa fa-spinner fa-spin" aria-hidden="true" *ngIf="resending"></i>
+          Resend Payment URL
+        </button>
+        <button
+          cButton
+          size="sm"
+          color="danger"
+          class="ms-3 text-white"
+          *ngIf="promotion.status === 'Created'"
+          (click)="cancelPromotion(promotion.id)"
+          [disabled]="canceling"
+        >
+          <i class="fa fa-times" aria-hidden="true" *ngIf="!canceling && !isStore"></i>
+          <i class="fa fa-spinner fa-spin" aria-hidden="true" *ngIf="canceling"></i>
+          Cancel
+        </button>
+      </div>
+    </c-card-header>
+
+    <c-card-body *ngIf="promotion">
+      <h5 class="mb-3" *ngIf="!isStore">Store Information</h5>
+      <div class="row mb-4 ms-lg-1 me-lg-1 border rounded p-3" *ngIf="!isStore">
+        <div class="col-md-4 mb-3">
+          <div class="text-body-secondary">Store Name</div>
+          <strong>{{ promotion.store.name }}</strong>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="text-body-secondary">Contact</div>
+          <strong>{{ promotion.store.contact }}</strong>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="text-body-secondary">Email</div>
+          <strong>{{ promotion.store.email }}</strong>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="text-body-secondary">Store Code</div>
+          <strong>{{ promotion.store.code }}</strong>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="text-body-secondary">Category</div>
+          <strong>{{ promotion.store.category }}</strong>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="text-body-secondary">Location</div>
+          <strong>{{ promotion.store.location }}</strong>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <h5 class="mb-3">Coupon Details</h5>
+          <div class="row border ms-lg-1 rounded px-3 py-4 align-items-center">
+            <div [ngClass]="promotion.coupon.image ? 'col-md-6' : 'col-md-12'">
+              <dl class="row mb-0">
+                <dt class="col-sm-4">Name</dt>
+                <dd class="col-sm-8">{{ promotion.coupon.name }}</dd>
+
+                <dt class="col-sm-4">Code</dt>
+                <dd class="col-sm-8">
+                  <c-badge color="success" shape="rounded-pill">
+                    {{ promotion.coupon.code }}
+                  </c-badge>
+                </dd>
+
+                <dt class="col-sm-4">From</dt>
+                <dd class="col-sm-8">{{ promotion.coupon.from }}</dd>
+
+                <dt class="col-sm-4">To</dt>
+                <dd class="col-sm-8">{{ promotion.coupon.to }}</dd>
+
+                <dt class="col-sm-4">Discount</dt>
+                <dd class="col-sm-8">{{ promotion.coupon.discount }}%</dd>
+
+                <dt class="col-sm-4">User Limit</dt>
+                <dd class="col-sm-8">{{ promotion.coupon.limit }}</dd>
+
+                <dt class="col-sm-4">Min Amount</dt>
+                <dd class="col-sm-8">₹{{ promotion.coupon.minValue }}/-</dd>
+              </dl>
+            </div>
+            <div class="col-md-6" *ngIf="promotion.coupon.image">
+              <img
+                width="100%"
+                [src]="promotion.coupon.image"
+                alt="Coupon Image"
+                class="img-fluid rounded"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <h5 class="mb-3">Summary & Status</h5>
+          <ul class="list-group">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Promotion Status
+              <c-badge [color]="PromotionStatusInfo.color">
+                {{ PromotionStatusInfo.text }}
+              </c-badge>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Payment Status
+              <c-badge [color]="PaymentStatusInfo.color">
+                {{ PaymentStatusInfo.text }}
+              </c-badge>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Amount
+              <span>&#8377;{{ promotion.amount }}/-</span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Sending Type
+              <span>{{ promotion.sentType }}</span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              *ngIf="promotion.sentType === 'Scheduled'"
+            >
+              Scheduled For
+              <span>{{ promotion.scheduled | date: 'short' }}</span>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Total Contacts
+              <c-badge color="info" shape="rounded-pill">
+                {{ promotion.totalContacts }}
+              </c-badge>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Public Contacts
+              <c-badge color="secondary" shape="rounded-pill">
+                {{ promotion.publicContacts }}
+              </c-badge>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Channels
+              <div class="">
+              <c-badge [color]="channelColor(channel)" shape="rounded-pill" *ngFor="let channel of promotion.channels; let i = index" class="ms-1">
+                {{ channel }}
+              </c-badge>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </c-card-body>
+
+    <!-- <ng-template #loading>
+      <div
+        class="d-flex justify-content-center align-items-center p-5"
+        style="min-height: 300px"
+      >
+        <c-spinner color="primary"></c-spinner>
+      </div>
+    </ng-template> -->
+  </c-card>
+
+  <c-card class="mb-4" *ngIf="!promotion">
+    <c-card-header class="d-flex justify-content-between align-items-center">
+      <div cCol="9" cPlaceholderAnimation=glow>
+        <h5><span cPlaceholder class="placeholder placeholder-lg col-5"></span></h5>
+        <small><span cPlaceholder class="placeholder col-4"></span></small>
+      </div>
+      <div cCol="3" cPlaceholderAnimation=glow>
+        <button cButton color="secondary" disabled cCol="5" cPlaceholder size="sm"></button>
+        <button cButton color="secondary" disabled cCol="5" cPlaceholder size="sm" class="ms-3"></button>
+      </div>
+    </c-card-header>
+    <c-card-body>
+      <div class="row">
+        <div class="col-lg-8" cPlaceholderAnimation=glow>
+          <h5 class="mb-3"><span cPlaceholder class="placeholder placeholder-md col-5"></span></h5>
+          <div class="row mb-4 ms-lg-1 border rounded p-3">
+            <div class="col-md-4 mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+            <div class="col-md-4 mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+            <div class="col-md-4 mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+            <div class="col-md-4 mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+            <div class="col-md-4 mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+          </div>
+
+          <h5 class="mb-3"><span cPlaceholder class="placeholder placeholder-md col-5"></span></h5>
+          <div class="row border ms-lg-1 rounded p-3 align-items-center">
+            <div class="col-md-7">
+              <div>
+                <div class="mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+                <div class="mb-2"><span cPlaceholder class="placeholder col-10"></span></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <img aria-label="Placeholder" cCardImg="top" cPlaceholder focusable="false" height="100"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4" cPlaceholderAnimation=glow>
+          <h5 class="mb-3"><span cPlaceholder class="placeholder placeholder-md col-6"></span></h5>
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-4"></span>
+              <span cPlaceholder class="placeholder col-3"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-6"></span>
+              <span cPlaceholder class="placeholder col-2"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-5"></span>
+              <span cPlaceholder class="placeholder col-1"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-3"></span>
+              <span cPlaceholder class="placeholder col-3"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-7"></span>
+              <span cPlaceholder class="placeholder col-2"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-4"></span>
+              <span cPlaceholder class="placeholder col-1"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-6"></span>
+              <span cPlaceholder class="placeholder col-1"></span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span cPlaceholder class="placeholder col-3"></span>
+              <span cPlaceholder class="placeholder col-5"></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </c-card-body>
+    
+  </c-card>
+</c-col>

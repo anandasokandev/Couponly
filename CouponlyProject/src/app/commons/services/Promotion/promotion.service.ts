@@ -11,7 +11,8 @@ export class PromotionService {
     constructor(private http: HttpClient) { }
 
     createPromotion(promotionData: any): Observable<any> {
-      const headers = new HttpHeaders({ loginid: sessionStorage.getItem('userId') ?? 0 });
+      const token = sessionStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.NewPromotion}`, promotionData, { headers });
     }
 
@@ -24,8 +25,9 @@ export class PromotionService {
       return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.LocationContact.ContactCount}`, { headers });
     }
 
-    getPromotionsByStoreId(storeId: number, currentPage: number, itemsPerPage: number): Observable<any> {
-      const headers = new HttpHeaders({ storeId: sessionStorage.getItem('userId') ?? 0 });
+    getPromotionsByStoreId(currentPage: number, itemsPerPage: number): Observable<any> {
+      const token = sessionStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       let params = new HttpParams()
         .set('PageNumber', currentPage)
         .set('PageSize', itemsPerPage);
@@ -33,12 +35,16 @@ export class PromotionService {
     }
 
     getPromotionById(promotionId: number): Observable<any> {
+      const token = sessionStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       let params = new HttpParams()
         .set('id', promotionId);
-      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.FetchPromotionById}`, { params });
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.FetchPromotionById}`, { params, headers });
     }
 
     downloadPromotionReportExcel(title: string, store: string, code: string, status: number, fromDate: string | null, toDate: string | null, sortColumn: string, sortDirection: 'asc' | 'desc'): Observable<Blob> {
+      const token = sessionStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       let params = new HttpParams()
         .set('Title', title)
         .set('Store', store)
@@ -48,10 +54,13 @@ export class PromotionService {
         .set('ToDate', toDate ? toDate : '')
         .set('SortColumn', sortColumn)
         .set('SortDirection', sortDirection);
-      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.Excel.DownloadPromotionReportExcel}`, { responseType: 'blob', params });
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.Excel.DownloadPromotionReportExcel}`, { responseType: 'blob', params, headers });
     }
 
     emailPromotionReportExcel(title: string, store: string, code: string, status: number, fromDate: string | null, toDate: string | null, sortColumn: string, sortDirection: 'asc' | 'desc'): Observable<any> {
+      
+      const token = sessionStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       let params = new HttpParams()
         .set('Title', title)
         .set('Store', store)
@@ -61,18 +70,21 @@ export class PromotionService {
         .set('ToDate', toDate ? toDate : '')
         .set('SortColumn', sortColumn)
         .set('SortDirection', sortDirection);
-      let headers = new HttpHeaders({ userId: sessionStorage.getItem('userId') ?? 0 });
       return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.Excel.ExportPromotionReportToExcelAndMail}`, { params, headers });
     }
 
     getPromotions(currentPage: number, itemsPerPage: number): Observable<any> {
+      const token = sessionStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       let params = new HttpParams()
         .set('PageNumber', currentPage)
         .set('PageSize', itemsPerPage);
-      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.FetchPromotions}`, { params });
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.FetchPromotions}`, { params, headers });
     }
 
     getPromotionsWithFilter(currentPage: number, itemsPerPage: number, title: string, store: string, code: string, status: number, fromDate: string | null, toDate: string | null, sortColumn: string, sortDirection: 'asc' | 'desc'): Observable<any> {
+      const token = sessionStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       let params = new HttpParams()
         .set('PageNumber', currentPage)
         .set('PageSize', itemsPerPage)
@@ -85,7 +97,7 @@ export class PromotionService {
         .set('SortColumn', sortColumn)
         .set('SortDirection', sortDirection);
         console.log(params);
-      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.FetchPromotionsWithFilter}`, { params });
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.FetchPromotionsWithFilter}`, { params, headers });
     }
 
     getStores(currentPage: number, itemsPerPage: number, type: string, searchtype: string, searchtext: string) {
@@ -97,6 +109,10 @@ export class PromotionService {
         .set('searchtext', searchtext);
 
       return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.store.filterstore}`, { params });
+    }
+
+    getStoreById(storeId: number): Observable<any> {
+      return this.http.get(`${environment.apiBaseUrl}/Store/id${storeId}`);
     }
 
     getDistricts(): Observable<any> {
@@ -113,23 +129,26 @@ export class PromotionService {
 
     getCoupons(storeId: number, couponCode: string): Observable<any> {
       return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.coupon.CouponSearch}`, {
-        params: { StoreId: storeId.toString(), CouponCode: couponCode }
+        params: { StoreId: storeId.toString(), CouponCode: couponCode, DateFilter: 'valid' }
       });
     }
 
     GetStatuses(): Observable<any> {
-      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.status.AllStatuses}`);
+      const token = sessionStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.status.AllStatuses}`, { headers });
     }
 
     CancelPromotion(promotionId: number): Observable<any> {
-      const headers = new HttpHeaders({ loginid: sessionStorage.getItem('userId') ?? 0, promotionid: promotionId ?? 0 });
-      // let params = new HttpParams()
-      //   .set('id', promotionId);
+      const token = sessionStorage.getItem('token');
+      const headers = new HttpHeaders({'Authorization': `Bearer ${token}`, promotionid: promotionId ?? 0});
       return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.CancelPromotion}`, null, { headers });
     }
 
     ResendPaymentLink(promotionId: number): Observable<any> {
-      const headers = new HttpHeaders({ loginid: sessionStorage.getItem('userId') ?? 0, promotionid: promotionId ?? 0 });
+      const token = sessionStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      headers.append('promotionid', promotionId.toString() ?? '0');
       return this.http.post(`${environment.apiBaseUrl}/${environment.endpoints.promotion.payment.GeneratePaymentTokenUrl}`, null, { headers });
     }
 

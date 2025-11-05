@@ -97,4 +97,22 @@ verifyPaymentToken(paymentToken: string): Observable<any> {
   );
 }
 
+
+
+
+
+//store redeem api
+
+FetchStoreRedeem(id: number): Observable<any> {
+  return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.store.fetchStoreRedeem}?storeId=${id}`);
+}
+
+
+//add new contact
+
+AddNewContact(contactData: any): Observable<any> {
+  return this.http.post( `${environment.apiBaseUrl}/${environment.endpoints.store.addContact}`,contactData);
+}
+
+
 }

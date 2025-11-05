@@ -1,5 +1,5 @@
 <!--sidebar-->
-<div class="" *ngIf="loadPage">
+<!-- <div class="" *ngIf="loadPage"> -->
 <c-sidebar
   #sidebar1="cSidebar"
   class="d-print-none sidebar sidebar-fixed border-end"
@@ -38,7 +38,8 @@
   <!--app-body-->
   <div class="body flex-grow-1">
     <c-container breakpoint="lg" class="h-auto px-4">
-      <router-outlet></router-outlet>
+      <app-page-loader></app-page-loader>
+      <router-outlet *ngIf="!loadPage"></router-outlet>
       <div class="toaster-container">
         <app-toast 
           *ngFor="let t of (toast.toasts$ | async)" 
@@ -53,4 +54,4 @@
   <!--app footer-->
   <app-default-footer />
 </div>
-</div>
+<!-- </div> -->

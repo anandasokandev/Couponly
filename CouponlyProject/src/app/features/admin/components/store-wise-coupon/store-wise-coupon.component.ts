@@ -34,7 +34,7 @@ export class StoreWiseCouponComponent implements OnInit {
   isLoading = false;
   isViewingCoupons = false;
   isPageChange = false;
-
+ selectedStoreType: number = 0;
   storeSearch: string = '';
   couponCodeSearch = '';
   selectedTypeId?: number;
@@ -58,39 +58,44 @@ export class StoreWiseCouponComponent implements OnInit {
       error: () => (this.types = [])
     });
   }
+loadStoresByName() {
+  if (!this.isPageChange) this.currentPage = 1;
 
+  this.isLoading = true;
+  this.storeService.searchStores(
+    this.currentPage,
+    this.itemsPerPage,
+    this.selectedStoreType,  
+    1,                       
+    this.storeSearch
+  ).subscribe({
+    next: (res: any) => {
+      const storeList = Array.isArray(res?.data?.items) ? res.data.items : [];
+      this.stores = storeList;
+      this.totalItems = res.data?.totalCount || storeList.length;
 
-  loadStoresByName() {
-    if (!this.isPageChange) this.currentPage = 1;
-
-    this.isLoading = true;
-    this.storeService.searchStores(this.currentPage, this.itemsPerPage, 0, 1, this.storeSearch).subscribe({
-      next: (res: any) => {
-        const storeList = Array.isArray(res?.data?.items) ? res.data.items : [];
-        this.stores = storeList;
-        this.totalItems = res.data?.totalCount || storeList.length;
-
-        this.stores.forEach((store) => {
-          this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe({
-            next: (couponRes: any) => {
-              store.totalCoupons = couponRes?.data?.length || 0;
-            },
-            error: () => {
-              store.totalCoupons = 0;
-            }
-          });
+      //  Get total coupon count for each store
+      this.stores.forEach((store) => {
+        this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe({
+          next: (couponRes: any) => {
+            store.totalCoupons = couponRes?.data?.length || 0;
+          },
+          error: () => {
+            store.totalCoupons = 0;
+          }
         });
+      });
 
-        this.isLoading = false;
-        this.isPageChange = false;
-      },
-      error: () => {
-        this.stores = [];
-        this.totalItems = 0;
-        this.isLoading = false;
-      }
-    });
-  }
+      this.isLoading = false;
+      this.isPageChange = false;
+    },
+    error: () => {
+      this.stores = [];
+      this.totalItems = 0;
+      this.isLoading = false;
+    }
+  });
+}
 
 
   onPageChange(page: number) {
@@ -116,52 +121,68 @@ export class StoreWiseCouponComponent implements OnInit {
 
 
 
-  viewCoupons(store: any) {
-    this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe(res => {
-      const coupons = res.data || [];
-      this.selectedStore = {
-        id: store.id,
-        name: store.store,
-        coupons: coupons,
-        couponCount: coupons.length
-      };
-      this.filteredCoupons = [...coupons];
-      this.isViewingCoupons = true;
-      this.couponCodeSearch = '';
-      this.selectedTypeId = undefined;
-    });
+viewCoupons(store: any) {
+  this.couponService.getCouponsByFilter({ storeId: store.id }).subscribe(res => {
+    let coupons = res.data || [];
+
+    //  Sort latest coupons first based on startingDate
+    coupons = coupons.sort(
+      (a: any, b: any) => new Date(b.startingDate).getTime() - new Date(a.startingDate).getTime()
+    );
+
+    this.selectedStore = {
+      id: store.id,
+      name: store.store,
+      coupons: coupons,
+      couponCount: coupons.length
+    };
+
+    this.filteredCoupons = [...coupons];
+    this.isViewingCoupons = true;
+    this.couponCodeSearch = '';
+    this.selectedTypeId = undefined;
+  });
+}
+
+
+
+ filterStoreCoupons() {
+  if (!this.selectedStore) return;
+
+  let dateFilter: string | undefined;
+
+  switch (this.selectedDateFilter) {
+    case '2':
+      dateFilter = 'valid';
+      break;
+    case '3':
+      dateFilter = 'upcoming';
+      break;
+    case '4':
+      dateFilter = 'expired';
+      break;
+    default:
+      dateFilter = undefined;
+      break;
   }
 
+  this.couponService.getCouponsByFilter({
+    storeId: this.selectedStore.id,
+    couponCode: this.couponCodeSearch,
+    typeId: this.selectedTypeId,
+    dateFilter: dateFilter
+  }).subscribe(res => {
+    let coupons = res.data || [];
 
-  filterStoreCoupons() {
-    if (!this.selectedStore) return;
+    // Sort latest coupons first
+    coupons = coupons.sort(
+      (a: any, b: any) => new Date(b.startingDate).getTime() - new Date(a.startingDate).getTime()
+    );
 
-    let dateFilter: string | undefined;
+    this.filteredCoupons = coupons;
+  });
+}
 
-    switch (this.selectedDateFilter) {
-      case '2':
-        dateFilter = 'valid';
-        break;
-      case '3':
-        dateFilter = 'upcoming';
-        break;
-      case '4':
-        dateFilter = 'expired';
-        break;
-      default:
-        dateFilter = undefined;
-        break;
-    }
-
-    this.couponService.getCouponsByFilter({
-      storeId: this.selectedStore.id,
-      couponCode: this.couponCodeSearch,
-      typeId: this.selectedTypeId,
-      dateFilter: dateFilter
-    }).subscribe(res => {
-      this.filteredCoupons = res.data || [];
-    });
-  }
 
   getTypeNameById(id: number): string | undefined {
     const type = this.types.find(t => t.id === id);

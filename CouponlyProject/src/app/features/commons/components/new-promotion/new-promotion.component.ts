@@ -1,0 +1,186 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import {
+  CardModule,
+  GridModule,
+  FormModule,
+  ButtonModule,
+  SpinnerModule,
+  AlertModule,
+  ButtonGroupModule,
+  ButtonDirective,
+  AccordionModule,
+  ModalComponent,
+  ModalToggleDirective,
+  CardComponent,
+  ColComponent,
+  CardHeaderComponent,
+  CardFooterComponent,
+  CardBodyComponent,
+} from '@coreui/angular';
+import { IconModule } from '@coreui/icons-angular';
+import { FindStoreModelComponent } from '../../pages/find-store-model/find-store-model.component';
+import { PromotionCalculatorModelComponent } from '../../pages/promotion-calculator-model/promotion-calculator-model.component';
+import { CostSettingService } from '../../../../commons/services/Promotion/cost-setting.service';
+import { CostSetting } from '../../../../commons/models/CostSetting.model';
+import { cilArrowThickFromLeft, cilArrowThickFromRight, cilPenNib, cilPlus, cilSortAlphaUp, cilSortNumericDown } from '@coreui/icons';
+import { Router } from '@angular/router';
+
+// Updated interface to hold all promotion campaign details
+export interface PromotionCampaign {
+  promotionName: string;
+  selectedCategory: string;
+  selectedStore: string;
+  storeId: number;
+  contactCount: number;
+  publicContacts: number;
+  channels: {
+    whatsapp: boolean;
+    email: boolean;
+    sms: boolean;
+  };
+  costs: {
+    whatsapp: number;
+    email: number;
+    sms: number;
+  };
+  couponId: number;
+  couponCode: string;
+  couponName?: string;
+  sendType: 'immediate' | 'schedule';
+  scheduleDate?: string;
+}
+
+@Component({
+  selector: 'app-promotion',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ColComponent,
+    GridModule,
+    FormModule,
+    ButtonModule,
+    IconModule,
+    SpinnerModule,
+    AlertModule,
+    ButtonGroupModule,
+    ButtonDirective,
+    AccordionModule,
+    FindStoreModelComponent,
+    PromotionCalculatorModelComponent,
+    ModalComponent,
+    ModalToggleDirective,
+    CardComponent,
+    CardHeaderComponent,
+    CardBodyComponent,
+    CardFooterComponent,
+  ],
+  templateUrl: './new-promotion.component.html',
+  styleUrls: ['./new-promotion.component.scss']
+})
+export class NewPromotionComponent {
+   campaign: PromotionCampaign = {
+     promotionName: '',
+     selectedCategory: '',
+     storeId: 0,
+     selectedStore: '',
+     contactCount: 0,
+     publicContacts: 0,
+     channels: {
+       whatsapp: false,
+       email: false,
+       sms: false
+     },
+     costs: {
+       whatsapp: 0,
+       email: 0,
+       sms: 0
+     },
+     couponId: 0,
+     couponCode: '',
+     couponName: '',
+     sendType: 'immediate',
+     scheduleDate: ''
+   };
+   serviceCosts: CostSetting[] = [];
+   isStore: boolean = false;
+
+  isSaving: boolean = false;
+  icons = { cilSortAlphaUp, cilSortNumericDown, cilPlus, cilPenNib, cilArrowThickFromRight };
+
+  constructor(private costService: CostSettingService, private router: Router) { }
+
+  ngOnInit(): void {
+    this.costService.getAllServices().subscribe(services => {
+      this.serviceCosts = services.data;
+      console.log('Service Costs:', services);
+    });
+    if(sessionStorage.getItem('role') == 'Store') {
+      this.isStore = true;
+      sessionStorage.setItem('NavContainer', 'true');
+      this.campaign.storeId = Number(sessionStorage.getItem('userId'));
+      this.campaign.selectedStore = sessionStorage.getItem('StoreName') || '';
+      this.campaign.selectedCategory = sessionStorage.getItem('StoreCat') || '';
+    }
+    console.log('Is Store:', this.isStore);
+
+  }
+
+  viewPromotion(): void {
+    if(this.isStore) {
+      this.router.navigate(['/store/promotion-history']);
+    } else {
+      this.router.navigate(['/admin/promotion']);
+    }
+  }
+
+  updateChannel(channel: keyof PromotionCampaign['channels']): void {
+    this.campaign.channels[channel] = !this.campaign.channels[channel];
+    this.calculateCost(channel);
+  }
+  calculateCost(channel: keyof PromotionCampaign['channels']): void {
+    if (!this.campaign.channels[channel]) {
+      this.campaign.costs[channel] = 0;
+      return;
+    }
+    const service = this.serviceCosts.find(service => service.name.toLowerCase() === channel);
+    if (service) {
+      const charge = service.charge * this.campaign.contactCount;
+      const profit = service.profit * this.campaign.contactCount;
+      const handling = service.handling * (this.campaign.contactCount / 100);
+      this.campaign.costs[channel] = charge + profit + handling;
+    }
+  }
+
+  saveCampaign(): void {
+    this.isSaving = true;
+
+    // Clear schedule date if sending immediately
+    if (this.campaign.sendType === 'immediate') {
+      this.campaign.scheduleDate = '';
+    }
+    console.log('Saving Campaign:', this.campaign);
+    this.isSaving = false;
+    
+  }
+
+  handleContactsAdded(event: { store: any; count: number; contactsNeeded: number; publicContacts: number; coupon: any }): void {
+    console.log('Contacts added:', event);
+    // Update the campaign details based on the event data
+    this.campaign.selectedCategory = event.store.category;
+    this.campaign.selectedStore = event.store.store;
+    this.campaign.storeId = event.store.id;
+    this.campaign.contactCount = event.contactsNeeded;
+    this.campaign.publicContacts = event.publicContacts;
+    this.campaign.couponId = event.coupon.id;
+    this.campaign.couponCode = event.coupon.couponCode;
+    this.campaign.couponName = event.coupon.name;
+    // Recalculate costs for all selected channels
+    for (const channel of Object.keys(this.campaign.channels) as (keyof PromotionCampaign['channels'])[]) {
+      if (this.campaign.channels[channel]) {
+        this.calculateCost(channel);
+      }
+    }
+  }
+}
