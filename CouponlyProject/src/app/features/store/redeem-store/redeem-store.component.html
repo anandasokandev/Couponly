@@ -166,7 +166,7 @@
                     </div>
                   </div>
                   <div class="col">
-                    <button type="button" class="btn btn-theme-outline-primary btn-sm w-100" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-theme-outline-primary btn-sm w-100" (click)="openModal()" data-bs-toggle="modal"
                       data-bs-target="#addNewUserModal">
                       Add New
                     </button>
@@ -204,13 +204,13 @@
       </c-card>
 
       <!-- ======================== ADD NEW CONTACT MODAL ======================== -->
-      <div class="modal fade" id="addNewUserModal" tabindex="-1" aria-labelledby="addNewUserModalLabel"
+      <div class="modal fade" id="addNewUserModal" tabindex="-1" aria-labelledby="addNewUserModalLabel" 
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content redeem-theme">
             <div class="modal-header">
               <h5 class="modal-title theme-heading" id="addNewUserModalLabel">Add New Contact</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close"   (click)="closeModal()" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <form [formGroup]="contactForm" (ngSubmit)="createContact()">
@@ -239,16 +239,28 @@
                   <label class="form-label small">Email</label>
                   <input type="email" class="form-control form-control-sm" formControlName="Email"
                     placeholder="enter your Email">
-                  <div *ngIf="contactForm.get('Email')?.touched && contactForm.get('Email')?.invalid"
-                    class="text-danger small">
-                    Enter a valid email.
-                  </div>
-                </div>
+                  <div
+  *ngIf="contactForm.get('Email')?.touched && contactForm.get('Email')?.invalid"
+  class="text-danger small"
+>
+  <ng-container *ngIf="contactForm.get('Email')?.errors?.['required']">
+    Email is required.
+  </ng-container>
+  <ng-container *ngIf="contactForm.get('Email')?.errors?.['invalidEmailDomain']">
+    Enter a valid domain
+  </ng-container>
+  <ng-container *ngIf="!contactForm.get('Email')?.errors?.['invalidEmailDomain'] && contactForm.get('Email')?.errors?.['email']">
+    Enter a valid email.
+  </ng-container>
+</div>
+
+                
               </div>
+               </div> 
 
               <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-sm btn-theme-primary">Save Contact</button>
+                <button type="button" class="btn btn-sm btn-secondary" (click)="closeModal()" data-bs-dismiss="modal" >Close</button>
+                <button type="submit" class="btn btn-sm btn-theme-primary" > Save Contact</button>
               </div>
             </form>
           </div>
