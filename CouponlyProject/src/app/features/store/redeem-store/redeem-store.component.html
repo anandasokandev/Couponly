@@ -83,15 +83,19 @@
       </div>
 
       <!-- View link (bottom right) -->
-      <small class="text-end mt-auto">
-        <a
-          href="#"
-          data-bs-toggle="modal"
-          [attr.data-bs-target]="'#couponModal' + coupon.id"
-          class="text-primary text-decoration-underline"
-          style="font-size: 12px;"
-        >View</a>
-      </small>
+ <!-- View button (bottom right, eye icon) -->
+<small class="text-end mt-auto">
+  <button
+    type="button"
+    class="btn btn-sm btn-light border-0 text-primary"
+    data-bs-toggle="modal"
+    [attr.data-bs-target]="'#couponModal' + coupon.id"
+    title="View Details"
+    style="font-size: 14px;"
+  >
+    <i class="bi bi-eye-fill"></i>
+  </button>
+</small>
     </div>
   </div>
 
