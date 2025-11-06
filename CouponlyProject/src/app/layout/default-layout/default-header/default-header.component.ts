@@ -23,7 +23,7 @@ import {
 } from '@coreui/angular';
 
 import { IconDirective } from '@coreui/icons-angular';
-import { ToastService } from 'src/app/commons/services/Toaster/toast.service';
+import { ToastService } from '../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-default-header',
@@ -130,7 +130,7 @@ export class DefaultHeaderComponent extends HeaderComponent {
 
   logout() {
     sessionStorage.clear();
-    this.toast.show({ type: 'error', message: 'Logged out successfully!' });
+    // this.toast.show({ type: 'error', message: 'Logged out successfully!' });
     // this.router.navigate(['/login']);
   }
 }

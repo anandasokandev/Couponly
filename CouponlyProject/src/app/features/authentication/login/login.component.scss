@@ -64,3 +64,7 @@ background: linear-gradient(to right, #5b8ce8 10%, #81a0ef 40%, #70b4ef 90%);
   transform: translateX(-50%);
   z-index: 99999;
 }
+
+input[type="password"]::-ms-reveal {
+    display: none;
+}

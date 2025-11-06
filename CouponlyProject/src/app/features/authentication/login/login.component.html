@@ -40,13 +40,14 @@
          placeholder="Enter your password"
          formControlName="password"
          autocomplete="current-password"
-         required>
-
-          <i class="bi"
-            [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"
-            class="position-absolute top-50 end-0 translate-middle-y me-3 text-muted"
+         required />
+        <!-- <i class="fa-solid fa-eye"></i> -->
+          <i *ngIf="showPassword" class="fa-solid fa-eye top-50 position-absolute end-0 translate-middle-y me-3 mt-3 text-muted"
             style="cursor: pointer;"
             (click)="togglePassword()"></i>
+          <i *ngIf="!showPassword" class="fa-solid fa-eye-slash top-50 position-absolute end-0 translate-middle-y me-3 mt-3 text-muted"
+              style="cursor: pointer;"
+              (click)="togglePassword()"></i>
         </div>
 
 
