@@ -56,17 +56,6 @@ export class RedeemStoreComponent implements OnInit, AfterViewInit  {
   contactSearch:any; 
 
 ngOnInit(): void {
-  const raw = sessionStorage.getItem('storeId');
-  this.storeId = (raw && raw !== 'null') ? Number(raw) : null;
-
-  if (!this.storeId) {
-    console.warn('No valid storeId in sessionStorage');
-    this.toast.show({ type: 'warning', message: 'Please select a store first.' });
-    
-    return;
-  }
-
-  // Use the new function instead of FetchStoreRedeem
   this.loadValidCoupons();
 }
 
@@ -135,9 +124,6 @@ console.log('ELSE',this.contacts)
     });
   }
 
-  closeModal(): void {
-    this.closeButton.nativeElement.click();
-  }
 
   validateNameInput(event: KeyboardEvent): void {
     const inputChar = event.key;
@@ -190,6 +176,12 @@ ngAfterViewInit(): void {
   rightBtn.addEventListener('click', () => {
     scroller.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   });
+  const modalEl = document.getElementById('addNewUserModal');
+    if (modalEl) {
+      modalEl.addEventListener('shown.bs.modal', () => {
+        this.resetModal();
+      });
+    }
 }
 
 
@@ -234,6 +226,26 @@ private loadValidCoupons(): void {
     }
   });
 }
+
+resetModal(): void {
+    this.contactForm.reset();
+    this.contactSearch = '';
+    this.contacts = [];
+    this.contactForm.markAsPristine();
+    this.contactForm.markAsUntouched();
+  }
+ 
+isModalOpen = false;
+ 
+openModal(): void {
+  this.resetModal(); // reset before showing
+  this.isModalOpen = true;
+}
+ 
+closeModal(): void {
+  this.isModalOpen = false;
+}
+ 
 
 }
 
