@@ -16,24 +16,26 @@
               <span class="text-danger" *ngIf="addStoreForm.get('storeName')?.errors?.['required']"> store name is required. </span>
             </div>
           </div>
-          <div class="mb-3">
-            <label cLabel for="districtSelect">District</label><span class="text-danger">*</span>
-            <select class="form-select form-select-sm" id="districtSelect" formControlName="district" (change)="selectLocationByDistrict()">
-              <option value="">Select District</option>
-              <option *ngFor="let district of districts" [value]="district.id"> {{district.districtName}}</option>
-            </select>
-            <div *ngIf="addStoreForm.get('district')?.touched && addStoreForm.get('district')?.invalid">
-              <span class="text-danger" *ngIf="addStoreForm.get('district')?.errors?.['required']"> *choose the district. </span>
+          <div class="mb-3 row">
+            <div class="col-6">
+              <label cLabel for="districtSelect">District</label><span class="text-danger">*</span>
+              <select class="form-select form-select-sm" id="districtSelect" formControlName="district" (change)="selectLocationByDistrict()">
+                <option value="">Select District</option>
+                <option *ngFor="let district of districts" [value]="district.id"> {{district.districtName}}</option>
+              </select>
+              <div *ngIf="addStoreForm.get('district')?.touched && addStoreForm.get('district')?.invalid">
+                <span class="text-danger" *ngIf="addStoreForm.get('district')?.errors?.['required']"> *choose the district. </span>
+              </div>
             </div>
-          </div>
-          <div class="mb-3">
-            <label cLabel for="locationSelect">Location</label><span class="text-danger">*</span>
-            <select class="form-select form-select-sm" id="locationSelect" formControlName="storeLocation">
-              <option value="">{{default}}</option>
-              <option *ngFor="let location of locations" [value]="location.id"> {{location.locationName}}</option>
-            </select>
-            <div *ngIf="addStoreForm.get('storeLocation')?.touched && addStoreForm.get('storeLocation')?.invalid">
-              <span class="text-danger" *ngIf="addStoreForm.get('storeLocation')?.errors?.['required']"> *choose the location. </span>
+            <div class="col-6">
+              <label cLabel for="locationSelect">Location</label><span class="text-danger">*</span>
+              <select class="form-select form-select-sm" id="locationSelect" formControlName="storeLocation">
+                <option value="">{{default}}</option>
+                <option *ngFor="let location of locations" [value]="location.id"> {{location.locationName}}</option>
+              </select>
+              <div *ngIf="addStoreForm.get('storeLocation')?.touched && addStoreForm.get('storeLocation')?.invalid">
+                <span class="text-danger" *ngIf="addStoreForm.get('storeLocation')?.errors?.['required']"> *choose the location. </span>
+              </div>
             </div>
           </div>
           <div class="mb-3">
@@ -42,6 +44,15 @@
             <div *ngIf="addStoreForm.get('storeContact')?.touched && addStoreForm.get('storeContact')?.invalid">
               <span class="text-danger" *ngIf="addStoreForm.get('storeContact')?.errors?.['required']"> *contact is required. </span>
               <span class="text-danger" *ngIf="addStoreForm.get('storeContact')?.errors?.['pattern']"> *contact should contain 10 digits. </span>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label cLabel for="emailInput">Email address</label><span class="text-danger">*</span>
+            <input cFormControl id="emailInput" sizing="sm" type="email" formControlName="storeEmail" />
+            <div *ngIf="addStoreForm.get('storeEmail')?.touched && addStoreForm.get('storeEmail')?.invalid">
+              <span class="text-danger" *ngIf="addStoreForm.get('storeEmail')?.errors?.['required']"> *email is required. </span>
+              <span class="text-danger" *ngIf="addStoreForm.get('storeEmail')?.errors?.['strictEmail'] && addStoreForm.get('storeEmail')?.touched">
+              Please enter a valid email address with a domain</span>
             </div>
           </div>
           <div class="mb-3">
@@ -90,12 +101,13 @@
             </div>
           </div>
           <div class="mb-3">
-            <label cLabel for="emailInput">Email address</label><span class="text-danger">*</span>
-            <input cFormControl id="emailInput" sizing="sm" type="email" formControlName="storeEmail" />
-            <div *ngIf="addStoreForm.get('storeEmail')?.touched && addStoreForm.get('storeEmail')?.invalid">
-              <span class="text-danger" *ngIf="addStoreForm.get('storeEmail')?.errors?.['required']"> *email is required. </span>
-              <span class="text-danger" *ngIf="addStoreForm.get('storeEmail')?.errors?.['strictEmail'] && addStoreForm.get('storeEmail')?.touched">
-              Please enter a valid email address with a domain</span>
+            <label cLabel for="userIdSelect">Store User</label>
+            <select class="form-select form-select-sm" id="userIdSelect" formControlName="userId">
+              <option *ngFor="let user of users" [value]="user.id">{{ user.firstName }} {{ user.lastName }} ({{ user.email }})</option>
+              <option value=0>Select User ID</option>
+            </select>
+            <div *ngIf="addStoreForm.get('userId')?.touched && addStoreForm.get('userId')?.invalid">
+              <span class="text-danger" *ngIf="addStoreForm.get('userId')?.errors?.['required']"> *choose store user ID. </span>
             </div>
           </div>
         </div>

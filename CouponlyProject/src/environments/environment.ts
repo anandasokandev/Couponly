@@ -25,8 +25,8 @@ export const environment = {
       filterusers: 'User/FilterUser',
       addusers:'User/AddUser',
       disableusers:'User/DisableUser',
-      updateusers:'User/Update'
-      
+      updateusers:'User/Update',
+      StoreUsers: 'User/StoreUsers'
     },
 
     location: {

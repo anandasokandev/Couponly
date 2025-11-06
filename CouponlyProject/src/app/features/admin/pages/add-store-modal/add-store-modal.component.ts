@@ -35,6 +35,7 @@ export class AddStoreModalComponent {
   categories:any[]=[];
   districts:any[]=[];
   locations:any[]=[];
+  users:any[]=[];
   default:string="Choose a District";
   selectedFile: File | null = null;
   private toast = inject(ToastService);
@@ -54,6 +55,13 @@ export class AddStoreModalComponent {
         this.districts = response.data;
       }
     })
+    //fetching Users
+    this.api.fetchStoreUsers().subscribe({
+      next: (response: any) => {
+        console.log(response.data)
+        this.users = response.data;
+      }
+    });
     //InitiateForm
     this.initiateForm();
   }
@@ -68,7 +76,8 @@ private initiateForm(){
     district:['',Validators.required],
     storeContact:['',[Validators.required,Validators.pattern(/^\d{10}$/)]],
     storeEmail:['',[Validators.required,strictEmailValidator]],
-    storeType:['',Validators.required]
+    storeType:['',Validators.required],
+    userId:[0,Validators.required]
   });
 }
 
@@ -166,6 +175,7 @@ createStore() {
 
 private buildStorePayload(url: string): any {
   const form = this.addStoreForm.value;
+  const loginId = sessionStorage.getItem('userId')
   return {
     StoreName: form.storeName,
     Address: form.storeAddress,
@@ -174,8 +184,9 @@ private buildStorePayload(url: string): any {
     Email: form.storeEmail,
     LocationId: form.storeLocation,
     CategoryId: form.storeCategory,
-    ApprovedBy: sessionStorage.getItem('userId'),
+    ApprovedBy: loginId,
     Type: form.storeType,
+    UserId: form.userId
   };
 }
 

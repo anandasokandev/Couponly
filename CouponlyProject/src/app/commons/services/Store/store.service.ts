@@ -114,5 +114,9 @@ AddNewContact(contactData: any): Observable<any> {
   return this.http.post( `${environment.apiBaseUrl}/${environment.endpoints.store.addContact}`,contactData);
 }
 
-
+fetchStoreUsers(): Observable<any[]> {
+  const token = sessionStorage.getItem('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.user.StoreUsers}`, { headers });
+}
 }

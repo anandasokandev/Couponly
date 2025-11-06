@@ -58,13 +58,13 @@ this.api.login(payload).subscribe({
   next: (response: any) => {
     console.log(response);
     if (response.isSuccess) {
-      const { token, role, userId, storeId } = response.data;
+      const { token, role, userId } = response.data;
 
       sessionStorage.setItem('token', token);
       sessionStorage.setItem('role', role);
 
       if (role === 'Store') {
-        sessionStorage.setItem('storeId', storeId);
+        sessionStorage.setItem('storeId', userId);
       } else {
         sessionStorage.setItem('userId', userId);
       }
