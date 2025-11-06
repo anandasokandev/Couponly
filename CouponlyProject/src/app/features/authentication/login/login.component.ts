@@ -6,6 +6,9 @@ import { LoginService } from './../../../commons/services/Authentication/login.s
 import { SpinnerModule } from '@coreui/angular';
 import { ToastComponent } from '../../admin/pages/toast/toast.component';
 import { ToastService } from '../../../commons/services/Toaster/toast.service';
+import { IconComponent, IconModule, IIconSet } from '@coreui/icons-angular';
+import { cilCloudDownload } from '@coreui/icons/dist/esm/free/cil-cloud-download';
+import { cilEnvelopeOpen } from '@coreui/icons/dist/esm/free/cil-envelope-open';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +20,7 @@ import { ToastService } from '../../../commons/services/Toaster/toast.service';
     RouterModule,
     SpinnerModule,
     ToastComponent,
+    IconModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -38,6 +42,8 @@ export class LoginComponent {
       password: ['', Validators.required]
     });
   }
+
+  
 
   togglePassword() {
     this.showPassword = !this.showPassword;
