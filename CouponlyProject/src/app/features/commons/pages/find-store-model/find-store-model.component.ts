@@ -39,9 +39,6 @@ export interface Coupon {
     PaginationComponent,
     NavModule,
     NavComponent,
-    CardComponent,
-    CardBodyComponent,
-    ColComponent,
     RowComponent
   ],
   templateUrl: './find-store-model.component.html',

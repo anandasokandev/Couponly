@@ -88,6 +88,13 @@ export const routes: Routes = [
       }
   },
   {
+      path: 'logindemo',
+      loadComponent: () => import('./features/commons/pages/logindemo/logindemo.component').then(m => m.LogindemoComponent),
+      data: {
+          title: 'Login Demo'
+      }
+  },
+  {
     path: '401',
     loadComponent: () => import('./views/pages/page401/page401.component').then(m => m.Page401Component),
     data: {
