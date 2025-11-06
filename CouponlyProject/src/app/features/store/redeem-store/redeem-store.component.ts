@@ -57,6 +57,8 @@ export class RedeemStoreComponent implements OnInit, AfterViewInit  {
 
 ngOnInit(): void {
   this.loadValidCoupons();
+  
+
 }
 
   updateSelectedCouponImage(): void {
@@ -199,19 +201,19 @@ clearCouponSearch(): void {
 }
 
 selectCoupon(coupon: any): void {
-  this.selectedCoupon = coupon.couponId;
-  this.updateSelectedCouponImage();   // if you still need the image for checkout
+  this.selectedCoupon = coupon.id;
+  this.updateSelectedCouponImage(); // keep your function logic intact
 }
 
 private loadValidCoupons(): void {
-
-
   this.api.getStoreCoupons('', undefined, 'valid').subscribe({
     next: (response: any) => {
       console.log('COUPONS FROM API →', response);
-      this.coupons = response.data ?? [];
+      this.coupons = Array.isArray(response.data) ? response.data : [];
       this.filteredCoupons = [...this.coupons];
 
+      console.log("Coupon IDs:", this.coupons.map(c => c.id)); // ✅ fixed from couponId to id
+      console.log("Sample coupon object:", this.coupons[0]);
 
       if (this.coupons.length === 0) {
         this.toast.show({ type: 'info', message: 'No valid coupons found.' });
@@ -222,7 +224,6 @@ private loadValidCoupons(): void {
       this.toast.show({ type: 'error', message: 'Failed to fetch coupons.' });
       this.coupons = [];
       this.filteredCoupons = [];
-
     }
   });
 }

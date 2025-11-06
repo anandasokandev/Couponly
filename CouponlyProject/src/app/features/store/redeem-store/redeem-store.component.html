@@ -56,83 +56,112 @@
     <div class="coupon-scroller d-flex gap-3 mx-5"
       style="overflow-x: auto; flex-wrap: nowrap; padding: 0.5rem;">
 
-      <!-- DYNAMIC COUPONS -->
-      <div *ngFor="let coupon of filteredCoupons" style="flex: 0 0 240px;">
-        <div class="card h-100 coupon-card-inactive d-flex flex-row align-items-start"
-          [class.coupon-card-active]="selectedCoupon === coupon.couponId"
-          style="text-decoration: none; cursor: pointer;"
-          (click)="selectCoupon(coupon)">
+<!-- DYNAMIC COUPONS -->
+<div *ngFor="let coupon of filteredCoupons" style="flex: 0 0 240px;">
+  <div
+    class="card h-100 coupon-card-inactive d-flex flex-row align-items-start"
+    [class.coupon-card-active]="selectedCoupon === coupon.id"
+    style="text-decoration: none; cursor: pointer;"
+    (click)="selectCoupon(coupon)"
+  >
 
-          <!-- Left Image -->
-          <img [src]="coupon.couponImage || coupon.imageUrl"
-            class="card-img-top" alt="Coupon Image"
-            style="max-width: 50%; height: 100%; object-fit: cover;">
+    <!-- Left Image -->
+    <img
+      [src]="coupon.couponImage || coupon.imageUrl"
+      class="card-img-top"
+      alt="Coupon Image"
+      style="max-width: 50%; height: 100%; object-fit: cover;"
+    >
 
-          <!-- Right Side Details -->
-          <div class="card-body p-2 pt-4 d-flex flex-column justify-content-between">
-            <div>
-              <h6 class="card-title fw-bold mb-1">{{ coupon.name }}</h6>
-              <small class="card-text text-muted d-block mb-1">
-                <span class="text-dark fw-semibold">{{ coupon.couponCode }}</span>
-              </small>
-            </div>
-
-            <!-- View link (bottom right) -->
-            <small class="text-end mt-auto">
-              <a href="#" data-bs-toggle="modal" [attr.data-bs-target]="'#couponModal'+coupon.couponId"
-                class="text-primary text-decoration-underline" style="font-size: 12px;">View</a>
-            </small>
-          </div>
-        </div>
-
-        <!-- MODAL FOR THIS COUPON -->
-        <div class="modal fade" [id]="'couponModal'+coupon.couponId" tabindex="-1"
-          [attr.aria-labelledby]="'couponModalLabel'+coupon.couponId" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg rounded-4" style="overflow: hidden;">
-              <div class="card border-0 h-100">
-                <div class="d-flex justify-content-center pt-4 pb-2">
-                  <img [src]="coupon.couponImage || coupon.imageUrl" alt="Coupon Image"
-                    class="img-fluid" style="max-width: 45%;">
-                </div>
-
-                <div class="card-body text-center pt-3 pb-2">
-                  <h5 class="card-title fw-bold mb-2" [id]="'couponModalLabel'+coupon.couponId">
-                    {{ coupon.name }}
-                  </h5>
-                  <p class="text-muted mb-3"><em>{{ coupon.description }}</em></p>
-
-                  <div class="bg-light p-2 rounded-3 d-inline-block mb-3">
-                    <span class="fw-semibold text-dark">Coupon Code:</span>
-                    <span class="badge bg-primary-subtle text-dark ms-2">{{ coupon.couponCode }}</span>
-                  </div>
-
-                  <div class="text-start mx-auto" style="max-width: 300px;">
-                    <p class="mb-1"><strong>Coupon Type:</strong> {{ coupon.typeName }}</p>
-                    <p class="mb-1"><strong>Min Amount:</strong> ₹{{ coupon.minAmount }}</p>
-                    <p class="mb-1"><strong>User Limit:</strong>
-                      {{ coupon.userLimit ? coupon.userLimitCount : 'Unlimited' }}</p>
-                    <p class="mb-0"><strong>Validity:</strong>
-                      {{ coupon.startingDate | date:'dd-MM-yyyy' }} → {{ coupon.endingDate | date:'dd-MM-yyyy' }}</p>
-                  </div>
-                </div>
-
-                <div class="card-footer bg-transparent border-0 text-center pb-4 pt-2">
-                  <button type="button" class="btn btn-outline-primary btn-sm px-4"
-                    data-bs-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <!-- Right Side Details -->
+    <div class="card-body p-2 pt-4 d-flex flex-column justify-content-between">
+      <div>
+        <h6 class="card-title fw-bold mb-1">{{ coupon.name }}</h6>
+        <small class="card-text text-muted d-block mb-1">
+          <span class="text-dark fw-semibold">{{ coupon.couponCode }}</span>
+        </small>
       </div>
 
-      <!-- NO COUPONS MESSAGE -->
-      <div *ngIf="filteredCoupons.length === 0" class="w-100 text-center text-muted py-4">
-        No coupons available
-      </div>
-
+      <!-- View link (bottom right) -->
+      <small class="text-end mt-auto">
+        <a
+          href="#"
+          data-bs-toggle="modal"
+          [attr.data-bs-target]="'#couponModal' + coupon.id"
+          class="text-primary text-decoration-underline"
+          style="font-size: 12px;"
+        >View</a>
+      </small>
     </div>
+  </div>
+
+  <!-- MODAL FOR THIS COUPON -->
+  <div
+    class="modal fade"
+    [id]="'couponModal' + coupon.id"
+    tabindex="-1"
+    [attr.aria-labelledby]="'couponModalLabel' + coupon.id"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg rounded-4" style="overflow: hidden;">
+        <div class="card border-0 h-100">
+          <div class="d-flex justify-content-center pt-4 pb-2">
+            <img
+              [src]="coupon.couponImage || coupon.imageUrl"
+              alt="Coupon Image"
+              class="img-fluid"
+              style="max-width: 45%;"
+            >
+          </div>
+
+          <div class="card-body text-center pt-3 pb-2">
+            <h5
+              class="card-title fw-bold mb-2"
+              [id]="'couponModalLabel' + coupon.id"
+            >
+              {{ coupon.name }}
+            </h5>
+            <p class="text-muted mb-3"><em>{{ coupon.description }}</em></p>
+
+            <div class="bg-light p-2 rounded-3 d-inline-block mb-3">
+              <span class="fw-semibold text-dark">Coupon Code:</span>
+              <span class="badge bg-primary-subtle text-dark ms-2">
+                {{ coupon.couponCode }}
+              </span>
+            </div>
+
+            <div class="text-start mx-auto" style="max-width: 300px;">
+              <p class="mb-1"><strong>Coupon Type:</strong> {{ coupon.typeName }}</p>
+              <p class="mb-1"><strong>Min Amount:</strong> ₹{{ coupon.minAmount }}</p>
+              <p class="mb-1"><strong>User Limit:</strong>
+                {{ coupon.userLimit ? coupon.userLimitCount : 'Unlimited' }}
+              </p>
+              <p class="mb-0"><strong>Validity:</strong>
+                {{ coupon.startingDate | date:'dd-MM-yyyy' }} →
+                {{ coupon.endingDate | date:'dd-MM-yyyy' }}
+              </p>
+            </div>
+          </div>
+
+          <div class="card-footer bg-transparent border-0 text-center pb-4 pt-2">
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm px-4"
+              data-bs-dismiss="modal"
+            >Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NO COUPONS MESSAGE -->
+<div *ngIf="filteredCoupons.length === 0" class="w-100 text-center text-muted py-4">
+  No coupons available
+</div>
+
 
     <button type="button" id="scrollRight"
       class="btn btn-circle btn-theme-primary btn-sm position-absolute top-50 end-0 translate-middle-y shadow"
@@ -140,14 +169,7 @@
       <strong>&gt;</strong>
     </button>
   </div>
-</div>
-
-<button type="button" id="scrollRight"
-  class="btn btn-circle btn-theme-primary btn-sm position-absolute top-50 end-0 translate-middle-y shadow"
-  style="z-index: 2; margin-right: -10px;">
-  <strong>&gt;</strong>
-</button>
-              
+</div>  
             </div>
 
             <!-- ======================== FIND CUSTOMER ======================== -->
@@ -223,8 +245,8 @@
               </button>
             </div>
           
-        </c-card-body>
-      </c-card>
+        
+     
 
       <!-- ======================== ADD NEW CONTACT MODAL ======================== -->
       <div class="modal fade" id="addNewUserModal" tabindex="-1" aria-labelledby="addNewUserModalLabel" 
@@ -325,7 +347,3 @@
           </div>
         </div>
       </div>
-
-    </c-col>
-  </c-row>
-</c-col>
