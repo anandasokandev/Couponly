@@ -14,7 +14,7 @@ a {
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
   transition: .3s all ease;
-  color: #e3b04b;
+  color: #568add;
 }
 a:hover, a:focus {
   text-decoration: none !important;
@@ -49,82 +49,58 @@ h1, h2, h3, h4, h5,
 /* ===================================================================
    Login Specific Styles
    =================================================================== */
+
+/* ===================================================================
+   Layout Background
+   =================================================================== */
 .wrap .img {
   width: 50%;
-  background-color: #fef3e0;
+  background: #568add;
+  position: relative;
+}
+.wrap .img::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(227,176,75,0.1), transparent);
+  pointer-events: none;
 }
 
 .wrap .login-wrap {
   width: 50%;
   padding: 3rem !important;
+  background: #ffffff;
+  box-shadow: 0 15px 35px rgba(26,42,68,0.1);
+  border-radius: 12px;
 }
 
-@media (max-width: 991.98px) {
-  .wrap .img,
-  .wrap .login-wrap {
-    width: 100%;
-  }
-  .wrap .img {
-    /* Add some padding on mobile so the logo isn't squished */
-    padding: 3rem 0;
-  }
-}
+.login-wrap h3 { color: #2d3748; }
 
-.login-wrap h3 {
-  font-weight: 700;
-  color: #000;
-}
-
-/* ===================================================================
-   Form Styles
-   =================================================================== */
-.signin-form .form-group {
-  position: relative;
-}
 .signin-form .form-control {
-  height: 52px;
-  background: #fff;
-  color: #000;
-  border: 1px solid transparent;
-  border-radius: 2px;
-  font-size: 16px;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid #f9fafc;
+  border-radius: 6px;
 }
-.signin-form .form-control:focus, .signin-form .form-control:active {
-  outline: none !important;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  border: 1px solid #e3b04b;
+.signin-form .form-control:focus {
+  border: 1px solid #1d1d1c;
+  box-shadow: 0 0 0 3px rgba(227,176,75,0.15);
 }
 
-.signin-form .label {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #000;
-  font-weight: 700;
-}
-
-/* ===================================================================
-   Button
-   =================================================================== */
+/* BUTTON: Solid Gold → Outline on Hover */
 .form-group .btn {
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 3px;
-  padding: 12px 20px;
-  background: #e3b04b !important;
-  border: 1px solid #e3b04b !important;
+    background: #568add;
+  border: 1px solid #f2f3f7 !important;
   color: #fff !important;
+  border-radius: 6px;
+  padding: 12px 28px;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 .form-group .btn:hover {
-  border: 1px solid #e3b04b !important;
   background: transparent !important;
-  color: #e3b04b !important;
+  color: #171716 !important;
+  border: 1px solid #f9fafb !important;
+  box-shadow: 0 0 0 2px rgba(227,176,75,0.2);
 }
-
 /*
   (REMOVED) All .social-media, .social-icon, .checkbox-wrap, 
   and .checkmark styles have been deleted.
