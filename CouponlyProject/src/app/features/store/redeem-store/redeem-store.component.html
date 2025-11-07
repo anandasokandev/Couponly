@@ -59,7 +59,7 @@
 <!-- DYNAMIC COUPONS -->
 <div *ngFor="let coupon of filteredCoupons" style="flex: 0 0 240px;">
   <div
-    class="card h-100 coupon-card-inactive d-flex flex-row align-items-start"
+    class="card h-100 d-flex flex-row align-items-start"
     [class.coupon-card-active]="selectedCoupon === coupon.id"
     style="text-decoration: none; cursor: pointer;"
     (click)="selectCoupon(coupon)"
@@ -68,32 +68,34 @@
     <!-- Left Image -->
     <img
       [src]="coupon.couponImage || coupon.imageUrl"
-      class="card-img-top"
       alt="Coupon Image"
       style="max-width: 50%; height: 100%; object-fit: cover;"
     >
 
-    <!-- Right Side Details -->
-    <div class="card-body p-2 pt-4 d-flex flex-column justify-content-between">
-      <div>
+    <!-- Right Side (positioning context) -->
+    <div class="card-body p-2 pt-4 position-relative">
+      <div class="pe-4">
         <h6 class="card-title fw-bold mb-1">{{ coupon.name }}</h6>
         <small class="card-text text-muted d-block mb-1">
           <span class="text-dark fw-semibold">{{ coupon.couponCode }}</span>
         </small>
       </div>
 
-      <!-- View link (bottom right) -->
-      <small class="text-end mt-auto">
-        <a
-          href="#"
-          data-bs-toggle="modal"
-          [attr.data-bs-target]="'#couponModal' + coupon.id"
-          class="text-primary text-decoration-underline"
-          style="font-size: 12px;"
-        >View</a>
-      </small>
+      <!-- Pinned bottom-right button -->
+      <button
+        type="button"
+        class="btn btn-sm btn-light border-0 p-0 position-absolute bottom-0 end-0 mb-2 me-2"
+        title="View details"
+        data-bs-toggle="modal"
+        [attr.data-bs-target]="'#couponModal' + coupon.id"
+        (click)="$event.stopPropagation()"
+      >
+        <i class="fas fa-info-circle text-primary" style="font-size:14px;"></i>
+      </button>
     </div>
   </div>
+</div>
+
 
   <!-- MODAL FOR THIS COUPON -->
   <div
@@ -173,7 +175,7 @@
             </div>
 
             <!-- ======================== FIND CUSTOMER ======================== -->
-            <div class="mb-3 mx-5 d-flex flex-column" style="min-height: 360px;">
+            <div class="mb-3 mx-5 d-flex flex-column" style="min-height: 340px;">
               <h5 class="fw-bold mb-3 theme-heading">Find Customer</h5>
 
               <div class="p-3 bg-white rounded shadow-sm border d-flex flex-column" style="flex-grow: 1;">
