@@ -166,4 +166,21 @@ loadCoupons() {
     this.itemsPerPage = items;
     this.loadCoupons();
   }
+
+  deleteCoupon(couponId: number) {
+  if (!confirm("Are you sure you want to delete this coupon?")) {
+    return;
+  }
+  this.couponService.deleteCoupon(couponId).subscribe({
+    next: (res) => {
+      alert("Coupon deleted successfully!");
+      this.loadCoupons();
+    },
+    error: (err) => {
+      console.error(err);
+      alert("Failed to delete coupon.");
+    }
+  });
+}
+
 }
