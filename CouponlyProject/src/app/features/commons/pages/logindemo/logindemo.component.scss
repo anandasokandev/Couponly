@@ -1,107 +1,130 @@
-/* ===================================================================
-   Base Styles
-   =================================================================== */
 body {
-  font-family: "Lato", sans-serif;
-  font-size: 16px;
-  line-height: 1.8;
-  font-weight: normal;
-  background: #f8f9fa; /* Light grey background */
-  color: gray;
-}
+        font-family: "Lato", sans-serif;
+        font-size: 16px;
+        line-height: 1.8;
+        font-weight: normal;
+        background: linear-gradient(to right, #7ab8e8, #153874);
+        color: gray;
+        margin: 0;
+        padding: 0;
+      }
 
-a {
-  -webkit-transition: .3s all ease;
-  -o-transition: .3s all ease;
-  transition: .3s all ease;
-  color: #568add;
-}
-a:hover, a:focus {
-  text-decoration: none !important;
-  outline: none !important;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  color: #000;
-}
+      a {
+        transition: .3s all ease;
+        color: #1e3a6f;
+      }
 
-h1, h2, h3, h4, h5,
-.h1, .h2, .h3, .h4, .h5 {
-  line-height: 1.5;
-  font-weight: 400;
-  font-family: "Lato", sans-serif;
-  color: #000;
-}
+      a:hover,
+      a:focus {
+        color: #7ab8f5;
+        text-decoration: none !important;
+        outline: none !important;
+        box-shadow: none;
+      }
 
-.ftco-section {
-  padding: 7em 0;
-}
+      h3 {
+        font-weight: 700;
+        font-size: 2rem;
+        background: linear-gradient(to right, #cce4f6, #2a4f8d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
 
-.wrap {
-  width: 100%;
-  overflow: hidden;
-  background: #fff;
-  border-radius: 5px;
-  -webkit-box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
-  -moz-box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
-  box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
-}
+      .ftco-section {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 7em 0;
+      }
 
-/* ===================================================================
-   Login Specific Styles
-   =================================================================== */
+      .wrap {
+        width: 100%;
+        background: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
+        display: flex;
+        min-height: 500px;
+        overflow: hidden;
+      }
 
-/* ===================================================================
-   Layout Background
-   =================================================================== */
-.wrap .img {
-  width: 50%;
-  background: #c1dcf7;
-  position: relative;
-}
-.wrap .img::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(227,176,75,0.1), transparent);
-  pointer-events: none;
-}
+      .wrap .img {
+        width: 50%;
+        position: relative;
+        display: flex;
+        align-items: stretch;
+      }
 
-.wrap .login-wrap {
-  width: 50%;
-  padding: 3rem !important;
-  background: #ffffff;
-  box-shadow: 0 15px 35px rgba(26,42,68,0.1);
-  border-radius: 12px;
-}
+      .wrap .img::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(227, 176, 75, 0.1), transparent);
+        pointer-events: none;
+        z-index: 1;
+      }
 
-.login-wrap h3 { color: #2d3748; }
+      .wrap .img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+      }
 
-.signin-form .form-control {
-  border: 1px solid #f9fafc;
-  border-radius: 6px;
-}
-.signin-form .form-control:focus {
-  border: 1px solid #1d1d1c;
-  box-shadow: 0 0 0 3px rgba(227,176,75,0.15);
-}
+      .wrap .login-wrap {
+        width: 50%;
+        padding: 3rem;
+        background: #ffffff;
+        box-shadow: 0 15px 35px rgba(26, 42, 68, 0.1);
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
 
-/* BUTTON: Solid Gold → Outline on Hover */
-.form-group .btn {
-    background: #568add;
-  border: 1px solid #f2f3f7 !important;
-  color: #fff !important;
-  border-radius: 6px;
-  padding: 12px 28px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-.form-group .btn:hover {
-  background: transparent !important;
-  color: #171716 !important;
-  border: 1px solid #f9fafb !important;
-  box-shadow: 0 0 0 2px rgba(227,176,75,0.2);
-}
-/*
-  (REMOVED) All .social-media, .social-icon, .checkbox-wrap, 
-  and .checkmark styles have been deleted.
-*/
+      .signin-form .form-control {
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        border-radius: 6px;
+        color: #000;
+      }
+
+      .signin-form .form-control:focus {
+        border: 1px solid #1e3a6f;
+        box-shadow: 0 0 0 3px rgba(122, 184, 245, 0.3);
+      }
+
+      .label {
+        color: #000;
+        transition: color 0.3s ease;
+      }
+
+      .form-control:focus + .label,
+      .form-control:focus ~ .label {
+        color: #7ab8f5;
+      }
+
+      .form-group .btn {
+        background: #1e3a6f;
+        border: none;
+        color: #fff !important;
+        border-radius: 6px;
+        padding: 12px 28px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .form-group .btn:hover {
+        background: #16325c;
+        box-shadow: 0 0 0 2px rgba(122, 184, 245, 0.2);
+      }
+
+      .text-md-right a,
+      .text-center a {
+        color: #1e3a6f;
+        font-weight: 500;
+      }
+
+      .text-md-right a:hover,
+      .text-center a:hover {
+        color: #7ab8f5;
+      }
