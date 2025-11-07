@@ -78,7 +78,7 @@ searchContact() {
   else{
 console.log('ELSE',this.contacts)
   this.searchStart = true;
-  this.conatctService.searchContacts(1, 4, '', '', query).subscribe({
+  this.conatctService.searchContacts(1, 3, '', '', query).subscribe({
     next: (response: any) => {
       this.contacts = response.data.items;
       this.searchStart = false;
