@@ -97,5 +97,8 @@ deleteCoupon(couponId: number) {
   );
 }
 
+  generateAiImage(data: any) {
+    return this.http.post<any>(`${environment.endpoints.coupon.GenerateAiImage}`, data );
+  }
 
 }
