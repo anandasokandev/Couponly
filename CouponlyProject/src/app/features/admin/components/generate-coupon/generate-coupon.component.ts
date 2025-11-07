@@ -142,6 +142,8 @@ export class GenerateCouponComponent implements OnInit {
     
     this.imageUpload.UploadImage(this.selectedFile!).subscribe({
       next: (res: any) => {
+        console.log(res);
+        
           if (res.status && res.url) {
             const payload = this.buildPayload(res.url);
             console.log(payload);
