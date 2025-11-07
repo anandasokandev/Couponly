@@ -1,0 +1,22 @@
+<c-modal #verticallyCenteredScrollableModal
+         [scrollable]="true"
+         alignment="center"
+         id="verticallyCenteredScrollableModal"
+         class="wide-modal">
+
+  <c-modal-header>
+    <h5 cModalTitle>Generate AI Coupon</h5>
+    <button cButtonClose cModalToggle></button>
+  </c-modal-header>
+
+  <c-modal-body>
+    <p>Hey</p>
+    </c-modal-body>
+
+  <c-modal-footer>
+    <button [cModalToggle]="verticallyCenteredScrollableModal.id" cButton color="secondary">
+      Close
+    </button>
+    <button cButton color="primary">Save</button>
+  </c-modal-footer>
+</c-modal>

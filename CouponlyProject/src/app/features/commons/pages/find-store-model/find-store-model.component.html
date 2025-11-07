@@ -18,19 +18,19 @@
 
     <c-modal-body class="p-4">
         <c-nav variant="tabs" class="justify-content-around">
-            <c-nav-item cNavLink [active]="currentStep === 1" disabled class="d-flex align-items-center gap-2 nav">
-                <img src="./../../../../../assets/images/checked.png" alt="Check Icon" class="nav-icon" *ngIf="stepCheck.store"> 
-                <img src="./../../../../../assets/images/unchecked.png" alt="Uncheck Icon" class="nav-icon" *ngIf="!stepCheck.store">
+            <c-nav-item cNavLink [active]="currentStep === 1" (click)="changeStore()" class="d-flex align-items-center gap-2 nav">
+                <img src="./../../../../../assets/images/checked.png" alt="Check Icon" class="nav-icon-checked" *ngIf="stepCheck.store"> 
+                <img src="./../../../../../assets/images/unchecked.png" alt="Uncheck Icon" class="nav-icon-unchecked" *ngIf="!stepCheck.store">
                 <strong>Select Store</strong>
             </c-nav-item>
-            <c-nav-item cNavLink [active]="currentStep === 2" disabled class="d-flex align-items-center gap-2 nav">
-                <img src="./../../../../../assets/images/checked.png" alt="Check Icon" class="nav-icon" *ngIf="stepCheck.coupon"> 
-                <img src="./../../../../../assets/images/unchecked.png" alt="Uncheck Icon" class="nav-icon" *ngIf="!stepCheck.coupon">
+            <c-nav-item cNavLink [active]="currentStep === 2" (click)="currentStep !== 1 ? changeCoupon() : null" class="d-flex align-items-center gap-2 nav">
+                <img src="./../../../../../assets/images/checked.png" alt="Check Icon" class="nav-icon-checked" *ngIf="stepCheck.coupon"> 
+                <img src="./../../../../../assets/images/unchecked.png" alt="Uncheck Icon" class="nav-icon-unchecked" *ngIf="!stepCheck.coupon">
                 <strong>Select Coupon</strong>
             </c-nav-item>
-            <c-nav-item cNavLink [active]="currentStep === 3" disabled class="d-flex align-items-center gap-2 nav">
-                <img src="./../../../../../assets/images/checked.png" alt="Check Icon" class="nav-icon" *ngIf="stepCheck.contacts"> 
-                <img src="./../../../../../assets/images/unchecked.png" alt="Uncheck Icon" class="nav-icon" *ngIf="!stepCheck.contacts">
+            <c-nav-item cNavLink [active]="currentStep === 3" class="d-flex align-items-center gap-2 nav">
+                <img src="./../../../../../assets/images/checked.png" alt="Check Icon" class="nav-icon-checked" *ngIf="stepCheck.contacts"> 
+                <img src="./../../../../../assets/images/unchecked.png" alt="Uncheck Icon" class="nav-icon-unchecked" *ngIf="!stepCheck.contacts">
                 <strong>Define Contacts</strong>
             </c-nav-item>
         </c-nav>
@@ -38,87 +38,68 @@
         <div [ngSwitch]="currentStep" class="mt-4">
             <ng-container *ngSwitchCase="1">
                 <form [formGroup]="filterForm" *ngIf="!isStore">
-                <h6 class="mb-3">Choose Store</h6>
-                <div class="d-flex gap-4">
-                    <c-input-group>
-                    <span cInputGroupText>
-                        <i class="fas fa-search"></i>
-                    </span>
-                    <input
-                        cFormControl
-                        class="form-control-sm"
-                        type="text"
-                        formControlName="storeName"
-                        placeholder="Search by name..."
-                    />
-                    </c-input-group>
-                    <button
-                    cButton
-                    color="secondary"
-                    class="btn btn-sm d-flex align-items-center"
-                    (click)="searchStores()"
-                    [disabled]="!filterForm.get('storeName')?.value || isStoreLoading"
-                    >
-                    Search <i class="fas fa-search ms-2"></i>
-                    </button>
-                </div>
+                    <h6 class="mb-3">Choose Store</h6>
+                    <div class="d-flex gap-4">
+                        <c-input-group>
+                            <span cInputGroupText><i class="fas fa-search"></i></span>
+                            <input cFormControl class="form-control-sm" type="text" formControlName="storeName" placeholder="Search by name..." />
+                        </c-input-group>
+                        <button cButton color="secondary" class="btn btn-sm d-flex align-items-center" (click)="searchStores()" [disabled]="!filterForm.get('storeName')?.value || isStoreLoading">
+                            Search <i class="fas fa-search ms-2"></i>
+                        </button>
+                    </div>
                 </form>
 
                 <h6 *ngIf="!isStore" class="mt-3">Search Results</h6>
 
                 <div *ngIf="isStoreLoading && !isStore" class="d-flex justify-content-center my-5">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                </div>
-
-                <div
-                *ngIf="!isStoreLoading && searchResults.length === 0 && !isStore"
-                class="d-flex justify-content-center my-5"
-                >
-                <span>No stores found. Please try a different search.</span>
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
 
-                <ng-container
-                *ngIf="
-                    searchResults && searchResults.length > 0 && !isStoreLoading && !isStore
-                "
-                >
-                <table [hover]="true" cTable class="responsive-table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Logo</th>
-                        <th>Store Name</th>
-                        <th>Available Contacts</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr
-                        *ngFor="let store of searchResults; let i = index"
-                        class="align-middle"
-                        (click)="selectStore(store)"
-                        style="cursor: pointer"
-                    >
-                        <td>
-                        {{ currentPage * itemsPerPage - itemsPerPage + i + 1 }}
-                        </td>
-                        <td><img [src]="store.storeLogo" class="img" /></td>
-                        <td>{{ store.store }}</td>
-                        <td>{{ store.contactCount || 0 }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div *ngIf="!isStoreLoading && searchResults.length === 0 && !isStore" class="d-flex justify-content-center my-5">
+                    <span>No stores found. Please try a different search.</span>
+                </div>
 
-                <app-pagination
+                <ng-container *ngIf="searchResults && searchResults.length > 0 && !isStoreLoading && !isStore">
+                    <c-row>
+                        <c-col 
+                            *ngFor="let store of searchResults; let i = index" 
+                            xs="12" 
+                            sm="6" 
+                            lg="4" 
+                            xl="3" 
+                            class="mb-4"
+                        >
+                            <c-card (click)="selectStore(store)" style="cursor: pointer; height: 100%;">
+                            
+                            <c-card-body class="text-center d-flex flex-column justify-content-between">
+                                <div>
+                                <img [src]="store.storeLogo" class="img mb-3" style="max-width: 100%; object-fit: contain;" />
+
+                                <h6 c-card-title>{{ store.store }}</h6>
+                                </div>
+                            </c-card-body>
+                            
+                            <c-card-footer>
+                                <small class="text-muted"># {{ currentPage * itemsPerPage - itemsPerPage + i + 1 }}</small>
+                            </c-card-footer>
+                            </c-card>
+                        </c-col>
+                    </c-row>
+
+                    <app-pagination
                     [currentPage]="currentPage"
                     [itemsPerPage]="itemsPerPage"
                     [totalItems]="totalItems"
                     [fromModel]="true"
                     (pageChange)="onPageChange($event)"
-                ></app-pagination>
+                    ></app-pagination>
+
                 </ng-container>
             </ng-container>
+
             <ng-container *ngSwitchCase="2">
                 <div
                 *ngIf="selectedStore"
@@ -181,6 +162,7 @@
                     </div>
                 </c-row>
             </ng-container>
+
             <ng-container *ngSwitchCase="3">
                 <h6>Confirm Selections</h6>
 
@@ -246,23 +228,22 @@
                 </div>
             </ng-container>
         </div>
-
     
     </c-modal-body>
 
     <c-modal-footer>
-    <button cButton class="btn-sm" color="secondary" [cModalToggle]="FindStoreModal.id">Cancel</button>
-    <button
-        cButton
-        type="button"
-        class="btn-sm"
-        color="primary"
-        (click)="addContacts()"
-        [disabled]="!selectedStore || !selectedCoupon || contactsNeeded <= 0 || contactsNeeded > PublicContactCount"
-        [cModalToggle]="FindStoreModal.id"
-    >
-        Select Store
-    </button>
+        <button cButton class="btn-sm" color="secondary" [cModalToggle]="FindStoreModal.id">Cancel</button>
+        <button
+            cButton
+            type="button"
+            class="btn-sm"
+            color="primary"
+            (click)="addContacts()"
+            [disabled]="!selectedStore || !selectedCoupon || contactsNeeded <= 0 || contactsNeeded > PublicContactCount"
+            [cModalToggle]="FindStoreModal.id"
+        >
+            Select Store
+        </button>
     </c-modal-footer>
 
 </c-modal>

@@ -7,6 +7,7 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
 import { Coupon, CouponType } from '../../../../commons/models/coupon.model' 
 import { ImageUploadService } from '../../../../commons/services/ImageUpload/image-upload.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AiImageModalComponent } from '../../pages/ai-image-modal/ai-image-modal.component';
 
 @Component({
   selector: 'app-generate-coupon',
@@ -18,7 +19,9 @@ import { ActivatedRoute, Router } from '@angular/router';
     GridModule,
     CardModule,
     ModalModule,
-    ButtonModule
+    ButtonModule,
+    AiImageModalComponent,
+    CommonModule
   ],
   templateUrl: './generate-coupon.component.html',
   styleUrls: ['./generate-coupon.component.scss']

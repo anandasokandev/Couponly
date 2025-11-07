@@ -11,7 +11,8 @@ import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-add-contact-modal',
-  imports: [ ModalToggleDirective,
+  imports: [ 
+    ModalToggleDirective,
     ModalComponent,
     ModalHeaderComponent,
     ModalTitleDirective,
@@ -21,7 +22,6 @@ import { Output, EventEmitter } from '@angular/core';
     FormLabelDirective,
     ModalFooterComponent,
     CommonModule,
-    ModalFooterComponent,
     ButtonDirective,
     ReactiveFormsModule
   ],

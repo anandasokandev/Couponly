@@ -57,7 +57,8 @@ export class RedeemStoreComponent implements OnInit, AfterViewInit  {
 
 ngOnInit(): void {
   this.loadValidCoupons();
-  
+  this.storeId = sessionStorage.getItem('storeId');
+
 
 }
 
@@ -78,7 +79,7 @@ searchContact() {
   else{
 console.log('ELSE',this.contacts)
   this.searchStart = true;
-  this.conatctService.searchContacts(1, 4, '', '', query).subscribe({
+  this.conatctService.searchContacts(1, 3, '', '', query).subscribe({
     next: (response: any) => {
       this.contacts = response.data.items;
       this.searchStart = false;
@@ -247,6 +248,69 @@ closeModal(): void {
   this.isModalOpen = false;
 }
  
+getSelectedCoupon(): any {
+  if (!this.selectedCoupon) return null;
+  return this.coupons.find(c => c.id === this.selectedCoupon);
+}
+
+confirmRedeem(): void {
+  const selectedCoupon = this.getSelectedCoupon();
+  const selectedUser = this.selectedContact;
+
+  if (!selectedUser || !selectedCoupon) {
+    this.toast.show({
+      type: 'error',
+      message: 'Please select both a customer and a coupon before redeeming.'
+    });
+    return;
+  }
+
+  // Build redeem object
+  const redeemData = {
+    coupon: selectedCoupon.id,
+    user: selectedUser.id,  
+    store: this.storeId,    
+  };
+
+  // If backend expects an array:
+  const redeemArray = [redeemData];
+
+  console.log('✅ Redeem Payload:', redeemArray);
+
+  // ===== Optional: Call API to save redeem record =====
+  // this.api.redeemCoupon(redeemArray).subscribe({
+  //   next: (res: any) => {
+  //     if (res.isSuccess) {
+  //       this.toast.show({ type: 'success', message: 'Coupon redeemed successfully!' });
+  //     } else {
+  //       this.toast.show({ type: 'error', message: res.errors?.[0] || 'Redemption failed' });
+  //     }
+  //   },
+  //   error: (err) => {
+  //     console.error('Redeem API Error:', err);
+  //     this.toast.show({ type: 'error', message: 'Something went wrong during redemption.' });
+  //   }
+  // });
+
+
+   // Hide modal safely after confirm
+  const modalEl = document.getElementById('checkoutModal');
+  const modalInstance = (window as any).bootstrap?.Modal.getInstance(modalEl);
+  if (modalInstance) modalInstance.hide();
+
+  // Optional success toast
+  this.toast.show({
+    type: 'success',
+    message: `🎉 ${selectedCoupon.name} redeemed for ${selectedUser.name}!`
+  });
+
+  // Refresh after short delay (so toast is visible)
+setTimeout(() => {
+  window.location.reload();
+}, 1000);
+
+}
+
 
 }
 

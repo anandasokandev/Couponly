@@ -1,56 +1,54 @@
+<c-modal #aiImageModal [scrollable]="true" alignment="center" id="aiImageModal">
+  <app-ai-image-modal></app-ai-image-modal>
+</c-modal>
+
+
 <c-col xs="12">
   <c-card class="mb-4 shadow-sm rounded-4">
-    <!-- Card Header -->
-    <c-card-header class="d-flex justify-content-between align-items-center bg-light rounded-top">
+    <c-card-header class="d-flex justify-content-between align-items-center bg-light rounded-top-2">
       <strong class="fs-5">Generate Coupons</strong>
       <button class="btn btn-primary btn-sm">View Coupons</button>
     </c-card-header>
 
     <c-card-body>
       <div class="row g-4">
-        <!-- Left Form Column (40%) -->
-        <div class="col-12 col-lg-5">
-          <h6 class="mb-3 text-dark">Coupon Details</h6>
+
+        <div class="col-12 col-lg-6 border-end">
+          <h6 class="mb-3 text-dark text-center">Coupon Details</h6>
           <form #couponForm="ngForm" class="needs-validation" novalidate>
-            
-            <!-- Coupon Title -->
+
             <div class="mb-3">
               <label class="form-label">Coupon Title</label>
-              <input type="text" class="form-control" 
-                     [(ngModel)]="coupon.title" name="title" required maxlength="50" 
-                     #title="ngModel" placeholder="50% OFF on Shoes">
+              <input type="text" class="form-control" [(ngModel)]="coupon.title" name="title" required maxlength="50"
+                #title="ngModel" placeholder="50% OFF on Shoes">
               <div *ngIf="title.invalid && title.touched" class="text-danger small">
                 Coupon Title is required (max 50 characters)
               </div>
             </div>
 
-            <!-- Description -->
             <div class="mb-3">
               <label class="form-label">Description</label>
-              <textarea class="form-control" rows="3"
-                        [(ngModel)]="coupon.description" name="description" required maxlength="200"
-                        #description="ngModel" placeholder="Enter description"></textarea>
+              <textarea class="form-control" rows="3" [(ngModel)]="coupon.description" name="description" required
+                maxlength="200" #description="ngModel" placeholder="Enter description"></textarea>
               <div *ngIf="description.invalid && description.touched" class="text-danger small">
                 Description is required (max 200 characters)
               </div>
             </div>
 
-            <!-- Coupon Code -->
             <div class="mb-3">
               <label class="form-label">Coupon Code</label>
-              <input type="text" class="form-control"
-                     [(ngModel)]="coupon.code" name="code" required pattern="[A-Z0-9]+" 
-                     #code="ngModel" placeholder="SHOES50">
+              <input type="text" class="form-control" [(ngModel)]="coupon.code" name="code" required
+                pattern="[A-Z0-9]+" #code="ngModel" placeholder="SHOES50">
               <div *ngIf="code.invalid && code.touched" class="text-danger small">
                 Code is required (uppercase letters & numbers only)
               </div>
             </div>
 
-            <!-- Coupon Type -->
             <div class="mb-3">
               <label class="form-label">Coupon Type</label>
-              <select class="form-select" [(ngModel)]="coupon.couponType" name="couponType" required #couponType="ngModel">
-                <option value="null" disabled>Select Coupon Type</option>
+              <select class="form-select" [(ngModel)]="coupon.couponType" name="couponType" required
+                #couponType="ngModel">
+                <option [ngValue]="null" disabled>Select Coupon Type</option>
                 <option [ngValue]="item" *ngFor="let item of couponTypeList">{{ item.name }}</option>
               </select>
               <div *ngIf="couponType.invalid && couponType.touched" class="text-danger small">
@@ -58,57 +56,47 @@
               </div>
             </div>
 
-            <!-- Discount -->
             <div class="mb-3" *ngIf="coupon.couponType?.name === 'Discount Coupons'">
               <label class="form-label">Discount %</label>
-              <input type="number" class="form-control"
-                     [(ngModel)]="coupon.discount" name="discount" required min="0"
-                     #discount="ngModel" placeholder="Enter discount">
+              <input type="number" class="form-control" [(ngModel)]="coupon.discount" name="discount" required min="0"
+                #discount="ngModel" placeholder="Enter discount">
               <div *ngIf="discount.invalid && discount.touched" class="text-danger small">
                 Discount is required and must be ≥ 0
               </div>
             </div>
 
-            <!-- Minimum Amount -->
             <div class="mb-3">
               <label class="form-label">Minimum Amount</label>
-              <input type="number" class="form-control"
-                     [(ngModel)]="coupon.minimumAmount" name="minAmount" required min="0"
-                     #minAmount="ngModel" placeholder="Enter minimum order amount">
+              <input type="number" class="form-control" [(ngModel)]="coupon.minimumAmount" name="minAmount" required
+                min="0" #minAmount="ngModel" placeholder="Enter minimum order amount">
               <div *ngIf="minAmount.invalid && minAmount.touched" class="text-danger small">
                 Minimum amount is required and must be ≥ 0
               </div>
             </div>
 
-            <!-- Validity Dates -->
             <div class="row g-3 mb-3">
               <div class="col">
                 <label class="form-label">Valid From</label>
-                <input type="date" class="form-control"
-                       [(ngModel)]="coupon.validFrom" name="validFrom" [min]="today" required #validFrom="ngModel">
+                <input type="date" class="form-control" [(ngModel)]="coupon.validFrom" name="validFrom" [min]="today"
+                  required #validFrom="ngModel">
                 <div *ngIf="validFrom.invalid && validFrom.touched" class="text-danger small">
                   Valid From date is required
                 </div>
               </div>
               <div class="col">
                 <label class="form-label">Valid Until</label>
-                <input type="date" class="form-control"
-                       [(ngModel)]="coupon.validUntil" name="validUntil" [min]="today" required #validUntil="ngModel">
+                <input type="date" class="form-control" [(ngModel)]="coupon.validUntil" name="validUntil"
+                  [min]="today" required #validUntil="ngModel">
                 <div *ngIf="validUntil.invalid && validUntil.touched" class="text-danger small">
                   Valid Until date is required
                 </div>
               </div>
             </div>
 
-            <!-- User Limit -->
             <div class="mb-3">
               <label class="form-label">User Limit</label>
-              <select class="form-select"
-                      [(ngModel)]="coupon.userLimit"
-                      (ngModelChange)="onUserLimitChange($event)"
-                      name="userLimit"
-                      required
-                      #userLimitModel="ngModel">
+              <select class="form-select" [(ngModel)]="coupon.userLimit" (ngModelChange)="onUserLimitChange($event)"
+                name="userLimit" required #userLimitModel="ngModel">
                 <option [ngValue]="null" disabled selected>-- Select --</option>
                 <option [ngValue]="true">Limited</option>
                 <option [ngValue]="false">Unlimited</option>
@@ -118,17 +106,10 @@
               </div>
             </div>
 
-            <!-- User Limit Count -->
             <div class="mb-3" *ngIf="coupon.userLimit">
               <label class="form-label">User Limit Number</label>
-              <input type="number"
-                     class="form-control"
-                     [(ngModel)]="coupon.userLimitCount"
-                     name="userLimitCount"
-                     min="1"
-                     required
-                     placeholder="3"
-                     #userLimitCountModel="ngModel">
+              <input type="number" class="form-control" [(ngModel)]="coupon.userLimitCount" name="userLimitCount"
+                min="1" required placeholder="3" #userLimitCountModel="ngModel">
               <div *ngIf="userLimitCountModel.invalid && userLimitCountModel.touched" class="text-danger small">
                 User Limit Number is required
               </div>
@@ -136,57 +117,55 @@
           </form>
         </div>
 
-        <!-- Right Column (60%) -->
-        <div class="col-12 col-lg-7">
-          <div class="card shadow-sm rounded-4 p-3 h-100">
-            <h5 class="mb-3 text-dark">Upload or Generate Coupon</h5>
+        <div class="col-12 col-lg-6">
+          <h6 class="mb-3 text-dark text-center">Generate Coupons</h6>
 
-            <!-- Tabs -->
-            <ul class="nav nav-tabs mb-3">
-              <li class="nav-item">
-                <a class="nav-link text-dark" [class.active]="activeTab === 'upload'" (click)="activeTab = 'upload'">Upload Image</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-dark" [class.active]="activeTab === 'ai'" (click)="activeTab = 'ai'">AI Coupon</a>
-              </li>
-            </ul>
-
-            <!-- Upload Tab -->
-            <div *ngIf="activeTab === 'upload'">
-              <div class="border border-dashed rounded p-4 mb-3 text-center">
-                <p class="text-muted mb-2">Drag & Drop Image Here</p>
-                <label class="btn btn-outline-secondary btn-sm">
-                  Choose File <input type="file" accept=".jpg,.jpeg,.png,.gif" hidden (change)="onFileSelected($event)" />
-                </label>
-              </div>
-              <div *ngIf="imagePreviewUrl" class="coupon-preview mb-3 text-center">
-                <img [src]="imagePreviewUrl" alt="Coupon Preview" class="img-fluid rounded shadow-sm" style="max-height: 250px; object-fit: contain;">
-              </div>
-            </div>
-
-            <!-- AI Tab -->
-            <div *ngIf="activeTab === 'ai'">
-              <input type="text" name="prompt" [(ngModel)]="prompt" placeholder="Describe your coupon idea..."
-                class="form-control mb-2" />
-              <button class="btn btn-outline-primary w-100 mb-3" (click)="generateAICoupon()" [disabled]="loading">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
-                ✨ Generate with AI
+          <ul class="nav nav-tabs" id="couponTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload-pane"
+                type="button" role="tab" aria-controls="upload-pane" aria-selected="true">
+                Upload Image
               </button>
-              <div *ngIf="aiImage" class="border p-3 rounded mb-2 text-center">
-                <img [src]="aiImage" alt="AI Coupon" class="img-fluid rounded" style="max-height: 250px;">
-              </div>
-              <div *ngIf="aiText" class="border p-3 rounded mb-2">
-                <p>{{ aiText }}</p>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="ai-tab" data-bs-toggle="tab" data-bs-target="#ai-pane" type="button"
+                role="tab" aria-controls="ai-pane" aria-selected="false" [cModalToggle]="aiImageModal.id">
+                AI Coupon
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content border border-top-0 rounded-bottom p-3" id="couponTabsContent">
+
+            <div class="tab-pane fade show active" id="upload-pane" role="tabpanel" aria-labelledby="upload-tab"
+              tabindex="0">
+              <div class="text-center p-5 mb-3"
+                style="border: 2px dashed #ccc; min-height: max-content; border-radius: 0.25rem;">
+                <p class="lead mb-2">Drag & Drop Image Here</p>
+                <p class="text-muted mb-3">or</p>
+                
+                <div class="d-grid">
+                  <label for="couponImageFile" class="btn btn-outline-primary">Choose File</label>
+                  <input type="file" id="couponImageFile" class="d-none">
+                </div>
+
               </div>
             </div>
 
-            <!-- Save Button -->
-            <div class="text-end mt-3">
-              <button class="btn btn-primary px-5" (click)="saveCoupon()" [disabled]="!couponForm.valid || (!imagePreviewUrl && !aiImage)">Save Coupon</button>
-            </div>
+            <!-- <div class="tab-pane fade" id="ai-pane" role="tabpanel" aria-labelledby="ai-tab" tabindex="0">
+              <app-ai-image-modal></app-ai-image-modal>
+            </div> -->
           </div>
         </div>
       </div>
     </c-card-body>
+
+    <c-card-footer class="bg-light d-flex justify-content-end gap-2">
+      <button type="button" class="btn btn-outline-secondary" >Reset</button>
+      <button type="submit" class="btn btn-success"  [disabled]="couponForm.invalid">
+        Generate Coupon
+      </button>
+    </c-card-footer>
+
   </c-card>
 </c-col>
