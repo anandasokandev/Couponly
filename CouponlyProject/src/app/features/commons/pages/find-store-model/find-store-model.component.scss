@@ -1,5 +1,5 @@
 ::ng-deep .wide-modal .modal-dialog {
-  max-width: 1000px;
+  max-width: 900px;
 }
 
 ::ng-deep .img{
@@ -12,9 +12,14 @@
   height: auto;
 }
 
-.nav-icon {
+.nav-icon-checked {
     width: 30px;
     height: 30px;
+}
+
+.nav-icon-unchecked {
+    width: 20px;
+    height: 20px;
 }
 
 .nav[disabled] {
@@ -24,7 +29,8 @@
 }
 
 .nav {
-    color: black;
+    color: rgb(52, 52, 52);
+    font-weight: lighter;
 }
 
   /* --- Carousel Styles --- */

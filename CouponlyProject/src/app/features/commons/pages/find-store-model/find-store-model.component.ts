@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Inject, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonDirective, CardBodyComponent, CardComponent, ColComponent, FormModule, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, NavComponent, NavItemComponent, NavModule, RowComponent, SpinnerModule, TableModule } from '@coreui/angular';
+import { ButtonDirective, CardBodyComponent, CardComponent, CardFooterComponent, ColComponent, FormModule, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective, NavComponent, NavItemComponent, NavModule, RowComponent, SpinnerModule, TableModule } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { District } from '../../../../commons/models/district.model';
 import { Location } from '../../../../commons/models/location.model';
@@ -39,10 +39,11 @@ export interface Coupon {
     PaginationComponent,
     NavModule,
     NavComponent,
+    RowComponent,
     CardComponent,
     CardBodyComponent,
-    ColComponent,
-    RowComponent
+    CardFooterComponent,
+    ColComponent
   ],
   templateUrl: './find-store-model.component.html',
   styleUrl: './find-store-model.component.scss'
@@ -159,7 +160,7 @@ export class FindStoreModelComponent {
         this.totalItems = response.data.totalCount;
         this.isStoreLoading = false;
         this.isPageChange = false;
-        console.log(response)
+        console.log("Store search: ",response)
       }
     })
     this.selectedStore = null; // Reset selection on new search
