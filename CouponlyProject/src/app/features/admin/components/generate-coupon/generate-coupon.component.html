@@ -1,5 +1,5 @@
 <c-modal #aiImageModal [scrollable]="true" alignment="center" id="aiImageModal">
-  <app-ai-image-modal></app-ai-image-modal>
+  <app-ai-image-modal [coupon]="coupon"></app-ai-image-modal>
 </c-modal>
 
 
@@ -129,7 +129,7 @@
             </li>
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="ai-tab" data-bs-toggle="tab" data-bs-target="#ai-pane" type="button"
-                role="tab" aria-controls="ai-pane" aria-selected="false" [cModalToggle]="aiImageModal.id">
+                role="tab" aria-controls="ai-pane" aria-selected="false" [cModalToggle]="aiImageModal.id" (click)="submitCouponMethod()" >
                 AI Coupon
               </button>
             </li>

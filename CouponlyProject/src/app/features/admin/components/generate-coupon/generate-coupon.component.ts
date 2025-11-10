@@ -1,5 +1,5 @@
 import { CommonModule, NgClass } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule, CardComponent, CardHeaderComponent, CardModule, ColComponent, FormModule, GridModule, ModalComponent, ModalModule, ModalToggleDirective, TableDirective, TabsComponent } from '@coreui/angular';
 import { CouponService } from '../../../../commons/services/Coupon/coupon.service';
@@ -27,6 +27,9 @@ import { AiImageModalComponent } from '../../pages/ai-image-modal/ai-image-modal
   styleUrls: ['./generate-coupon.component.scss']
 })
 export class GenerateCouponComponent implements OnInit {
+
+  @Output() couponSubmit = new EventEmitter<any>();
+
   activeTab: string = 'upload';
 
   selectedFile: File | null = null;
@@ -36,7 +39,6 @@ export class GenerateCouponComponent implements OnInit {
   aiImage: string | null = null;
   couponTypeList: CouponType [] = [];
   isUserLimit: boolean = false;
-  storeId!: number;
   userId = sessionStorage.getItem('userId');
   prompt: string = ''
   loading: boolean = false;
@@ -48,6 +50,7 @@ export class GenerateCouponComponent implements OnInit {
     code: '',
     couponType: null,
     discount: null,
+    storeId: undefined,
     minimumAmount: null,
     userLimit: false,
     userLimitCount: 1,
@@ -63,7 +66,7 @@ export class GenerateCouponComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.route.params.subscribe(params => {
-    this.storeId = params['id'];
+    this.coupon.storeId = params['id'];
   });
   }
 
@@ -167,22 +170,25 @@ export class GenerateCouponComponent implements OnInit {
     })
   }
 
+  public submitCouponMethod(){
+    this.couponSubmit.emit(this.coupon);
+  }
   
-private buildPayload(url: string): any {
-  return {
-    name : this.coupon.title,
-      couponCode : this.coupon.code,
-      description : this.coupon.description,
-      typeId : this.coupon.couponType?.id,
-      userLimit: this.coupon.userLimit,
-      userLimitCount : this.coupon.userLimitCount,
-      discountPercentage : this.coupon.discount,
-      startingDate: this.coupon.validFrom,
-      endingDate: this.coupon.validUntil,
-      minAmount: this.coupon.minimumAmount,
-      storeId: this.storeId,
-      createdBy: this.userId,
-      couponImage: url
-  };
-}
+  private buildPayload(url: string): any {
+    return {
+      name : this.coupon.title,
+        couponCode : this.coupon.code,
+        description : this.coupon.description,
+        typeId : this.coupon.couponType?.id,
+        userLimit: this.coupon.userLimit,
+        userLimitCount : this.coupon.userLimitCount,
+        discountPercentage : this.coupon.discount,
+        startingDate: this.coupon.validFrom,
+        endingDate: this.coupon.validUntil,
+        minAmount: this.coupon.minimumAmount,
+        storeId: this.coupon.storeId,
+        createdBy: this.userId,
+        couponImage: url
+    };
+  }
 }
