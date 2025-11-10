@@ -85,6 +85,7 @@ export const environment = {
       DeleteCoupon:'Coupon',
 
       GenerateAiImage: 'Coupon/GenerateImage',
+      GetAiGeneratedImages: 'Coupon/GeneratedCoupons',
       // validcoupons: 'Coupon/valid',
       // expiredcoupons:'Coupon/expired',
       // upcomingcoupon:'Coupon/upcoming',
