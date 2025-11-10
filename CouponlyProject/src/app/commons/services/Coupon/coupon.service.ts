@@ -92,8 +92,18 @@ export class CouponService {
     );
   }
 
-  generateAiImage(data: any) {
-    return this.http.post<any>(`${environment.endpoints.coupon.GenerateAiImage}`, data );
-  }
+  //#region  Generate AI Image
+    generateAiImage(data: any) {
+      return this.http.post<any>(`${environment.apiBaseUrl}/${environment.endpoints.coupon.GenerateAiImage}`, data );
+    }
+  //#endregion
 
+  //#region Fetch AI Generated Images
+    getAiGeneratedImages(storeId: number) {
+
+      const params: any = {};
+      if (storeId != null) params.storeId = storeId;
+      return this.http.get<any>(`${environment.apiBaseUrl}/${environment.endpoints.coupon.GetAiGeneratedImages}`, { params });
+    }
+  //#endregion
 }
