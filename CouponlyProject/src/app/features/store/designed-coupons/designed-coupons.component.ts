@@ -66,7 +66,7 @@ export class DesignedCouponsComponent implements OnInit {
     let dateFilter: string | undefined;
     switch (this.selectedDateFilter) {
       case '2':
-        dateFilter = 'valid';
+        dateFilter = undefined;
         break;
       case '3':
         dateFilter = 'upcoming';
@@ -75,7 +75,7 @@ export class DesignedCouponsComponent implements OnInit {
         dateFilter = 'expired';
         break;
       default:
-        dateFilter = undefined; //All Coupons
+        dateFilter = 'valid'; //All Coupons
     }
 
     this.api.getStoreCoupons(this.couponCode, this.typeId, dateFilter).subscribe({

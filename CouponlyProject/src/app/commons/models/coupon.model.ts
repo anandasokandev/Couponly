@@ -11,6 +11,7 @@ export interface Coupon {
   discount: number | null;
   minimumAmount: number | null;
   userLimit: boolean;
+  storeId?: number;
   userLimitCount: number,
   validFrom: string;
   validUntil: string;
