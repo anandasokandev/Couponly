@@ -146,6 +146,7 @@ export const environment = {
       excelpromo:'StoreDashboardRedeem/ExportStorePromotionsToExcel',
       excelredeem:'StoreDashboardRedeem/ExportStoreRedeemsToExcel',
       invoice:'StoreDashboardRedeem/GeneratePromotionInvoice',
+      deletecoupon:'StoreDashBoardCoupons/StoreCoupon',
     },
 
     admindashboard:{

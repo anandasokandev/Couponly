@@ -95,7 +95,15 @@ export class StoreDashboardService {
     const url = `${environment.apiBaseUrl}/${environment.endpoints.storedashboard.coupons}`;
     return this.http.get(url, { headers, params });
   }
-  
+
+  deleteStoreCoupon(couponId: number): Observable<any> {
+  const token = sessionStorage.getItem('token');
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  const url = `${environment.apiBaseUrl}/${environment.endpoints.storedashboard.deletecoupon}/${couponId}`;
+  return this.http.delete(url, { headers });
+}
+
 
   exportStoreRedeemsToExcel(
   searchType: number = 4,
@@ -151,5 +159,6 @@ downloadPromotionInvoice(promotionId: number): Observable<Blob> {
   const url = `${environment.apiBaseUrl}/${environment.endpoints.storedashboard.invoice}/${promotionId}`;
   return this.http.get(url, { headers, responseType: 'blob' });
 }
+
 
 }
