@@ -6,7 +6,7 @@ import { CouponService } from '../../../../commons/services/Coupon/coupon.servic
 import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 import { Coupon, CouponType } from '../../../../commons/models/coupon.model'
 import { ImageUploadService } from '../../../../commons/services/ImageUpload/image-upload.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AiImageModalComponent } from '../../pages/ai-image-modal/ai-image-modal.component';
 
 @Component({
@@ -20,15 +20,19 @@ import { AiImageModalComponent } from '../../pages/ai-image-modal/ai-image-modal
     ModalModule,
     ButtonModule,
     AiImageModalComponent,
-    CommonModule
-  ],
+    CommonModule,
+    RouterLink
+],
   templateUrl: './generate-coupon.component.html',
   styleUrls: ['./generate-coupon.component.scss']
 })
 export class GenerateCouponComponent implements OnInit {
 
+  //#region Decorators
   @Output() couponSubmit = new EventEmitter<any>();
+  //#endregion
 
+  //#region Variables
   activeTab: string = 'upload';
 
   selectedFile: File | null = null;
@@ -58,6 +62,9 @@ export class GenerateCouponComponent implements OnInit {
     validUntil: ''
   };
 
+  //#endregion
+
+  //#region Contructor
   constructor(
     private couponApi: CouponService,
     private toastService: ToastService,
@@ -69,6 +76,7 @@ export class GenerateCouponComponent implements OnInit {
       this.coupon.storeId = params['id'];
     });
   }
+  //#endregion
 
   //#region Lifecycle Hooks
   ngOnInit(): void {
@@ -91,23 +99,28 @@ export class GenerateCouponComponent implements OnInit {
       }
     });
   }
-  //#endregion
-
-  setActiveTab(tab: string) {
-    this.activeTab = tab;
-  }
 
   ngOnChange(): void {
     console.log(this.coupon.couponType);
   }
+  //#endregion
 
+  //#region Set Tab
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
+  }
+  //#endregion
+
+  //#region User Limit Change
   onUserLimitChange(value: boolean | null): void {
     console.log(value);
     if (value === false) {
       this.coupon.userLimitCount = 0;
     }
   }
+  //#endregion
 
+  //#region File Selection
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
@@ -123,6 +136,7 @@ export class GenerateCouponComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+  //#endregion
 
   //#region After Coupon Received
   onCouponReceived(url: string) {

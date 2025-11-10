@@ -7,7 +7,7 @@
   <c-card class="mb-4 shadow-sm rounded-4">
     <c-card-header class="d-flex justify-content-between align-items-center bg-light rounded-top-2">
       <strong class="fs-5">Generate Coupons</strong>
-      <button class="btn btn-primary btn-sm">View Coupons</button>
+      <button class="btn btn-primary btn-sm" routerLink="/admin/couponlist">View Coupons</button>
     </c-card-header>
 
     <c-card-body>
@@ -194,7 +194,8 @@
 
     <c-card-footer class="bg-light d-flex justify-content-end gap-2">
       <button type="button" class="btn btn-outline-secondary">Reset</button>
-      <button type="submit" class="btn btn-success" [disabled]="couponForm.invalid" (click)="saveCoupon()">
+      <button type="submit" class="btn btn-success" [disabled]="couponForm.invalid || (!imagePreviewUrl && !aiImagewPreviewUrl) || (imagePreviewUrl && aiImagewPreviewUrl)"
+        (click)="saveCoupon()">
         Generate Coupon
       </button>
     </c-card-footer>

@@ -68,6 +68,7 @@ export class AiImageModalComponent implements OnInit {
           if(response.isSuccess == true && response.statusCode == 200){
             this.generatedCouponUrl = response.data.url;
             this.isGenerating = false;
+            this.loadPreviouslyGeneratedImages(this.coupon.storeId)
           }else{
             this.toast.show({ type: 'error', message: 'Failed to generate image. Please try again.' });
             this.isGenerating = false;
@@ -87,6 +88,7 @@ export class AiImageModalComponent implements OnInit {
           if(response.isSuccess == true && response.statusCode == 200){
             this.generatedCouponUrl = response.data.url;
             this.isGenerating = false;
+            this.loadPreviouslyGeneratedImages(this.coupon.storeId)
           }else{
             this.toast.show({ type: 'error', message: 'Failed to generate image. Please try again.' });
             this.isGenerating = false;

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../../../../environments/environment';
+import { map, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -128,9 +129,13 @@ export class PromotionService {
     }
 
     getCoupons(storeId: number, couponCode: string): Observable<any> {
-      return this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.coupon.CouponSearch}`, {
+      let data1 = this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.coupon.CouponSearch}`, {
         params: { StoreId: storeId.toString(), CouponCode: couponCode, DateFilter: 'valid' }
       });
+      let data2 = this.http.get(`${environment.apiBaseUrl}/${environment.endpoints.promotion.coupon.CouponSearch}`, {
+        params: { StoreId: storeId.toString(), CouponCode: couponCode, DateFilter: 'upcoming' }
+      });
+      return forkJoin([data1, data2]);
     }
 
     GetStatuses(): Observable<any> {
