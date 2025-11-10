@@ -91,6 +91,11 @@ export class CouponService {
       { params }
     );
   }
+deleteCoupon(couponId: number) {
+  return this.http.delete<any>(
+    `${environment.apiBaseUrl}/${environment.endpoints.coupon.DeleteCoupon}/${couponId}`
+  );
+}
 
   //#region  Generate AI Image
     generateAiImage(data: any) {
