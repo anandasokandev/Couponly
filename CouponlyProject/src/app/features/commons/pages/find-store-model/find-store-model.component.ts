@@ -56,7 +56,7 @@ export class FindStoreModelComponent {
 
   // --- Pagination & Search Controls ---
   currentPage: number = 1;
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 4;
   totalItems: number = 0;
   isStoreLoading: boolean = false;
   isCouponLoading: boolean = false;

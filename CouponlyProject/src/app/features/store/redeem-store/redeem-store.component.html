@@ -83,20 +83,20 @@
         </small>
       </div>
 
-      <!-- View link (bottom right) -->
- <!-- View button (bottom right, eye icon) -->
-<small class="text-end mt-auto">
-  <button
-    type="button"
-    class="btn btn-sm btn-light border-0 p-0"
-    data-bs-toggle="modal"
-    [attr.data-bs-target]="'#couponModal' + coupon.id"
-    title="View Details">
-    <i class="fas fa-info-circle text-primary" style="font-size:14px;"></i>
-  </button>
-</small>
 
     </div>
+    
+      <!-- View button (bottom right, eye icon) -->
+      <div class="view-icon">
+        <button
+          type="button"
+          class="btn btn-sm border-0 p-0"
+          data-bs-toggle="modal"
+          [attr.data-bs-target]="'#couponModal' + coupon.id"
+          title="View Details">
+          <i class="fas fa-info-circle text-secondary" style="font-size:15px;"></i>
+        </button>
+      </div>
   </div>
 
   <!-- MODAL FOR THIS COUPON -->

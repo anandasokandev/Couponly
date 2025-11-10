@@ -134,3 +134,11 @@
 
 
 
+.view-icon {
+  position: relative;
+  top: 90px;
+  right: 12px;        /* or left: 12px if you prefer */
+  // z-index: 1055;      /* above Bootstrap modals backdrop (1050) if needed */
+
+
+}
