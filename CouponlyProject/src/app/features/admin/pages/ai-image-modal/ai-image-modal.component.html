@@ -11,7 +11,7 @@
       <c-card-header>
         <c-form-check>
           <input cFormCheckInput type="radio" name="generationType" id="promptRadio" value="prompt"
-            [(ngModel)]="generationMethod">
+            [(ngModel)]="generationMethod" >
           <label cFormCheckLabel for="promptRadio" class="fw-bold" style="cursor: pointer;">
             Generate using Prompt
           </label>
@@ -22,8 +22,8 @@
         <label cFormLabel for="promptInput">Enter your prompt:</label>
         <c-input-group class="pt-2">
           <input cFormControl id="promptInput" placeholder="e.g., 'A modern sneaker on a bright background'"
-            aria-label="AI prompt" />
-          <button cButton type="button" color="primary">Generate</button>
+            aria-label="AI prompt" #promptInput />
+          <button cButton type="button" color="primary" (click)="generateImage(promptInput.value)">Generate</button>
         </c-input-group>
       </c-card-body>
     </c-card>
@@ -43,7 +43,7 @@
         <p class="text-muted mb-2">
           This will generate an image based on the default keyword (e.g., "Shoes").
         </p>
-        <button cButton type="button" color="primary">Generate Default</button>
+        <button cButton type="button" color="primary" (click)="generateImage('null')">Generate Default</button>
       </c-card-body>
     </c-card>
 
@@ -53,11 +53,20 @@
 
       <c-col md="6">
         <h5>Preview</h5>
-        <div class="text-center p-3 border rounded bg-light"
+        <div class="text-center p-3 border rounded bg-light position-relative"
           style="min-height: 250px; display: grid; place-items: center;">
-          <img src="https://via.placeholder.com/400x300.png?text=Generated+Image+Preview"
-            alt="Generated Coupon Image Preview" class="img-fluid rounded">
+      
+          <!-- Loading Animation -->
+          <div *ngIf="isGenerating" class="loading-overlay">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2">Generating image...</p>
+          </div>
+      
+          <!-- Image Preview -->
+          <img *ngIf="!isGenerating && generatedCouponUrl" [src]="generatedCouponUrl" alt="Generated Coupon Image"
+            class="img-fluid rounded">
         </div>
+      
       </c-col>
 
       <c-col md="6">
@@ -88,6 +97,6 @@
     <button [cModalToggle]="aiImageModal.id" cButton color="secondary">
       Close
     </button>
-    <button cButton color="primary">Use This Image</button>
+    <button cButton color="primary" (click)="submitGeneratedImage()">Use This Image</button>
   </c-modal-footer>
 </c-modal>
