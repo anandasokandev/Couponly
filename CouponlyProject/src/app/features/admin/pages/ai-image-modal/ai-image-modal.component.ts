@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonCloseDirective, ButtonDirective, CardBodyComponent, CardHeaderComponent, CardModule, FormModule, GridModule, InputGroupComponent, ModalBodyComponent, ModalComponent, ModalDialogComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective, ModalToggleDirective } from '@coreui/angular';
 import { CouponService } from '../../../../commons/services/Coupon/coupon.service';
@@ -29,22 +29,36 @@ import { ToastService } from '../../../../commons/services/Toaster/toast.service
   styleUrl: './ai-image-modal.component.scss'
 })
 export class AiImageModalComponent implements OnInit {
+  
+  //#region Decorators
 
   @Input() coupon: any; 
   @Output() couponUrl = new EventEmitter<string>();
+  @ViewChild('closeButton') closeButton!: ElementRef;
+  //#endregion
   
-  public generationMethod: 'prompt' | 'default' = 'prompt';
+  //#region Variables
+
+  generationMethod: 'prompt' | 'default' = 'prompt';
   selectedCoupon: any = null;
   isGenerating: boolean = false;
   generatedCouponUrl: string = '';
+  previouslyGeneratedImages: any[] = [];
 
+  //#endregion
+
+  //#region DI
   couponService = inject(CouponService);
   toast = inject(ToastService);
+  //#endregion
   
+  //#region Lifecycle Hooks
   ngOnInit(): void {
-
+    this.loadPreviouslyGeneratedImages(this.coupon.storeId);
   }
+  //#endregion
 
+  //#region Generate Image
   generateImage(promptInput: string) {
     this.isGenerating = true;
 
@@ -86,15 +100,43 @@ export class AiImageModalComponent implements OnInit {
       });
     }
   }
+  //#endregion
 
-
+  //#region Submit Generated Image & Close Modal
   submitGeneratedImage() {
     this.couponUrl.emit(this.generatedCouponUrl);
+    this.closeModal();
   }
+  //#endregion
 
-  private loadPreviouslyGeneratedImages(storeId: number) {
-    
+  //#region Select Previously Generated Image
+  selectPreviouslyGeneratedImage(image: any) {
+    this.selectedCoupon = image;
+    this.generatedCouponUrl = image.imageUrl;
   }
+  //#endregion
+  
+  //#region Load Previously Generated Images to display
+  private loadPreviouslyGeneratedImages(storeId: number) {
+    this.couponService.getAiGeneratedImages(storeId).subscribe({
+      next: (response) => {
+        console.log(response.data);
+        
+        if(response.isSuccess == true && response.statusCode == 200 && response){
+          this.previouslyGeneratedImages = response.data;
+        }else{
+          this.toast.show({ type: 'error', message: 'Failed to load previously generated images.' });
+        }
+      },
+      error: (error) => {
+        this.toast.show({ type: 'error', message: 'An error occurred while loading previously generated images.' });
+        console.error('Error loading images:', error);
+      }
+    });
+  }
+  //#endregion
+
+  //#region Build Keywords from Coupon Object
 
   private buildKeywords(couponObj: Record<string, any>): string {
     const keywords: string[] = [];
@@ -116,4 +158,12 @@ export class AiImageModalComponent implements OnInit {
     }
     return keywords.join(", ");
   }
+
+  //#endregion
+
+  //#region Close Modal
+  closeModal(): void {
+    this.closeButton.nativeElement.click();
+  }
+  //#endregion
 }

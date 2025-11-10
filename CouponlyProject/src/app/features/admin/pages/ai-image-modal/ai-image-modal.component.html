@@ -2,7 +2,7 @@
 
   <c-modal-header>
     <h5 cModalTitle>Generate AI Coupon</h5>
-    <button cButtonClose cModalToggle></button>
+    <button #closeButton cButtonClose cModalToggle></button>
   </c-modal-header>
 
   <c-modal-body class="p-4">
@@ -72,20 +72,13 @@
       <c-col md="6">
         <h5>Previously Generated</h5>
 
-        <div class="d-flex flex-row overflow-auto py-2" style="gap: 1rem; min-height: 250px;">
-
-          <img src="https://png.pngtree.com/png-clipart/20230620/ourlarge/pngtree-coupon-code-vector-png-image_7305291.png" alt="Previously generated 1"
-            class="rounded border p-1" style="cursor: pointer; max-width: 250px;">
-
-          <img src="https://png.pngtree.com/png-clipart/20230620/ourlarge/pngtree-coupon-code-vector-png-image_7305291.png" alt="Previously generated 2"
-            class="rounded p-1"style="cursor: pointer; max-width: 250px;">
-
-          <img src="https://png.pngtree.com/png-clipart/20230620/ourlarge/pngtree-coupon-code-vector-png-image_7305291.png" alt="Previously generated 3"
-            class="rounded border p-1" style="cursor: pointer; max-width: 250px;">
-
-          <img src="https://png.pngtree.com/png-clipart/20230620/ourlarge/pngtree-coupon-code-vector-png-image_7305291.png" alt="Previously generated 4"
-            class="rounded border p-1" style="cursor: pointer; max-width: 250px;">
-
+        <div class="d-flex flex-row overflow-auto py-2" style="gap: 1rem; min-height: 250px; overflow-y: auto;">
+        
+          @for (img of previouslyGeneratedImages; track img.imageUrl) {
+          <img [src]="img.imageUrl" alt="Previously generated" class="rounded border p-1"
+            style="cursor: pointer; max-width: 200px; min-height: 250px; object-fit: contain;" (click)="selectPreviouslyGeneratedImage(img)">
+          }
+          
         </div>
       </c-col>
 
@@ -97,6 +90,6 @@
     <button [cModalToggle]="aiImageModal.id" cButton color="secondary">
       Close
     </button>
-    <button cButton color="primary" (click)="submitGeneratedImage()">Use This Image</button>
+    <button cButton color="primary" (click)="submitGeneratedImage()" [disabled]="!generatedCouponUrl">Use This Image</button>
   </c-modal-footer>
 </c-modal>

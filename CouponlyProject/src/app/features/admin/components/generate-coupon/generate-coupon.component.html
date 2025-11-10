@@ -1,5 +1,5 @@
 <c-modal #aiImageModal [scrollable]="true" alignment="center" id="aiImageModal">
-  <app-ai-image-modal [coupon]="coupon"></app-ai-image-modal>
+  <app-ai-image-modal (couponUrl)="onCouponReceived($event)" [coupon]="coupon"></app-ai-image-modal>
 </c-modal>
 
 
@@ -118,7 +118,7 @@
         </div>
 
         <div class="col-12 col-lg-6">
-          <h6 class="mb-3 text-dark text-center">Generate Coupons</h6>
+          <h6 class="mb-3 text-dark text-center">Generate / Upload Coupons</h6>
 
           <ul class="nav nav-tabs" id="couponTabs" role="tablist">
             <li class="nav-item" role="presentation">
@@ -129,7 +129,7 @@
             </li>
             <li class="nav-item" role="presentation">
               <button class="nav-link" id="ai-tab" data-bs-toggle="tab" data-bs-target="#ai-pane" type="button"
-                role="tab" aria-controls="ai-pane" aria-selected="false" [cModalToggle]="aiImageModal.id" (click)="submitCouponMethod()" >
+                role="tab" aria-controls="ai-pane" aria-selected="false">
                 AI Coupon
               </button>
             </li>
@@ -137,40 +137,57 @@
 
           <div class="tab-content border border-top-0 rounded-bottom p-3" id="couponTabsContent">
 
+            <!-- UPLOAD TAB -->
             <div class="tab-pane fade show active" id="upload-pane" role="tabpanel" aria-labelledby="upload-tab"
               tabindex="0">
-              <div class="text-center p-5 mb-3"
-                style="border: 2px dashed #ccc; min-height: max-content; border-radius: 0.25rem;">
-                <!-- Show preview if image is selected -->
-                <div *ngIf="imagePreviewUrl; else placeholder">
-                  <img [src]="imagePreviewUrl" alt="Uploaded Preview" class="img-fluid rounded mb-3"
-                    style="max-width: 100%; height: auto; border-radius: 8px;" />
-                  <button class="btn btn-outline-danger btn-sm" type="button"
+
+              <div class="preview-box">
+                <ng-container *ngIf="imagePreviewUrl; else uploadPlaceholder">
+                  <img [src]="imagePreviewUrl" alt="Preview" class="preview-image" />
+
+                  <button class="btn btn-outline-danger btn-sm mt-3" type="button"
                     (click)="imagePreviewUrl = null; selectedFile = null">
                     Remove Image
                   </button>
-                </div>
+                </ng-container>
 
-                <!-- Placeholder UI -->
-                <ng-template #placeholder>
-                  <!-- <p class="lead mb-2">Drag & Drop Image Here</p>
-                  <p class="text-muted mb-3">or</p> -->
-
-                  <div class="d-grid">
-                    <label for="couponImageFile" class="btn btn-outline-primary" style="cursor: pointer;">Choose
-                      File</label>
-                    <input type="file" id="couponImageFile" class="d-none" (change)="onFileSelected($event)"
-                      accept="image/*" />
-                  </div>
+                <ng-template #uploadPlaceholder>
+                  <label for="couponImageFile" class="btn btn-outline-primary mt-3">
+                    Choose File
+                  </label>
+                  <input type="file" id="couponImageFile" class="d-none" (change)="onFileSelected($event)"
+                    accept="image/*" />
                 </ng-template>
               </div>
+
             </div>
 
+            <!-- AI TAB -->
+            <div class="tab-pane fade" id="ai-pane" role="tabpanel" aria-labelledby="ai-tab" tabindex="0"
+              style="cursor: pointer;">
 
-            <!-- <div class="tab-pane fade" id="ai-pane" role="tabpanel" aria-labelledby="ai-tab" tabindex="0">
-              <app-ai-image-modal></app-ai-image-modal>
-            </div> -->
+              <div class="preview-box" [class.disabled-box]="couponForm.invalid"
+                [attr.data-tip]="couponForm.invalid ? 'Please fill all required fields before generating an AI image' : null"
+                [cModalToggle]="couponForm.invalid ? undefined : aiImageModal.id"
+                (click)="couponForm.invalid ? null : submitCouponMethod()">
+
+                <ng-container *ngIf="aiImagewPreviewUrl; else aiPlaceholder">
+                  <img [src]="aiImagewPreviewUrl" alt="AI Image" class="preview-image" />
+
+                  <button class="btn btn-outline-danger btn-sm mt-3" type="button" (click)="aiImagewPreviewUrl = null">
+                    Remove Image
+                  </button>
+                </ng-container>
+
+                <ng-template #aiPlaceholder>
+                  <p class="text-muted">Generate an image using AI</p>
+                </ng-template>
+              </div>
+
+            </div>
+
           </div>
+
         </div>
       </div>
     </c-card-body>
