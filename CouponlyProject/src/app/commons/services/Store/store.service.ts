@@ -119,4 +119,11 @@ fetchStoreUsers(): Observable<any[]> {
   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
   return this.http.get<any[]>(`${environment.apiBaseUrl}/${environment.endpoints.user.StoreUsers}`, { headers });
 }
+
+
+redeem(data: { coupon: number; user: number; store: number }): Observable<any> {
+  const url = `${environment.apiBaseUrl}/${environment.endpoints.redeem.redeemCoupon}`;
+  return this.http.post<any>(url, data);
+}
+
 }

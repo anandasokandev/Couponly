@@ -16,7 +16,8 @@ export const environment = {
       getRedeemsByUserId: 'Redeems/getRedeemsByUserId',
       getRedeemsByStoreId: 'Redeems/getRedeemsByStoreId',
       ExportExcel: 'Redeems/ExportRedeemsToExcel',
-      ExportEmail: 'Redeems/ExportToExcelAndMail'
+      ExportEmail: 'Redeems/ExportToExcelAndMail',
+      redeemCoupon: 'Redeems/RedeemCoupon'
     },
 
     user: {
