@@ -97,22 +97,18 @@ export class DesignedCouponsComponent implements OnInit {
     this.fetchCoupons();
   }
 
-  
+
   deleteCoupon(couponId: number): void {
-  if (!confirm("Are you sure you want to delete this coupon?")) {
-    return;
+
+    this.api.deleteStoreCoupon(couponId).subscribe({
+      next: () => {
+        this.toast.show({ type: 'success', message: 'Coupon deleted successfully' });
+        this.fetchCoupons();
+      },
+      error: (err) => {
+        console.error(err);
+        this.toast.show({ type: 'error', message: 'Failed to delete coupon' });
+      }
+    });
   }
-
-  this.api.deleteStoreCoupon(couponId).subscribe({
-    next: () => {
-      alert("Coupon deleted successfully!");
-      this.fetchCoupons(); // Refresh the list
-    },
-    error: (err) => {
-      console.error(err);
-      alert("Failed to delete coupon.");
-    }
-  });
-}
-
 }

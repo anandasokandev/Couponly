@@ -7,6 +7,7 @@ import { CouponService } from '../../../../commons/services/Coupon/coupon.servic
 import { StoreService } from '../../../../commons/services/Store/store.service';
 import { StoreWiseCouponComponent } from '../store-wise-coupon/store-wise-coupon.component';
 import { AddCouponModalComponent } from '../../pages/add-coupon-modal/add-coupon-modal.component';
+import { ToastService } from '../../../../commons/services/Toaster/toast.service';
 
 @Component({
   selector: 'app-couponlist',
@@ -63,7 +64,8 @@ export class CouponlistComponent implements OnInit {
 
   constructor(
     private couponService: CouponService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private toast:ToastService,
   ) { }
 
   ngOnInit(): void {
@@ -168,19 +170,20 @@ loadCoupons() {
   }
 
   deleteCoupon(couponId: number) {
-  if (!confirm("Are you sure you want to delete this coupon?")) {
-    return;
-  }
+ 
   this.couponService.deleteCoupon(couponId).subscribe({
     next: (res) => {
-      alert("Coupon deleted successfully!");
+      // alert("Coupon deleted successfully!");
+      this.toast.show({ type: 'success', message: 'Coupon deleted successfully' });
       this.loadCoupons();
     },
     error: (err) => {
       console.error(err);
-      alert("Failed to delete coupon.");
+      // alert("Failed to delete coupon.");
+      this.toast.show({ type: 'error', message: 'Failed to delete coupon' });
     }
   });
 }
+
 
 }

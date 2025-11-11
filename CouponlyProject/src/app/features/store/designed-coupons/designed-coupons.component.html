@@ -1,75 +1,4 @@
 <c-col xs="12">
-    <c-card class="mb-4">
-        <c-card-header>
-            <strong class="fs-5">Coupon List</strong>
-        </c-card-header>
-
-        <c-card-body>
-            <form>
-                <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
-                    <input type="text" class="form-control form-control-sm" style="max-width: 210px"
-                        placeholder="Search Coupon Code" [(ngModel)]="couponCode" name="couponCode"
-                        (input)="fetchCoupons()" />
-
-                    <select class="form-select form-select-sm" style="max-width: 210px" [(ngModel)]="typeId"
-                        name="typeId" (change)="fetchCoupons()">
-                        <option [ngValue]="undefined">-- Select Type --</option>
-                        <option *ngFor="let type of couponTypes" [value]="type.id">{{ type.name }}</option>
-                    </select>
-
-                    <select class="form-select form-select-sm" style="max-width: 180px;"
-                        [(ngModel)]="selectedDateFilter" name="selectedDateFilter" (change)="fetchCoupons()">
-                        <option value="2">All Coupons</option>
-                        <option value="1">Valid Coupons</option>
-                        <option value="3">Upcoming Coupons</option>
-                        <option value="4">Expired Coupons</option>
-                    </select>
-
-                    <button type="button" class="btn btn-danger btn-sm text-white" title="Reset"
-                        (click)="resetFilters()">
-                        <i class="fas fa-arrows-rotate"></i>
-                    </button>
-                </div>
-            </form>
-
-           
-            <div *ngIf="isLoading" class="d-flex justify-content-center my-5">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
-
-            
-            <div *ngIf="!isLoading && coupons.length > 0" class="d-flex flex-wrap gap-3 justify-content-start">
-                <div class="coupon-card" *ngFor="let coupon of coupons; let i = index">
-                    <img [src]="coupon.couponImage" alt="Coupon Image" class="coupon-image" />
-                    <div class="coupon-content">
-                        <h5 class="coupon-title" [style.color]="getColor(i)">{{ coupon.name }}</h5>
-                        <div class="coupon-code-box text-center">{{ coupon.couponCode }}</div>
-                        <p class="coupon-desc">{{ coupon.description }}</p>
-                        <div class="coupon-details">
-                            <p><span class="label">Coupon Type:</span> {{ coupon.typeName }}</p>
-                            <p><span class="label">Min Amount:</span> ₹{{ coupon.minAmount }}</p>
-                            <div class="user-limit-box">
-                                User Limit: {{ coupon.userLimit ? coupon.userLimitCount : 'Unlimited' }}
-                            </div>
-                        </div>
-                        <div class="coupon-dates">
-                            <p>Start: {{ coupon.startingDate | date: 'dd-MM-yyyy' }}</p>
-                            <p>End: {{ coupon.endingDate | date: 'dd-MM-yyyy' }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            
-            <div *ngIf="!isLoading && coupons.length === 0" class="text-center text-muted py-4">
-                <i class="fas fa-info-circle me-2"></i> No coupons found.
-            </div>
-        </c-card-body>
-    </c-card>
-</c-col>
-<!-- <c-col xs="12">
   <c-card class="mb-4">
     <c-card-header>
       <strong class="fs-5">Coupon List</strong>
@@ -79,31 +8,29 @@
       <form>
         <div class="d-flex justify-content-start align-items-center mb-4 flex-wrap gap-2">
           <input type="text" class="form-control form-control-sm" style="max-width: 210px"
-              placeholder="Search Coupon Code" [(ngModel)]="couponCode" name="couponCode"
-              (input)="fetchCoupons()" />
+            placeholder="Search Coupon Code" [(ngModel)]="couponCode" name="couponCode" (input)="fetchCoupons()" />
 
-          <select class="form-select form-select-sm" style="max-width: 210px" [(ngModel)]="typeId"
-              name="typeId" (change)="fetchCoupons()">
+          <select class="form-select form-select-sm" style="max-width: 210px" [(ngModel)]="typeId" name="typeId"
+            (change)="fetchCoupons()">
             <option [ngValue]="undefined">-- Select Type --</option>
             <option *ngFor="let type of couponTypes" [value]="type.id">{{ type.name }}</option>
           </select>
 
-          <select class="form-select form-select-sm" style="max-width: 180px;"
-              [(ngModel)]="selectedDateFilter" name="selectedDateFilter" (change)="fetchCoupons()">
+          <select class="form-select form-select-sm" style="max-width: 180px;" [(ngModel)]="selectedDateFilter"
+            name="selectedDateFilter" (change)="fetchCoupons()">
             <option value="2">All Coupons</option>
             <option value="1">Valid Coupons</option>
             <option value="3">Upcoming Coupons</option>
             <option value="4">Expired Coupons</option>
           </select>
 
-          <button type="button" class="btn btn-danger btn-sm text-white" title="Reset"
-              (click)="resetFilters()">
+          <button type="button" class="btn btn-danger btn-sm text-white" title="Reset" (click)="resetFilters()">
             <i class="fas fa-arrows-rotate"></i>
           </button>
         </div>
       </form>
 
-     
+
       <div *ngIf="isLoading" class="d-flex justify-content-center my-5">
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Loading...</span>
@@ -126,19 +53,20 @@
               </div>
             </div>
 
-          
-            <div class="coupon-footer d-flex justify-content-between align-items-center mt-auto pt-2 border-top flex-nowrap" style="flex-wrap: nowrap;">
-              <div class="coupon-dates d-flex align-items-center ps-2" style="white-space: nowrap; gap: 1rem;">
-                <span><strong>Start:</strong> {{ coupon.startingDate | date:'dd-MM-yyyy' }}</span>
-                <span><strong>End:</strong> {{ coupon.endingDate | date:'dd-MM-yyyy' }}</span>
+
+            <div class="coupon-footer d-flex justify-content-between align-items-center mt-auto pt-2 border-top"
+              style="flex-wrap: nowrap; font-size: 0.85rem;">
+
+              <div class="ps-0" style="white-space: nowrap;">
+                <strong>Start:</strong> {{ coupon.startingDate | date:'dd-MM-yyyy' }}
               </div>
-              <div class="d-flex align-items-center pe-1">
-                <button 
-                  type="button" 
-                  (click)="deleteCoupon(coupon.id)" 
-                  title="Delete" 
+
+              <div class="d-flex align-items-center gap-2 pe-2" style="white-space: nowrap;">
+                <span><strong>End:</strong> {{ coupon.endingDate | date:'dd-MM-yyyy' }}</span>
+
+                <button type="button" (click)="deleteCoupon(coupon.id)" title="Delete"
                   class="btn p-0 bg-transparent border-0">
-                  <i class="fas fa-trash text-danger" style="font-size: 1rem;"></i>
+                  <i class="fas fa-trash text-danger" style="font-size: 0.86rem;"></i>
                 </button>
               </div>
             </div>
@@ -146,10 +74,10 @@
         </div>
       </div>
 
-  
+
       <div *ngIf="!isLoading && coupons.length === 0" class="text-center text-muted py-4">
         <i class="fas fa-info-circle me-2"></i> No coupons found.
       </div>
     </c-card-body>
   </c-card>
-</c-col> -->
+</c-col>
