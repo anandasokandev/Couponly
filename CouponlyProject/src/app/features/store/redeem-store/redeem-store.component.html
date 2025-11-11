@@ -58,7 +58,7 @@
 <!-- DYNAMIC COUPONS -->
 <div *ngFor="let coupon of filteredCoupons" style="flex: 0 0 240px;">
   <div
-    class="card h-100 coupon-card-inactive d-flex flex-row align-items-start"
+    class="card coupon-card-inactive d-flex flex-row align-items-start coupon-card"
     [class.coupon-card-active]="selectedCoupon === coupon.id"
     style="text-decoration: none; cursor: pointer;"
     (click)="selectCoupon(coupon)"
