@@ -69,7 +69,7 @@
       [src]="coupon.couponImage || coupon.imageUrl"
       class="card-img-top"
       alt="Coupon Image"
-      style="max-width: 50%; height: 100%; object-fit: cover;"
+      style="width: 50%; height: 100%; object-fit: cover;"
     >
 
     <!-- Right Side Details -->
@@ -212,6 +212,7 @@
                 <div class="spinner" *ngIf="contactSearch?.trim() && searchStart"></div>
                 <!--CONTACTS-->
                 <!-- Contact Results -->
+                 
                 <div *ngIf="contactSearch?.trim() && !searchStart">
                   <ng-container *ngIf="contacts.length > 0; else noContacts">
                     <div class="list-group">

@@ -1,70 +1,131 @@
-
-.bg-light {
-background: linear-gradient(to right, #5b8ce8 10%, #81a0ef 40%, #70b4ef 90%);
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.card {
+.coupon-login-container {
+  background: #edecea;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.coupon-card {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
   border-radius: 10px;
-  background-color: #ffffff;
+  position: relative;
+  overflow: visible;
 }
 
-.btn-primary {
-  background-color: #0061f2;
-  border-color: #0061f2;
-  padding: 0.5rem 1.5rem;
-  font-weight: 500;
-  width: fit-content;
-  margin: 0 auto; /* Center the button */
-}
-.btn-login {
-  padding: 0.6rem 2rem;
-  font-size: 1rem;
-  width: 300px; /* Set a longer horizontal width */
-  max-width: 100%; /* Prevent overflow on smaller screens */
-  margin: 0 auto; /* Center the button */
-  display: block;
+.coupon-card::after {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: -38px;
+  bottom: -20px;
+  width: 20px;
+  background: radial-gradient(circle,
+    #edecea 8px,
+    #edecea 10px,
+    transparent 10px);
+  background-size: 20px 40px;
+  background-repeat: repeat-y;
 }
 
-
-.btn-primary:hover {
-  background-color: #004bb5;
+.coupon-left {
+  flex: 1;
+  background: linear-gradient(135deg, #777df5, #ee5a52);
+  color: #ffffff;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
 }
 
-/* Make the forgot password and sign up links look unified */
-.auth-links {
-  font-size: 0.9rem;
+.coupon-right {
+  flex: 1;
+  padding: 40px;
+  position: relative;
 }
 
-.auth-links a {
-  color: #0061f2;
-  text-decoration: none;
+.perforated-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0%;
+  width: 2px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    #ff6b6b,
+    #ff6b6b 5px,
+    transparent 5px,
+    transparent 10px
+  );
 }
 
-.auth-links a:hover {
-  text-decoration: underline;
+.scissors-icon {
+  position: absolute;
+  top: 50%;
+  left: -1.5%;
+  transform: translateY(-50%) rotate(90deg);
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 18px;
+  color: #ff6b6b;
 }
 
-.input-group-text {
-  background-color: transparent;
+.btn-coupon {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  border-radius: 12px;
   border: none;
-  padding-right: 0.1rem;
-  padding-left: 0.1rem;
-  color: #6c757d; 
+  font-weight: 600;
+  color: white;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
 }
 
-.input-group .form-control {
-  border-radius: 0.375rem;
+.btn-coupon:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(255,107,107,0.3);
 }
 
-.toaster-container {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 99999;
+.input-group {
+  position: relative;
 }
 
-input[type="password"]::-ms-reveal {
-    display: none;
+.input-group-text i,
+.input-group i {
+  color: #ff6b6b;
+}
+
+.coupon-right input {
+  border-radius: 12px;
+  background: #f8f9fa;
+  border: 2px solid #eee;
+  padding: 14px 14px 14px 45px;
+}
+
+.coupon-right input:focus {
+  border-color: #ff6b6b;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(255,107,107,0.1);
+  outline: none;
+}
+
+.form-footer a {
+  color: #ff6b6b;
+  font-weight: 600;
+  text-decoration: none;
 }
