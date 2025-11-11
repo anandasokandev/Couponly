@@ -6,84 +6,91 @@
   </app-toast>
 </div>
 
-<div class="bg-light min-vh-100 d-flex align-items-center justify-content-center">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6 col-lg-5">
-        <div class="card shadow border-0">
-          <div class="card-body p-4 p-md-5">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<div class="coupon-login-container">
+  <div class="coupon-card">
 
-              <h2 class="mb-3 text-center fw-bold">Sign In</h2>
-              <p class="text-muted text-center mb-4">
-                Welcome back! Please login to your account.
-              </p>
-
-              <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <div class="input-group">
-                  <span class="input-group-text bg-white text-muted">
-                    <i class="bi bi-person-fill"></i>
-                  </span>
-                  <input type="text" id="username" class="form-control"
-                         placeholder="Enter your username"
-                         formControlName="username"
-                         autocomplete="username" required>
-                </div>
-              </div>
-
-          <div class="mb-3 position-relative">
-  <label for="password" class="form-label">Password</label>
-  <input [type]="showPassword ? 'text' : 'password'"
-         id="password"
-         class="form-control pe-5"
-         placeholder="Enter your password"
-         formControlName="password"
-         autocomplete="current-password"
-         required />
-        <!-- <i class="fa-solid fa-eye"></i> -->
-          <i *ngIf="showPassword" class="fa-solid fa-eye top-50 position-absolute end-0 translate-middle-y me-3 mt-3 text-muted"
-            style="cursor: pointer;"
-            (click)="togglePassword()"></i>
-          <i *ngIf="!showPassword" class="fa-solid fa-eye-slash top-50 position-absolute end-0 translate-middle-y me-3 mt-3 text-muted"
-              style="cursor: pointer;"
-              (click)="togglePassword()"></i>
-        </div>
+    <!-- LEFT DESIGN -->
+    <div class="coupon-left">
+      <img src="assets/logo.png" style="width: 200px;" alt="Logo" />
+      <h2>Welcome Back!</h2>
+      <p>Use your credentials to sign in and unlock your coupon benefits.</p>
+    </div>
 
 
-<!-- 
-              <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="rememberMe">
-                <label class="form-check-label" for="rememberMe">Remember me</label>
-              </div> -->
+    <div class="coupon-right">
 
-                <div class="text-center mb-3">
-            <button 
-                type="submit" 
-                class="btn btn-primary btn-login d-flex align-items-center justify-content-center" 
-                [disabled]="isLoading">
+      <div class="perforated-line"></div>
+      <div class="scissors-icon">&#xf0c4;</div>
 
-                <c-spinner *ngIf="isLoading" class="me-2" size="sm"></c-spinner>
-                <span *ngIf="isLoading">Loading...</span>
-                <span *ngIf="!isLoading">Login</span>
-              </button>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-            </div>
-             <div *ngIf="errorMessage && !isLoading" class="text-danger text-center mb-3" >
-                {{ errorMessage }}
-              </div>
+        <h2 class="mb-3 text-center fw-bold">Sign In</h2>
+        <p class="text-muted text-center mb-4">
+          Welcome back! Please login to your account.
+        </p>
 
-
-              <div class="text-center mb-3">
-                <a routerLink="/forgot-password" class="small text-decoration-none">
-                  Forgot password?
-                </a>
-              </div>
-              
-            </form>
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white text-muted">
+              <i class="bi bi-person-fill"></i>
+            </span>
+            <input type="text"
+                   id="username"
+                   class="form-control"
+                   placeholder="Enter your username"
+                   formControlName="username"
+                   autocomplete="username"
+                   required />
           </div>
         </div>
-      </div>
+
+        <div class="mb-3 position-relative">
+          <label for="password" class="form-label">Password</label>
+          <input [type]="showPassword ? 'text' : 'password'"
+                 id="password"
+                 class="form-control pe-5"
+                 placeholder="Enter your password"
+                 formControlName="password"
+                 autocomplete="current-password"
+                 required />
+
+          <i *ngIf="showPassword"
+             class="fa-solid fa-eye top-50 position-absolute end-0 translate-middle-y me-3 mt-3 text-muted"
+             style="cursor:pointer;"
+             (click)="togglePassword()"></i>
+
+          <i *ngIf="!showPassword"
+             class="fa-solid fa-eye-slash top-50 position-absolute end-0 translate-middle-y me-3 mt-3 text-muted"
+             style="cursor:pointer;"
+             (click)="togglePassword()"></i>
+        </div>
+
+        <div class="text-center mb-3">
+          <button type="submit"
+                  class="btn-coupon d-flex align-items-center justify-content-center"
+                  [disabled]="isLoading">
+
+            <c-spinner *ngIf="isLoading" class="me-2" size="sm"></c-spinner>
+            <span *ngIf="isLoading">Loading...</span>
+            <span *ngIf="!isLoading">Login</span>
+            <i class="fas fa-arrow-right ms-2"></i>
+          </button>
+        </div>
+
+        <div *ngIf="errorMessage && !isLoading"
+             class="text-danger text-center mb-3">
+          {{ errorMessage }}
+        </div>
+
+        <div class="text-center mb-3">
+          <a routerLink="/forgot-password" class="small text-decoration-none">
+            Forgot password?
+          </a>
+        </div>
+
+      </form>
+
     </div>
   </div>
 </div>
