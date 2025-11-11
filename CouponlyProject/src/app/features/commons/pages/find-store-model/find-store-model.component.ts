@@ -174,9 +174,11 @@ export class FindStoreModelComponent {
     this.isCouponLoading = true;
 
     this.promotionService.getCoupons(this.selectedStore.id, this.couponText).subscribe({
-      next: (response: any) => {
-        console.log(response)
-        this.couponDetails = response.data;
+      next: ([valid, upcoming]: any) => {
+        this.couponDetails = [
+          ...valid.data,
+          ...upcoming.data
+        ];
         this.isCouponLoading = false;
         console.log("Coupon: ", this.couponDetails);
       },

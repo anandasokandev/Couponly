@@ -96,4 +96,23 @@ export class DesignedCouponsComponent implements OnInit {
     this.selectedDateFilter = '1';
     this.fetchCoupons();
   }
+
+  
+  deleteCoupon(couponId: number): void {
+  if (!confirm("Are you sure you want to delete this coupon?")) {
+    return;
+  }
+
+  this.api.deleteStoreCoupon(couponId).subscribe({
+    next: () => {
+      alert("Coupon deleted successfully!");
+      this.fetchCoupons(); // Refresh the list
+    },
+    error: (err) => {
+      console.error(err);
+      alert("Failed to delete coupon.");
+    }
+  });
+}
+
 }
