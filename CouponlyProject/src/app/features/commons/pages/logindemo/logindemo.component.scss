@@ -269,4 +269,18 @@
         display: none;
       }
     }
- 
+ .hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block;
+}
+#loginDiv, #forgotDiv {
+  transition: opacity 0.3s ease;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}

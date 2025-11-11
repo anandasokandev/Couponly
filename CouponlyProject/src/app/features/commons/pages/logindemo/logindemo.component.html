@@ -19,31 +19,82 @@
         <p>Use your credentials to sign in and unlock your coupon benefits.</p>
       </div>
 
-      <div class="coupon-right">
-        <div class="perforated-line"></div>
-        <div class="scissors-icon">&#xf0c4;</div>
+<div class="coupon-right">
+  <div class="perforated-line"></div>
+  <div class="scissors-icon">&#xf0c4;</div>
 
-        <form class="login-form">
-          <h3>Login</h3>
-          <div class="input-group">
-            <i class="fas fa-user"></i>
-            <input type="text" placeholder="Username" required />
-          </div>
-          <div class="input-group">
-            <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" required />
-          </div>
-          <button type="submit" class="btn-coupon">
-            <span>Sign In</span>
-            <i class="fas fa-arrow-right"></i>
-          </button>
-          <div class="form-footer">
-            <p><a href="#" class="forgot-link">Forgot Password?</a></p>
-            <p>Not a member? <a href="#" class="signup-link">Sign Up</a></p>
-          </div>
-        </form>
+  <!-- Login Form -->
+  <div id="loginDiv">
+    <form class="login-form">
+      <h3>Login</h3>
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" placeholder="Username" required />
       </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" placeholder="Password" required />
+      </div>
+      <button type="submit" class="btn-coupon">
+        <span>Sign In</span>
+        <i class="fas fa-arrow-right"></i>
+      </button>
+      <div class="form-footer">
+        <p><a href="#" class="forgot-link">Forgot Password?</a></p>
+        <p>Not a member? <a href="#" class="signup-link">Sign Up</a></p>
+      </div>
+    </form>
+  </div>
+
+  <!-- Forgot Password Form -->
+  <div id="forgotDiv" style="display:none;">
+    <form>
+      <h2 class="mb-3 text-center fw-bold">Forgot Password</h2>
+      <p class="text-muted text-center mb-4">Enter your email to receive your password reset link</p>
+
+      <div class="mb-4">
+        <label for="email" class="form-label">Email address</label>
+        <div class="input-group">
+          <span class="input-group-text bg-white text-muted">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+        </div>
+      </div>
+
+      <div class="text-center mb-3">
+        <button type="submit" class="btn-coupon">Submit</button>
+      </div>
+
+      <p class="text-center text-muted mb-0">
+        Remembered your password?
+        <a href="#" class="back-login">Go back to login</a>
+      </p>
+    </form>
+  </div>
+</div>
+
     </div>
   </div>
 </body>
 </html>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const loginDiv = document.getElementById("loginDiv");
+    const forgotDiv = document.getElementById("forgotDiv");
+    const forgotLink = document.querySelector(".forgot-link");
+    const backLogin = document.querySelector(".back-login");
+
+    forgotLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      loginDiv.style.display = "none";
+      forgotDiv.style.display = "block";
+    });
+
+    backLogin.addEventListener("click", function (e) {
+      e.preventDefault();
+      forgotDiv.style.display = "none";
+      loginDiv.style.display = "block";
+    });
+  });
+</script>
