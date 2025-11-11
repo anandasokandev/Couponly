@@ -50,43 +50,43 @@
   overflow: visible; // Important: allows pseudo-elements to show outside
   position: relative;
   background-color: #ffffff;
-  padding-left: 20px; // Space for tear effect
+  // Space for tear effect
   clip-path: none; // We'll use pseudo-elements instead
 
-  // === LEFT TEAR EFFECT ===
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 30px;
-    background: linear-gradient(135deg, 
-      transparent 45%, 
-      #f0f0f0 46%, 
-      #f0f0f0 54%, 
-      transparent 55%
-    );
-    background-size: 12px 12px;
-    z-index: 1;
-    pointer-events: none;
+  // // === LEFT TEAR EFFECT ===
+  // &::before {
+  //   content: '';
+  //   position: absolute;
+  //   left: 0;
+  //   top: 0;
+  //   bottom: 0;
+  //   width: 30px;
+  //   background: linear-gradient(135deg, 
+  //     transparent 45%, 
+  //     #f0f0f0 46%, 
+  //     #f0f0f0 54%, 
+  //     transparent 55%
+  //   );
+  //   background-size: 12px 12px;
+  //   z-index: 1;
+  //   pointer-events: none;
 
-    // Optional: Add subtle shadow inside tear
-    box-shadow: inset 8px 0 10px -8px rgba(0,0,0,0.1);
-  }
+  //   // Optional: Add subtle shadow inside tear
+  //   box-shadow: inset 8px 0 10px -8px rgba(0,0,0,0.1);
+  // }
 
   // === SEMI-CIRCLE CUTOUTS (Perforated Tear Line) ===
   &::after {
     content: '';
     position: absolute;
-    left: 15px; // Center of tear area
-    top: -20px;
+    left: -10px; // Center of tear area
+    top: -25px;
     bottom: -20px;
     width: 20px;
     background: radial-gradient(circle at center, 
-      transparent 8px, 
-      #fff 8px, 
-      #fff 10px, 
+      
+      #edecea 8px, 
+      #edecea 10px, 
       transparent 10px
     );
     background-size: 20px 40px;
@@ -96,16 +96,16 @@
     pointer-events: none;
   }
 
-  // Optional: Add a faint vertical line behind tear
-  .tear-line {
-    position: absolute;
-    left: 15px;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: #ddd;
-    z-index: 1;
-  }
+  // // Optional: Add a faint vertical line behind tear
+  // .tear-line {
+  //   position: absolute;
+  //   left: 15px;
+  //   top: 0;
+  //   bottom: 0;
+  //   width: 1px;
+  //   background: #ddd;
+  //   z-index: 1;
+  // }
 }
 
     @keyframes float {
