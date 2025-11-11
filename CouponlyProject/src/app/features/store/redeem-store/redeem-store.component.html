@@ -17,10 +17,8 @@
           <img src="http://localhost:4200/assets/logo.png" alt="Logo" style="height: 35px;">
 
           <div class="ms-auto d-flex align-items-center gap-4">
-            <a href="#" class="nav-link-theme fw-bold text-decoration-none fs-6">Coupons</a>
-            <a href="#" class="nav-link-theme fw-bold text-decoration-none active fs-6"
-              style="border-bottom-width: 2px; padding-bottom: 5px;">Redeems</a>
-            <a href="#" class="nav-link-theme fw-bold text-decoration-none fs-6">Promotions</a>
+            <a [routerLink]="['/store/dashboard']" class="nav-link-theme fw-bold text-decoration-none active fs-6"
+              style="border-bottom-width: 2px; padding-bottom: 5px;"> Back to Home</a>
           </div>
         </c-card-header>
 
