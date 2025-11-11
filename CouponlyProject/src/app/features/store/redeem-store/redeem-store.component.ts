@@ -7,6 +7,7 @@ import { ToastService,} from '../../../commons/services/Toaster/toast.service';
 import { ToastComponent } from '../../admin/pages/toast/toast.component';
 import { ContactService } from '../../../commons/services/Contacts/contact.service';
 import { StoreDashboardService } from '../../../commons/services/StoreDashboard/store-dashboard.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-redeem-store',
@@ -20,7 +21,8 @@ import { StoreDashboardService } from '../../../commons/services/StoreDashboard/
     ColComponent,
     RowComponent,
     FormsModule,
-    ToastComponent
+    ToastComponent,
+    RouterLink
   ],
   templateUrl: './redeem-store.component.html',
   styleUrls: ['./redeem-store.component.scss']
