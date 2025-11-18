@@ -1,4 +1,4 @@
-<c-col xs="12">
+<c-col xs="12" xl="12">
   <c-card class="mb-4" *ngIf="promotion">
     <c-card-header class="d-flex justify-content-between align-items-center">
       <div>
@@ -17,11 +17,11 @@
           color="success"
           class="ms-3"
           style="color: blanchedalmond;"
-          *ngIf="PaymentStatusInfo.text === 'Failed' && promotion.status == 'Created'"
+          *ngIf="PaymentStatusInfo.text === 'Failed' && promotion.status == 'Created' && !isStore"
           (click)="resendPaymentLink(promotion.id)"
           [disabled]="resending"
         >
-          <i class="fa fa-key" aria-hidden="true" *ngIf="!resending && !isStore"></i>
+          <i class="fa fa-key" aria-hidden="true" *ngIf="!resending"></i>
           <i class="fa fa-spinner fa-spin" aria-hidden="true" *ngIf="resending"></i>
           Resend Payment URL
         </button>
@@ -30,11 +30,11 @@
           size="sm"
           color="danger"
           class="ms-3 text-white"
-          *ngIf="promotion.status === 'Created'"
+          *ngIf="promotion.status === 'Created' || promotion.status === 'TokenRecreated' && !isStore"
           (click)="cancelPromotion(promotion.id)"
           [disabled]="canceling"
         >
-          <i class="fa fa-times" aria-hidden="true" *ngIf="!canceling && !isStore"></i>
+          <i class="fa fa-times" aria-hidden="true" *ngIf="!canceling"></i>
           <i class="fa fa-spinner fa-spin" aria-hidden="true" *ngIf="canceling"></i>
           Cancel
         </button>

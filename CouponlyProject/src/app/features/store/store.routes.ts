@@ -100,6 +100,13 @@ export const storeRoutes: Routes = [
                 }
             },
             {
+                path: 'change-password',
+                loadComponent: () => import('../store/change-password/change-password.component').then(m => m.ChangePasswordComponent),
+                data: {
+                    title: 'Change Password'
+                }
+            },
+            {
                 path: '', // Default redirect
                 redirectTo: 'dashboard',
                 pathMatch: 'full'

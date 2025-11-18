@@ -9,13 +9,18 @@
 
   <!-- Store Info Content -->
   <div *ngIf="!isLoading" class="profile-container">
-    <div class="header-box">
-      <div class="logo-box">
-        <img [src]="storeData?.logo" alt="Store Logo">
+    <div class="d-flex justify-content-between">
+      <div class="header-box">
+        <div class="logo-box">
+          <img [src]="storeData?.logo" alt="Store Logo">
+        </div>
+        <div class="store-info">
+          <div class="store-name">{{ storeData?.name }}</div>
+          <div class="store-code">Code: {{ storeData?.code }}</div>
+        </div> 
       </div>
-      <div class="store-info">
-        <div class="store-name">{{ storeData?.name }}</div>
-        <div class="store-code">Code: {{ storeData?.code }}</div>
+      <div class="mt-5">
+        <button type="button" class="btn btn-sm btn-secondary" [routerLink]="'/store/change-password'">Change Password</button>
       </div>
     </div>
 

@@ -1,11 +1,3 @@
-<div class="toaster-container">
-  <app-toast 
-    *ngFor="let t of (toast.toasts$ | async)" 
-    [toast]="t"
-    (remove)="onRemove($event)">
-  </app-toast>
-</div>
-
 <div class="coupon-login-container">
   <div class="coupon-card">
 

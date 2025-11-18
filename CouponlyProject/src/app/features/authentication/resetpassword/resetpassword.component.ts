@@ -23,6 +23,10 @@ export class ResetpasswordComponent implements OnInit {
   isError: boolean = false;
   email: string = ''; 
   role: String='';
+  showPassword = false;
+  showRePassword = false;
+  passwordStrength: number = 0;
+  passwordStrengthLabel: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -32,15 +36,52 @@ export class ResetpasswordComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe(params => {
-      this.token = params.get('token') || '';
-      if (this.token) {
-        this.verifyToken(this.token);
-      } else {
-        this.router.navigate(['/404']);
-      }
-    });
+    this.isTokenValid = true;
+    // this.route.queryParamMap.subscribe(params => {
+    //   this.token = params.get('token') || '';
+    //   if (this.token) {
+    //     this.verifyToken(this.token);
+    //   } else {
+    //     this.router.navigate(['/404']);
+    //   }
+    // });
   }
+
+  updatePasswordStrength(val: string) {
+     const len = val ? val.length : 0;
+      if (!val) {
+      this.passwordStrength = 0;
+      this.passwordStrengthLabel = '';
+      return;
+      }
+
+      const hasUpper = /[A-Z]/.test(val);
+      const hasDigit = /\d/.test(val);
+      const hasSpecial = /[^A-Za-z0-9]/.test(val);
+
+      let score = 0;
+      // length scoring
+      if (len >= 12) score += 40;
+      else if (len >= 8) score += 20;
+      else if (len >= 4) score += 10;
+      else score += 5;
+
+      // character type scoring
+      if (hasUpper) score += 20;
+      if (hasDigit) score += 20;
+      if (hasSpecial) score += 20;
+
+      this.passwordStrength = Math.min(100, score);
+
+      if (this.passwordStrength >= 80) {
+      this.passwordStrengthLabel = 'Strong';
+      } else if (this.passwordStrength >= 50) {
+      this.passwordStrengthLabel = 'Medium';
+      } else {
+      this.passwordStrengthLabel = 'Weak';
+      }
+    }
+
 
   private verifyToken(token: string): void {
     this.forgotPasswordService.verifyToken({ token }).subscribe({

@@ -19,7 +19,6 @@ import { cilEnvelopeOpen } from '@coreui/icons/dist/esm/free/cil-envelope-open';
     CommonModule,
     RouterModule,
     SpinnerModule,
-    ToastComponent,
     IconModule
   ],
   templateUrl: './login.component.html',

@@ -68,34 +68,49 @@ export const storeNavItems: INavData[] = [
     iconComponent: { name: 'cil-speedometer' }
   },
   {
+    title: true,
+    name: 'Main Menu'
+  },
+  {
     name: 'Coupons',
     url: '/store/designed-coupons',
     iconComponent: { name: 'cil-tags' }
   },
   {
-    name: 'Information',
-    url: '/store/store-info',
-    iconComponent: { name: 'cil-home' }
+    name: 'Store Redeem',
+    url: '/redeem-store',
+    iconComponent: { name: 'cil-layers' }
   },
   {
     name: 'Redeem History',
     url: '/store/redeem-history',
-    iconComponent: { name: 'cil-layers' }
+    iconComponent: { name: 'cilChart' }
   },
-
-
-  {
-    name: 'Redeem Store',
-    url: '/redeem-store',
-    iconComponent: { name: 'cil-layers' }
-  },
-  
-
   {
     name: 'Promotion History',
     url: '/store/promotion-history',
-    iconComponent: { name: 'cil-people' }
+    iconComponent: { name: 'cilSpreadsheet' }
   },
+  {
+    title: true,
+    name: 'Settings'
+  },
+  {
+    name: 'Profile',
+    url: '/store/store-info',
+    iconComponent: { name: 'cil-home' }
+  },
+  {
+    name: 'Change Password',
+    url: '/store/change-password',
+    iconComponent: { name: 'cilApplicationsSettings' }
+  },
+  // {
+  //   name: 'Docs',
+  //   url: 'https://coreui.io/angular/docs/',
+  //   iconComponent: { name: 'cil-description' },
+  //   attributes: { target: '_blank' }
+  // }
 ]
 
 // export const navItems: INavData[] = [

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CardModule, NavModule } from '@coreui/angular';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StoreDashboardService } from '../../../commons/services/StoreDashboard/store-dashboard.service';
 
 @Component({
   selector: 'app-store-info',
-  imports: [CardModule, NavModule, CommonModule],
+  imports: [CardModule, NavModule, CommonModule, RouterLink],
   templateUrl: './store-info.component.html',
   styleUrl: './store-info.component.scss'
 })
