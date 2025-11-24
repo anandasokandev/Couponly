@@ -18,7 +18,7 @@ export class ChangePasswordComponent {
   showConfirm = false;
   submitting = false;
   errorMessage = '';
-  currentPassword = '';
+  existingPassword = '';
   success = false;
   passwordStrength = 0;
   passwordStrengthLabel = 'Weak';
@@ -36,21 +36,21 @@ export class ChangePasswordComponent {
         Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/)
         ]
       ],
-      confirmPassword: ['', [Validators.required]]
+      confirmPassword: ['', [Validators.minLength(8), Validators.required]]
       },
       {
-      validators: (group: FormGroup) => {
-        const pw = group.get('password')?.value;
-        const cpw = group.get('confirmPassword')?.value;
-        const current = group.get('currentPassword')?.value;
-        // reuse existing mismatch check
-        if (pw !== cpw) return { mismatch: true };
-        // if a stored current password is available, ensure the entered currentPassword matches it
-        if (this.currentPassword && current !== this.currentPassword) return { currentInvalid: true };
-        // ensure new password is not the same as the current password supplied in the form
-        if (pw && current && pw === current) return { sameAsCurrent: true };
-        return null;
-      }
+        validators: (group: FormGroup) => {
+          const pw = group.get('password')?.value;
+          const cpw = group.get('confirmPassword')?.value;
+          const current = group.get('currentPassword')?.value;
+          // reuse existing mismatch check
+          if (pw !== cpw) return { mismatch: true };
+          // if a stored current password is available, ensure the entered currentPassword matches it
+          if (this.existingPassword && current !== this.existingPassword) return { currentInvalid: true };
+          // ensure new password is not the same as the current password supplied in the form
+          if (pw && current && pw === current) return { sameAsCurrent: true };
+          return null;
+        }
       }
     );
 
@@ -102,13 +102,13 @@ export class ChangePasswordComponent {
       return;
     }
     this.submitting = true;
-    this.errorMessage = '';
+    this.errorMessage = 'Haiii';
     this.success = false;
 
     // Replace with real save logic / HTTP call
     setTimeout(() => {
       this.submitting = false;
-      this.success = true;
+      this.success = false;
     }, 500);
   }
 }

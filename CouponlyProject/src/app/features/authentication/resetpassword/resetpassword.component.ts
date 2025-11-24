@@ -36,15 +36,14 @@ export class ResetpasswordComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isTokenValid = true;
-    // this.route.queryParamMap.subscribe(params => {
-    //   this.token = params.get('token') || '';
-    //   if (this.token) {
-    //     this.verifyToken(this.token);
-    //   } else {
-    //     this.router.navigate(['/404']);
-    //   }
-    // });
+    this.route.queryParamMap.subscribe(params => {
+      this.token = params.get('token') || '';
+      if (this.token) {
+        this.verifyToken(this.token);
+      } else {
+        this.router.navigate(['/404']);
+      }
+    });
   }
 
   updatePasswordStrength(val: string) {
@@ -74,11 +73,11 @@ export class ResetpasswordComponent implements OnInit {
       this.passwordStrength = Math.min(100, score);
 
       if (this.passwordStrength >= 80) {
-      this.passwordStrengthLabel = 'Strong';
+        this.passwordStrengthLabel = 'Strong';
       } else if (this.passwordStrength >= 50) {
-      this.passwordStrengthLabel = 'Medium';
+        this.passwordStrengthLabel = 'Medium';
       } else {
-      this.passwordStrengthLabel = 'Weak';
+        this.passwordStrengthLabel = 'Weak';
       }
     }
 
@@ -92,10 +91,10 @@ export class ResetpasswordComponent implements OnInit {
           this.role =res.data.email.role;
           console.log(res)
         } else {
-          this.router.navigate(['/404']);
+          this.router.navigate(['/500']);
         }
       },
-      error: () => this.router.navigate(['/404'])
+      error: () => this.router.navigate(['/500'])
     });
   }
 
